@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="QuestionBoardMapper">
+
+	<insert id="insertBoard" parameterType="questionBoardVo">
+		insert into question_board  
+		(board_idx, all_board_number, title, content, member_idx, member_nickname 
+   		<if test="originFile != null">
+     		, originfile
+  		 </if>
+   		<if test="saveFile != null">
+  		   , savefile
+   		</if>
+		)
+		values(question_board _seq.nextval, all_board_seq.nextval, #{title}, #{content}, #{member_idx}, #{member_nickname} 
+    	<if test="originFile != null">
+   	   		, #{originFile}
+    	</if>
+    	<if test="saveFile != null">
+      		, #{saveFile}
+    	</if>
+		)						
+	</insert>
+
+	<select id="selectCount" parameterType="map" resultType="_int">
+		select count(*) from question_board 
+			<if test="searchWord != null">
+				<where>
+					<choose>
+						<when test="searchField == 'title'">
+							title like '%'||#{searchWord}||'%'
+						</when>
+						<when test="searchField == 'content'">
+							content like '%'||#{searchWord}||'%'
+						</when>
+						<when test="searchField == 'nickname'">
+							member_nickname like '%'||#{searchWord}||'%'
+						</when>						
+						<otherwise>
+							board_idx in(select board_idx
+											from question_board _reply
+											where content like '%'||#{searchWord}||'%')
+						</otherwise>
+					</choose>
+				</where>
+			</if>
+	</select>
+	
+	<select id="selectList" parameterType="map" resultType="questionBoardVo">
+		select * from question_board 
+			<if test="searchWord != null">
+				<where>
+					<choose>
+						<when test="searchField == 'title'">
+							title like '%'||#{searchWord}||'%'
+						</when>
+						<when test="searchField == 'content'">
+							content like '%'||#{searchWord}||'%'
+						</when>
+						<when test="searchField == 'nickname'">
+							member_nickname like '%'||#{searchWord}||'%'
+						</when>						
+						<otherwise>
+							board_idx in(select board_idx
+											from question_board _reply
+											where content like '%'||#{searchWord}||'%')
+						</otherwise>
+					</choose>
+				</where>
+			</if>
+			order by board_idx desc
+	</select>	
+	
+	<update id="updateReadCount" parameterType="_int">
+		update question_board  
+			set read_count = read_count+1 
+			where board_idx = #{board_idx}
+	</update>	
+	
+	<select id="selectView" parameterType="_int" resultType="questionBoardVo">
+		select * from question_board  where board_idx = #{board_idx}
+	</select>	
+	
+	<update id="updateBoard" parameterType="questionBoardVo">
+		update question_board 
+			<set>
+				<if test="title != null">
+					title = #{title},
+				</if>
+				<if test="content != null">
+					content = #{content},
+				</if>
+				<if test="originFile != null">
+					originfile = #{originFile},
+				</if>
+				<if test="saveFile != null">
+					savefile = #{saveFile},
+				</if> 
+			</set>
+				where board_idx = #{board_idx}
+	</update>
+	
+	<delete id="deletePost" parameterType="_int">
+		delete from question_board  where board_idx = #{board_idx}
+	</delete>		
+	
+	<select id="recommendationCount" parameterType="map" resultType="_int">
+		select count(*) from QUESTION_BOARD_RECOMMENDATION 
+		where member_idx = #{member_idx} and board_idx=#{board_idx}
+	</select>		
+	 
+	<insert id="insertRecommendationCount" parameterType="map">
+		insert into question_board _recommendation 
+		(recommendation_idx, board_idx, member_idx)
+		values(question_board _rd_seq.nextval, #{board_idx}, #{member_idx})						
+	</insert>	
+	
+	<update id="updateRecommendationCount" parameterType="_int">
+		update question_board 
+			set RECOMMENDATION_COUNT = RECOMMENDATION_COUNT+1
+			where board_idx = #{board_idx}
+	</update>	
+
+	<update id="updateNotRecommendationCount" parameterType="_int">
+		update question_board 
+			set NOT_RECOMMENDATION_COUNT = NOT_RECOMMENDATION_COUNT+1
+			where board_idx = #{board_idx}
+	</update>
+	
+	<delete id="deleteRecommendation" parameterType="_int">
+		delete from question_board _recommendation where board_idx = #{board_idx}
+	</delete>			
+</mapper>

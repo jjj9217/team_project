@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="MembershipMapper">
+
+	<select id="checkId" parameterType="string" resultType="_int">
+		select count(*) member_id from membership where member_id=#{member_id}
+	</select>
+	
+	<select id="checkNickname" parameterType="string" resultType="_int">
+		select count(*) member_nickname from membership where member_nickname=#{member_nickname}
+	</select>
+	
+	<insert id="join" parameterType="membershipVo">
+		insert into membership (member_idx, member_id, member_pw, member_nickname, member_name, gender, birthday, handphone, email)
+		values (member_seq.nextval,#{member_id},#{member_pw},#{member_nickname},#{member_name},#{gender},#{birthday},#{handphone},#{email})
+	</insert>
+	
+	<select id="login" parameterType="map" resultType="membershipVo">
+		select * from membership where member_id=#{member_id} and member_pw=#{member_pw} and cancel_or_not=1
+	</select>
+	
+	<update id="info_edit" parameterType="membershipVo">
+		update membership set member_nickname=#{member_nickname}, handphone=#{handphone}, update_date=sysdate
+			where member_id=#{member_id}
+	</update>
+	
+	<update id="pw_edit" parameterType="membershipVo">
+		update membership set member_pw=#{member_pw}, update_date=sysdate
+			where member_id=#{member_id}
+	</update>	
+	
+	<!-- 업데이트된 회원정보 가져오는 구문 -->
+	<select id="selectOne" parameterType="string" resultType="membershipVo">
+		select * from membership where member_id=#{member_id}
+	</select>		
+	
+	<update id="drop_out" parameterType="_int">
+		update membership set cancel_or_not=-1, cancel_date=sysdate where member_idx=#{member_idx}
+	</update>	
+	
+	<select id="searchId" parameterType="map" resultType="membershipVo">
+		select member_id from membership where member_name=#{member_name} and birthday=#{birthday} and email=#{email}
+	</select>
+	
+	<select id="searchPw" parameterType="map" resultType="membershipVo">
+		select member_id from membership where member_id=#{member_id} and member_name=#{member_name} and birthday=#{birthday} and email=#{email}
+	</select>	
+	
+	<update id="search_pw_edit" parameterType="membershipVo">
+		update membership set member_pw=#{member_pw}, update_date=sysdate
+			where member_id=#{member_id}
+	</update>	
+	
+	<select id="selectMember" parameterType="map" resultType="_int">
+		select count(*) from membership
+			<if test="searchWord != null">
+				<where>
+					<choose>
+						<when test="searchField == 'member_id'">
+							member_id like '%'||#{searchWord}||'%'
+						</when>
+						<when test="searchField == 'member_nickname'">
+							member_nickname like '%'||#{searchWord}||'%'
+						</when>
+						<otherwise>
+							member_name like '%'||#{searchWord}||'%'
+						</otherwise>
+					</choose>
+				</where>
+			</if>
+			order by member_idx desc
+	</select>			
+
+	<select id="selectList" parameterType="map" resultType="MembershipVo">
+		select * from membership
+			<if test="searchWord != null">
+				<where>
+					<choose>
+						<when test="searchField == 'member_id'">
+							member_id like '%'||#{searchWord}||'%'
+						</when>
+						<when test="searchField == 'member_nickname'">
+							member_nickname like '%'||#{searchWord}||'%'
+						</when>
+						<otherwise>
+							member_name like '%'||#{searchWord}||'%'
+						</otherwise>
+					</choose>
+				</where>
+			</if>
+			order by member_idx desc
+	</select>
+
+	<select id="selectView" parameterType="_int" resultType="MembershipVo">
+		select * from membership where member_idx = #{member_idx}
+	</select>	
+	
+	<update id="member_edit" parameterType="membershipVo">
+		update membership set member_nickname=#{member_nickname}, handphone=#{handphone}, grade=#{grade}, update_date=sysdate
+			where member_idx=#{member_idx}
+	</update>	
+	
+	<update id="admin_drop_out" parameterType="_int">
+		update membership set cancel_or_not=-1, cancel_date=sysdate where member_idx=#{member_idx}
+	</update>	
+</mapper>

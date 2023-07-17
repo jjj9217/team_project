@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+ 
+ 	<typeAliases>
+ 		<!-- 클래스에 대한 별칭 정의: MyBatis구문 내에서 별칭으로 클래스를 사용할 수 있음 -->
+ 		<typeAlias alias="membershipVo" type="vo.MembershipVo"/>
+ 		<typeAlias alias="freeBoardVo" type="vo.FreeBoardVo"/>
+ 		<typeAlias alias="freeBoardReplyVo" type="vo.FreeBoardReplyVo"/>
+ 		<typeAlias alias="allBoardVo" type="vo.AllBoardVo"/>
+ 		<typeAlias alias="allBoardReplyVo" type="vo.AllBoardReplyVo"/>
+ 		<typeAlias alias="questionBoardVo" type="vo.QuestionBoardVo"/>
+ 		<typeAlias alias="questionBoardReplyVo" type="vo.QuestionBoardReplyVo"/> 
+ 		<typeAlias alias="reviewBoardVo" type="vo.ReviewBoardVo"/>
+ 		<typeAlias alias="reviewBoardReplyVo" type="vo.ReviewBoardReplyVo"/> 
+ 		<typeAlias alias="onelineBoardVo" type="vo.OnelineBoardVo"/>
+ 		<typeAlias alias="onelineBoardReplyVo" type="vo.OnelineBoardReplyVo"/>  		
+ 	</typeAliases>
+ 	
+</configuration>
