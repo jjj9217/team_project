@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>SkyBox - 홈</title>
+<title>SkyBox - 홈.</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 $(function(){
