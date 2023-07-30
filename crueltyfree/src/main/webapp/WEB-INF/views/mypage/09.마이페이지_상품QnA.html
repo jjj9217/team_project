@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Header</title>
+<style>
+
+	.head {
+		margin-left: 5%;
+		margin-right: 5%;
+	}
+	
+	.small_menu {
+		text-align: right;
+	}
+	
+	.small_menu a {
+		font-size: 12px; 
+		color: black;
+		text-decoration-line: none;
+	}
+	
+	.head_logo {
+		margin-right: 7%;
+		text-align: left;
+		width: 180px;
+		display: inline-block;
+	}
+	
+	.head_search {
+	    width: 300px;
+	    height: 40px;
+	    margin: 22px 0 0 90px;
+	    padding: 0 45px 0 20px;
+	    border: 2px solid #7d99a4;
+	    background: #ffffff;
+	    border-radius: 20px;
+	    display: inline-block;
+	    white-space : nowrap;
+	}
+	
+	#head_searchWord {
+		width: 290px;
+	    color: #a4a4a4;
+	    font-size: 12px;
+	    line-height: 20px;
+	    letter-spacing: -.04em;
+	    border: #ffffff;
+	    margin-top: 5px;
+	    position: relative;
+	    vertical-align: middle;
+	    display: inline-block;
+    }
+    
+    #head_searchBtn {
+	    width: 30px;
+	    height: 30px;
+    	margin-top: 5px;
+    	vertical-align: middle;
+		display: inline;
+		border: #ffffff;
+		background-color: #ffffff;
+    }
+    
+    .recent_pro {
+    	margin-top: -35px;
+		text-align: right;
+		background-color: #fff;
+		vertical-align: middle;
+    }
+    
+    .recent_pro a {
+    	font-size: 15.5px; 
+		color: black;
+		text-decoration-line: none;
+    }
+    
+    .menu_box {
+    	width: 100%;
+    	height: 40px;
+    	text-align: center;
+    	margin-top: 40px;
+    	border-top: 1px solid #a4a4a4;
+    	border-bottom: 2px solid #000000;
+    }
+    
+	.menu {
+		margin-top: -0%;
+		margin-left: 2%;
+		text-align: center;
+		width: 100%;
+		list-style: none;
+	}
+	
+	.menu > li {
+		width: 12.8%; /* 90 * 7 */
+		float: left;
+		text-align: center;
+		line-height: 40px;
+		background-color: white;
+	}
+	
+	.menu a {
+		color: #000000;
+		font-weight: bold;
+		text-decoration-line: none;
+	}
+	
+	.submenu {
+		height: 0; /*ul의 높이를 안보이게 처리*/
+		overflow: hidden;
+		list-style: none;
+	}
+	
+	.submenu a {
+		height: 0; /*ul의 높이를 안보이게 처리*/
+		overflow: hidden;
+		list-style: none;
+		font-size: 12px;
+	}
+	
+	.submenu > li {
+		line-height: 50px;
+		background-color: #7d99a4;
+	}
+	
+	.menu > li:hover {
+		background-color: #7d99a4;
+		transition-duration: 0.5s;
+	}
+	
+	.menu > li:hover .submenu {
+		height: 150px; /*서브메뉴 li한개의 높이 50*5*/
+		transition-duration: 1s;
+	 }
+	 
+	 .menu > li:hover a {
+	 	color: #ffffff;
+	}
+	
+	/* 바디 CSS */
+
+    #Container{
+		overflow:hidden;
+
+		width: 1020px; margin: 0 auto;
+	}
+	
+	#mypage{
+		
+		width: 199px;
+		height:500px;
+		float:left;		
+	}
+
+	#mypage-conts{
+		
+		width:810px;
+		height: 950px;		
+		float:left;
+	}
+
+	#mylink{
+		color: black;
+		font-size: 30px;
+		text-decoration: none;
+	}
+
+	.mypagetable{
+		font-size: 20px;
+		font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+		font-weight: bold;		
+	}
+
+	#blank{
+		width:100%;
+		height: 35px;
+		
+	}
+
+	
+	
+	
+
+	
+
+	
+
+
+
+	.detailSearch{
+		width: 1020px;
+		height: 170px;
+		
+	}
+
+	.serach_category_big{
+		width: 1020px;
+		height: 55px;
+		
+	}
+
+	.serach_category_small{
+		width: 1020px;
+		height: 55px;
+		
+	}
+
+	.saerch_price{
+		width: 1020px;
+		height: 55px;
+		
+	}
+	
+	.inner{
+		width: 1020px;
+		height: 54px;
+		
+	}
+
+	.tit_classification{
+		float:left;
+		width: 150px;
+		height: 54px;
+		
+	}
+
+	.tit_classification2{
+		margin: 0;
+		width: 150px;
+		height: 37px;
+		padding-left: 20px;
+		padding-top: 17px;
+
+	}
+
+	.classification{
+		width: 18px;
+		height: 18px;	
+	}	
+
+	.list_classification{
+		float: left;
+		width: 865px;
+		height: 26px;
+		
+		padding-inline-start: 0px;
+		margin: 0;	
+		padding-top: 14px;	
+		padding-bottom: 14px;	
+	}
+	
+	.list_classification li{
+		width: 155px;
+		height: 27px;
+		padding-left: 15px;
+	}
+
+	ul li{		
+   		list-style:none;
+		float: left;
+	}	
+
+
+	.serach-period{
+		width: 100%;
+		border: 0px;
+		padding: 20px;
+		margin:0;
+	}
+
+	.buy_period_txt{
+		float: left;
+	}
+
+	.select-month{
+		float: left;
+		padding-left: 10px;
+	}
+
+	.select-range{
+		float: left;
+		padding-left: 79px;
+	}
+
+	#do-search-period{
+		height: 78px;
+		
+		color: white;		
+		margin-left: 74px;
+		padding-left: 20px;
+		padding-right: 20px;
+		
+	}
+
+	.buy_list{
+		width: 100%;
+		height:340px;
+		
+		text-align: center;
+	}
+
+	
+
+
+
+
+
+
+
+
+
+
+	/* footer Css */
+
+	.foot {
+		text-align: center;
+		border-top: 2px solid #a4a4a4;
+	}
+	
+	.foot_logo {
+		width: 20%;
+		vertical-align: top;
+		margin-top: 7%;
+		display: inline-block;
+	}
+	
+	.foot_content {
+		width: 70%;
+		margin-top: 3%;
+		display: inline-block;
+	}
+	
+	.foot_content a {
+		font-size: 13px;
+	}
+
+
+</style>
+</head>
+
+<body>
+<div class="head">
+
+	<!-- 상단 작은 메뉴 (조건에 따라 회원용/비회원용 구분) -->
+	<c:choose>
+		<c:when test="${!empty member}">
+			<!-- 회원용 -->
+			<article class="small_menu">
+				<a>${member.member_name}님</a>&nbsp;&nbsp;<a href="#">로그아웃</a>&nbsp;&nbsp;<a href="#">마이페이지</a>&nbsp;&nbsp;<a href="#">장바구니</a>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="#">고객센터</a>
+			</article>
+		</c:when>
+		<c:otherwise>
+			<!-- 일반용 -->
+			<article class="small_menu">
+				<a href="#">회원가입</a>&nbsp;&nbsp;<a href="#">로그인</a>&nbsp;&nbsp;<a href="#">장바구니</a>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="#">고객센터</a>
+			</article>
+		</c:otherwise>
+	</c:choose>
+	
+	<!-- 로고 -->
+	<a href="../index/index.jsp">
+		<img src="../resources/CrueltyFree_logo.png" class="head_logo" />
+	</a>
+	
+	<!-- 검색창 -->
+	<div class="head_search">
+		<input type="text" name="searchWord" id="head_searchWord" value="검색어를 입력해 주세요">
+		<button type="submit" name="searchBtn" id="head_searchBtn"><img src="../resources/search_img.png" style="width: 21px; height: 21px; margin-left: -4px; margin-top: -1px;"></button>
+	</div>
+	
+	<!-- 최근 본 상품 -->
+	<div class="recent_pro">
+		<a href="#">최근 본 상품 ▼</a>
+	</div>
+
+</div>
+
+<div class="menu_box">
+	<ul class="menu">
+		<li>
+			<a href="#">베스트</a>
+		</li>
+		<li>
+			<a href="#">스킨케어</a>
+			<ul class="submenu">
+				<li class="sub3"><a href="#">토너/로션/올인원</a></li>
+				<li class="sub3"><a href="#">에센스/크림</a></li>
+				<li class="sub3"><a href="#">미스트/오일</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="#">클렌징</a>
+			<ul class="submenu">
+				<li class="sub2"><a href="#">클렌징폼/젤</a></li>
+				<li class="sub2"><a href="#">오일/워터/리무버</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="#">메이크업</a>
+			<ul class="submenu">
+				<li class="sub3"><a href="#">립메이크업</a></li>
+				<li class="sub3"><a href="#">베이스메이크업</a></li>
+				<li class="sub3"><a href="#">아이메이크업</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="#">바디케어</a>
+			<ul class="submenu">
+				<li class="sub2"><a href="#">샤워/입욕</a></li>
+				<li class="sub2"><a href="#">로션/오일</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="#">헤어케어</a>
+			<ul class="submenu">
+				<li class="sub2"><a href="#">샴푸/린스/트리트먼트</a></li>
+				<li class="sub2"><a href="#">염색약/펌</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="#">미용소품</a>
+		</li>
+	</ul>
+</div>
+
+<!-- body시작 -->
+
+<div id="Container">
+	<div id="mypage">		
+		<table>
+			<th><h3><a href="#" id="mylink">마이페이지</a></h3></th>			
+			<tr><td class="mypagetable">마이 쇼핑</td></tr>
+			<tr><td>주문/배송조회</td></tr>
+			<tr><td>취소/반품내역</td></tr>
+			<tr><td><hr width=100%></td></tr>
+			<tr><td>장바구니</td></tr>
+			<tr><td>좋아요</td></tr>
+			<tr><td>쿠폰</td></tr>
+			<tr><td><hr width=100%></td></tr>
+			<tr><td class="mypagetable">마이활동</td></tr>
+			<tr><td>1:1문의내역</td></tr>
+			<tr><td>리뷰</td></tr>
+			<tr><td>상품문의내역</td></tr>
+			<tr><td><hr width=100%></td></tr>
+			<tr><td class="mypagetable">마이 정보</td></tr>
+			<tr><td>회원정보 수정</td></tr>
+			<tr><td>배송지/환불계좌</td></tr>
+		</table>		
+	</div>
+	
+	<div id="mypage-conts">
+		<div id="blank">			
+		</div>
+		<div class="tit_area">
+			<h2 class="tit">상품 Q&A</h2>
+		</div>
+		
+
+		<fieldset class="serach-period">
+			<legend></legend>
+			<div class="select_con" id="selectOrderTypeZone.select_con">
+				<p class="buy_period_txt">구매 기간</p>
+				<ul class="select-month">
+					<li class="buy_month"><button type="button">1개월</button></li>
+					<li class="buy_month"><button type="button">3개월</button></li>
+					<li class="buy_month"><button type="button">6개월</button></li>
+					<li class="buy_month"><button type="button">12개월</button></li>
+				</ul>
+			</div>
+			<div class="select-range">
+				
+
+
+				<select id="cal-start-year" title="년도를 선택하세요" style="width:76px;"><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023" selected="selected">2023</option></select>
+				<label for="cal-start-year">년</label>
+				<select id="cal-start-month" title="달월을 선택하세요" style="width:60px;">
+					<option value="01">1</option>
+					<option value="02">2</option>
+					<option value="03">3</option>
+					<option value="04">4</option>
+					<option value="05">5</option>
+					<option value="06" selected="selected">6</option>
+					<option value="07">7</option>
+					<option value="08">8</option>
+					<option value="09">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+				</select>
+				<label for="cal-start-month">월</label>
+				<select id="cal-start-day" title="날일을 선택하세요" style="width:60px;">
+				<option value="01">1</option><option value="02">2</option><option value="03">3</option><option value="04">4</option><option value="05">5</option><option value="06">6</option><option value="07">7</option><option value="08">8</option><option value="09">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27" selected="selected">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option></select>
+				<label for="cal-start-day">일</label>
+				<span class="des">~</span>
+				<select id="cal-end-year" title="년도를 선택하세요" style="width:76px;"><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023" selected="selected">2023</option></select>
+				<label for="cal-end-year">년</label>
+				<select id="cal-end-month" title="달월을 선택하세요" style="width:60px;">
+					<option value="01">1</option>
+					<option value="02">2</option>
+					<option value="03">3</option>
+					<option value="04">4</option>
+					<option value="05">5</option>
+					<option value="06">6</option>
+					<option value="07" selected="selected">7</option>
+					<option value="08">8</option>
+					<option value="09">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+				</select>
+				<label for="cal-end-month">월</label>
+				<select id="cal-end-day" title="날일을 선택하세요" style="width:60px;">
+				<option value="01">1</option><option value="02">2</option><option value="03">3</option><option value="04">4</option><option value="05">5</option><option value="06">6</option><option value="07">7</option><option value="08">8</option><option value="09">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27" selected="selected">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option></select>
+				<label for="cal-end-day">일</label>							
+			</div>
+			<button type="button" class="btnLookup" id="do-search-period">조회</button>
+		</fieldset>
+		
+		<table class="buy_list">
+			<colgroup>
+				<col style="width:367px;">
+				<col style="width:272px;">
+				<col style="width:150px;">
+			</colgroup>
+			<thead>
+				<hr width=100%>
+				<tr>
+					<th scope="col">상품</th>
+					<th scope="col">문의내용</th>
+					<th scope="col">답변상태</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>${untitled}상품</td>
+					<td>${untitled}문의내용</td>
+					<td>${untitled}답변상태</td>
+				</tr>		
+			</tbody>
+
+
+		</table>
+
+
+
+		
+		
+	</div>
+</div>
+
+<!-- footer -->
+<div class="foot">
+	<div class="foot_logo">
+		<img src="../resources/CrueltyFree_logo.png" style="width: 70%;" />
+	</div>
+	
+	<div class="foot_content">
+		<a style="font-weight: bold; color:#000000;">크루얼티프리 주식회사</a><br><br>
+		<a style="text-align: left; color:#4a4a4a;"> 대표이사: 정종진<br>
+			주소: (31144) 충남 천안시 동남구 대흥로 215 7층, 8층<br><br>
+			크루얼티프리에서 판매되는 상품 중에는 크루얼티프리에 입점한 개별 판매자가 판매하는 상품이 포함되어
+			있습니다. 개별 판매자 판매 상품의 경우, 크루얼티프리는 통신판매중개자로서 통신판매의 당사자가 아니며
+			판매자가 등록한 상품정보 및 거래 정보 등에 대하여 책임을 부담하지 않습니다.
+		</a>
+	</div>
+</div>
+</body>
+</body>
+</html>
+
