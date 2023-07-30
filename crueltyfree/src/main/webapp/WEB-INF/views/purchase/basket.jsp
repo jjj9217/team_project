@@ -1,11 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>장바구니 | CrueltyFree</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(function(){
+	//장바구니 전체 체크박스 클릭
+	$("#all_checkbox").click(function(){
+		const checkAllState = $(this).prop("checked");
+		
+		$(".checkboxes").prop("checked", checkAllState);
+	});
+	//장바구니 개별 체크박스 클릭
+	$(".checkboxes").click(function() {
+        const anyUnchecked = $(".checkboxes:not(:checked)").length > 0;
 
+        $("#all_checkbox").prop("checked", !anyUnchecked);
+    });
+	
+})
+</script>
     <style>
         *{margin: 0; padding: 0;}
         a{text-decoration: none;}
@@ -15,8 +33,7 @@
 			width: 100%;
 			height: 165px;
 			background-color: white;
-		}
-		
+		}		
 		footer{
 			bottom: 0px;
 			width: 100%;
@@ -210,6 +227,7 @@
             border-radius: 24px;
             border: 2px solid #7d99a4;
         }
+        .basket_count:focus{outline:none;}
     </style>
     
     </head>
@@ -246,7 +264,7 @@
     <div id="basket_box">
         <table id="tb_basket_box">
             <tr id="tr_basket_title">
-                <th id="th_all_checkbox"><input type="checkbox" name="all_checkbox"value=""></th>                
+                <th id="th_all_checkbox"><input type="checkbox" id="all_checkbox" value=""></th>                
                 <th id="th_product_info">상품정보</th>
                 <th id="th_sell_price">판매가</th>
                 <th id="th_product_count">수량</th>
@@ -256,7 +274,7 @@
             </tr>
             <!-- 이 밑 tr은 foreach문 사용하여 리스트, 각 td el문으로 들어갈 예정 -->
                 <tr class="tr_basket_content">
-                    <td class="td_checkbox"><input type="checkbox" name="all_checkbox" value=""></td>
+                    <td class="td_checkbox"><input type="checkbox" class="checkboxes" value=""></td>
                     <td class="td_product_info">
                         <div class="basket_item">
                         	<a class="prd_name" href="#">
@@ -274,7 +292,7 @@
                     <td class="td_product_count">
                         <div class="count_item">
                             <input type="button" class="count_plus_btn" value="-">
-                            <input type="text" name="basket_count" class="basket_count" value="1">
+                            <input type="text" name="basket_count" class="basket_count" value="1" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1');">
                             <input type="button" class="count_minus_btn" value="+">
                         </div>                    
                     </td>
@@ -295,7 +313,7 @@
                 </tr>
                 
                 <tr class="tr_basket_content">
-                    <td class="td_checkbox"><input type="checkbox" name="all_checkbox" value=""></td>
+                    <td class="td_checkbox"><input type="checkbox" class="checkboxes" value=""></td>
                     <td class="td_product_info">
                         <div class="basket_item">
                             <a class="prd_name" href="#">
@@ -313,7 +331,7 @@
                     <td class="td_product_count">
                         <div class="count_item">
                             <input type="button" class="count_plus_btn" value="-">
-                            <input type="text" name="basket_count" class="basket_count" value="2">
+                            <input type="text" name="basket_count" class="basket_count" value="2" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1');">
                             <input type="button" class="count_minus_btn" value="+">
                         </div>                    
                     </td>

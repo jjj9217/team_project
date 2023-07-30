@@ -1,10 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>주문/결제 | CrueltyFree</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(function(){
+	//장바구니 전체 체크박스 클릭
+	$("#all_agree_check").click(function(){
+		const checkAllState = $(this).prop("checked");
+		
+		$(".agree_check").prop("checked", checkAllState);
+	});
+	//장바구니 개별 체크박스 클릭
+	$(".agree_check").click(function() {
+        const anyUnchecked = $(".agree_check:not(:checked)").length > 0;
+
+        $("#all_agree_check").prop("checked", !anyUnchecked);
+    });
+	
+})
+</script>
     <style>
         *{margin: 0; padding: 0;}
         a{text-decoration: none;}
@@ -197,6 +216,8 @@
         .agree_check_text_small{display: inline-block; width: 150px; padding-left: 10px; font-size: 12px; color: #4a4a4a; font-weight: bold;}
         .agree_check_btn_area{display: inline-block; width: 40px; padding-left: 10px;}
         .agree_check_btn{width: 70px; height: 24px; color:#4a4a4a; font-size: 12px; font-weight: bold; background-color: #fff; border: 1px solid #4a4a4a; border-radius: 5px;}
+        
+        .right_title{width: 300px;}
     </style>
 </head>
 <body>
@@ -445,7 +466,7 @@
         </div>
 
         <div class="right_area">
-            <h2 class="sub_title">최종 결제정보</h2>
+            <h2 class="sub_title right_title">최종 결제정보</h2>
             <div class="total_payment_box">
                 <table class="tb_total_payment_box">
                     <tr>
@@ -500,7 +521,7 @@
                         <tr>
                             <td class="bottom">
                                 <div class="agree_box">
-                                    <span class="agree_check_area"><input type="checkbox" name="agree_check" id="agree_check_1"></span>
+                                    <span class="agree_check_area"><input type="checkbox" name="agree_check" id="agree_check_1" class="agree_check"></span>
                                     <label for="agree_check_1"><span class="agree_check_text"> 주문하실 상품, 가격, 배송정보, 할인내역등을 최종 확인하였으며, 구매에 동의합니다.</span></label>
                                 </div>                                
                             </td>
@@ -512,7 +533,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="agree_check_area"><input type="checkbox" name="agree_check" id="agree_check_2"></span>
+                                <span class="agree_check_area"><input type="checkbox" name="agree_check" id="agree_check_2"  class="agree_check"></span>
                                 <label for="agree_check_2"><span class="agree_check_text_small"> 전자금융거래기본약관</span></label>
                                 <span class="agree_check_btn_area">
                                     <input type="button" class="agree_check_btn" id="agree_check_btn_1" value="약관보기">
@@ -521,7 +542,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="agree_check_area"><input type="checkbox" name="agree_check" id="agree_check_3"></span>
+                                <span class="agree_check_area"><input type="checkbox" name="agree_check" id="agree_check_3" class="agree_check"></span>
                                 <label for="agree_check_3"><span class="agree_check_text_small"> 개인정보 수집 및 이용동의</span></label>
                                 <span class="agree_check_btn_area">
                                     <input type="button" class="agree_check_btn" id="agree_check_btn_2" value="약관보기">
@@ -530,7 +551,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="agree_check_area"><input type="checkbox" name="agree_check" id="agree_check_4"></span>
+                                <span class="agree_check_area"><input type="checkbox" name="agree_check" id="agree_check_4" class="agree_check"></span>
                                 <label for="agree_check_4"><span class="agree_check_text_small"> 개인정보 제공 및 위탁 동의</span></label>
                                 <span class="agree_check_btn_area">
                                     <input type="button" class="agree_check_btn" id="agree_check_btn_3" value="약관보기">
@@ -538,10 +559,10 @@
                             </td>
                         </tr>
                     </table>
-                </div>
-            </div>
-        </div>
-    </div>
+                </div> <!-- end of other_agree -->
+            </div> <!-- end of agree_payment_box -->
+        </div> <!-- end of right_area -->
+    </div> <!-- end of order_payment_box -->
 
     <!-- float 속성 해제 -->
     <div class="clean"></div>

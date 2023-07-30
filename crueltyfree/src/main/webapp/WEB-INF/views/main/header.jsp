@@ -8,7 +8,9 @@
 <meta charset="UTF-8">
 <title>Header</title>
 <style>
-
+	* {margin:0; padding:0;}
+	a{text-decoration: none;}
+    input[type="button"], input[type="submit"], input[type="checkbox"], select, label, button{cursor: pointer;}
 	.head {
 		margin-left: 5%;
 		margin-right: 5%;
@@ -45,7 +47,6 @@
 	
 	#head_searchWord {
 		width: 290px;
-	    color: #a4a4a4;
 	    font-size: 12px;
 	    line-height: 20px;
 	    letter-spacing: -.04em;
@@ -55,7 +56,9 @@
 	    vertical-align: middle;
 	    display: inline-block;
     }
-    
+    #head_searchWord:focus{
+    	outline:none;
+    }    
     #head_searchBtn {
 	    width: 30px;
 	    height: 30px;
@@ -97,7 +100,7 @@
 	}
 	
 	.menu > li {
-		width: 12.8%; /* 90 * 7 */
+		width: 13.8%; /* 90 * 7 */
 		float: left;
 		text-align: center;
 		line-height: 40px;
@@ -114,6 +117,8 @@
 		height: 0; /*ul의 높이를 안보이게 처리*/
 		overflow: hidden;
 		list-style: none;
+		width: 141px;
+		position: absolute;
 	}
 	
 	.submenu a {
@@ -151,15 +156,17 @@
 	<!-- 상단 작은 메뉴 (조건에 따라 회원용/비회원용 구분) -->
 	<c:choose>
 		<c:when test="${!empty member}">
-			<!-- 회원용 -->
+			<!-- 관리자용:회원등급2 -->
+			<!-- 판매자용:회원등급1 -->
+			<!-- 회원용:회원등급0 -->
 			<article class="small_menu">
-				<a>${member.member_name}님</a>&nbsp;&nbsp;<a href="#">로그아웃</a>&nbsp;&nbsp;<a href="#">마이페이지</a>&nbsp;&nbsp;<a href="#">장바구니</a>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="#">고객센터</a>
+				<a>${member.member_name}님</a>&nbsp;&nbsp;<a href="#">로그아웃</a>&nbsp;&nbsp;<a href="#">마이페이지</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
 			</article>
 		</c:when>
 		<c:otherwise>
 			<!-- 일반용 -->
 			<article class="small_menu">
-				<a href="#">회원가입</a>&nbsp;&nbsp;<a href="#">로그인</a>&nbsp;&nbsp;<a href="#">장바구니</a>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="#">고객센터</a>
+				<a href="${pageContext.request.contextPath}/member/terms.do">회원가입</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/login.do">로그인</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/login.do">로그인</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
 			</article>
 		</c:otherwise>
 	</c:choose>

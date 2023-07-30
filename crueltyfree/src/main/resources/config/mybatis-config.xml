@@ -4,9 +4,23 @@
 <configuration>
  
  	<typeAliases>
-<!--  		클래스에 대한 별칭 정의: MyBatis구문 내에서 별칭으로 클래스를 사용할 수 있음 -->
- 		<typeAlias alias="memberVo" type="com.crfr.vo.MemberVo"/>
-
+		<!-- 클래스에 대한 별칭 정의: MyBatis구문 내에서 별칭으로 클래스를 사용할 수 있음 -->
+ 		<typeAlias alias="BasketVo" type="com.crfr.vo.BasketVo"/>
+ 		<typeAlias alias="CouponVo" type="com.crfr.vo.CouponVo"/>
+ 		<typeAlias alias="DeliveryVo" type="com.crfr.vo.DeliveryVo"/>
+ 		<typeAlias alias="FileVo" type="com.crfr.vo.FileVo"/>
+ 		<typeAlias alias="LikeVo" type="com.crfr.vo.LikeVo"/>
+ 		<typeAlias alias="MemberVo" type="com.crfr.vo.MemberVo"/>
+ 		<typeAlias alias="NoticeVo" type="com.crfr.vo.NoticeVo"/>
+ 		<typeAlias alias="OneInqVo" type="com.crfr.vo.OneInqVo"/>
+ 		<typeAlias alias="OrderVo" type="com.crfr.vo.OrderVo"/>
+ 		<typeAlias alias="PayVo" type="com.crfr.vo.PayVo"/>
+ 		<typeAlias alias="ProductInfoVo" type="com.crfr.vo.ProductInfoVo"/>
+ 		<typeAlias alias="ProductInqVo" type="com.crfr.vo.ProductInqVo"/>
+ 		<typeAlias alias="ProductOutVo" type="com.crfr.vo.ProductOutVo"/>
+ 		<typeAlias alias="ProductVo" type="com.crfr.vo.ProductVo"/>
+ 		<typeAlias alias="ReviewRecomVo" type="com.crfr.vo.ReviewRecomVo"/>
+ 		<typeAlias alias="ReviewVo" type="com.crfr.vo.ReviewVo"/>
  	</typeAliases>
  	
 </configuration>
