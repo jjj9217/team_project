@@ -8,7 +8,9 @@
 <style>
 	
 	.foot {
-		text-align: center;
+		display: flex;
+        flex-wrap: wrap;             
+        justify-content: center;            
 		border-top: 2px solid #a4a4a4;
 	}
 	
@@ -35,7 +37,7 @@
 <body>
 <div class="foot">
 	<div class="foot_logo">
-		<img src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" style="width: 70%;" />
+		<img src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" style="width: 70%; background-color: rgba(255,255,255,0);" />
 	</div>
 	
 	<div class="foot_content">
