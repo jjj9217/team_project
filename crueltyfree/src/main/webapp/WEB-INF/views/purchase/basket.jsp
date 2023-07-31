@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +23,119 @@ $(function(){
         $("#all_checkbox").prop("checked", !anyUnchecked);
     });
 	
+	//수량관련 나중에 ajax적용해서 db내용 업데이트하기.	
+	//장바구니 수량 + 클릭
+	$(".count_plus_btn").click(function(){
+		//현재 클릭한 버튼의 인덱스 가져오기
+		var index = $(".count_plus_btn").index(this);
+		
+		//현재 basket_count의 값 가져오기
+	    var currentValue = parseInt($(".basket_count").eq(index).val());
+	    
+		//현재상품 가격 가져오기
+		var productPrice = parseInt($(".product_price").eq(index).val());
+		
+	    $(".basket_count").eq(index).val(currentValue + 1);
+	    
+	    //가격 * 수량
+	    var buyPrice = productPrice * (currentValue + 1);
+	    $(".buy_price").eq(index).text(buyPrice);	    
+	    $(".buy_price").eq(index).text(buyPrice.toLocaleString());
+	    //hidden에 값지정
+	    $(".buyPrice").eq(index).val(buyPrice);
+	    updateBasketTotal();
+	});
+	
+	//장바구니 수량 - 클릭
+	$(".count_minus_btn").click(function(){
+		//현재 클릭한 버튼의 인덱스 가져오기
+		var index = $(".count_minus_btn").index(this);
+		
+		//현재 basket_count의 값 가져오기		
+	    var currentValue = parseInt($(".basket_count").eq(index).val());
+		
+	    if (currentValue > 1) {	    		    	
+	    	//현재상품 가격 가져오기
+			var productPrice = parseInt($(".product_price").eq(index).val());
+			
+			$(".basket_count").eq(index).val(currentValue - 1);
+		    
+		    //가격 * 수량
+		    var buyPrice = productPrice * (currentValue - 1);
+		    $(".buy_price").eq(index).text(buyPrice);
+		    $(".buy_price").eq(index).text(buyPrice.toLocaleString());
+		    //hidden에 값지정
+		    $(".buyPrice").eq(index).val(buyPrice);
+		    updateBasketTotal();
+	    } else {
+	    	alert("수량은 1개 이상이여야 합니다.");
+	    	$(".basket_count").eq(index).val(1);
+	    }    
+	});
+	
+	//장바구니 수량 직접 변경
+	$(".basket_count").change(function(){
+		//현재 클릭한 버튼의 인덱스 가져오기
+		var index = $(".basket_count").index(this);
+		
+		//현재 basket_count의 값 가져오기		
+	    var currentValue = parseInt($(".basket_count").eq(index).val());
+		
+		if (currentValue > 0) {	    		    	
+	    	//현재상품 가격 가져오기
+			var productPrice = parseInt($(".product_price").eq(index).val());
+		    
+		    //가격 * 수량
+		    var buyPrice = productPrice * (currentValue);
+		    $(".buy_price").eq(index).text(buyPrice);		    
+		    $(".buy_price").eq(index).text(buyPrice.toLocaleString());
+		    //hidden에 값지정
+		    $(".buyPrice").eq(index).val(buyPrice);
+		    updateBasketTotal();
+	    } else {
+	    	alert("수량은 1개 이상이여야 합니다.");
+	    	$(".basket_count").eq(index).val(1).focus();
+	    }    
+			
+	});
+	
+	// 체크박스가 변경될 때마다 합계를 계산
+	function updateBasketTotal() {
+		var totalBuyPrice = 0;
+	    var totalDeliveryPrice = 0;
+	    var checkedCount = 0;
+	    
+	    $(".tr_basket_content").each(function() {
+	    	if ($(this).find(".checkboxes").prop("checked")) {
+	        var buyPrice = parseInt($(this).find(".buyPrice").val());
+	        var deliveryPrice = parseInt($(this).find(".deliveryPrice").val());
+	
+	        totalBuyPrice += buyPrice;
+	        totalDeliveryPrice += deliveryPrice;
+	        
+	        checkedCount++;
+	        }
+	    });
+	
+	    var totalPayment = totalBuyPrice + totalDeliveryPrice;
+	
+	    $(".buy_sum_price").text(totalBuyPrice.toLocaleString());
+	    $(".delivery_sum_price").text(totalDeliveryPrice.toLocaleString());
+	    $(".basket_total_price").text(totalPayment.toLocaleString());
+	    
+	    $(".checked").text(checkedCount);
+	}
+	
+	//페이지 로딩시 초기 합계
+	updateBasketTotal();
+	
+	//체크박스 변경시
+	$(".checkboxes").change(function() {
+		  updateBasketTotal();
+	});
+	$("#all_checkbox").change(function() {
+		  updateBasketTotal();
+	});	
 })
 </script>
     <style>
@@ -264,7 +378,7 @@ $(function(){
     <div id="basket_box">
         <table id="tb_basket_box">
             <tr id="tr_basket_title">
-                <th id="th_all_checkbox"><input type="checkbox" id="all_checkbox" value=""></th>                
+                <th id="th_all_checkbox"><input type="checkbox" id="all_checkbox" value="" checked ></th>                
                 <th id="th_product_info">상품정보</th>
                 <th id="th_sell_price">판매가</th>
                 <th id="th_product_count">수량</th>
@@ -274,7 +388,7 @@ $(function(){
             </tr>
             <!-- 이 밑 tr은 foreach문 사용하여 리스트, 각 td el문으로 들어갈 예정 -->
                 <tr class="tr_basket_content">
-                    <td class="td_checkbox"><input type="checkbox" class="checkboxes" value=""></td>
+                    <td class="td_checkbox"><input type="checkbox" class="checkboxes" value="" checked ></td>
                     <td class="td_product_info">
                         <div class="basket_item">
                         	<a class="prd_name" href="#">
@@ -287,22 +401,37 @@ $(function(){
                         </div>
                     </td>
                     <td class="td_sell_price">
-                        4,500원
+                    	<input type="hidden" class="product_price" value="4500"></input>
+                    	<!-- 나중에 값이 들어오면 c:set없애고 바로 밸류에 값으로 설정 -->
+                    	<c:set var="sellPrice" value="4500"/>
+                        <span class="sell_price">
+							<fmt:formatNumber value="${sellPrice}" pattern="###,###" /></span>원							
                     </td>
                     <td class="td_product_count">
                         <div class="count_item">
-                            <input type="button" class="count_plus_btn" value="-">
+                            <input type="button" class="count_minus_btn" value="-">
                             <input type="text" name="basket_count" class="basket_count" value="1" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1');">
-                            <input type="button" class="count_minus_btn" value="+">
+                            <input type="button" class="count_plus_btn" value="+">
                         </div>                    
                     </td>
                     <td class="td_buy_price">
-                        4,500원
+                        <span class="buy_price">
+                        <fmt:formatNumber value="${sellPrice}" pattern="###,###" /></span>원
+                        <input type="hidden" class="buyPrice" value="${sellPrice}">
                     </td>
                     <td class="td_delivery_info">
-                        <!-- 배송비 0일때 아래문구, 0초과시 해당 가격-->
-                        <span class="delivery_price">무료배송</span><br>
-                        <span class="delivery_notice">도서·산간제외</span>
+                    	<c:set var="deliveryPrice" value="0"/>
+                    	<input type="hidden" class="deliveryPrice" value="${deliveryPrice}">
+                    	<c:choose>
+                    		<c:when test="${deliveryPrice == 0}">
+                    			<span class="delivery_price">무료배송</span><br>
+                        		<span class="delivery_notice">도서·산간제외</span>
+                    		</c:when>
+                    		<c:otherwise>
+                    			<span class="delivery_price">
+                    			<fmt:formatNumber value="${deliveryPrice}" pattern="###,###" />원</span>
+                    		</c:otherwise>
+                    	</c:choose>
                     </td>
                     <td class="td_select">
                         <div class="select_item">
@@ -313,7 +442,7 @@ $(function(){
                 </tr>
                 
                 <tr class="tr_basket_content">
-                    <td class="td_checkbox"><input type="checkbox" class="checkboxes" value=""></td>
+                    <td class="td_checkbox"><input type="checkbox" class="checkboxes" value="" checked ></td>
                     <td class="td_product_info">
                         <div class="basket_item">
                             <a class="prd_name" href="#">
@@ -326,20 +455,37 @@ $(function(){
                         </div>
                     </td>
                     <td class="td_sell_price">
-                        13,500원
+                        <input type="hidden" class="product_price" value="13500"></input>
+                        <!-- 나중에 값이 들어오면 c:set없애고 바로 밸류에 값으로 설정 -->
+                    	<c:set var="sellPrice" value="13500"/>
+                        <span class="sell_price">
+							<fmt:formatNumber value="${sellPrice}" pattern="###,###" /></span>원
                     </td>
                     <td class="td_product_count">
                         <div class="count_item">
-                            <input type="button" class="count_plus_btn" value="-">
-                            <input type="text" name="basket_count" class="basket_count" value="2" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1');">
-                            <input type="button" class="count_minus_btn" value="+">
+                            <input type="button" class="count_minus_btn" value="-">
+                            <input type="text" name="basket_count" class="basket_count" value="1" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1');">
+                            <input type="button" class="count_plus_btn" value="+">
                         </div>                    
                     </td>
                     <td class="td_buy_price">
-                        27,000원
+                        <span class="buy_price">
+                        <fmt:formatNumber value="${sellPrice}" pattern="###,###" /></span>원
+                        <input type="hidden" class="buyPrice" value="${sellPrice}">
                     </td>
                     <td class="td_delivery_info">
-                        <span class="delivery_price">2,500원</span>
+                    	<c:set var="deliveryPrice" value="2500"/>
+                    	<input type="hidden" class="deliveryPrice" value="${deliveryPrice}">
+                    	<c:choose>
+                    		<c:when test="${deliveryPrice == 0}">
+                    			<span class="delivery_price">무료배송</span><br>
+                        		<span class="delivery_notice">도서·산간제외</span>
+                    		</c:when>
+                    		<c:otherwise>
+                    			<span class="delivery_price">
+                    			<fmt:formatNumber value="${deliveryPrice}" pattern="###,###" />원</span>
+                    		</c:otherwise>
+                    	</c:choose>
                     </td>
                     <td class="td_select">
                         <div class="select_item">
@@ -363,9 +509,12 @@ $(function(){
                     </div>
                 </td>
                 <td id="td_basket_sum_price">
-                    <div class="basket_sum_price">
-                        <span class="basket_sum_text">총 구매가 31,500원 + 배송비 2,500원 =</span>
-                        <span class="basket_sum_result_text">총 결제금액 34,000원</span>
+                    <div class="basket_sum_price">                    	
+                        <span class="basket_sum_text">총 구매가
+                        <span class="buy_sum_price"></span>원 + 배송비
+                        <span class="delivery_sum_price"></span>원 =</span>
+                        <span class="basket_sum_result_text">총 결제금액 
+                        <span class="basket_total_price"></span>원</span>
                     </div>
                 </td>
             </tr>
@@ -377,11 +526,11 @@ $(function(){
             <tr id="tr_total_sum">
                 <td id="td_total_buy_price">
                     <span class="price_text">총 구매가</span><br>
-                    <span class="price_num">31,500원</span>
+                    <span class="price_num"><span class="buy_sum_price"></span>원</span>
                 </td>
                 <td id="td_total_delivery_price">
                     <span class="price_text">배송비</span><br>
-                    <span class="price_num">2,500원</span>                 
+                    <span class="price_num"><span class="delivery_sum_price"></span>원</span>                 
                 </td>
             </tr>
             <tr id="tr_total_sum_price">
@@ -391,7 +540,7 @@ $(function(){
                 </td>
                 <td id="td_total_sum_price">
                     <span class="total_price_text">총 결제예상금액&nbsp;&nbsp;</span>
-                    <span class="total_price_num">2,500</span>
+                    <span class="total_price_num"><span class="basket_total_price"></span></span>
                     <span class="total_price_text">원</span>                 
                 </td>
             </tr>
@@ -399,7 +548,7 @@ $(function(){
     </div>
     <!-- 장바구니 주문 버튼 -->
     <div class="basket_order_btn">
-        <input type="button" class="select_order_btn" value="선택주문(2)">
+        <button class="select_order_btn" >선택주문(<span class="checked"></span>)</button>
         <input type="button" class="all_order_btn" value="전체주문">
     </div>
 	<footer>

@@ -303,6 +303,7 @@
 	<a href="${pageContext.request.contextPath}/purchase/order.do">주문/결제</a><br>
 	<a href="${pageContext.request.contextPath}/purchase/order_complete.do">주문완료</a><br>
 	<a href="${pageContext.request.contextPath}/manager/manager_1main.do">관리자메인</a><br>
+	
 <footer>
 	<jsp:include page="../main/footer.jsp" />
 </footer>

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>      
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +10,70 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 $(function(){
+	
+	//수량 + 클릭
+	$("#prd_cart_plus_btn").click(function(){			
+		//현재 상품의 count 값 가져오기
+	    var currentValue = parseInt($("#prd_cart_cnt").val());
+	    
+		//현재상품 가격 가져오기
+		var productPrice = parseInt($(".product_price").eq(0).val());
+		
+	    $("#prd_cart_cnt").val(currentValue + 1);
+	    
+	    //가격 * 수량
+	    var buyPrice = productPrice * (currentValue + 1);
+	    $(".total_price").eq(0).text(buyPrice);	    
+	    $(".total_price").eq(0).text(buyPrice.toLocaleString());
+	    //hidden에 값지정
+	    $(".buyPrice").eq(0).val(buyPrice);
+	});	
+	
+	//장바구니 수량 - 클릭
+	$("#prd_cart_minus_btn").click(function(){		
+		//현재 상품의 count 값 가져오기		
+	    var currentValue = parseInt($("#prd_cart_cnt").val());
+		
+	    if (currentValue > 1) {	    		    	
+	    	//현재상품 가격 가져오기
+			var productPrice = parseInt($(".product_price").eq(0).val());
+			
+			$("#prd_cart_cnt").val(currentValue - 1);
+		    
+		    //가격 * 수량
+		    var buyPrice = productPrice * (currentValue - 1);
+		    $(".total_price").eq(0).text(buyPrice);
+		    $(".total_price").eq(0).text(buyPrice.toLocaleString());
+		    //hidden에 값지정
+		    $(".buyPrice").eq(0).val(buyPrice);
+	    } else {
+	    	alert("수량은 1개 이상이여야 합니다.");
+	    	$("#prd_cart_cnt").val(1);
+	    }    
+	});
+	
+	//장바구니 수량 직접 변경
+	$("#prd_cart_cnt").change(function(){		
+		//현재 상품의 count 값 가져오기		
+	    var currentValue = parseInt($("#prd_cart_cnt").val());
+		
+		if (currentValue > 0) {	    		    	
+	    	//현재상품 가격 가져오기
+			var productPrice = parseInt($(".product_price").eq(0).val());
+		    
+		    //가격 * 수량
+		    var buyPrice = productPrice * (currentValue);
+		    $(".total_price").eq(0).text(buyPrice);		    
+		    $(".total_price").eq(0).text(buyPrice.toLocaleString());
+		    //hidden에 값지정
+		    $(".buyPrice").eq(0).val(buyPrice);
+	    } else {
+	    	alert("수량은 1개 이상이여야 합니다.");
+	    	$("#prd_cart_cnt").eq(0).val(1).focus();
+	    }    
+			
+	});
+	
 	//상세보기탭 상품설명 클릭
 	$("#product_info").click(function(){
 		$(this).addClass("tap_open");
@@ -118,7 +184,7 @@ $(function(){
      #prd_cart_cnt:focus{outline: none;}
      .prd_total_price{width: 450px; height: 40px; padding-top: 18px; border-bottom: 2px solid #7d99a4; margin-top: 10px;}
      .prd_total_price_title{font-size: 22px; font-weight: bold;}
-     .total_price{font-size: 22px; padding-left: 210px;}
+     .total_price{font-size: 22px;}
 
      .prd_btn_area{display: flex; justify-content: space-between; width: 450px; height: 65px; margin-top: 25px;}
      #basket_btn{width: 177px; height: 65px; border: 1px solid #7d99a4; background-color: #fff; color: #7d99a4; font-weight: bold; font-size: 20px;}
@@ -222,6 +288,8 @@ $(function(){
      .title{background-color: #eef3f5; font-weight: bold; font-size: 15px;}
      
      #prd_content{margin: 0 auto;}
+     .total_price{font-weight: bold;}
+     .total_price_right{float: right;}
 </style>
 </head>
 <body>
@@ -245,7 +313,11 @@ $(function(){
             <div class="prd_info">
                 <p class="prd_seller">라쿤보호협회</p>
                 <p class="prd_name">라쿤보호협회 이벤트상품 한정판 고급 라쿤뒷다리살튀김</p>
-                <p class="prd_price">13,500원</p>
+                <p class="prd_price">
+                <input type="hidden" class="product_price" value="13500"></input>
+                <c:set var="prdPrice" value="13500"/>
+                <span class="prdPrice">
+                <fmt:formatNumber value="${prdPrice}" pattern="###,###" /></span>원</p>
                 <div class="prd_delivery_info">
                     <p class="prd_delivery_title">배송정보</p>
                     <div class="prd_delivery_box">
@@ -263,7 +335,10 @@ $(function(){
                 </div>
                 <div class="prd_total_price txt_blue ">
                     <span class="prd_total_price_title">상품금액 합계</span>
-                    <span class="total_price"><b>13,500</b></span>원                    
+                    <div class="total_price_right">
+                    <span class="total_price">
+                    <fmt:formatNumber value="${prdPrice}" pattern="###,###" /></span>원</div>                     
+                    <input type="hidden" class="buyPrice" value="${prdPrice}">                  
                 </div>
 
                 <div class="prd_btn_area">
@@ -400,11 +475,11 @@ $(function(){
                         <div id="align_space" class="">                            
                         </div>
                         <div id="align_photo" class="bold">
-                            <input type="checkbox" name="align_photo_check" id="align_photo_check">
+                            <input type="checkbox" name="align_photo_check" id="align_photo_check" checked>
                             <label for="align_photo_check">포토리뷰</label>
                         </div>
                         <div id="align_text" class="">
-                            <input type="checkbox" name="align_text_check" id="align_text_check">
+                            <input type="checkbox" name="align_text_check" id="align_text_check" checked>
                             <label for="align_text_check">일반리뷰</label>
                         </div>
                     </div>
