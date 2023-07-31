@@ -9,19 +9,74 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 $(function(){
-	//장바구니 전체 체크박스 클릭
+	//전체 체크박스 클릭
 	$("#all_agree_check").click(function(){
 		const checkAllState = $(this).prop("checked");
 		
 		$(".agree_check").prop("checked", checkAllState);
 	});
-	//장바구니 개별 체크박스 클릭
+	//개별 체크박스 클릭
 	$(".agree_check").click(function() {
         const anyUnchecked = $(".agree_check:not(:checked)").length > 0;
 
         $("#all_agree_check").prop("checked", !anyUnchecked);
     });
+	//동의 탭 클릭
+	$("#all_agree_open").click(function(){
+	    var index = $(".other_agree").index(this);
+	    var targetDetail = $(".other_agree").eq(index);
+	    
+	    $(".other_agree").not(targetDetail).removeClass("show");
+	    targetDetail.toggleClass("show");
+	    
+	    var allAgreeOpenText = $("#all_agree_open").text();
+	    $("#all_agree_open").text(allAgreeOpenText == "^" ? "v" : "^");
+	});
 	
+	//배송메시지 옵션변경
+	$("#delivery_message").change(function() {
+	    var deliveryOption = $("#delivery_message_option");
+	    var deliveryText = $("#delivery_message_text");
+
+	    if (deliveryOption.is(":selected")) {
+	      deliveryText.prop("type", "text");
+	    } else {
+	      deliveryText.prop("type", "hidden");
+	    }
+	});
+	
+	//배송메시지 직접입력
+	$("#delivery_message_text").on("input", function(){
+		var deliveryText = $("#delivery_message_text").val();
+		
+	    if (deliveryText.length > 30) {
+	    	var truncatedText = deliveryText.slice(0, 30);
+	        $(this).val(truncatedText); // 입력한 텍스트를 최대 50자까지 자른 내용으로 설정
+	
+	        alert("배송메시지는 30자까지만 입력가능합니다.");
+	    }
+		$("#delivery_message_option").val(deliveryText);
+	});
+	
+	//공동현관 출입방법 
+	$("input[name='dv_input']").change(function(){
+	    var selectedOptionValue = $(this).val();
+	    var deliveryInputMethod = $("#delivery_input_method");
+	    var deliveryTitle = $(".td_delivery_title").eq(6);	
+	    
+	    if (selectedOptionValue == "1") {
+	    	deliveryInputMethod.show();
+	        deliveryTitle.text("공동현관 비밀번호");
+	    } else if(selectedOptionValue == "2"){
+	        deliveryInputMethod.show();
+	        deliveryTitle.text("경비실 호출 방법");
+	    } else if(selectedOptionValue == "3"){
+	        deliveryInputMethod.hide();
+	    } else{
+	    	deliveryInputMethod.show();
+	        deliveryTitle.text("기타 상세 내용");
+	    }
+	});
 })
 </script>
     <style>
@@ -218,6 +273,12 @@ $(function(){
         .agree_check_btn{width: 70px; height: 24px; color:#4a4a4a; font-size: 12px; font-weight: bold; background-color: #fff; border: 1px solid #4a4a4a; border-radius: 5px;}
         
         .right_title{width: 300px;}
+        
+        section{display: none; width: 298px; height: auto;}
+     	.show{display: flex; flex-wrap: wrap;}
+     	
+     	#delivery_message_text{margin-top:5px; width: 478px; height: 26px; border-width: 1px; border-style: solid;  border-radius: 5px; padding: 0 10px;}
+     	#delivery_input_method {display: none;}
     </style>
 </head>
 <body>
@@ -317,13 +378,15 @@ $(function(){
                 <td class="td_delivery_title top bottom title">배송 메시지</td>
                 <td class="td_delivery_content top bottom">
                     <select name="delivery_message" id="delivery_message">
-                        <option value>배송메시지를 선택해주세요</option>
-                        <option value="1">그냥 문 앞에 놓아주시면 돼요.</option>
-                        <option value="2">직접 받을게요.(부재시 문앞)</option>
-                        <option value="3">벨을 누르지 말아주세요.</option>
-                        <option value="4">도착 후 전화주시면 직접 받으러 갈게요.</option>
-                        <option value="5">직접 입력하기</option>
+                        <option value="">배송메시지를 선택해주세요</option>
+                        <option value="그냥 문 앞에 놓아주시면 돼요.">그냥 문 앞에 놓아주시면 돼요.</option>
+                        <option value="직접 받을게요.(부재시 문앞)">직접 받을게요.(부재시 문앞)</option>
+                        <option value="벨을 누르지 말아주세요.">벨을 누르지 말아주세요.</option>
+                        <option value="도착 후 전화주시면 직접 받으러 갈게요.">도착 후 전화주시면 직접 받으러 갈게요.</option>
+                        <option id="delivery_message_option" value="">직접 입력하기</option>
                     </select>
+                    <br>
+                    <input id="delivery_message_text" type="hidden">
                 </td>
             </tr>
             <tr>
@@ -338,7 +401,7 @@ $(function(){
             <tr id="delivery_input_method">
                 <td class="td_delivery_title bottom title">공동현관 비밀번호</td>
                 <td class="td_delivery_content bottom">
-                    <input class="input_focus" type="text" name="delivery_get_name" id="delivery_get_name" value="1234">
+                    <input class="input_focus" type="text" name="delivery_get_name" id="delivery_get_name" value="">
                 </td>
             </tr> 
         </table>
@@ -511,7 +574,7 @@ $(function(){
                     <span class="all_agree_text"><label for="all_agree_check"> 모두동의</label></span>
                     <span id="all_agree_open">^</span>
                 </div>
-                <div class="other_agree">
+                <section class="other_agree">
                     <table class="tb_other_agree">
                         <tr>
                             <td class="all_agree_text">
@@ -559,7 +622,7 @@ $(function(){
                             </td>
                         </tr>
                     </table>
-                </div> <!-- end of other_agree -->
+                </section> <!-- end of other_agree -->
             </div> <!-- end of agree_payment_box -->
         </div> <!-- end of right_area -->
     </div> <!-- end of order_payment_box -->
