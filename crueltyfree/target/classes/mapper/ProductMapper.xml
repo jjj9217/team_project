@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.crfr.ProductMapper">
+	
+	<!-- 상품번호 입력후 상품 Vo반환 -->
+	<select id="selectView" parameterType="_int" resultType="ProductVo">
+		select * from product where product_idx = #{product_idx}
+	</select>		
+	
+	<!-- 상품번호 입력후 상품 파일Vo중 썸네일만 반환 -->
+	<select id="selectThumbnail" parameterType="_int" resultType="FileVo">
+		select * from file where product_idx = #{product_idx} ORDER BY file_idx LIMIT 1;
+	</select>		
+</mapper>

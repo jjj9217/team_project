@@ -77,6 +77,23 @@ $(function(){
 	        deliveryTitle.text("기타 상세 내용");
 	    }
 	});
+	
+	//약관동의 모달창	
+	$(".agree_check_btn").click(function(){
+		//현재 클릭한 버튼의 인덱스 가져오기
+		var index = $(".agree_check_btn").index(this);
+		
+		//현재 index값의 modalContainer클래스에 hidden클래스 제거
+		$(".modalContainer").eq(index).removeClass("hidden");
+	});
+	//모달창 내부 닫기 버튼
+	$(".modalCloseButton").click(function(){
+		//현재 클릭한 버튼의 인덱스 가져오기
+		var index = $(".modalCloseButton").index(this);
+		
+		//현재 index값의 modalContainer클래스에 hidden클래스 추가
+		$(".modalContainer").eq(index).addClass("hidden");
+	});
 })
 </script>
     <style>
@@ -279,6 +296,30 @@ $(function(){
      	
      	#delivery_message_text{margin-top:5px; width: 478px; height: 26px; border-width: 1px; border-style: solid;  border-radius: 5px; padding: 0 10px;}
      	#delivery_input_method {display: none;}
+     	
+		.modalContainer {
+		  width: 100%;
+		  height: 100%;
+		  position: fixed;
+		  top: 0;
+		  left: 0;
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		  background: rgba(0, 0, 0, 0.5);
+		}
+		
+		.modalContent {
+		  position: absolute;
+		  background-color: #ffffff;
+		  width: 300px;
+		  height: 150px;
+		  padding: 15px;
+		}
+		
+		.hidden {
+		  display: none;
+		}     	
     </style>
 </head>
 <body>
@@ -623,6 +664,24 @@ $(function(){
                         </tr>
                     </table>
                 </section> <!-- end of other_agree -->
+                <div class="modalContainer hidden">
+					<div class="modalContent">
+						<p>모달 창1 입니다.</p>
+					    <button class="modalCloseButton">닫기</button>
+				    </div>				    
+				</div>
+				<div class="modalContainer hidden">
+					<div class="modalContent">
+						<p>모달 창2 입니다.</p>
+					    <button class="modalCloseButton">닫기</button>
+				    </div>				    
+				</div>
+				<div class="modalContainer hidden">
+					<div class="modalContent">
+						<p>모달 창3 입니다.</p>
+					    <button class="modalCloseButton">닫기</button>
+				    </div>				    
+				</div>
             </div> <!-- end of agree_payment_box -->
         </div> <!-- end of right_area -->
     </div> <!-- end of order_payment_box -->
