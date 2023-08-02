@@ -50,7 +50,7 @@
         font-weight:700;
         font-family: Arial, Helvetica, sans-serif;
     }
-    #pswd2{
+    #member_pw2{
         margin-bottom: 20px;
     }
     select{
@@ -64,7 +64,7 @@
     #gender{
         width: 100%;
     }
-    #id,#pswd,#pswd2,#name,#handphone,#nick,#identity,#address,#postNum,#reset_btn,#join_btn,#postNum2,#postNum3{
+    #member_id,#member_pw,#member_pw2,#name,#member_handphone,#nick,#identity,#address,#select_postNum,#reset_btn,#join_btn,#postNum2,#postNum3,#email{
         width: 97%;
         height: 35px;
         padding-left: 10px;
@@ -101,21 +101,98 @@
     	cursor:pointer;
     	font: bold 13px Arial, sans-serif;
     }
-    #postNum{
+    #select_postNum{
     	background-color: #7d99a4;
     	color:white;
     	width:105px;
     	cursor:pointer;
     	font: bold 13px Arial, sans-serif;
     }
-    #handphone{
+    #member_handphone{
     	width:200px;
     }
     #address{
     	width:200px;
     }
+    #idmsg{
+    	font-size:12px;
+    }
+	#errmsg{
+		font-size:12px;
+		color:red;
+	}    
 </style>
 <script type="text/javascript" src="../resources/js/checkMember.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+
+
+<script>
+$(function(){
+	$(document).on("keyup", "input:text[engnumonly]", function() {
+		$(this).val( $(this).val().replace(/[^A-Za-z\x20^0-9]/gi,"") );
+	});
+	$(document).on("keyup", "input:text[numberonly]", function() {
+		$(this).val( $(this).val().replace( /[^0-9]/gi,"") );
+	});
+	$(document).on("keyup", "input:text[notspecial]" ,function() {
+		$(this).val( $(this).val().replace( /[^0-9^A-Za-z\x20^가-힣ㄱ-ㅎㅏ-ㅣ\x20]/g, '' ) );
+	});
+	$(document).on("keyup", "input:text[nameonly]" ,function() {
+		$(this).val( $(this).val().replace( /[^A-Za-z\x20^가-힣ㄱ-ㅎㅏ-ㅣ\x20]/g, '' ) );
+	});
+	
+	$("#member_pw, #member_pw2").change(function(){
+    	if($("#member_pw").val() != $("#member_pw2").val()){
+	    	$("#errmsg").text("비밀번호가 일치하지 않습니다.");
+    	}else{
+    		$("#errmsg").text("");
+    	}
+    });
+	
+	$("#member_id").change(function(){
+		let member_id = $("#member_id").val();
+    $.ajax({
+        type: "post",
+        url: "checkId_process.do",
+        data: { "member_id": member_id },
+        success: function(data) {
+        	if (data == "success") {
+        		$("#idmsg").text("사용 가능한 ID입니다.");
+        		$("#idmsg").css("color", "rgb(41, 128, 185)")
+        		$("#confirm_id").val("ok");
+            } else {
+            	$("#idmsg").text("이미 사용중인 ID입니다.");
+            	$("#idmsg").css("color", "rgb(231, 76, 60)")
+            	$("#confirm_id").val("fail");
+            }
+        },
+        error: function(error) {
+        	alert("ajax 에러 발생");
+        }
+    });    
+});	
+});
+</script>
+
+
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+function kakaopost(){
+	var width=500;
+	var height = 600; //팝업의 높이
+	
+    new daum.Postcode({    	
+        oncomplete: function(data) {
+            document.querySelector("#address").value=data.zonecode;
+            document.querySelector("#postNum2").value=data.address;
+        }
+
+    }).open({left:10,top:200});
+}
+</script>
+
 </head>
 <body>
 
@@ -126,38 +203,42 @@
     <div id="container">
         <div id="logo">회원가입</div>
         
-        <form action="join_process.jsp" method="post" name="frm_join" style="margin-top:35px;">
+        <form action="join_process.do" method="post" name="frm_join" style="margin-top:35px;">
             <p >
                 <label>아이디<br>
-                    <input type="text" name="member_id" id="id" placeholder="User Name" required oninput="checkId()">
-                    <input type="hidden" name="confirm_id">
-                    <span class="id_ok" style="green; display:none;">사용 가능한 아이디입니다.</span>
-                    <span class="id_ok" style="green; display:none;">중복된 아이디입니다.</span>
+                    <input type="text" name="member_id" id="member_id" placeholder="아이디를 입력해주세요.(영문,숫자만 입력가능)" maxlength="30" engnumonly=""/>
+                    <input type="hidden" name="confirm_id" id="confirm_id" value="">
                     </label></p>
+                    <div id="idmsg"></div>
             <p >
                 <label>비밀번호<br>
-                    <input type="password" name="member_pw" id="pswd" placeholder="Password"></label></p>
+                    <input type="password" name="member_pw" id="member_pw" placeholder="비밀번호를 입력해주세요."></label></p>
             <p >
-                <label>비밀번호 확인<br>
-                    <input type="password" name="member_pw2" id="pswd2"></label></p>
+                <label>비밀번호 재확인<br>
+                    <input type="password" name="member_pw2" id="member_pw2" placeholder="비밀번호를 다시 입력해주세요."></label>
+                    <div id="errmsg"></div></p>
             <p >
                 <label>이름<br>
-                    <input type="text" name="member_name" id="name"></label></p>
+                    <input type="text" name="member_name" id="name" placeholder="본인 이름을 입력해주세요." maxlength="20" nameonly="true"></label></p>
            	<p>
            		<label>전화번호<br>
-           			<input type="text" name="member_handphone" id="handphone"></label>
+           			<input type="text" name="member_handphone" id="member_handphone" maxlength="11" placeholder="-없이 연락처를 입력해주세요." numberonly="ture"></label>
            			<input type="button" name="member_identity" id="identity" value="본인인증&nbsp;&nbsp;">
            			</p>  
+           	<p>
+           		<label>이메일<br>
+           			<input type="text" name="member_email" id="email" placeholder="이메일을 입력해주세요."></label>
+           	</p>
            <p >
                 <label>닉네임<br>
-                	<input type="text" name="member_nickname" id="nick"> 
+                	<input type="text" name="member_nickname" id="nick" maxlength="20" notspecial="true" placeholder="닉네임을 입력해주세요."> 
                 </label></p>
            <p >
                 <label>주소<br>
-                    <input type="text" name="member_postNum" id="address" placeholder="">
-                    <input type="button" name="select_postNum" id="postNum" value="우편번호 검색&nbsp;&nbsp;">
-                    <input type="text" name="member_address" id="postNum2">
-                    <input type="text" name="member_address2" id="postNum3">
+                    <input type="text" name="member_postNum" id="address" placeholder="우편번호" readonly>
+                    <input type="button" name="select_postNum" id="select_postNum" value="우편번호 검색&nbsp;&nbsp;" onclick="kakaopost()" >
+                    <input type="text" name="member_address" id="postNum2" placeholder="주소" readonly>
+                    <input type="text" name="member_address2" id="postNum3" placeholder="상세 주소">
                 </label></p>
                 <input type="reset" id="reset_btn" value="취소하기" onclick="location.href='login.do';">
                 <input type="button" id="join_btn" value="회원가입">

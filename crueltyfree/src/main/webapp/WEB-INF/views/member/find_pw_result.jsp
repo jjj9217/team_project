@@ -36,7 +36,7 @@
         	text-align: center;
         	margin-top:70px;
     }
-	#member_id, #member_name, #member_handphone, #submit_btn, #id_btn{
+	#member_pw, #member_repw,#id_btn, #back, #submit_btn,#pw_btn,#login_btn{
 		width:400px;
 		height:40px;
 		margin-top:10px;
@@ -44,6 +44,9 @@
 		border-width:1px;
 		outline-color: #7d99a4;
 		padding-left:10px;
+	}
+	#member_pw{
+		margin-top:30px;
 	}
 	input[type="button"]{
 		background-color:rgb(59, 58, 58);
@@ -53,6 +56,7 @@
 		border-radius:3px;
 		cursor:pointer;
 		font: bold 17px Arial, sans-serif;
+		width:200px;
 	}
 	p{font-weight:500; color:gray;}
 	
@@ -96,57 +100,74 @@
 		color:rgb(231, 76, 60);
 		font-size:13px;
 	}
-   
+	#errmsg{
+		color:rgb(231, 76, 60);
+		font-size:13px;
+	}
+	#back{
+  		color:black; 
+  		background-color:rgb(221, 219, 214);
+  		width:203px;
+  	}
+  	#submit_btn{
+  		width:203px;
+  	}
+  	#notice{
+  		margin-top:30px;
+  	}
+  	#notice2{
+  		margin-top:30px;
+  	}
+  	fieldset{
+  		height:100px;
+  	}
+  	#pw_btn{
+  		color:black; 
+  		background-color:rgb(221, 219, 214);
+  	}
 </style>
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 $(document).ready(function() {
     $("#submit_btn").click(function() {
-        var userid = $("#member_id").val();
+        var userpw = $("#member_pw").val();
 
         // 아이디를 입력하지 않았을 경우 메시지 띄우기
-        if (userid === '') {
-            $("#message").text("아이디를 입력해 주세요.");
+        if (userpw === '') {
+            $("#message").text("새 비밀번호를 입력해 주세요.");
         } else {
         	$("#message").text("");
         }
     });
     $("#submit_btn").click(function() {
-        var username = $("#member_name").val();
+        var userrepw = $("#member_repw").val();
 
         // 아이디를 입력하지 않았을 경우 메시지 띄우기
-        if (username === '') {
-            $("#message2").text("이름을 입력해 주세요.");
+        if (userrepw === '') {
+            $("#message2").text("새 비밀번호를 재입력해 주세요.");
         } else {
         	$("#message2").text("");
         }
     });
-    
-    
-    $("#submit_btn").click(function() {
-        var userphone = $("#member_handphone").val();
-
-        // 비밀번호를 입력하지 않았을 경우 메시지 띄우기
-        if (userphone === '') {
-            $("#message3").text("전화번호를 입력해 주세요.");
-        } else {
-        	$("#message3").text("");
-        }
-    });
 });
 </script>
-
 <script>
-$(function(){
-	$(document).on("keyup", "input:text[numberonly]", function() {
-		$(this).val( $(this).val().replace( /[^0-9]/gi,"") );
-	});
+$(function(){    
+    $("#member_pw, #member_repw").change(function(){
+    	if($("#member_pw").val() != $("#member_repw").val()){
+	    	$("#errmsg").text("비밀번호가 서로 같지 않습니다.");
+	    	$("#errmsg").css("color","rgb(231, 76, 60)");
+    	}else{
+    		if($("#member_pw").val() != 0){
+    		$("#errmsg").text("비밀번호가 일치합니다.");
+    		$("#errmsg").css("color","blue");
+    		}
+    	}
+    });   
 });
 </script>
-
 <script>
-
 window.onload = function(){
 	
 	let s_btn = frm.submit_btn;//로그인 버튼
@@ -155,16 +176,18 @@ window.onload = function(){
 }
 
 function checkInput(){
-    if(frm.member_id.value.length==0){
-        frm.member_id.focus();
-        return false;
-    }else if(frm.member_name.value.length==0){
-        frm.member_name.focus();
-        return false;        
-    }else if(frm.member_handphone.value.length==0){
-        frm.member_handphone.focus();
+    if(frm.member_pw.value.length==0){
+        frm.member_pw.focus();
         return false;
 
+    }else if(frm.member_repw.value.length==0){
+        frm.member_repw.focus();
+        return false;
+	
+    }else if(frm.member_pw.value != frm.member_repw.value){
+	   alert("비밀번호가 같지 않습니다.");
+	   frm.member_pw.focus();
+	   return false;	            
     }else{
        document.frm.submit();
     }
@@ -172,7 +195,6 @@ function checkInput(){
     return true;
 }
 </script>
-
 
 
 
@@ -191,19 +213,32 @@ function checkInput(){
     	<a href="" id="a">〉 비밀번호 찾기</a>
     </div>
     <h1>비밀번호 찾기</h1>
-    <p>비밀번호가 기억나지 않으세요?</p>
+    <p>원하는 정보를 찾으셨나요?</p>
     <hr id="hr">
     <div id="tag"><span>입력하신 정보는 비밀번호 찾기에만 사용되며 </span> <span style="color:red;">저장되지 않습니다.</span></div>
     
     	<div id="find_pw">
-    		<form action="find_pw_process.do" method="post" name="frm">
-    		<input type="text" id="member_id" name="member_id" placeholder="아이디">
-    		<div id="message"></div>
-    		<input type="text" id="member_name" name="member_name" placeholder="이름">
-    		<div id="message2"></div>
-    		<input type="text" id="member_handphone" name="member_handphone" placeholder="전화번호(-없이 입력)" numberonly="" maxlength="11">
-    		<div id="message3"></div>
-    		<input type="button" id="submit_btn" name="submit_btn" value="확인" style="width:415px";>
+    		<form action="find_pw_edit_process.do" method="post" name="frm">
+    		
+    			<c:choose>
+						<c:when test="${msg_findPw eq 'ok'}">
+								<div id="notice"><span>CrueltyFree 아이디 :</span><span style="color:#7d99a4;"> ${find_pw.member_id}</span></div>
+			                  	<input class="newpw" type="password" id="member_pw" name="member_pw" placeholder="새 비밀번호">
+			                  	<div id="message"></div>
+	              				<input class="newpw" type="password" id="member_repw" name="member_repw" placeholder="새 비밀번호 확인"><br>
+	              				<div id="message2"></div>
+	              				<div id="errmsg"></div>
+	              				<input id="back" type="button" value="취소" onclick="history.back()">
+	              				<input id="submit_btn" type="button" value="비밀번호 변경">							
+						</c:when>
+						<c:when test="${msg_findPw eq 'fail'}">
+						<fieldset>
+								<div id="notice2">내용과 일치한 회원정보가 없습니다.</div>
+								</fieldset>
+								<input type="button" id="pw_btn" name="pw_btn" value="비밀번호 찾기" onclick="location.href='find_pw.do';" style="width:200px;">
+								<input type="button" id="login_btn" name="login_btn" value="로 그 인" onclick="location.href='login.do';" style="width:200px;">
+						</c:when>
+					</c:choose> 
     		</form>
     	</div>
     	<div id="find_id">
