@@ -127,6 +127,76 @@ $(function(){
 	    $(".qna_detail_content").not(targetDetail).removeClass("show");
 	    targetDetail.toggleClass("show");			
 	});
+	
+	//장바구니 담기 스크립트
+	// 비회원 식별값을 가져오는 함수
+	function getGuestId() {
+		let guestId = getCookie("guestId");
+		if (!guestId) {
+			// 쿠키에 비회원 식별값이 없으면 새로 생성하여 쿠키에 저장
+			guestId = generateGuestId(10);
+			document.cookie = "guestId=" + guestId + "; max-age=" + (60 * 60 * 24 * 7) + "; path=/";
+		}
+		return guestId;
+	}
+
+	// 쿠키 값을 가져오는 함수
+	function getCookie(name) {
+		const value = "; " + document.cookie;
+		const parts = value.split("; " + name + "=");
+		if (parts.length === 2) return parts.pop().split(";").shift();
+	}
+
+	// 비회원 식별값 생성 함수 (랜덤 문자열 생성)
+	function generateGuestId(length) {
+		const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+		let result = '';
+		for (let i = 0; i < length; i++) {
+			result += characters.charAt(Math.floor(Math.random() * characters.length));
+		}
+		return result;
+	}
+
+	// 장바구니 담기 버튼 클릭 이벤트 처리
+	$("#basket_btn").click(function() {
+		// 비회원 식별값 가져오기
+		const guestId = getGuestId();		
+		
+		//cart_cnt의 값 가져오기
+	    var cart_cnt = parseInt($("#cart_cnt").val());
+	  	//현재 product_idx의 값 가져오기
+	    var product_idx = parseInt($("#product_idx").val());	  
+		
+	    $.ajax({
+	        type: "post",
+	        url: "basket_insert.do",
+	        data: { "product_idx": product_idx,
+	        		"prd_cart_cnt": cart_cnt },
+	        success: function(data) {
+	        	if (data == "success") {
+	        		// 모달 열기
+	        		//현재 index값의 modalContainer클래스에 hidden클래스 제거
+	        		$(".modalContainer").eq(0).removeClass("hidden");
+	            } else if(data == "fail"){
+	            	alert("장바구니 담기 실패");
+	            } else{
+	            	alert("장바구니에 담을 수 있는 남은 상품의 수는 ("+data+")개 입니다.");
+	            	$("#cart_cnt").focus();
+	            }
+	        },
+	        error: function(error) {
+	        	alert("ajax 에러 발생");
+	        }
+	    });//end of ajax
+	  	
+	    
+	});
+	
+	//모달창 내부 닫기 버튼
+	$(".modalCloseButton").click(function(){		
+		//현재 index값의 modalContainer클래스에 hidden클래스 추가
+		$(".modalContainer").eq(0).addClass("hidden");
+	});
 });
 </script>
 <style>
@@ -290,6 +360,39 @@ $(function(){
      #prd_content{margin: 0 auto;}
      .total_price{font-weight: bold;}
      .total_price_right{float: right;}
+     
+	 .modalContainer {
+	 	width: 100%;
+	 	height: 100%;
+	 	position: fixed;
+	 	top: 0;
+	 	left: 0;
+	 	display: flex;
+	 	justify-content: center;
+	 	align-items: center;
+	 	background: rgba(0, 0, 0, 0.5);
+	 }
+		
+	 .modalContent {
+		position: absolute;
+	 	background-color: #ffffff;
+	 	border-radius: 5px;
+	 	width: 450px;
+	 	height: 250px;
+	 	padding: 15px;
+	 }
+	 .hidden {
+	 	display: none;
+	 }
+	.modal_title{width:450px; font-size: 24px; font-weight: bold; margin-bottom: 10px;}
+	.modal_content{width:450px; height:130px; line-height:130px; color:#a4a4a4; font-weight: bold; text-align: center;}
+	.modal_hr{width:450px; height: 5px; background-color: #7d99a4; margin-bottom: 10px;}
+	.modal_btn{width:450px; display: flex; justify-content: center;}
+	.modal_title_text{display:inline-block;}
+	.modal_title_right{float:right;}
+	.close{border:0;color:#4a4a4a; font-weight: bold; font-size: 24px; background-color: #fff;}	     
+	.shoppingButton{width:130px; height:40px; margin-right: 10px; border-radius: 2px; background-color: #fff; color:#7d99a4; font-weight: bold; border: 1px solid #7d99a4}
+	.basketPageButton{width:130px; height:40px; margin-left: 10px; border-radius: 2px; background-color: #7d99a4; color:#fff; font-weight: bold; border: 1px solid #7d99a4}	     
 </style>
 </head>
 <body>
@@ -331,6 +434,9 @@ $(function(){
                         <input type="button" name="prd_cart_minus_btn" id="prd_cart_minus_btn" value="-">
                         <input type="text" name="prd_cart_cnt" id="prd_cart_cnt" value="1" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1');">
                         <input type="button" name="prd_cart_plus_btn" id="prd_cart_plus_btn"  value="+">
+                        <!-- 테스트 후 EL문으로 변경하기 -->
+                        <input type="hidden" id="product_idx" value="3">
+                        <input type="hidden" id="cart_cnt" value="80">
                     </div>
                 </div>
                 <div class="prd_total_price txt_blue ">
@@ -342,6 +448,24 @@ $(function(){
                 </div>
 
                 <div class="prd_btn_area">
+                	<div class="modalContainer hidden">
+					<div class="modalContent">
+						<div class="modal_title">
+							<div class="modal_title_text">선택완료</div>
+							<div class="modal_title_right"><button class="modalCloseButton close">X</button></div>							
+						</div>
+						<div class="modal_hr">
+						</div>
+						<div class="modal_content">
+							장바구니에 추가되었습니다.
+						</div>
+						<div class="modal_btn">
+						    <button class="modalCloseButton shoppingButton">쇼핑 계속하기</button>
+						    <button class="basketPageButton" onclick="location.href='${pageContext.request.contextPath}/purchase/basket.do';">
+						    장바구니 확인</button>
+						</div>
+				    </div>				    
+					</div>
                     <input type="button" id="basket_btn" value="장바구니">
                     <input type="button" id="order_btn" value="바로구매">
                     <input type="button" id="like_btn" value="♡">
