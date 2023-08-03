@@ -13,19 +13,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.crfr.service.member.MemberService;
 import com.crfr.vo.MemberVo;
-
-import service.member.MemberService;
 
 @Controller
 @RequestMapping("/member")
 public class MemberController {
 	
-	MemberService mCheckId, mLogin, mFindId, mFindPw, mFind_pw_edit;
+	MemberService mCheckId, mCheckNickName, mJoin, mLogin, mFindId, mFindPw, mFind_pw_edit;
 	
 	@Autowired
 	public void setMCheckId(@Qualifier("mCheckId") MemberService mCheckId) {
 		this.mCheckId = mCheckId;
+	}
+	@Autowired
+	public void setMCheckNickName(@Qualifier("mCheckNickName") MemberService mCheckNickName) {
+		this.mCheckNickName = mCheckNickName;
+	}
+	@Autowired
+	public void setMJoin(@Qualifier("mJoin") MemberService mJoin) {
+		this.mJoin = mJoin;
 	}
 	@Autowired
 	public void setMLogin(@Qualifier("mLogin") MemberService mLogin) {
@@ -97,9 +104,9 @@ public class MemberController {
 	}
 	
 	@PostMapping("/find_pw_edit_process.do")
-	public String find_pw_edit_process(MemberVo MemberVo, HttpServletRequest request) {
+	public String find_pw_edit_process(MemberVo memberVo, HttpServletRequest request) {
 		
-		MemberVo vo = mFind_pw_edit.find_pw_edit(MemberVo);
+		MemberVo vo = mFind_pw_edit.find_pw_edit(memberVo);
 		String viewPage = "redirect:/member/join.do";
 		System.out.println(vo);
 		if(vo != null) {
@@ -128,6 +135,39 @@ public class MemberController {
 		}		
 		return msg;
 	}
+	
+	@PostMapping("/checkNickname_process.do")
+	@ResponseBody
+	public String checkNickname_process(@RequestParam("member_nickname") String member_nickname) {
+		int result = mCheckNickName.checkNickName(member_nickname);
+		String msg = null;
+		if(result == -1) {
+			msg = "success";
+		}else {
+			msg = "fail";
+		}		
+		return msg;
+	}
+	
+	@PostMapping("/join_process.do")
+	public String join_process(MemberVo memberVo, Model model, HttpServletRequest request) {
+	//커맨드 객체: 폼의 입력값 전송을 처리하는 메소드에서 파라미터 값들을 저장하는데 사용되는 자바 객체
+	//-파라미터 값들을 전달받을 수 있도록 setter메소드를 포함하고 있음
+	//-폼의 name 속성값과 일치하는 필드에 입력값을 저장함
+	//-뷰에서 커맨드 객체를 사용하려면 첫글자를 소문자로 바꾼 클래스 이름으로 사용할 수 있음
+		
+		int result = mJoin.join(memberVo);
+		
+		String viewPage = "member/join";
+		HttpSession session = request.getSession();
+		if(result == 1) {//정상적으로 회원가입이 이루어진 경우
+			session.setAttribute("msg_join","ok");	
+			viewPage = "redirect:/member/login.do";
+			//view이름으로 "redirect:요청정보"가 전달되면 요청정보로 재요청이 이루어짐
+		}		
+		return viewPage;
+	}
+	
 	
 	@GetMapping("/login.do")
 	public String login() {		

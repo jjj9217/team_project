@@ -218,18 +218,22 @@ function checkInput(){
     <div id="tag"><span>입력하신 정보는 비밀번호 찾기에만 사용되며 </span> <span style="color:red;">저장되지 않습니다.</span></div>
     
     	<div id="find_pw">
-    		<form action="find_pw_edit_process.do" method="post" name="frm">
+    		
     		
     			<c:choose>
 						<c:when test="${msg_findPw eq 'ok'}">
+						<form action="find_pw_edit_process.do" method="post" name="frm">
 								<div id="notice"><span>CrueltyFree 아이디 :</span><span style="color:#7d99a4;"> ${find_pw.member_id}</span></div>
+								<input type="hidden" name="member_id" value="${find_pw.member_id}">
+								<input type="hidden" id="member_current_pw" name="member_current_pw" value="${find_pw.member_pw}">
 			                  	<input class="newpw" type="password" id="member_pw" name="member_pw" placeholder="새 비밀번호">
 			                  	<div id="message"></div>
 	              				<input class="newpw" type="password" id="member_repw" name="member_repw" placeholder="새 비밀번호 확인"><br>
 	              				<div id="message2"></div>
 	              				<div id="errmsg"></div>
 	              				<input id="back" type="button" value="취소" onclick="history.back()">
-	              				<input id="submit_btn" type="button" value="비밀번호 변경">							
+	              				<input id="submit_btn" type="button" value="비밀번호 변경">	
+	              				</form>						
 						</c:when>
 						<c:when test="${msg_findPw eq 'fail'}">
 						<fieldset>
@@ -239,7 +243,7 @@ function checkInput(){
 								<input type="button" id="login_btn" name="login_btn" value="로 그 인" onclick="location.href='login.do';" style="width:200px;">
 						</c:when>
 					</c:choose> 
-    		</form>
+    		
     	</div>
     	<div id="find_id">
     		<img src="../resources/img/find.png" style="width: 130px; height: 130px;">
