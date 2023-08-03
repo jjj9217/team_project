@@ -12,4 +12,5 @@ public interface PurchaseService {
 	default void updateBasketCount(int product_idx, int basket_count, String client_num) {}
 	default int basketInsert(int product_idx, int prd_cart_cnt, String client_num) {return 0;}
 	default void plusBasketMultipleCount(int product_idx, int prd_cart_cnt, String client_num) {}
+	default int basketDeleteOne(String basket_idx) {return 0;}
 }

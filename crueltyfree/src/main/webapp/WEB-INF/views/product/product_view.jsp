@@ -179,9 +179,11 @@ $(function(){
 	        		$(".modalContainer").eq(0).removeClass("hidden");
 	            } else if(data == "fail"){
 	            	alert("장바구니 담기 실패");
+	            } else if(data == "soldout"){
+	            	alert("현재 품절된 상품 입니다.");
 	            } else{
 	            	alert("장바구니에 담을 수 있는 남은 상품의 수는 ("+data+")개 입니다.");
-	            	$("#cart_cnt").focus();
+	            	$("#cart_cnt").focus();	            	
 	            }
 	        },
 	        error: function(error) {
@@ -435,8 +437,8 @@ $(function(){
                         <input type="text" name="prd_cart_cnt" id="prd_cart_cnt" value="1" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1');">
                         <input type="button" name="prd_cart_plus_btn" id="prd_cart_plus_btn"  value="+">
                         <!-- 테스트 후 EL문으로 변경하기 -->
-                        <input type="hidden" id="product_idx" value="3">
-                        <input type="hidden" id="cart_cnt" value="80">
+                        <input type="hidden" id="product_idx" value="4">
+                        <input type="hidden" id="cart_cnt" value="3">
                     </div>
                 </div>
                 <div class="prd_total_price txt_blue ">

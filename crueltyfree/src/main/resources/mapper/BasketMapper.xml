@@ -51,5 +51,10 @@
 			where product_idx = #{product_idx}
 			and client_num=#{client_num}
 	</update>	
+	
+	<!-- 장바구니 개별 삭제 -->
+	<delete id="basketDeleteOne" parameterType="_int">
+		delete from basket where basket_idx = #{basketIdx}
+	</delete>			
 					
 </mapper>
