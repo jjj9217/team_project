@@ -168,6 +168,10 @@ public class MemberController {
 		return viewPage;
 	}
 	
+	@GetMapping("/join_result.do")
+	public String join_result() {
+		return "member/join_result";
+	}
 	
 	@GetMapping("/login.do")
 	public String login() {		

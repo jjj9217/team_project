@@ -42,7 +42,7 @@
 		width:800px;
 		height:1100px;
 		margin: 0 auto;
-		margin-top:80px;
+		margin-top:30px;
 
 	}
 	#text1{
@@ -127,7 +127,7 @@ function checkAgreements(){
 	<jsp:include page="../main/header.jsp" />
 </header>
 
-
+	<div id="joinbanner" style="text-align:center; margin: 0 auto; width:1000px; height:90px; margin-top:50px;"><img src="../resources/img/joinbanner.JPG" style="width: 500px; height: 90px; text-align:center; margin:0 auto; "></div>
     <div id="yak">
     	 <div id="logo">회원가입약관</div>
     	

@@ -330,8 +330,10 @@ function kakaopost(){
 <header>
 	<jsp:include page="../main/header.jsp" />
 </header>
+	<input type="reset" id="reset_btn" value="취소하기" onclick="location.href='join_result.do';">
+	<div id="joinbanner" style="text-align:center; margin: 0 auto; width:1000px; height:90px; margin-top:50px;"><img src="../resources/img/joinbanner2.JPG" style="width: 500px; height: 90px; text-align:center; margin:0 auto; "></div>
 	<div id="title">
-	<div id="mark"><img src="../resources/img/CrueltyFree_logo.png" style="width: 200px; height: 55px; margin-top:50px;"></div>
+	<div id="mark"><img src="../resources/img/CrueltyFree_logo.png" style="width: 200px; height: 55px; margin-top:20px;"></div>
         <p id="logo">Cruelty Free에 오신것을 환영합니다.</p>
         <p id="logo2">회원가입에 필요한 기본 정보를 입력해 주세요.</p><hr style="margin-top:35px;"> 
     </div>  
