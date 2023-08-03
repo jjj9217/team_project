@@ -77,5 +77,11 @@ public class BasketDao {
 	    map.put("client_num", client_num);
 		
 		sqlSession.update(MAPPER+".plusBasketMultipleCount",map);		
-	}	
+	}
+	
+	//장바구니 상품 개별 삭제
+	public int basketDeleteOne(String basket_idx) {
+		int basketIdx = Integer.parseInt(basket_idx);
+		return sqlSession.delete(MAPPER+".basketDeleteOne",basketIdx);
+	}
 }

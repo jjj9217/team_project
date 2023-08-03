@@ -200,7 +200,74 @@ $(function(){
 		  updateBasketTotal();
 	});	
 		
+	//장바구니 개별삭제 클릭시
+	$(".select_item_delete").click(function(){
+		//현재 클릭한 버튼의 인덱스 가져오기		
+		var index = $(".select_item_delete").index(this);
+				
+	    var confirmAns = confirm("상품을 장바구니에서 삭제하시겠습니까?");
+	    if (confirmAns) {
+		    // 현재 인덱스에 해당하는 폼 엘리먼트 가져오기
+		    var form = $(".basket_delete_one_form_class").eq(index);
+		    
+		    // 폼의 action 속성을 변경하여 해당 basket_idx를 전달
+	        form.attr("action", "basket_delete_one.do");
+	    	// 폼의 method 속성을 변경하여 POST 메소드로 설정
+	        form.attr("method", "post");
+	     	// 폼 전송
+	        form.submit();
+	    }
+	});
 	
+	//장바구니 선택삭제 클릭시
+	$("#select_prd_item_delete").click(function(){
+		//선택된 체크박스 담을 변수 설정
+		var selectedValues = [];
+		
+		//체크된 체크박스의 value를 넣음
+		$(".checkboxes:checked").each(function() {
+            selectedValues.push($(this).val());
+        });
+		
+		$.ajax({
+	        type: "post",
+	        url: "basket_delete_multiple.do",
+	        data: { "basket_idxs": selectedValues},
+	        success: function(data) {
+	        	if (data == "success") {
+	        		alert("선택한 상품의 삭제를 성공하였습니다.");
+	        		window.location.href = "basket.do";
+	            } else {
+	            	alert("선택한 상품의 삭제를 실패하였습니다.");
+	            }
+	        },
+	        error: function(error) {
+	        	alert("ajax 에러 발생");
+	        }
+	    });//end of ajax
+	});
+	
+	//장바구니 품절삭제 클릭시
+	$("#sold_out_item_delete").click(function(){
+	    var confirmAns = confirm("품절 상품을 장바구니에서 삭제하시겠습니까?");
+	    if (confirmAns) {
+	    	$.ajax({
+	    		type: "post",
+	            url: "basket_delete_soldout.do",
+	            success: function(data) {
+	                if (data === "success") {
+	                    alert("품절된 상품을 장바구니에서 삭제하였습니다.");
+	                    window.location.href = "basket.do";
+	                } else {
+	                    alert("장바구니에 품절된 상품이 없습니다.");
+	                }
+	            },
+	            error: function(error) {
+	                alert("ajax 에러 발생");
+	            }
+	        });
+	    }
+	});
 })
 </script>
     <style>
@@ -442,6 +509,7 @@ $(function(){
             </tr>
         </table>
 	</div>
+	
     <h2 class="sub_title">장바구니 상품목록</h2>
     <!-- 장바구니 목록 -->    
     <div id="basket_box">
@@ -466,7 +534,7 @@ $(function(){
 						<c:choose>
 						<c:when test="${basketList[rowNum-1].product_capa == 0}"> <!-- 상품재고 0일때 -->
 							<tr class="tr_soldout">
-			                    <td class="td_checkbox"><input type="checkbox" class="checkboxes" value="" disabled ></td>
+			                    <td class="td_checkbox"><input type="checkbox" class="checkboxes" value="${basketList[rowNum-1].basket_idx}" disabled ></td>
 			                    <td class="td_product_info">
 			                        <div class="basket_item">
 			                        	<a class="prd_name" href="#">
@@ -486,7 +554,7 @@ $(function(){
 			                    <td class="td_product_count">
 			                        <div class="count_item">
 			                            <input type="button" class="count_minus_btn" value="-">
-			                            <input type="text" name="basket_count" class="basket_count" value="${basketList[rowNum-1].basket_count}" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1');">
+			                            <input type="text" name="basket_count" class="basket_count" value="" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1');">
 			                            <input type="button" class="count_plus_btn" value="+">
 			                            <input type="hidden" class="basket_item_basket_count" value="${basketList[rowNum-1].basket_count}">
 			                            <input type="hidden" class="basket_item_product_idx" value="${basketList[rowNum-1].product_idx}">
@@ -495,7 +563,7 @@ $(function(){
 			                    </td>
 			                    <td class="td_buy_price">
 			                        <span class="buy_price">
-			                        <fmt:formatNumber value="${basketList[rowNum-1].product_price * basketList[rowNum-1].basket_count}" pattern="###,###" /></span>원
+			                        <fmt:formatNumber value="" pattern="###,###" /></span>원
 			                        <input type="hidden" class="buyPrice" value="${basketList[rowNum-1].product_price * basketList[rowNum-1].basket_count}">
 			                    </td>
 			                    <td class="td_delivery_info">
@@ -513,10 +581,13 @@ $(function(){
 			                    	</c:choose>
 			                    </td>
 			                    <td class="td_select">
+			                    	<form class="basket_delete_one_form_class" name="basket_delete_one_form">
 			                        <div class="select_item">
 			                            <input type="button" class="select_item_buy" value="바로구매">
 			                            <input type="button" class="select_item_delete" value="X 삭제">
-			                        </div>  
+			                            <input type="hidden" name="basket_idx" class="basket_item_basket_idx" value="${basketList[rowNum-1].basket_idx}">
+			                        </div> 
+			                        </form> 
 			                    </td>
 			                </tr>
 			                <tr>
@@ -525,7 +596,7 @@ $(function(){
 						</c:when>
 						<c:otherwise> <!-- 상품재고 1이상(일반) -->
 							<tr class="tr_basket_content">
-			                    <td class="td_checkbox"><input type="checkbox" class="checkboxes" value="" checked ></td>
+			                    <td class="td_checkbox"><input type="checkbox" class="checkboxes" value="${basketList[rowNum-1].basket_idx}" checked ></td>
 			                    <td class="td_product_info">
 			                        <div class="basket_item">
 			                        	<a class="prd_name" href="#">
@@ -572,10 +643,13 @@ $(function(){
 			                    	</c:choose>
 			                    </td>
 			                    <td class="td_select">
+			                    	<form class="basket_delete_one_form_class" name="basket_delete_one_form">
 			                        <div class="select_item">
 			                            <input type="button" class="select_item_buy" value="바로구매">
 			                            <input type="button" class="select_item_delete" value="X 삭제">
-			                        </div>  
+			                            <input type="hidden" name="basket_idx" class="basket_item_basket_idx" value="${basketList[rowNum-1].basket_idx}">
+			                        </div> 
+			                        </form> 
 			                    </td>
 			                </tr>
 						</c:otherwise>
@@ -586,6 +660,34 @@ $(function(){
         </table>
     </div>	
     
+    <!-- 장바구니 삭제 성공 메시지 -->
+	<c:if test="${not empty successMessage}">
+	    <script>
+	        alert("${successMessage}");
+	    </script>
+	</c:if>
+	
+	<!-- 장바구니 삭제 실패 메시지 -->
+	<c:if test="${not empty errorMessage}">
+	    <script>
+	        alert("${errorMessage}");
+	    </script>
+	</c:if>
+	
+    <!-- 장바구니 품절삭제 성공 메시지 -->
+	<c:if test="${not empty successSoldout}">
+	    <script>
+	        alert("${successSoldout}");
+	    </script>
+	</c:if>
+	
+	<!-- 장바구니 품절삭제 실패 메시지 -->
+	<c:if test="${not empty errorSoldout}">
+	    <script>
+	        alert("${errorSoldout}");
+	    </script>
+	</c:if>
+	
     <!-- 하위 내용 장바구니 내용물 있을때만 보이게 함 -->
     <c:if test="${basketCount != 0}">
     <!-- 장바구니 내부 상품 체크박스이용 삭제버튼, 장바구니 내용물 총합 -->

@@ -83,7 +83,9 @@ public class ProductController {
 		if(basket_count == 0) { //0일때: 장바구니에 상품이 없을때
 			int basketInsert = 0;
 			basketInsert = bBasketInsert.basketInsert(product_idx, prd_cart_cnt, client_num); //장바구니에 Insert
-			if(basketInsert == 1) {//insert성공일때
+			if(product_capa == 0) {//insert성공일때
+				result = "soldout";
+			}else if(basketInsert == 1){ //재고수량 0일때
 				result="success";
 			}else {//insert실패일때
 				result="fail";
@@ -94,8 +96,10 @@ public class ProductController {
 				bPlusBasketMultipleCount.plusBasketMultipleCount(product_idx, prd_cart_cnt, client_num);
 				//장바구니 수량 + prd_cart_cnt 업데이트			
 				result="success";
+			}else if(product_capa == 0){
+				result = "soldout";
 			}else {
-				result = String.valueOf(product_capa - basket_count); //실패시 담을수 있는 수량을 전송
+				result = String.valueOf(product_capa - basket_count); //실패시 담을수 있는 수량을 전송				
 			}
 		}
 		
