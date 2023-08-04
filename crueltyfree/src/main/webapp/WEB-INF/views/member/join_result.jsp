@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>아이디 찾기 | CrueltyFree</title>
+<title>회원가입완료 | CrueltyFree</title>
 <style>
 	* {margin:0; padding:0;}
 	a{text-decoration: none;}
@@ -29,14 +29,14 @@
 		background-color: #eef3f5;	
 	}
 	#container{
-            width: 1000px;
-            height: 1000px;
+            width: 500px;
+            height: 600px;
             margin: 0 auto;
             font: bold 25px Arial, Sans-serif;
         	text-align: center;
         	margin-top:70px;
     }
-	#member_name, #member_handphone,#submit_btn,#pw_btn{
+	#login_btn{
 		width:400px;
 		height:40px;
 		margin-top:10px;
@@ -54,44 +54,14 @@
 		font: bold 17px Arial, sans-serif;
 		border-radius:3px;
 	}
-	p{font-weight:500; color:gray;}
+	#login{
+		margin-top:100px;
+	}
 	
-	#tag{
-		font-size:17px;
-		margin-top:50px;
-		font-weight:600;
+	#sub2{
+		color:gray;
 	}
-	#find_id{
-		margin-top:30px;
-		width:80%;
-		margin-left:90px;
-	}
-	#find_pw{
-		margin-top:50px;
-	}
-	#hr{
-		margin-top:50px;
-	}
-	#home{
-		width:300px;
-		height:70px;
-		margin:0 auto;
-		margin-top:50px;
-		margin-right:0px;
-	}
-	#a{
-		color:black;
-		text-decoration-line: none;
-		font-size:19px;
-	}
-	#message{
-		color:rgb(231, 76, 60);
-		font-size:13px;
-	}
-	#message2{
-		color:rgb(231, 76, 60);
-		font-size:13px;
-	}
+
    
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -104,11 +74,12 @@
 <header>
 	<jsp:include page="../main/header.jsp" />
 </header>
-	<div id="joinbanner" style="text-align:center; margin: 0 auto; width:1000px; height:90px; margin-top:50px;"><img src="../resources/img/joinbanner3.JPG" style="width: 500px; height: 90px; text-align:center; margin:0 auto; "></div>
+	<div id="joinbanner" style="text-align:center; margin: 0 auto; width:1000px; height:90px; margin-top:70px;"><img src="../resources/img/joinbanner3.JPG" style="width: 500px; height: 90px; text-align:center; margin:0 auto; "></div>
     <div id="container" style="">
-    회원가입을 축하드립니다.<br>
-    다양한 서비스를 이용해 보세요.
-    
+    <img src="../resources/img/CrueltyFree_logo.png" style="width: 380px; height: 100px; margin-top:20px;"><br>
+    회원가입이 정상적으로 완료되었습니다.<br>
+    <div id="sub2">다양한 서비스를 이용해 보세요.</div>
+    <div id="login"><input type="button" id="login_btn" value="로그인 하러가기" onclick="location.href='login.do';"></div>
     </div>
     
 

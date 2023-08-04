@@ -90,14 +90,11 @@
 	#sub2{
 		margin-top:30px;
 	}
-	#message{
+	#message,#message2,#msg{
 		color:rgb(231, 76, 60);
 		font-size:13px;
 	}
-	#message2{
-		color:rgb(231, 76, 60);
-		font-size:13px;
-	}
+
 </style>
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -166,6 +163,13 @@ function checkInput(){
             <div id="message"></div>
             <input type="password" name="member_pw" id="member_pw" placeholder="비밀번호">
             <div id="message2"></div>
+            <div id="msg">
+            <c:choose>
+				<c:when test="${msg eq 'fail'}">
+					<div id="msg">아이디 또는 비밀번호를 잘못 입력했습니다.</div>
+				</c:when>
+			</c:choose> 
+            </div>
             <input type="button" name="submit_btn" id="submit_btn" value="로 그 인">
     		<br>
     </form>
@@ -180,18 +184,9 @@ function checkInput(){
     <div id="sub2">
     	<hr>
     	<img src="../resources/img/CrueltyFree_logo.png" style="width: 150px; height: 60px; margin-top:30px; float:left;">
-    	<p style="font-size:12px; margin-right:0px; color:rgb(122, 120, 120); width:200px;margin-top:50px; float:right;">가입을 하시면 크루얼티프리의 다양한 서비스를 이용하실 수 있습니다.</p>
+    	<p style="font-size:12px; margin-right:0px; color:rgb(122, 120, 120); width:210px;margin-top:50px; float:right;">가입을 하시면 크루얼티프리의 다양한 서비스를 이용하실 수 있습니다.</p>
     </div>
-</div>
-<c:choose>
-	<c:when test="${msg eq 'ok'}">
-		<div id="msg">회원가입이 정상적으로 이루어졌습니다</div>
-	</c:when>
-	<c:when test="${msg eq 'fail'}">
-		<div id="msg">회원정보가 없거나 아이디나 비밀번호가 일치하지 않습니다</div>
-	</c:when>
-</c:choose> 
-    
+</div>    
 </section>
 
 

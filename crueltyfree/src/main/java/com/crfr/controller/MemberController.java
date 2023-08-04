@@ -162,7 +162,7 @@ public class MemberController {
 		HttpSession session = request.getSession();
 		if(result == 1) {//정상적으로 회원가입이 이루어진 경우
 			session.setAttribute("msg_join","ok");	
-			viewPage = "redirect:/member/login.do";
+			viewPage = "redirect:/member/join_result.do";
 			//view이름으로 "redirect:요청정보"가 전달되면 요청정보로 재요청이 이루어짐
 		}		
 		return viewPage;
@@ -192,7 +192,6 @@ public class MemberController {
 			viewPage = "redirect:/main/home.do";
 		}else{//로그인 실패시
 			model.addAttribute("msg","fail");
-			viewPage = "redirect:/member/login.do";
 			
 		}
 		return viewPage;

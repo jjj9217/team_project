@@ -11,8 +11,8 @@
 		select count(*) member_nickname from member where member_nickname=#{member_nickname}
 	</select>
 	<insert id="join" parameterType="memberVo">
-		insert into member (member_idx, member_id, member_pw, member_name, member_handphone, member_email, member_nickname, member_postNum, member_address, member_address2)
-		values (#{member_idx}, #{member_id},#{member_pw},#{member_name},#{member_handphone},#{member_email},#{member_nickname},#{member_postNum},#{member_address},#{member_address2})
+		insert into member (member_idx, member_id, member_pw, member_name, member_birthday, member_gender, member_handphone, member_email, member_nickname, member_postNum, member_address, member_address2)
+		values (#{member_idx}, #{member_id},#{member_pw},#{member_name},#{member_birthday},#{member_gender},#{member_handphone},#{member_email},#{member_nickname},#{member_postNum},#{member_address},#{member_address2})
 	</insert>
 	<select id="login" parameterType="map" resultType="MemberVo">
 		select * from member where member_id=#{member_id}and member_pw=#{member_pw} and cancel_or_not=1

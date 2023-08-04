@@ -45,6 +45,7 @@
 		outline-color: #7d99a4;
 		padding-left:10px;
 	}
+
 	input[type="button"]{
 		background-color:rgb(59, 58, 58);
 		background-color:#7d99a4;
@@ -54,6 +55,7 @@
 		font: bold 17px Arial, sans-serif;
 		border-radius:3px;
 	}
+
 	p{font-weight:500; color:gray;}
 	
 	#tag{
