@@ -54,7 +54,7 @@ $(function(){
         		    $(".buyPrice").eq(index).val(buyPrice);
         		    updateBasketTotal();
 	            } else {
-	            	alert("상품 재고수량("+product_capa+") 보다 더 담을 수 없습니다.");
+	            	alert("상품 재고수량( "+product_capa+"개 ) 보다 더 담을 수 없습니다.");
 	            }
 	        },
 	        error: function(error) {
@@ -228,6 +228,12 @@ $(function(){
 		$(".checkboxes:checked").each(function() {
             selectedValues.push($(this).val());
         });
+		
+	    // 체크된 항목이 없을 경우 알림을 띄우고 함수를 종료
+	    if (selectedValues.length === 0) {
+	        alert("상품을 선택해 주세요.");
+	        return;
+	    }
 		
 		$.ajax({
 	        type: "post",
@@ -537,10 +543,10 @@ $(function(){
 			                    <td class="td_checkbox"><input type="checkbox" class="checkboxes" value="${basketList[rowNum-1].basket_idx}" disabled ></td>
 			                    <td class="td_product_info">
 			                        <div class="basket_item">
-			                        	<a class="prd_name" href="#">
+			                        	<a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${basketList[rowNum-1].product_idx}">
 			                            	<img src="../resources/img/${basketList[rowNum-1].saveFile}" width="85px" height="85px" alt="썸네일이미지">
 			                            </a>
-			                            <a class="prd_name" href="#">
+			                            <a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${basketList[rowNum-1].product_idx}">
 			                                <span class="prd_seller">${basketList[rowNum-1].member_nickname}</span>
 			                                <p class="prd_title">${basketList[rowNum-1].product_name}</p>
 			                            </a>
@@ -599,10 +605,10 @@ $(function(){
 			                    <td class="td_checkbox"><input type="checkbox" class="checkboxes" value="${basketList[rowNum-1].basket_idx}" checked ></td>
 			                    <td class="td_product_info">
 			                        <div class="basket_item">
-			                        	<a class="prd_name" href="#">
+			                        	<a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${basketList[rowNum-1].product_idx}">
 			                            	<img src="../resources/img/${basketList[rowNum-1].saveFile}" width="85px" height="85px" alt="썸네일이미지">
 			                            </a>
-			                            <a class="prd_name" href="#">
+			                            <a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${basketList[rowNum-1].product_idx}">
 			                                <span class="prd_seller">${basketList[rowNum-1].member_nickname}</span>
 			                                <p class="prd_title">${basketList[rowNum-1].product_name}</p>
 			                            </a>
@@ -671,20 +677,6 @@ $(function(){
 	<c:if test="${not empty errorMessage}">
 	    <script>
 	        alert("${errorMessage}");
-	    </script>
-	</c:if>
-	
-    <!-- 장바구니 품절삭제 성공 메시지 -->
-	<c:if test="${not empty successSoldout}">
-	    <script>
-	        alert("${successSoldout}");
-	    </script>
-	</c:if>
-	
-	<!-- 장바구니 품절삭제 실패 메시지 -->
-	<c:if test="${not empty errorSoldout}">
-	    <script>
-	        alert("${errorSoldout}");
 	    </script>
 	</c:if>
 	
