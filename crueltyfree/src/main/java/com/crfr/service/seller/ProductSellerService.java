@@ -1,4 +1,4 @@
-package com.crfr.service.product;
+package com.crfr.service.seller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,9 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.ProductVo;
 
-public interface ProductService {
+public interface ProductSellerService {
 	default ProductVo selectView (int Product_idx) {return null;}
-	default FileVo selectThumbnail (int product_idx) {return null;}
 	default int insertFile (MultipartFile attachedFile, String product_idx, 
 							HttpServletRequest request) {return 0;}
 	default int insertProduct (String category_code,

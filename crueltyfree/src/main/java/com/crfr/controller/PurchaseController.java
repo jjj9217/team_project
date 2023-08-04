@@ -36,7 +36,7 @@ public class PurchaseController {
 	PurchaseService bSelectCount, bSelectList, bPlusBasketCount, bMinusBasketCount, bUpdateBasketCount,
 	bBasketInsert, bBasketDeleteOne;
 	
-	@Setter(onMethod_={ @Autowired })	
+	@Setter(onMethod_={ @Autowired })
 	ProductService pSelectView, pSelectThumbnail;
 	
 	//장바구니 페이지
