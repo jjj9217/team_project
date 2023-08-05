@@ -53,11 +53,14 @@ public class MypageDao {
 	
 	//리뷰 번호 조회하기
 	public int selectReview_idx(ReviewVo vo) {
-		return sqlSession.insert(MAPPER+".selectReview_idx", vo);
+		return sqlSession.selectOne(MAPPER+".selectReview_idx", vo);
 		}
 	
 	//리뷰 사진 작성하기	
 	public int insertreviewimg(List<Map<String, String>> fileList) {
+		/*
+		 * for(file:fileList) { Map<String, String> map = file.map }
+		 */
 	return sqlSession.insert(MAPPER+".insertreviewimg", fileList);
 	}
 

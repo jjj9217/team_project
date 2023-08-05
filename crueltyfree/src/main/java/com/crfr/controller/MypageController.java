@@ -132,6 +132,34 @@ public class MypageController {
 	
 	
 	
+	
+	
+	
+	
+	/*
+	 * @PostMapping("/mypage_review_write_process.do") public String
+	 * mypage_review_insert1(List<MultipartFile> attachedFile, ReviewVo vo, String
+	 * pageNum, String pageBlock, HttpServletRequest request) {
+	 * 
+	 * //아래 내용이 성공적으로 이루어지지 않으면 실패페이지 주소 반환 String viewpage = "mypage_review_err";
+	 * 
+	 * //리뷰내용 작성 int insertreview = mpInsert.insertreview(vo); //위를 통해 mysql의
+	 * review테이블에 내용에 관한 쿼리가 삽입되는데, 이 때 쿼리에서 autoincrement되어 생성된 review_idx값 조회하여
+	 * 반환해야 한다 //그래야 사진을 삽입하는데 파일테이블에 삽입될 review_idx를 얻어올 수 있기 때문이다
+	 * 
+	 * //review_idx값 조회 int searchReview_idx = mpInsert.selectReview_idx(vo);
+	 * 
+	 * //리뷰사진 작성 및 searchReview_idx에서 얻은값까지 같이 건네주기 int insertreviewimg =
+	 * mpInsert.insertreviewimg(attachedFile, request, searchReview_idx);
+	 * 
+	 * //리뷰내용과 리뷰사진이 둘 다 제대로 sql에 삽입되었다면 맨 처음 나의리뷰페이지 주소값을 반환 if(insertreview == 1
+	 * && insertreviewimg == 1) { viewpage="redirect:mypage/mypage_review"; } return
+	 * viewpage; }
+	 */
+	
+	
+	
+	
 	@GetMapping("/test.do")
 	public String mypage_test() {		
 		return "mypage/test";

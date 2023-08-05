@@ -168,9 +168,11 @@
         insert into file  (review_idx, 
                            originFile, 
                            saveFile)
-                    values(#{review_idx},                                 
-                           #{originFile},
-                           #{saveFile}
+                    values                            
+                          (                          
+                            #{review_idx},               
+                            #{originFile},
+                            #{saveFile}                           
                            ) 
     </insert>
     
