@@ -19,7 +19,7 @@ import com.crfr.vo.ProductVo;
 
 @Controller
 @RequestMapping("/product")
-public class ProductController {
+public class ProductListController {
 	
 	ProductService pdCount, pdList, pdView, pdPage;
 	PageNav pageNav;
