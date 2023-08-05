@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>{상품이름} | CrueltyFree</title>
+<title>${productVo.product_name} | CrueltyFree</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 $(function(){
@@ -19,14 +19,20 @@ $(function(){
 		//현재상품 가격 가져오기
 		var productPrice = parseInt($(".product_price").eq(0).val());
 		
-	    $("#prd_cart_cnt").val(currentValue + 1);
-	    
-	    //가격 * 수량
-	    var buyPrice = productPrice * (currentValue + 1);
-	    $(".total_price").eq(0).text(buyPrice);	    
-	    $(".total_price").eq(0).text(buyPrice.toLocaleString());
-	    //hidden에 값지정
-	    $(".buyPrice").eq(0).val(buyPrice);
+		if(currentValue >= ${productVo.product_capa}){
+			alert("상품의 재고 수량이 "+${productVo.product_capa}+"개 남았습니다.");
+		}else{
+		    $("#prd_cart_cnt").val(currentValue + 1);
+		    $("#cart_cnt").val(currentValue + 1);
+		    
+		    //가격 * 수량
+		    var buyPrice = productPrice * (currentValue + 1);
+		    $(".total_price").eq(0).text(buyPrice);	    
+		    $(".total_price").eq(0).text(buyPrice.toLocaleString());
+		    //hidden에 값지정
+		    $(".buyPrice").eq(0).val(buyPrice);			
+		}
+		
 	});	
 	
 	//장바구니 수량 - 클릭
@@ -39,7 +45,8 @@ $(function(){
 			var productPrice = parseInt($(".product_price").eq(0).val());
 			
 			$("#prd_cart_cnt").val(currentValue - 1);
-		    
+			$("#cart_cnt").val(currentValue - 1);
+			
 		    //가격 * 수량
 		    var buyPrice = productPrice * (currentValue - 1);
 		    $(".total_price").eq(0).text(buyPrice);
@@ -57,7 +64,23 @@ $(function(){
 		//현재 상품의 count 값 가져오기		
 	    var currentValue = parseInt($("#prd_cart_cnt").val());
 		
-		if (currentValue > 0) {	    		    	
+	    if(currentValue >= ${productVo.product_capa}){
+			alert("상품의 재고 수량이 "+${productVo.product_capa}+"개 남았습니다.");
+			//현재상품 가격 가져오기
+			var productPrice = parseInt($(".product_price").eq(0).val());
+			
+			//가격 * 수량
+		    var buyPrice = productPrice * (${productVo.product_capa});
+		    $(".total_price").eq(0).text(buyPrice);		    
+		    $(".total_price").eq(0).text(buyPrice.toLocaleString());
+		    //hidden에 값지정
+		    $(".buyPrice").eq(0).val(buyPrice);
+			
+			$("#prd_cart_cnt").eq(0).val(${productVo.product_capa}).focus();		
+			
+		}else if (currentValue > 0) {	    
+			$("#cart_cnt").val(currentValue);
+			
 	    	//현재상품 가격 가져오기
 			var productPrice = parseInt($(".product_price").eq(0).val());
 		    
@@ -182,7 +205,7 @@ $(function(){
 	            } else if(data == "soldout"){
 	            	alert("현재 품절된 상품 입니다.");
 	            } else{
-	            	alert("장바구니에 담을 수 있는 남은 상품의 수는 ("+data+")개 입니다.");
+	            	alert("장바구니에 담을 수 있는 남은 상품의 수는 "+data+"개 입니다.");
 	            	$("#cart_cnt").focus();	            	
 	            }
 	        },
@@ -194,11 +217,193 @@ $(function(){
 	    
 	});
 	
-	//모달창 내부 닫기 버튼
-	$(".modalCloseButton").click(function(){		
-		//현재 index값의 modalContainer클래스에 hidden클래스 추가
-		$(".modalContainer").eq(0).addClass("hidden");
+	//장바구니 모달창 내부 닫기 버튼
+	$(".modalCloseButton").each(function(index) {
+	    $(this).click(function() {
+	        var containerIndex = Math.floor(index / 2);
+	        $(".inq_text").eq(containerIndex - 1).val("")
+			$(".inq_text_count").eq(containerIndex - 1).text("0 / 250")	        
+	        $(".modalContainer").eq(containerIndex).addClass("hidden");
+	        
+	    });
 	});
+	
+	//상품문의 작성 버튼
+	$("#prd_qna_write_btn").click(function(){
+		if(${empty member}){//비회원의 경우 로그인 페이지로 이동
+			alert("로그인한 회원만 문의를 작성할 수 있습니다.");
+			window.location.href = "${pageContext.request.contextPath}/member/login.do";
+		}else{
+			$(".modalContainer").eq(1).removeClass("hidden");
+		}		
+	});
+		
+	//상품문의 작성 텍스트 수 세기
+	var maxLength = 250;	
+	$(".inq_text").each(function(index) {
+		$(this).on("input", function() {
+			var currentLength = $(this).val().length;
+			var remainingLength = maxLength - currentLength;
+			
+			if (remainingLength < 0) {
+	            var truncatedText = $(this).val().substring(0, maxLength);
+	            $(this).val(truncatedText);
+	
+	            // alert 창 띄우기
+	            alert("250자 이상 입력할 수 없습니다.");
+	            currentLength = maxLength;
+	        }
+	
+	        $(".inq_text_count").eq(index).text(currentLength + " / " + maxLength);
+		});
+	});
+	
+	//상품문의 등록버튼
+	$(".writeButton").eq(0).click(function(){
+		
+		var contentLength = $(".inq_text").val().length;
+		
+		if(contentLength == 0){
+			alert("문의 내용을 입력해주세요.");
+			$(".inq_text").eq(0).focus();
+		}else{
+			document.inq_form.submit();			
+		}
+	});
+	
+	//상품문의 수정버튼 클릭
+	$(".qna_update_btn").each(function(index) {
+	    $(this).click(function() {
+	    	var answer = $(".product_inq_answer").eq(index + 1).val();
+	    	if(answer == null){
+	    		alert("답변이 달린 문의글은 수정하실 수 없습니다.");
+	    	}else{
+		        $(".modalContainer").eq(index + 2).removeClass("hidden");
+		        var inq_text = $(".product_inq_content").eq(index + 1).val();
+		        
+		        $(".inq_text").eq(index + 1).val(inq_text);
+		        
+		        var currentLength = inq_text.length;
+		        $(".inq_text_count").eq(index + 1).text(currentLength + " / " + maxLength);	    		
+	    	}
+	    });
+	});
+		
+	//모달창 내부 등록버튼 클릭
+	$(".edit_updateButton").each(function(index) {
+	    $(this).click(function() {	    	
+	    	var contentLength = $(".inq_text").eq(index+1).val().length;
+	    	
+	    	if(contentLength == 0){
+				alert("문의 내용을 입력해주세요.");
+				$(".inq_text").eq(index+1).focus();
+			}else{
+				$(".edit_form").eq(index).submit();			
+			}
+	    	
+	    });
+	});
+	
+	//상품문의 삭제버튼 클릭
+	$(".qna_delete_btn").each(function(index) {
+	    $(this).click(function() {
+	    	var result = confirm("문의 내용을 삭제하시겠습니까?");
+	        if (result) {
+	            $(".delete_form").eq(index).submit();
+	        }		
+	    });
+	});	
+	
+	//좋아요 버튼 클릭
+	var liked = false;
+	
+	if(${likeVo != null}){
+		liked = true;
+		$("#like_btn").val("♥");
+        $("#like_btn").css("font-size", "48px");
+	}
+
+	$("#like_btn").click(function(){
+		if(${empty member}){//비회원의 경우 로그인 페이지로 이동
+			alert("로그인한 회원만 좋아요를 할 수 있습니다.");
+			window.location.href = "${pageContext.request.contextPath}/member/login.do";			
+		}else{
+		    if (liked) {	    	
+		    	var product_idx = ${productVo.product_idx};
+		    	var member_idx = $("#like_member_idx").val();
+			    $.ajax({
+			        type: "post",
+			        url: "like_delete.do",
+			        data: { "product_idx": product_idx,
+			        		"member_idx": member_idx },
+			        success: function(data) {
+			        	if(data == "success"){
+			    	    	$(".likeContent").css("background-color", "#fff");
+			    	    	$(".likeContent").css("border", "1px solid #7d99a4");
+			    	    	$(".likeHeart").text("♡");
+			    	    	$(".likeHeart").css("font-size", "36px");
+			    	    	$(".likeHeart").css("color", "#7d99a4");
+			    	    	$(".likeText").css("color", "#7d99a4");
+			    	    	
+			    	    	// 서서히 likeContainer 보여주기
+			    	        $(".likeContainer").fadeIn();
+	
+			    	        // 2초 뒤에 likeContainer 다시 숨기기
+			    	        setTimeout(function() {
+			    	            $(".likeContainer").fadeOut();
+			    	        }, 500);
+			    	    	
+			    	        $("#like_btn").val("♡");
+			    	        $("#like_btn").css("font-size", "32px");
+			    	        liked = false;		        		
+			        	}else{
+			        		alert("좋아요 삭제에 실패하였습니다.");
+			        	}
+			        },
+			        error: function(error) {
+			        	alert("ajax 에러 발생");
+			        }
+			    });//end of ajax	   	    	
+		    } else {
+		    	var product_idx = ${productVo.product_idx};
+		    	var member_idx = $("#like_member_idx").val();
+			    $.ajax({
+			        type: "post",
+			        url: "like_insert.do",
+			        data: { "product_idx": product_idx,
+			        		"member_idx": member_idx },
+			        success: function(data) {
+			        	if(data == "success"){
+			    	    	$(".likeContent").css("background-color", "#7d99a4");
+			    	    	$(".likeContent").css("border", "1px solid #7d99a4");
+			    	    	$(".likeHeart").text("♥");
+			    	    	$(".likeHeart").css("font-size", "36px");
+			    	    	$(".likeHeart").css("color", "#fff");
+			    	    	$(".likeText").css("color", "#fff");
+			    	    	
+			    	        // 서서히 likeContainer 보여주기
+			    	        $(".likeContainer").fadeIn();
+	
+			    	        // 2초 뒤에 likeContainer 다시 숨기기
+			    	        setTimeout(function() {
+			    	            $(".likeContainer").fadeOut();
+			    	        }, 500);
+			    	    	
+			    	        $("#like_btn").val("♥");
+			    	        $("#like_btn").css("font-size", "48px");
+			    	        liked = true;
+			        	}else{
+			        		alert("좋아요 등록에 실패하였습니다.");
+			        	}
+			        },
+			        error: function(error) {
+			        	alert("ajax 에러 발생");
+			        }
+			    });//end of ajax		
+		    }//end of if(좋아요 클릭에 따른 등록/삭제)			
+		}//end of if(로그인 유무에 따른 로그인창이동/좋아요 동작)		
+	});//end of #like_btn 클릭
+	
 });
 </script>
 <style>
@@ -360,6 +565,7 @@ $(function(){
      .title{background-color: #eef3f5; font-weight: bold; font-size: 15px;}
      
      #prd_content{margin: 0 auto;}
+     #prd_content img{width: 1020px;}
      .total_price{font-weight: bold;}
      .total_price_right{float: right;}
      
@@ -383,6 +589,38 @@ $(function(){
 	 	height: 250px;
 	 	padding: 15px;
 	 }
+	 .likeContainer {
+	 	width: 100%;
+	 	height: 100%;
+	 	position: fixed;
+	 	top: 300px;
+	 	left: 500px;
+	 	display: flex;
+	 	justify-content: center;
+	 	align-items: center;
+	 }
+	 .likeContent {
+		position: absolute;
+	 	background-color: #7d99a4;
+	 	border-radius: 100%;
+	 	width: 200px;
+	 	height: 200px;
+	 	padding: 15px;
+	 	text-align: center;
+	 	line-height: 50px;
+	 }
+	 .likeHeart{
+	 	width: 200px;
+	 	margin-top: 50px;
+	 	font-size: 36px;
+	 	color: #fff;
+	 }
+	 .likeText{
+	 	width: 200px;
+	 	font-size: 24px;
+	 	font-weight: bold;
+	 	color: #fff;
+	 }	 
 	 .hidden {
 	 	display: none;
 	 }
@@ -394,7 +632,28 @@ $(function(){
 	.modal_title_right{float:right;}
 	.close{border:0;color:#4a4a4a; font-weight: bold; font-size: 24px; background-color: #fff;}	     
 	.shoppingButton{width:130px; height:40px; margin-right: 10px; border-radius: 2px; background-color: #fff; color:#7d99a4; font-weight: bold; border: 1px solid #7d99a4}
-	.basketPageButton{width:130px; height:40px; margin-left: 10px; border-radius: 2px; background-color: #7d99a4; color:#fff; font-weight: bold; border: 1px solid #7d99a4}	     
+	.basketPageButton{width:130px; height:40px; margin-left: 10px; border-radius: 2px; background-color: #7d99a4; color:#fff; font-weight: bold; border: 1px solid #7d99a4}
+	
+	.modalInqContent {
+		position: absolute;
+	 	background-color: #ffffff;
+	 	border-radius: 5px;
+	 	width: 550px;
+	 	height: 500px;
+	 	padding: 15px;
+	 }
+	 .modal_inq_title{width:550px; font-size: 24px; font-weight: bold; margin-bottom: 10px;}
+	 .modal_inq_content{width:550px; height:auto;}
+	 .modal_inq_hr{width:550px; height: 5px; background-color: #7d99a4; margin-bottom: 20px;}
+	 .inq_text_box{width:530px; height: 280px; margin-top: 10px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #a4a4a4; padding: 10px;}	
+	 .inq_text{width:510px; height: 180px; padding: 10px; border: none; resize: none;}
+	 .inq_text:focus{outline: none;}
+	 .inq_text_count{width:510px; height:50px; line-height:50px; border-top: 1px solid #a4a4a4; padding: 10px;}     
+	 .modal_inq_btn{width:550px; display: flex; justify-content: center; border-top: 1px solid #a4a4a4; padding-top: 20px; padding-bottom: 20px;}
+	 .cancelButton, .edit_cancelButton{width:130px; height:40px; margin-right: 10px; border-radius: 2px; background-color: #fff; color:#7d99a4; font-weight: bold; border: 1px solid #7d99a4}
+	 .writeButton, .edit_updateButton{width:130px; height:40px; margin-left: 10px; border-radius: 2px; background-color: #7d99a4; color:#fff; font-weight: bold; border: 1px solid #7d99a4}
+	 
+	 
 </style>
 </head>
 <body>
@@ -407,27 +666,35 @@ $(function(){
         <div class="left_area">
             <!-- 상품 대표 이미지 -->
             <div class="prd_img">
-                <img src="../resources/img/test02.jpg" alt="상품 메인 이미지">
+                <img src="../resources/img/${fileVoList[0].saveFile}" alt="상품 메인 이미지">
             </div>
             
             <div class="prd_review_score_avg">
-                <b>고객리뷰 <span class="txt_blue">4.8</span></b> (97건)
+                <b>고객리뷰 <span class="txt_blue">4.8</span></b> (${productReviewRows}건)
             </div>
         </div>
         <div class="right_area">
             <div class="prd_info">
-                <p class="prd_seller">라쿤보호협회</p>
-                <p class="prd_name">라쿤보호협회 이벤트상품 한정판 고급 라쿤뒷다리살튀김</p>
+                <p class="prd_seller">${productVo.member_nickname}</p>
+                <p class="prd_name">${productVo.product_name}</p>
                 <p class="prd_price">
-                <input type="hidden" class="product_price" value="13500"></input>
-                <c:set var="prdPrice" value="13500"/>
+                <input type="hidden" class="product_price" value="${productVo.product_price}"></input>
                 <span class="prdPrice">
-                <fmt:formatNumber value="${prdPrice}" pattern="###,###" /></span>원</p>
+                <fmt:formatNumber value="${productVo.product_price}" pattern="###,###" /></span>원</p>
                 <div class="prd_delivery_info">
                     <p class="prd_delivery_title">배송정보</p>
                     <div class="prd_delivery_box">
                         <span class="delivery_title">일반배송 |</span>
-                        <span class="delivery_content">2,500원<br>평균 3일 이내 배송</span>                        
+                        <span class="delivery_content">
+                        <c:choose>
+                        	<c:when test="${productVo.delivery_company == 0}">
+                        		배송비 무료
+                        	</c:when>
+                        	<c:otherwise>
+                        		${productVo.delivery_company}원                        		
+                        	</c:otherwise>
+                        </c:choose>                        
+                        <br>평균 3일 이내 배송</span>                        
                     </div>                   
                 </div>
                 <div class="prd_cnt_box">
@@ -437,19 +704,20 @@ $(function(){
                         <input type="text" name="prd_cart_cnt" id="prd_cart_cnt" value="1" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1');">
                         <input type="button" name="prd_cart_plus_btn" id="prd_cart_plus_btn"  value="+">
                         <!-- 테스트 후 EL문으로 변경하기 -->
-                        <input type="hidden" id="product_idx" value="4">
-                        <input type="hidden" id="cart_cnt" value="3">
+                        <input type="hidden" id="product_idx" value="${productVo.product_idx}">
+                        <input type="hidden" id="cart_cnt" value="1">
                     </div>
                 </div>
                 <div class="prd_total_price txt_blue ">
                     <span class="prd_total_price_title">상품금액 합계</span>
                     <div class="total_price_right">
                     <span class="total_price">
-                    <fmt:formatNumber value="${prdPrice}" pattern="###,###" /></span>원</div>                     
-                    <input type="hidden" class="buyPrice" value="${prdPrice}">                  
+                    <fmt:formatNumber value="${productVo.product_price}" pattern="###,###" /></span>원</div>                     
+                    <input type="hidden" class="buyPrice" value="${productVo.product_price}">                  
                 </div>
 
                 <div class="prd_btn_area">
+                	<!-- 장바구니 담기 완료시 모달창 -->
                 	<div class="modalContainer hidden">
 					<div class="modalContent">
 						<div class="modal_title">
@@ -471,6 +739,14 @@ $(function(){
                     <input type="button" id="basket_btn" value="장바구니">
                     <input type="button" id="order_btn" value="바로구매">
                     <input type="button" id="like_btn" value="♡">
+                    <input type="hidden" id="like_member_idx" value="${member.member_idx}">
+                    <!-- 좋아요 누를시 나타나는 창 -->
+                    <div class="likeContainer hidden">
+						<div class="likeContent">
+							<div class="likeHeart">♡</div>
+							<div class="likeText">좋아요</div>
+					    </div>				    
+					</div>
                 </div>
             </div>
         </div>
@@ -481,16 +757,19 @@ $(function(){
         <div class="prd_detail_tab">
             <aside id="product_info" class="tap_open">상품설명</aside>
             <aside id="buy_info" class="">구매정보</aside>
-            <aside id="review_info" class="">리뷰 (97)</aside>
-            <aside id="qna_info" class="">상품문의 (4)</aside>
+            <aside id="review_info" class="">리뷰 (${productReviewRows})</aside>
+            <aside id="qna_info" class="">상품문의 (${productInqRows})</aside>
         </div>
 
         <div class="prd_detail_content">
             <!-- 상품설명 -->
             <section id="prd_content_box" class="show">
-            	<div id="prd_content">
-	            	<!-- 이미지 개수만큼 if문걸기 -->
-	                <img src="../resources/img/상품설명 테스트.jpg" alt="상품 설명 이미지">
+            	<div id="prd_content">	                
+	                <c:forEach items="${fileVoList}" var="fileVo" varStatus="status">
+					    <c:if test="${status.index != 0}">
+					        <img src="../resources/img/${fileVo.saveFile}" alt="상품 설명 이미지">
+					    </c:if>
+					</c:forEach>
             	</div>
             </section>
              <!-- 구매정보 -->
@@ -502,25 +781,25 @@ $(function(){
                         <tr>
                             <td class="td_buy_info_title top bottom title">내용물의 용량 또는 중량</td>
                             <td class="td_buy_info_content top bottom">
-                                600g
+                                ${productInfoVo.product_info_amount}
                             </td>
                         </tr>
                         <tr>
                             <td class="td_buy_info_title bottom title">사용방법</td>
                             <td class="td_buy_info_content bottom">
-                                맛있게먹기
+                                ${productInfoVo.product_info_useMethod}
                             </td>
                         </tr>
                         <tr>
                             <td class="td_buy_info_title bottom title">제조국</td>
                             <td class="td_buy_info_content bottom">
-                                대한민국
+                                ${productInfoVo.product_info_maker}
                             </td>
                         </tr>
                         <tr>
                             <td class="td_buy_info_title bottom title">책임자 전화번호</td>
                             <td class="td_buy_info_content bottom">
-                                010-9388-8058
+                                ${productInfoVo.product_info_handphone}
                             </td>
                         </tr>
                     </table>                    
@@ -536,7 +815,7 @@ $(function(){
                                 <b>[일반 배송]</b><br>
                                 <b>배송지역</b> : 전국<br>
                                 <!-- 배송비는 해당 상품에 대한 값 -->
-                                <b>배송비</b> : 2,500원<br>
+                                <b>배송비</b> : ${productVo.delivery_company}원<br>
                                 도서, 산간, 오지 일부 지역은 배송비가 추가될 수 있습니다.<br>
                                 배송가능일 : 3일<br>
                                 배송가능일이란 본 상품을 주문하신 고객님들께 상품 배송이 가능한 기간을 의미합니다. 단, 연휴 및 공휴일은 기간 계산시 제외하며 현금 주문일 경우 입금일 기준 입니다.<br>
@@ -681,30 +960,91 @@ $(function(){
             </section>
             <!-- 상품문의 -->
             <section id="qna_content_box" class="">
+            
                 <div class="prd_qna_title">
                     <input type="button" id="prd_qna_write_btn" value="상품문의">
                 </div>
+			    <!-- 상품문의 등록 성공 메시지 -->
+				<c:if test="${not empty inqSuccess}">
+				    <script>
+				        alert("${inqSuccess}");
+				    </script>
+				</c:if>
+				
+				<!-- 상품문의 등록 실패 메시지 -->
+				<c:if test="${not empty inqError}">
+				    <script>
+				        alert("${inqError}");
+				    </script>
+				</c:if>                
+                <!-- 상품문의 버튼 누를시 뜨는 상품문의 작성 모달창 -->
+                <div class="modalContainer hidden">
+				<div class="modalInqContent">
+					<div class="modal_inq_title">
+						<div class="modal_title_text">상품 문의 작성</div>
+						<div class="modal_title_right"><button class="modalCloseButton close">X</button></div>							
+					</div>
+					<div class="modal_inq_hr">
+					</div>
+					<form name="inq_form" action="product_inq_write.do" method="post">
+					<div class="modal_inq_content">
+						${productVo.product_name}
+						<div class="inq_text_box">
+							<textarea class="inq_text" name="product_inq_content" rows="30" cols="10" placeholder="문의 내용을 입력해주세요. (250자 이내)"></textarea>
+							<div class="inq_text_count">
+							0 / 250
+							</div>
+						</div>
+						<input type="hidden" class="product_inq_content" value="">
+						<input type="hidden" name="member_idx" value="${member.member_idx}">
+						<input type="hidden" name="product_idx" value="${productVo.product_idx}">
+						<input type="hidden" name="member_nickname" value="${member.member_nickname}">
+					</div>
+					</form>
+					<div class="modal_inq_btn">
+					    <button class="modalCloseButton cancelButton">취소</button>
+					    <button class="writeButton">
+					    수정</button>
+					</div>
+			    </div>				    
+				</div>
                 
                 <div class="prd_qna_list">                    
-                    <!-- 타이틀 퀘스쳔 앤서 3개 묶음으로 forEach문, 상품이 가지고 있는 리뷰 개수만큼 -->
+                    
+                    <!-- 페이징 미적용 forEach문이라서 나중에 비긴 엔드 수정해야함 -->                    
+                    <c:forEach var="productInqRows" begin="${pviPageNav.startNum}" end="${pviPageNav.endNum}">
                     <div class="qna_title_box">
-                        <div class="qna_status_box">                           
-                            <div class="qna_status complete">
-                                답변완료
-                            </div>
+                        <div class="qna_status_box">
+                        	<c:choose>
+                        		<c:when test="${productInqList[productInqRows-1].product_inq_answer == null}">
+                        			<div class="qna_status">
+		                                답변대기
+		                            </div>
+                        		</c:when>
+                        		<c:otherwise>
+		                            <div class="qna_status complete">
+		                                답변완료
+		                            </div>
+                        		</c:otherwise>
+                        	</c:choose>                           
                         </div>                        
                         <div class="qna_content">
-                            원산지가 미국 맞나요? ellipsis 테스트를 위한 의도적 긴글 만들기 ellipsis 테스트를 위한 의도적 긴글 만들기
+                            ${productInqList[productInqRows-1].product_inq_content}
                         </div>
                         <div class="member_nickname">
-                        	<!-- 본인글이면 이걸로 표시 -->
-                            <div class="nickname_txt">라쿤러버</div>
-                            <button class="qna_update_btn">수정</button>
-                            <button class="qna_delete_btn">삭제</button>
-                            <!-- 본인이 아니면 텍스트로 닉네임만 처리-->
+                        	<c:choose>
+                        		<c:when test="${productInqList[productInqRows-1].member_idx != member.member_idx}">
+                        			<div class="member_nickname">${productInqList[productInqRows-1].member_nickname}</div>
+                        		</c:when>
+                        		<c:otherwise><!-- 본인글이면 수정/삭제 표시 -->
+                        			<div class="nickname_txt">${productInqList[productInqRows-1].member_nickname}</div>                            
+                            		<button class="qna_update_btn">수정</button>
+                            		<button class="qna_delete_btn">삭제</button>   
+                        		</c:otherwise>
+                        	</c:choose>                         
                         </div>
                         <div class="product_inq_regDate">
-                            2023.07.27
+                            <fmt:formatDate value="${productInqList[productInqRows-1].product_inq_regDate}" pattern="yyyy.MM.dd" />
                         </div>
                     </div>
                     <!-- 이 아래로 클릭에 따라 보여지는 구간 -->
@@ -714,51 +1054,89 @@ $(function(){
                                 Q
                             </div>
                             <div class="question_content">
-                                원산지가 미국 맞나요?
+                                ${productInqList[productInqRows-1].product_inq_content}
                             </div>                        
-                        </div>                    
+                        </div>
+                        <!-- 답변유무에 따라 보이게 설정-->
+                        <c:if test="${productInqList[productInqRows-1].product_inq_answer != null}">                 
                         <div class="qna_answer_box">
                             <div class="answer_title">
                                 A
                             </div>
                             <div class="answer_content">
-                                네 북아메리카산 라쿤입니다.
+                                ${productInqList[productInqRows-1].product_inq_answer}
                             </div>                        
                         </div>
+                        </c:if>   
                     </section>
-                     <!-- 타이틀 퀘스쳔 앤서 3개 묶음으로 forEach문, 상품이 가지고 있는 리뷰 개수만큼 -->
-                     <div class="qna_title_box">
-                        <div class="qna_status_box">
-                            <div class="qna_status">
-                                답변대기
-                            </div>
-                        </div>
-                        <div class="qna_content">
-                            유통기한은 언제까지인가요?
-                        </div>
-                        <div class="member_nickname">
-                            라쿤맘
-                        </div>
-                        <div class="product_inq_regDate">
-                            2023.07.27
-                        </div>
-                    </div>
-                    <!-- 이 아래로 클릭에 따라 보여지는 구간 -->
-                    <section class="qna_detail_content">
-                        <div class="qna_question_box">
-                            <div class="question_title">
-                                Q
-                            </div>
-                            <div class="question_content">
-                                유통기한은 언제까지인가요?
-                            </div>                                                    
-                        </div> 
-                        
-                    </section>                   
+                <!-- 상품 문의 수정 모달창 -->    
+                <div class="modalContainer hidden">
+				<div class="modalInqContent">
+					<div class="modal_inq_title">
+						<div class="modal_title_text">상품 문의 수정</div>
+						<div class="modal_title_right"><button class="modalCloseButton close">X</button></div>							
+					</div>
+					<div class="modal_inq_hr">
+					</div>
+					<form class="edit_form" name="inq_update_form" action="product_inq_update.do" method="post">
+					<div class="modal_inq_content">
+						${productVo.product_name}
+						<div class="inq_text_box">
+							<textarea class="inq_text" name="product_inq_content" rows="30" cols="10" placeholder="문의 내용을 입력해주세요. (250자 이내)">${productInqList[productInqRows-1].product_inq_content}</textarea>
+							<div class="inq_text_count">
+							0 / 250
+							</div>
+						</div>
+						<input type="hidden" class="product_inq_content" value="${productInqList[productInqRows-1].product_inq_content}">
+						<input type="hidden" class="product_inq_answer" value="${productInqList[productInqRows-1].product_inq_answer}">
+						<input type="hidden" name="product_inq_idx" value="${productInqList[productInqRows-1].product_inq_idx}">
+						<input type="hidden" name="member_idx" value="${productInqList[productInqRows-1].member_idx}">
+						<input type="hidden" name="product_idx" value="${productVo.product_idx}">
+						<input type="hidden" name="member_nickname" value="${productInqList[productInqRows-1].member_nickname}">
+					</div>
+					</form>
+					<form class="delete_form" name="inq_delete_form" action="product_inq_delete.do" method="post">
+					<input type="hidden" name="product_inq_idx" value="${productInqList[productInqRows-1].product_inq_idx}">
+					<input type="hidden" name="product_idx" value="${productVo.product_idx}">
+					</form>
+					<div class="modal_inq_btn">
+					    <button class="modalCloseButton edit_cancelButton">취소</button>
+					    <button class="edit_updateButton">
+					    등록</button>
+					</div>
+			    </div>				    
+				</div>
+                    
+                </c:forEach>
                 </div>
                 <!-- 페이지 네비게이션 -->
                 <div class="pageing">
-                    페이징 들어갈 자리
+		    		<c:if test="${pviPageNav.pageNum > pviPageNav.pages_per_block}">
+				    	<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=1&pageBlock=1">&lt;&lt;</a>&nbsp;
+			    		<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=${(pviPageNav.pageBlock - 2)*pviPageNav.pages_per_block + 1}&pageBlock=${pviPageNav.pageBlock-1}">
+			    			&lt;이전페이지
+			    		</a>   	
+			    	</c:if>
+			    	
+			    	<c:forEach var="i" begin="${(pviPageNav.pageBlock-1)*pviPageNav.pages_per_block + 1}" end="${pviPageNav.pageBlock*pviPageNav.pages_per_block}">
+			    		<c:if test="${i le pviPageNav.totalPageNum}">
+			    			<c:choose>
+			    				<c:when test = "${pviPageNav.pageNum eq i}">
+			    					<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=${i}&pageBlock=${pviPageNav.pageBlock}">
+			    						<span style="color:red">${i}&nbsp;</span>
+			    					</a>
+			    				</c:when>
+			    				<c:otherwise>
+			    					<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=${i}&pageBlock=${pviPageNav.pageBlock}">${i}&nbsp;</a>
+			    				</c:otherwise>
+			   			</c:choose>
+			    		</c:if>
+			    	</c:forEach>
+			    
+			    	<c:if test="${((pviPageNav.rows_per_page*pviPageNav.pages_per_block) lt pviPageNav.totalRows) and (pviPageNav.pageBlock ne pviPageNav.lastPageBlock) }">
+			    		<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=${pviPageNav.pageBlock*pviPageNav.pages_per_block+1}&pageBlock=${pviPageNav.pageBlock+1}">다음페이지&gt;</a>&nbsp;
+			    		<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=${pviPageNav.totalPageNum}&pageBlock=${pviPageNav.lastPageBlock}">&gt;&gt;</a>
+			    	</c:if>
                 </div>
             </section>
         </div>

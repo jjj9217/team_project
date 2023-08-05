@@ -298,7 +298,10 @@
 	
 </section>
 	<a href="${pageContext.request.contextPath}/main/home.do">홈(로고)</a><br>
-	<a href="${pageContext.request.contextPath}/product/product_view.do">상품상세보기</a><br>
+	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=1">상품상세보기1</a><br>
+	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=2">상품상세보기2</a><br>
+	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=3">상품상세보기3</a><br>
+	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=4">상품상세보기4</a><br>
 	<a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a><br>
 	<a href="${pageContext.request.contextPath}/purchase/order.do">주문/결제</a><br>
 	<a href="${pageContext.request.contextPath}/purchase/order_complete.do">주문완료</a><br>

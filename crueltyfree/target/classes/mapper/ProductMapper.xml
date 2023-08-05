@@ -12,5 +12,65 @@
 	<!-- 상품번호 입력후 상품 파일Vo중 썸네일만 반환 -->
 	<select id="selectThumbnail" parameterType="_int" resultType="FileVo">
 		select * from file where product_idx = #{product_idx} ORDER BY file_idx LIMIT 1;
+	</select>	
+	
+	<!-- 상품번호 입력후 상품 파일 반환 -->
+	<select id="selectFile" parameterType="_int" resultType="FileVo">
+		select * from file where product_idx = #{product_idx} ORDER BY file_idx;
+	</select>	
+	
+	<!-- 상품번호 입력후 상품정보 Vo반환 -->
+	<select id="selectInfo" parameterType="_int" resultType="ProductInfoVo">
+		select * from product_info where product_idx = #{product_idx}
 	</select>		
+
+	<!-- 상품번호 입력후 상품 문의 반환 -->
+	<select id="selectProductInq" parameterType="_int" resultType="ProductInqVo">
+		select * from product_inq where product_idx = #{product_idx} ORDER BY product_inq_regDate DESC;
+	</select>		
+
+	<!-- 해당 상품 문의 수 -->
+	<select id="selectProductInqCount" parameterType="_int" resultType="_int">
+		select count(*) from product_inq where product_idx=#{product_idx}
+	</select>
+
+	<!-- 상품 문의 등록 -->
+	<insert id="insertProductInq" parameterType="map">
+		insert into product_inq (member_idx, product_idx, product_inq_content, member_nickname)
+		values(#{member_idx}, #{product_idx}, #{product_inq_content}, #{member_nickname})						
+	</insert>	
+
+	<!-- 상품 문의 수정 -->
+	<update id="updateProductInq" parameterType="map">
+		update product_inq 
+		set product_inq_content=#{product_inq_content}
+		where product_inq_idx = #{product_inq_idx}					
+	</update>		
+	
+	<!-- 상품 문의 삭제 -->
+	<delete id="deleteProductInq" parameterType="_int">
+		delete from product_inq where product_inq_idx = #{productInqIdx}
+	</delete>		
+
+	<!-- 좋아요 정보 반환 -->
+	<select id="selectLike" parameterType="map" resultType="LikeVo">
+		select * from `like` where product_idx = #{product_idx} and member_idx = #{member_idx}
+	</select>	
+	
+	<!-- 상품 좋아요 등록 -->
+	<insert id="insertlike" parameterType="map">
+		insert into `like` (member_idx, product_idx)
+		values(#{member_idx}, #{product_idx})						
+	</insert>	
+
+	<!-- 상품 좋아요 삭제 -->
+	<delete id="deletelike" parameterType="map">
+		delete from `like` where product_idx = #{product_idx} and member_idx = #{member_idx}
+	</delete>
+
+	<!-- 해당 상품 문의 수 -->
+	<select id="selectReviewCount" parameterType="_int" resultType="_int">
+		select count(*) from review where product_idx=#{product_idx}
+	</select>
+							
 </mapper>
