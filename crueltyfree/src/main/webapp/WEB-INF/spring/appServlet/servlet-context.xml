@@ -30,7 +30,7 @@
 	<context:component-scan base-package="com.crfr.controller" />
 	<context:component-scan base-package="com.crfr.dao" />	
 	<context:component-scan base-package="com.crfr.service.purchase" />
-	<context:component-scan base-package="com.crfr.service.product" />
+	<context:component-scan base-package="com.crfr.service.productView" />
 	
 	<!--  Interceptor 관련 설정: 사용자의 요청에 대해서 로그인 여부를 체크하는 LoginInterCeptor 설정 -->
 <!-- 	<interceptors> -->

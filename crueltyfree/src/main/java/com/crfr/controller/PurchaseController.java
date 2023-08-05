@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.crfr.service.product.ProductService;
+import com.crfr.service.productView.ProductViewService;
 import com.crfr.service.purchase.PurchaseService;
 import com.crfr.vo.BasketListVo;
 import com.crfr.vo.BasketVo;
@@ -37,7 +37,7 @@ public class PurchaseController {
 	bBasketInsert, bBasketDeleteOne;
 	
 	@Setter(onMethod_={ @Autowired })	
-	ProductService pSelectView, pSelectThumbnail;
+	ProductViewService pSelectView, pSelectThumbnail;
 	
 	//장바구니 페이지
 	@GetMapping("/basket.do")
