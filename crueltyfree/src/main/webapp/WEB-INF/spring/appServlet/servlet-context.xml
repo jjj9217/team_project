@@ -29,6 +29,7 @@
 	<!-- 컴포넌트 스캔 -->	  	
 	<context:component-scan base-package="com.crfr.controller" />
 	<context:component-scan base-package="com.crfr.service.product" />
+	<context:component-scan base-package="com.crfr.service.mypage" />
 	<context:component-scan base-package="com.crfr.dao" />
 	<context:component-scan base-package="com.crfr.vo" />
 	

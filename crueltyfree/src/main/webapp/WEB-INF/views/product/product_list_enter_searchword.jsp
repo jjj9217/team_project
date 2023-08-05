@@ -375,7 +375,9 @@
         background-color: orange;
         
     }
-
+    
+    #category_code_btn{
+    }
 
     /* footer Css */
 
@@ -400,10 +402,12 @@
     .foot_content a {
         font-size: 13px;
     }
-
     
 </style>
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
+    
+    
 function doAction(){
 	   let min = document.getElementById("product_price_min");
 	   let max = document.getElementById("product_price_max");
@@ -415,7 +419,46 @@ function doAction(){
        }
 	   return true;
     }
-    </script>
+
+$(document).ready(function(){
+	$("#category_code_1").click(function(){ 
+		var asd = $("#qwe").val();
+		
+		var price
+		var category_small
+		var srot
+		var view_sort
+		
+		if(asd != null and price=null and category_small=null and srot=null and view_sort=null)
+		window.location.href = "product_list_enter_searchword.do?category_code="+asd&sort_salecount=1&sort_view=15;
+		else(asd != null and price != null and category_small=null and srot=null and view_sort=null){
+		window.location.href = "product_list_enter_searchword.do?category_code="+asd+"&prdocut_price="+price;
+		}
+	}); 	
+});
+
+/* 
+function me(category_code}){
+	
+	ca.method="get"
+	ca.action="product_list_enter_searchword.do?"+category_code
+	ca.submit();
+	
+	
+	
+	
+}
+ */
+
+/* let = category_code */
+
+/* let 
+$().each(function(){
+	if(this.checked){
+		category_code = this.val();
+	}
+})
+ */    </script>
 </head>
 
 <body>
@@ -516,19 +559,27 @@ function doAction(){
             <div class="inner">
                 <div class="tit_classification">
                     <h4 class="tit_classification2">카테고리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button class="classification">+</button>
+                        <button class="classification" id="category_code_btn">+</button>
                     </h4>
                 </div>
                 
                 <ul class="list_classification">
+                                      
 <!--                     <li><a href="javascript:function1();">스킨케어</a></li> -->
-                    <li>
+                    <!-- <li>
                     <form name="ca" action="product_list_enter_searchword.do" method="get">
                         <input type="hidden" name="category_code" value="1">
+                    <input type="hidden" name="category_code" value="" location.href=".do?="+category_code;> 
                     </form>
-                    <a href="#" onclick="document.forms['ca'].submit();">스킨케어</a></li>
+                    <a href="#" class="category_code" onclick="document.forms['ca'].submit();">스킨케어</a></li> -->
                     
-                    <li>
+                    <li><span id=category_code_1>
+                        스킨케어
+                        <input type="hidden" id="qwe" name="category_code" value="1">
+                        </span>
+                    </li>
+                                        
+                    <li>                                         
                     <form name="ca2" action="product_list_enter_searchword.do" method="get">
                         <input type="hidden" name="category_code" value="2">
                     </form>
@@ -555,10 +606,7 @@ function doAction(){
                     </form>
                     <a href="#" onclick="document.forms['ca6'].submit();">미용소품</a></li>                    
                     
-                    
-                    <%-- <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">                        
-                        <li>${productList[rowNum-1].category_code}</li>
-                    </c:forEach> --%>
+                   
                 </ul>                
             </div>
         </div>
@@ -652,7 +700,7 @@ function doAction(){
         <div class="cate_sort_box">
             <div class="cate_sort">
                 <ul class="cate_sort_tit">
-                    <li>                    
+                  <li>                    
                     <form name="sort_salecount" action="product_list_enter_searchword.do" method="get">
                         <input type="hidden" name="sort_salecount" value="1">
                     </form>

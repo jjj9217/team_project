@@ -22,6 +22,7 @@
  		<typeAlias alias="ReviewRecomVo" type="com.crfr.vo.ReviewRecomVo"/>
  		<typeAlias alias="ReviewVo" type="com.crfr.vo.ReviewVo"/>
  		<typeAlias alias="ExploreVo" type="com.crfr.vo.ExploreVo"/>
+ 		<typeAlias alias="ReviewExploreVo" type="com.crfr.vo.ReviewExploreVo"/>
  	</typeAliases>
  	
 </configuration>

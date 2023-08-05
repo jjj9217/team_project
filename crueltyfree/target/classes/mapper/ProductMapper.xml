@@ -9,7 +9,7 @@
         select count(*) from product
             <where>
 	            <if test="searchWord != null">
-	                    product_name like CONCAT('%',#{searchWord},'%')                                                                           
+	                    and product_name like CONCAT('%',#{searchWord},'%')                                                                           
 	            </if>
 	            <if test="category_code !=null">
                         and category_code = #{category_code}
@@ -17,10 +17,10 @@
                 <if test="category_code_small !=null">
                         and category_code_small = #{category_code_small}
                 </if>
-                <if test="product_price_min != 0 and product_price_max != 0 and product_price_max != 10000000">
+                <if test="product_price_min != 0 and product_price_max != 0">
                         <![CDATA[
-                        and product_price>= #{product_price_min} 
-                        and product_price<= #{product_price_max}
+                            and product_price>= #{product_price_min}
+                            and product_price<= #{product_price_max}
                         ]]>
                 </if>
                 <if test="product_price_min != 0 and product_price_max == 0">
@@ -32,7 +32,7 @@
                         <![CDATA[                         
                         and product_price<= #{product_price_max}
                         ]]>
-                </if>
+                </if>                
             </where>                 
             order by product_idx desc
     </select>
@@ -40,19 +40,34 @@
      <!-- 검색조건에 맞는 게시물 목록 반환 구문 -->
     <select id="selectList" parameterType="ExploreVo" resultType="ProductVo">        
         select * from product            
-            <where>
+            <where>            
                 <if test="searchWord !=null">
-                        product_name like CONCAT('%',#{searchWord},'%')                                                                           
-                </if>
+                        and product_name like CONCAT('%',#{searchWord},'%')                                                                           
+                </if>                
+                                                                
                 <if test="category_code !=null">
                         and category_code = #{category_code}
                 </if>
+                
                 <if test="category_code_small !=null">
                         and category_code_small = #{category_code_small}
                 </if>
+                                
                 <if test="product_price_min != 0 and product_price_max != 0">
                         <![CDATA[
-                        and product_price>= #{product_price_min} and product_price<= #{product_price_max}]]>
+                            and product_price>= #{product_price_min} 
+                            and product_price<= #{product_price_max}
+                        ]]>
+                </if>
+                <if test="product_price_min != 0 and product_price_max == 0">
+                        <![CDATA[
+                            and product_price>= #{product_price_min}                         
+                        ]]>
+                </if>
+                <if test="product_price_min == 0 and product_price_max != 0">
+                        <![CDATA[                         
+                            and product_price<= #{product_price_max}
+                        ]]>
                 </if>
             </where>
         <if test="sort_salecount == null">
@@ -84,39 +99,41 @@
             ON A.product_idx = B.product_idx
             <where>
                 <if test="searchWord !=null">
-                        B.product_name like CONCAT('%',#{searchWord},'%')                                                                           
-                </if>
-                <if test="searchWord !=null and category_code !=null">
-                        and
-                </if>                
+                        and B.product_name like CONCAT('%',#{searchWord},'%')                                                                           
+                </if>                             
                 
                 <if test="category_code !=null">
-                        B.category_code = #{category_code}
+                        and B.category_code = #{category_code}
                 </if>
-                <if test="category_code !=null and category_code_small !=null">
-                        and
-                </if>      
-                
+                                      
                 <if test="category_code_small !=null">
-                        B.category_code_small = #{category_code_small}
-                </if>
-                 <if test="category_code_small !=null and product_price_min != 0 and product_price_max != 0">
-                        and
-                </if>
-                <if test="searchWord !=null">
-                        and
+                        and B.category_code_small = #{category_code_small}
                 </if>                
+                                               
                 <if test="product_price_min != 0 and product_price_max != 0">
                         <![CDATA[
-                        B.product_price>= #{product_price_min} and B.product_price<= #{product_price_max} and]]>
+	                        and product_price>= #{product_price_min}
+	                        and product_price<= #{product_price_max}
+                        ]]>
                 </if>
-                A.product_idx IS NOT NULL
+                <if test="product_price_min != 0 and product_price_max == 0">
+                        <![CDATA[
+                            and product_price>= #{product_price_min}                         
+                        ]]>
+                </if>
+                <if test="product_price_min == 0 and product_price_max != 0">
+                        <![CDATA[                         
+                            and product_price<= #{product_price_max}
+                        ]]>
+                </if>                
+                and A.product_idx IS NOT NULL
                     AND (A.product_idx, A.file_idx) 
                     IN (
                         SELECT A.product_idx, MIN(A.file_idx)                   
                         FROM file
                         GROUP BY A.product_idx
-                       ) 
+                       )
+                
             </where>
             <if test="sort_salecount == null">
             order by product_idx desc

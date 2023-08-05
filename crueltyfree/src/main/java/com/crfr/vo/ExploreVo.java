@@ -14,10 +14,6 @@ public class ExploreVo {
 	
 	//정렬순서
 	private String sort_salecount;
-	private String sort_lastdate;
-	private String sort_review_score;
-	private String sort_maxprice;
-	private String sort_minprice;
 	
 	//뷰목록개수
 	private int sort_view;
