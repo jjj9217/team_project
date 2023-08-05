@@ -39,7 +39,7 @@
     #container{
         width: 330px;
         margin: 0 auto;
- 		height:1100px;
+ 		height:1000px;
     }
     #logo{
         width: 100%;
@@ -76,7 +76,7 @@
     #gender{
         width: 100%;
     }
-    #member_id,#member_pw,#member_pw2,#member_name,#member_birthday,#member_handphone,#member_nickname,#member_identity,#member_postNum,#select_postNum,#reset_btn,#join_btn,#member_address,#member_address2,#member_email,#member_mail,#member_mail2,#member_email2{
+    #member_id,#member_pw,#member_pw2,#member_name,#member_handphone,#member_nickname,#member_identity,#member_postNum,#select_postNum,#reset_btn,#join_btn,#member_address,#member_address2,#member_email{
         width: 97%;
         height: 35px;
         padding-left: 10px;
@@ -106,7 +106,7 @@
     	border-color:white;
     	background-color:#a4a4a4;
     }
-    #member_identity,#member_mail,#member_mail2{
+    #member_identity{
     	background-color: #7d99a4;
     	color:white;
     	width:105px;
@@ -120,59 +120,15 @@
     	cursor:pointer;
     	font: bold 13px Arial, sans-serif;
     }
-    #member_handphone,#member_email,#member_email2{
+    #member_handphone{
     	width:200px;
     }
     #member_postNum{
     	width:200px;
     }
-    #idmsg,#errmsg,#nickmsg,#mail-check-warn,#birthmsg{
+    #idmsg,#errmsg,#nickmsg{
     	font-size:12px;
     } 
-    
-	
-	.between{
-		width:350px;
-	}
-	
-	
-    .form_radio_btn {
-			height : 39px;
-    		border: 1px solid #EAE7E7;
-    		border-radius: 20px;
-    		float :left;
-		}
-
-		.form_radio_btn input[type=radio] {
-			display: none;
-		}
-		.form_radio_btn label {
-			display: block;
-    		border-radius: 20px;
-   			margin: 0 auto;
-    		text-align: center;
-    		line-height: 39px;
-    		height: -webkit-fill-available;
-		}
-		 
-		/* Checked */
-		.form_radio_btn input[type=radio]:checked + label {
-			background: #7d99a4;
-			color: #fff;
-		}
-		 
-		/* Hover */
-		.form_radio_btn label:hover {
-			color: #666;
-		}
-		 
-		/* Disabled */
-		.form_radio_btn input[type=radio] + label {
-			background: rgb(221, 219, 214);
-			color: #666;
-		}
-
-    
 
 </style>
 <script type="text/javascript" src="../resources/js/checkMember.js"></script>
@@ -216,12 +172,6 @@ function checkInput(){
     } else if($("#member_name").val().length == 0){
         alert("해당 정보가 입력되지 않았습니다.");
         $("#member_name").focus();
-        return false;
-    } else if($("#member_birthday").val().length < 8){
-    	alert("올바르지 않은 정보입니다.");
-    	$("#birthmsg").text("올바르지 않은 정보입니다.");
-    	$("#birthmsg").css("color", "rgb(231, 76, 60)")
-        $("#member_birthday").focus();
         return false;
     } else if($("#member_handphone").val().length == 0){
         alert("해당 정보가 입력되지 않았습니다.");
@@ -374,56 +324,6 @@ function kakaopost(){
 }
 </script>
 
-<script>
-
-$(function(){
-	let email; 
-	let code; 
-	let auth_flag=false; 
-	let checkInput = $("#member_email2"); 
-	
-	$("#member_mail").click(function(){
-		
-		email = $("#member_email").val(); 
-
-		let regExp_email= /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
-		
-		if(regExp_email.test(email)){
-			
-			$.ajax({
-				type: "get",
-				url: "emailCheck.do?email="+email,
-				success: function(data){
-					checkInput.attr("disabled", false);
-					code = data; 
-				    alert("인증번호가 전송되었습니다.");
-				}				
-			});
-		}else{
-			alert("입력하신 내용이 이메일 형식에 맞지 않습니다.");
-			frm_join.member_id.focus();
-		}				
-	});
-	
-    $("#member_mail2").click(function(){
-    	const inputCode = checkInput.val(); 
-    	const resultMsg = $("#mail-check-warn");
-    	
-    	if(inputCode == code){
-    		resultMsg.html("인증번호가 일치합니다.");
-    		resultMsg.css("color", "rgb(41, 128, 185)");
-    		auth_flag = true; //메일인증 성공
-    	}else{
-    		resultMsg.html("인증번호가 불일치합니다. 다시 확인해주세요.");
-            resultMsg.css("color", "rgb(231, 76, 60)");
-    	}
-    })
-})
-
-</script>
-
-
-
 </head>
 <body>
 
@@ -455,26 +355,6 @@ $(function(){
             <p>
                 <label>이름<br>
                     <input type="text" name="member_name" id="member_name" placeholder="본인 이름을 입력해 주세요." maxlength="20" nameonly="true"></label></p>
-            <p>
-                <label>생년월일<br>
-                    <input type="text" name="member_birthday" id="member_birthday" placeholder="생년월일을 입력해 주세요. ex)19980301" maxlength="8" numberonly="true"></label> </p>  
-          			<div id="birthmsg"></div>
-               <div class="mb-3">
-				  <label for="userSex" class="form-label">성별</label>
-				   	<div class="between" style="white-space:normal;" >
-						<div class="form_radio_btn" style="border-radius:20px 0px 0px 20px; width:163px; ">
-							<input id="radio-1" type="radio" name="member_gender" value="M" checked >
-							<label for="radio-1" style="border-radius:20px 0px 0px 20px; width:163px; ">남자</label>
-						</div>
-					     <div class="form_radio_btn" style="border-radius:0px 20px 20px 0px; width:163px; ">
-							<input id="radio-2" type="radio" name="member_gender" value="F">
-							<label for="radio-2" style="border-radius:0px 20px 20px 0px; width:163px; ">여자</label>
-						</div>
-					</div>
-			   </div>
-            	<br>
-            	<br>
-            	<br>
            	<p>
            		<label>전화번호<br>
            			<input type="text" name="member_handphone" id="member_handphone" maxlength="11" placeholder="-없이 연락처를 입력해 주세요." numberonly="ture"></label>
@@ -483,10 +363,6 @@ $(function(){
            	<p>
            		<label>이메일<br>
            			<input type="text" name="member_email" id="member_email" placeholder="이메일을 입력해 주세요." ></label>
-           			<input type="button" name="member_mail" id="member_mail" value="메일인증&nbsp;&nbsp;">
-           			<input type="text" name="member_email2" id="member_email2" maxlength="11" placeholder="인증번호" maxlength="6"></label>
-           			<input type="button" name="member_mail2" id="member_mail2" value="확인&nbsp;&nbsp;">
-           			<span id="mail-check-warn"></span>
            			</p>
             <p>
                 <label>닉네임<br>
