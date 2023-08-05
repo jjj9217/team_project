@@ -57,11 +57,8 @@ public class MypageDao {
 		}
 	
 	//리뷰 사진 작성하기	
-	public int insertreviewimg(List<Map<String, String>> fileList) {
-		/*
-		 * for(file:fileList) { Map<String, String> map = file.map }
-		 */
-	return sqlSession.insert(MAPPER+".insertreviewimg", fileList);
+	public int insertreviewimg(FileVo vo) {
+	return sqlSession.insert(MAPPER+".insertreviewimg", vo);
 	}
 
 	
