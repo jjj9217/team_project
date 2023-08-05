@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.crfr.BasketMapper">
+
+	<!-- 장바구니에 담긴 상품 수량 -->
+	<select id="selectCount" parameterType="string" resultType="_int">
+		select count(*) from basket where client_num=#{client_num}
+	</select>
+	
+	<!-- 장바구니 리스트 -->
+	<select id="selectList" parameterType="string" resultType="BasketVo">
+		select * from basket where client_num=#{client_num}
+	</select>
+	
+	<!-- 장바구니 수량 + 업데이트 -->
+	<update id="plusBasketCount" parameterType="map">
+		update basket 
+			set basket_count = basket_count+1 
+			where product_idx = #{product_idx}
+			and client_num=#{client_num}
+	</update>		
+	
+	<!-- 장바구니 수량 - 업데이트 -->
+	<update id="minusBasketCount" parameterType="map">
+		update basket 
+			set basket_count = basket_count-1 
+			where product_idx = #{product_idx}
+			and client_num=#{client_num}
+	</update>		
+	
+	<!-- 장바구니 수량 직접 업데이트 -->
+	<update id="updateBasketCount" parameterType="map">
+		update basket 
+			set basket_count = #{basket_count} 
+			where product_idx = #{product_idx}
+			and client_num=#{client_num}
+	</update>	
+	
+	<!-- 장바구니 담기 -->
+	<insert id="basketInsert" parameterType="map">
+		insert into basket (product_idx, basket_count, client_num)
+		values(#{product_idx},#{basket_count},#{client_num}) 
+	</insert>
+
+	<!-- 장바구니 수량 다수+ 업데이트 -->
+	<update id="plusBasketMultipleCount" parameterType="map">
+		update basket 
+			set basket_count = basket_count+#{basket_count}
+			where product_idx = #{product_idx}
+			and client_num=#{client_num}
+	</update>	
+	
+	<!-- 장바구니 개별 삭제 -->
+	<delete id="basketDeleteOne" parameterType="_int">
+		delete from basket where basket_idx = #{basketIdx}
+	</delete>			
+					
+</mapper>

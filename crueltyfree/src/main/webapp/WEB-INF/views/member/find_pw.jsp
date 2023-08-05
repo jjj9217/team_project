@@ -36,7 +36,7 @@
         	text-align: center;
         	margin-top:70px;
     }
-	#input{
+	#member_id, #member_name, #member_handphone, #submit_btn, #id_btn{
 		width:400px;
 		height:40px;
 		margin-top:10px;
@@ -58,7 +58,7 @@
 	
 	#tag{
 		font-size:17px;
-		margin-top:70px;
+		margin-top:50px;
 		font-weight:600;
 	}
 	#find_pw{
@@ -67,10 +67,10 @@
 		margin-left:90px;
 	}
 	#find_id{
-		margin-top:70px;
+		margin-top:50px;
 	}
 	#hr{
-		margin-top:70px;
+		margin-top:50px;
 	}
 	#home{
 		width:300px;
@@ -84,9 +84,98 @@
 		text-decoration-line: none;
 		font-size:19px;
 	}
-	
+	#message{
+		color:rgb(231, 76, 60);
+		font-size:13px;
+	}
+	#message2{
+		color:rgb(231, 76, 60);
+		font-size:13px;
+	}
+	#message3{
+		color:rgb(231, 76, 60);
+		font-size:13px;
+	}
    
 </style>
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(document).ready(function() {
+    $("#submit_btn").click(function() {
+        var userid = $("#member_id").val();
+
+        // 아이디를 입력하지 않았을 경우 메시지 띄우기
+        if (userid === '') {
+            $("#message").text("아이디를 입력해 주세요.");
+        } else {
+        	$("#message").text("");
+        }
+    });
+    $("#submit_btn").click(function() {
+        var username = $("#member_name").val();
+
+        // 아이디를 입력하지 않았을 경우 메시지 띄우기
+        if (username === '') {
+            $("#message2").text("이름을 입력해 주세요.");
+        } else {
+        	$("#message2").text("");
+        }
+    });
+    
+    
+    $("#submit_btn").click(function() {
+        var userphone = $("#member_handphone").val();
+
+        // 비밀번호를 입력하지 않았을 경우 메시지 띄우기
+        if (userphone === '') {
+            $("#message3").text("전화번호를 입력해 주세요.");
+        } else {
+        	$("#message3").text("");
+        }
+    });
+});
+</script>
+
+<script>
+$(function(){
+	$(document).on("keyup", "input:text[numberonly]", function() {
+		$(this).val( $(this).val().replace( /[^0-9]/gi,"") );
+	});
+});
+</script>
+
+<script>
+
+window.onload = function(){
+	
+	let s_btn = frm.submit_btn;//로그인 버튼
+	s_btn.addEventListener("click", checkInput);
+	
+}
+
+function checkInput(){
+    if(frm.member_id.value.length==0){
+        frm.member_id.focus();
+        return false;
+    }else if(frm.member_name.value.length==0){
+        frm.member_name.focus();
+        return false;        
+    }else if(frm.member_handphone.value.length==0){
+        frm.member_handphone.focus();
+        return false;
+
+    }else{
+       document.frm.submit();
+    }
+    
+    return true;
+}
+</script>
+
+
+
+
 
 
 </head>
@@ -97,7 +186,7 @@
 </header>
     <div id="container">
     <div id="home">
-    	<a href="" id="a"><img src="../resources/home.png" style="width: 21px; height: 21px;"></a>
+    	<a href="" id="a"><img src="../resources/img/home.png" style="width: 21px; height: 21px;"></a>
     	<a href="" id="a">〉 로그인</a>
     	<a href="" id="a">〉 비밀번호 찾기</a>
     </div>
@@ -107,13 +196,19 @@
     <div id="tag"><span>입력하신 정보는 비밀번호 찾기에만 사용되며 </span> <span style="color:red;">저장되지 않습니다.</span></div>
     
     	<div id="find_pw">
-    		<input type="text" id="input" name="member_name" placeholder="아이디를 입력해 주세요.">
-    		<input type="text" id="input" name="member_handphone" placeholder="-없이 숫자로 휴대폰 번호를 입력해 주세요.">
-    		<input type="button" id="input" name="" value="확인" style="width:415px";>
+    		<form action="find_pw_process.do" method="post" name="frm">
+    		<input type="text" id="member_id" name="member_id" placeholder="아이디">
+    		<div id="message"></div>
+    		<input type="text" id="member_name" name="member_name" placeholder="이름">
+    		<div id="message2"></div>
+    		<input type="text" id="member_handphone" name="member_handphone" placeholder="전화번호(-없이 입력)" numberonly="" maxlength="11">
+    		<div id="message3"></div>
+    		<input type="button" id="submit_btn" name="submit_btn" value="확인" style="width:415px";>
+    		</form>
     	</div>
     	<div id="find_id">
-    		<img src="../resources/find.png" style="width: 130px; height: 130px;">
-    		<p><input type="button" id="input" name="" value="아이디 찾기" onclick="" style="width:200px;"></p>
+    		<img src="../resources/img/find.png" style="width: 130px; height: 130px;">
+    		<p><input type="button" id="id_btn" name="id_btn" value="아이디 찾기" onclick="" style="width:200px;"></p>
     	</div>
 	</div>
 
