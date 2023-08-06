@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.crfr.service.seller.ProductInsertService;
-import com.crfr.vo.ProductVo;
+import com.crfr.service.seller.ProductSellerService;
 
 import lombok.Setter;
 
@@ -22,7 +21,7 @@ import lombok.Setter;
 public class SellerController {
 	//서비스 클래스로 사용할 클래스들을 멤버변수로 정의하고 의존 자동 주입받도록 함
 	@Setter(onMethod_={ @Autowired })
-	ProductInsertService pInsertFile, pInsertProduct, pInsertProductInfo, pfindProductIdx;
+	ProductSellerService pInsertFile, pInsertProduct, pInsertProductInfo, pSelectProductIdx;
 	
 	// @Setter(onMethod_={ @Autowired })
 	// PageNav pageNav;
@@ -64,14 +63,12 @@ public class SellerController {
 			String product_info_handphone, HttpServletRequest request) {
 		
 		String viewPage = "seller/regi_pro"; //글등록 실패시 보여지는 페이지
-			
+		
 		//작성 내용을 ProductInsertService 클래스를 이용하여 저장
 		int result1 = pInsertProduct.insertProduct (category_code, product_name, 
 				product_price, product_capa, delivery_company, member_nickname, member_idx);
-
-		int productIdx = pfindProductIdx.findProductIdx(product_name, member_nickname);
-				
-		System.out.println("ㅌㅅㅌ"+productIdx);
+		
+		int productIdx = pSelectProductIdx.selectProductIdx(product_name, product_price, member_nickname);
 		
 		String product_idx = String.valueOf(productIdx); 
 		

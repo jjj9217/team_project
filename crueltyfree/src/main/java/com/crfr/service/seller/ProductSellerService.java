@@ -8,7 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.crfr.vo.ProductVo;
 
 public interface ProductSellerService {
-	default int findProductIdx (String product_name, String member_nickname) {return 0;}
 	default int insertFile (MultipartFile attachedFile, String product_idx, 
 							HttpServletRequest request) {return 0;}
 	default int insertProduct (String category_code,
@@ -17,4 +16,5 @@ public interface ProductSellerService {
 	default int insertProductInfo (String product_idx, String product_info_amount,
 							String product_info_useMethod, String product_info_maker,
 							String product_info_handphone) {return 0;}
+	default int selectProductIdx (String product_name, String product_price, String member_nickname) {return 0;}
 }

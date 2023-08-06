@@ -7,7 +7,30 @@
 <head>
 <meta charset="UTF-8">
 <title>주문/결제 | CrueltyFree</title>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- 결제 -->
+<script>
+const userCode = {imp36534356};
+IMP.init(userCode);
+
+function doPayment(){
+	IMP.request_pay({
+	      pg: "kcp.{상점ID}",
+	      pay_method: "card",
+	      merchant_uid: "ORD20180131-0000011",   // 주문번호
+	      name: "노르웨이 회전 의자",
+	      amount: 64900,                         // 숫자 타입
+	      buyer_email: "gildong@gmail.com",
+	      buyer_name: "홍길동",
+	      buyer_tel: "010-4242-4242",
+	      buyer_addr: "서울특별시 강남구 신사동",
+	      buyer_postcode: "01181"
+	    }, function (rsp) { // callback
+	      //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+	    });	
+}
+</script>
 <script>
 $(function(){
 	//전체 체크박스 클릭
@@ -94,6 +117,28 @@ $(function(){
 		
 		//현재 index값의 modalContainer클래스에 hidden클래스 추가
 		$(".modalContainer").eq(index).addClass("hidden");
+	});
+	
+	//결제하기 버튼 클릭
+	$("#order_btn").click(function(){
+		 var allChecked = $(".agree_check:checked").length == $(".agree_check").length;
+		
+	    // 체크된 항목이 없을 경우 알림을 띄우고 함수를 종료
+	    if (!allChecked) {
+	        alert("약관동의에 체크해 주세요.");
+	        return;
+	    }
+	    
+	    var client_num = "";
+	    if(${!empty member}){
+	    	client_num = $("#order_member_idx").val()
+	    }else{
+	    	client_num = $("#order_client_num").val()
+	    }
+	    
+	    $("#clientNum").val(client_num);
+	    
+	    
 	});
 })
 </script>
@@ -321,6 +366,8 @@ $(function(){
 		.hidden {
 		  display: none;
 		}     	
+		
+		.guest_input {width: 193px; height: 26px; border-width: 1px; border-style: solid; border-radius: 5px; padding-left: 8px;}
     </style>
 </head>
 <body>
@@ -380,37 +427,13 @@ $(function(){
             <tr>
                 <td class="td_delivery_title bottom title">받는분</td>
                 <td class="td_delivery_content bottom">
-                    <input class="input_focus" type="text" name="delivery_get_name" id="delivery_get_name" value="정종진">
+                    <input class="input_focus" type="text" name="delivery_get_name" id="delivery_get_name" value="">
                 </td>
             </tr>
             <tr>
                 <td class="td_delivery_title bottom title">연락처</td>
                 <td class="td_delivery_content bottom">
-                    <select name="delivery_handphone_begin" id="delivery_handphone_begin">
-                        <option value>선택</option>
-                        <option value="010" selected="selected">010</option>
-                        <option value="011">011</option>
-                        <option value="016">016</option>
-                        <option value="017">017</option>
-                        <option value="018">018</option>
-                        <option value="019">019</option>
-                        <option value="02">02</option>
-                        <option value="031">031</option>
-                        <option value="032">032</option>
-                        <option value="033">033</option>
-                        <option value="041">041</option>
-                        <option value="042">042</option>
-                        <option value="043">043</option>
-                        <option value="051">051</option>
-                        <option value="052">052</option>
-                        <option value="053">053</option>
-                        <option value="061">061</option>
-                        <option value="062">062</option>
-                        <option value="063">063</option>
-                        <option value="064">064</option>
-                    </select>-
-                    <input type="text" name="delivery_handphone_middle" id="delivery_handphone_middle" value="9388">-
-                    <input type="text" name="delivery_handphone_end" id="delivery_handphone_end" value="8058">
+                    <input type="text" class="guest_input" id="delivery_handphone" placeholder="-없이 연락처를 입력해주세요.">
                 </td>
             </tr>
             <tr>
@@ -523,6 +546,31 @@ $(function(){
             </div>	
 			</c:if>
 			
+			<c:if test="${empty member}">
+			<h2 class="sub_title">[비회원] 주문자 정보 입력</h2>
+            <div id="coupon_info">
+                <table id="tb_coupon_info">
+                    <tr>
+                        <td class="td_coupon_title top bottom title">이름</td>
+                        <td class="td_coupon_content top bottom">
+                            <input type="text" class="guest_input"  id="guest_name"> 
+                        </td>
+                    </tr> 
+                    <tr>
+                        <td class="td_coupon_title bottom title">연락처</td>
+                        <td class="td_coupon_content bottom">
+                            <input type="text" class="guest_input" id="guest_phone" placeholder="-없이 연락처를 입력해주세요."> 
+                        </td>
+                    </tr> 
+                    <tr>
+                        <td class="td_coupon_title bottom title">이메일</td>
+                        <td class="td_coupon_content bottom">
+                            <input type="text" class="guest_input"  id="guest_email"> 
+                        </td>
+                    </tr>                                                           
+                </table>
+            </div>	
+			</c:if>
             <!-- 결제 API에 따라 변경 가능성 많음 -->
             <h2 class="sub_title">결제 수단 선택</h2>
             <div id="coupon_info">
@@ -599,11 +647,25 @@ $(function(){
                     <tr>
                         <td colspan="2" class="td_order_btn">
                             <input type="submit" name="order_btn" id="order_btn" value="결제하기">
+	                        <input type="hidden" id="order_member_idx" value="${member.member_idx}">
+	                        <input type="hidden" id="order_client_num" value="${client_num}">
                         </td>
                     </tr>
                 </table>
             </div>
+            <!-- 결제하기 버튼 누를시 전송되는 값들 -->
+            <form name="order_form" id="order_form" action="order_process.do" method="post">
+            <input type="hidden" id="clientNum" name="client_num" value="">
+            <input type="hidden" id="order_form_delivery_get_name" name="delivery_get_name" value="">
+            <input type="hidden" id="order_form_delivery_handphone" name="delivery_handphone" value="">
+            <input type="hidden" id="order_form_delivery_message" name="delivery_message" value="">
+            <input type="hidden" id="order_form_delivery_pass" name="delivery_pass" value="">
+            <input type="hidden" id="order_form_delivery_pass_content" name="delivery_pass_content" value="">
+            <input type="hidden" id="delivery_postNum" name="delivery_postNum" value="">
+            <input type="hidden" id="delivery_address" name="delivery_address" value="">
+            <input type="hidden" id="delivery_address2" name="delivery_address2" value="">
             
+            </form>            
             <!-- 약관동의 창 -->
             <div class="agree_payment_box">
                 <div class="all_agree">
@@ -663,19 +725,19 @@ $(function(){
                 </section> <!-- end of other_agree -->
                 <div class="modalContainer hidden">
 					<div class="modalContent">
-						<p>모달 창1 입니다.</p>
+						<p>약관동의 창 1.</p>
 					    <button class="modalCloseButton">닫기</button>
 				    </div>				    
 				</div>
 				<div class="modalContainer hidden">
 					<div class="modalContent">
-						<p>모달 창2 입니다.</p>
+						<p>약관동의 창 2.</p>
 					    <button class="modalCloseButton">닫기</button>
 				    </div>				    
 				</div>
 				<div class="modalContainer hidden">
 					<div class="modalContent">
-						<p>모달 창3 입니다.</p>
+						<p>약관동의 창 3.</p>
 					    <button class="modalCloseButton">닫기</button>
 				    </div>				    
 				</div>

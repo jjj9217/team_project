@@ -293,6 +293,27 @@ public class PurchaseController {
 	@PostMapping("/order.do")
 	public String order(HttpServletRequest request, Model model) {
 		
+		//세션에서 "member"를 얻어옴
+		HttpSession session = request.getSession();
+		MemberVo vo = (MemberVo)session.getAttribute("member");
+		
+		String client_num = null;
+		if(vo != null) {//로그인 되어있을때
+			client_num = vo.getMember_id();	//Vo의 member_id를 넣음
+		}else {//로그인 되어있지 않을때
+		    Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
+		    if (cookies != null) {
+		        for (Cookie cookie : cookies) {
+		            if ("guestId".equals(cookie.getName())) { //이름이 "guestId"인 쿠키의 value를
+		            	client_num  = cookie.getValue();	//client_num에 넣음
+		                break;
+		            }//end of if - cookie 이름 조건문
+		        }//end of for
+		    }//end of if - cookie null값 조건문
+		}			
+		model.addAttribute("client_num", client_num);
+		
+		
 		String selectedValuesStr = request.getParameter("selectedValuesStr"); //JSon형식으로 받은것
 		String[] selectedValues = new Gson().fromJson(selectedValuesStr, String[].class);//배열로 풀기
 		
