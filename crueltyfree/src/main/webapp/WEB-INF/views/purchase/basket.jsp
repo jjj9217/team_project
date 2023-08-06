@@ -274,6 +274,52 @@ $(function(){
 	        });
 	    }
 	});
+	
+	//장바구니 선택주문 클릭시
+	$(".select_order_btn").click(function(){
+		//선택된 체크박스 담을 변수 설정
+		var selectedValues = [];
+		
+		//체크된 체크박스의 value를 넣음
+		$(".checkboxes:checked").each(function() {
+            selectedValues.push($(this).val());
+        });
+		
+	    // 체크된 항목이 없을 경우 알림을 띄우고 함수를 종료
+	    if (selectedValues.length === 0) {
+	        alert("상품을 선택해 주세요.");
+	        return;
+	    }
+		
+	    // 선택된 상품 정보를 문자열로 변환
+        var selectedValuesStr = JSON.stringify(selectedValues);
+	    
+	    //값 넣기
+	    $("#basket_order").val(selectedValuesStr);
+	    
+	 	// 폼 제출 (submit)
+        document.basket_order_form.submit();
+	});
+	
+	//장바구니 전체주문 클릭시
+	$(".all_order_btn").click(function(){
+		//체크박스 담을 변수 설정
+		var selectedValues = [];
+		
+		//모든 체크박스의 value를 넣음
+		$(".checkboxes").each(function() {
+            selectedValues.push($(this).val());
+        });
+		
+		//상품 정보를 문자열로 변환
+        var selectedValuesStr = JSON.stringify(selectedValues);
+		
+	    //값 넣기
+	    $("#basket_order").val(selectedValuesStr);
+	    
+	 	// 폼 제출 (submit)
+        document.basket_order_form.submit();
+	});
 })
 </script>
     <style>
@@ -735,6 +781,9 @@ $(function(){
         <button class="select_order_btn" >선택주문(<span class="checked"></span>)</button>
         <input type="button" class="all_order_btn" value="전체주문">
     </div>
+    <form name="basket_order_form" action="order.do" method="post">
+	<input type="hidden" name="selectedValuesStr" id="basket_order"  value="">
+    </form>
     </c:if>
     
 	<footer>

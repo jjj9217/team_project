@@ -404,6 +404,12 @@ $(function(){
 		}//end of if(로그인 유무에 따른 로그인창이동/좋아요 동작)		
 	});//end of #like_btn 클릭
 	
+	//바로구매 클릭시
+	$("#order_btn").click(function(){		
+	 	// 폼 제출 (submit)
+        document.basket_order_form.submit();
+	});
+	
 });
 </script>
 <style>
@@ -533,6 +539,7 @@ $(function(){
      #prd_qna_write_btn{width: 120px; height: 34px; border: 0; background-color: #7d99a4; color: #fff; font-size: 16px; font-weight: bold; border-radius: 5px;}
      .prd_qna_list{width: 1020px; height: auto;}
      .qna_title_box{display: flex; flex-wrap:wrap; width: 1020px; height: 80px; line-height: 80px; border-bottom: 1px solid #4a4a4a;}
+     .qna_none_box{display: flex; flex-wrap:wrap; width: 1020px; height: 80px; line-height: 80px; border-bottom: 1px solid #4a4a4a; color:#4a4a4a; font-size: 24px; justify-content: center;}
      .qna_status{display: inline-block; width: 70px; height: 22px; line-height: 20px; font-size: 12px; color: #4a4a4a; background-color: #eef3f5; border-radius: 11px; text-align: center; vertical-align: middle;}
      .complete{display: inline-block; width: 70px; height: 22px; line-height: 20px; font-size: 12px; color: #fff; background-color: #7d99a4; border-radius: 11px; text-align: center; vertical-align: middle;}
      .qna_content{display: inline-block; width: 665px; height: 85px; padding-left: 10px; color: #4a4a4a; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; cursor: pointer;}        
@@ -703,9 +710,12 @@ $(function(){
                         <input type="button" name="prd_cart_minus_btn" id="prd_cart_minus_btn" value="-">
                         <input type="text" name="prd_cart_cnt" id="prd_cart_cnt" value="1" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1');">
                         <input type="button" name="prd_cart_plus_btn" id="prd_cart_plus_btn"  value="+">
-                        <!-- 테스트 후 EL문으로 변경하기 -->
-                        <input type="hidden" id="product_idx" value="${productVo.product_idx}">
-                        <input type="hidden" id="cart_cnt" value="1">
+                        
+                        <!-- 바로구매 폼전송 -->     
+					    <form name="basket_order_form" action="${pageContext.request.contextPath}/purchase/order.do" method="post">
+	                        <input type="hidden" id="product_idx" name="product_idx" value="${productVo.product_idx}">
+	                        <input type="hidden" id="cart_cnt" name="cart_cnt" value="1">
+					    </form>          
                     </div>
                 </div>
                 <div class="prd_total_price txt_blue ">
@@ -1004,110 +1014,119 @@ $(function(){
 					<div class="modal_inq_btn">
 					    <button class="modalCloseButton cancelButton">취소</button>
 					    <button class="writeButton">
-					    수정</button>
+					    등록</button>
 					</div>
 			    </div>				    
 				</div>
                 
                 <div class="prd_qna_list">                    
                     
-                    <!-- 페이징 미적용 forEach문이라서 나중에 비긴 엔드 수정해야함 -->                    
-                    <c:forEach var="productInqRows" begin="${pviPageNav.startNum}" end="${pviPageNav.endNum}">
-                    <div class="qna_title_box">
-                        <div class="qna_status_box">
-                        	<c:choose>
-                        		<c:when test="${productInqList[productInqRows-1].product_inq_answer == null}">
-                        			<div class="qna_status">
-		                                답변대기
+                    <c:choose>
+	                    <c:when test="${productInqRows == 0}">
+	                    <div class="qna_none_box">
+	                    	등록된 상품문의가 없습니다.
+	                    </div>
+	                    </c:when>
+	                    <c:otherwise>
+		  				<c:forEach var="productInqRows" begin="${pviPageNav.startNum}" end="${pviPageNav.endNum}">
+		                    <div class="qna_title_box">
+		                        <div class="qna_status_box">
+		                        	<c:choose>
+		                        		<c:when test="${productInqList[productInqRows-1].product_inq_answer == null}">
+		                        			<div class="qna_status">
+				                                답변대기
+				                            </div>
+		                        		</c:when>
+		                        		<c:otherwise>
+				                            <div class="qna_status complete">
+				                                답변완료
+				                            </div>
+		                        		</c:otherwise>
+		                        	</c:choose>                           
+		                        </div>                        
+		                        <div class="qna_content">
+		                            ${productInqList[productInqRows-1].product_inq_content}
+		                        </div>
+		                        <div class="member_nickname">
+		                        	<c:choose>
+		                        		<c:when test="${productInqList[productInqRows-1].member_idx != member.member_idx}">
+		                        			<div class="member_nickname">${productInqList[productInqRows-1].member_nickname}</div>
+		                        		</c:when>
+		                        		<c:otherwise><!-- 본인글이면 수정/삭제 표시 -->
+		                        			<div class="nickname_txt">${productInqList[productInqRows-1].member_nickname}</div>                            
+		                            		<button class="qna_update_btn">수정</button>
+		                            		<button class="qna_delete_btn">삭제</button>   
+		                        		</c:otherwise>
+		                        	</c:choose>                         
+		                        </div>
+		                        <div class="product_inq_regDate">
+		                            <fmt:formatDate value="${productInqList[productInqRows-1].product_inq_regDate}" pattern="yyyy.MM.dd" />
+		                        </div>
+		                    </div>
+		                    <!-- 이 아래로 클릭에 따라 보여지는 구간 -->
+		                    <section class="qna_detail_content">
+		                        <div class="qna_question_box">
+		                            <div class="question_title">
+		                                Q
 		                            </div>
-                        		</c:when>
-                        		<c:otherwise>
-		                            <div class="qna_status complete">
-		                                답변완료
+		                            <div class="question_content">
+		                                ${productInqList[productInqRows-1].product_inq_content}
+		                            </div>                        
+		                        </div>
+		                        <!-- 답변유무에 따라 보이게 설정-->
+		                        <c:if test="${productInqList[productInqRows-1].product_inq_answer != null}">                 
+		                        <div class="qna_answer_box">
+		                            <div class="answer_title">
+		                                A
 		                            </div>
-                        		</c:otherwise>
-                        	</c:choose>                           
-                        </div>                        
-                        <div class="qna_content">
-                            ${productInqList[productInqRows-1].product_inq_content}
-                        </div>
-                        <div class="member_nickname">
-                        	<c:choose>
-                        		<c:when test="${productInqList[productInqRows-1].member_idx != member.member_idx}">
-                        			<div class="member_nickname">${productInqList[productInqRows-1].member_nickname}</div>
-                        		</c:when>
-                        		<c:otherwise><!-- 본인글이면 수정/삭제 표시 -->
-                        			<div class="nickname_txt">${productInqList[productInqRows-1].member_nickname}</div>                            
-                            		<button class="qna_update_btn">수정</button>
-                            		<button class="qna_delete_btn">삭제</button>   
-                        		</c:otherwise>
-                        	</c:choose>                         
-                        </div>
-                        <div class="product_inq_regDate">
-                            <fmt:formatDate value="${productInqList[productInqRows-1].product_inq_regDate}" pattern="yyyy.MM.dd" />
-                        </div>
-                    </div>
-                    <!-- 이 아래로 클릭에 따라 보여지는 구간 -->
-                    <section class="qna_detail_content">
-                        <div class="qna_question_box">
-                            <div class="question_title">
-                                Q
-                            </div>
-                            <div class="question_content">
-                                ${productInqList[productInqRows-1].product_inq_content}
-                            </div>                        
-                        </div>
-                        <!-- 답변유무에 따라 보이게 설정-->
-                        <c:if test="${productInqList[productInqRows-1].product_inq_answer != null}">                 
-                        <div class="qna_answer_box">
-                            <div class="answer_title">
-                                A
-                            </div>
-                            <div class="answer_content">
-                                ${productInqList[productInqRows-1].product_inq_answer}
-                            </div>                        
-                        </div>
-                        </c:if>   
-                    </section>
-                <!-- 상품 문의 수정 모달창 -->    
-                <div class="modalContainer hidden">
-				<div class="modalInqContent">
-					<div class="modal_inq_title">
-						<div class="modal_title_text">상품 문의 수정</div>
-						<div class="modal_title_right"><button class="modalCloseButton close">X</button></div>							
-					</div>
-					<div class="modal_inq_hr">
-					</div>
-					<form class="edit_form" name="inq_update_form" action="product_inq_update.do" method="post">
-					<div class="modal_inq_content">
-						${productVo.product_name}
-						<div class="inq_text_box">
-							<textarea class="inq_text" name="product_inq_content" rows="30" cols="10" placeholder="문의 내용을 입력해주세요. (250자 이내)">${productInqList[productInqRows-1].product_inq_content}</textarea>
-							<div class="inq_text_count">
-							0 / 250
+		                            <div class="answer_content">
+		                                ${productInqList[productInqRows-1].product_inq_answer}
+		                            </div>                        
+		                        </div>
+		                        </c:if>   
+		                    </section>
+		                <!-- 상품 문의 수정 모달창 -->    
+		                <div class="modalContainer hidden">
+						<div class="modalInqContent">
+							<div class="modal_inq_title">
+								<div class="modal_title_text">상품 문의 수정</div>
+								<div class="modal_title_right"><button class="modalCloseButton close">X</button></div>							
 							</div>
+							<div class="modal_inq_hr">
+							</div>
+							<form class="edit_form" name="inq_update_form" action="product_inq_update.do" method="post">
+							<div class="modal_inq_content">
+								${productVo.product_name}
+								<div class="inq_text_box">
+									<textarea class="inq_text" name="product_inq_content" rows="30" cols="10" placeholder="문의 내용을 입력해주세요. (250자 이내)">${productInqList[productInqRows-1].product_inq_content}</textarea>
+									<div class="inq_text_count">
+									0 / 250
+									</div>
+								</div>
+								<input type="hidden" class="product_inq_content" value="${productInqList[productInqRows-1].product_inq_content}">
+								<input type="hidden" class="product_inq_answer" value="${productInqList[productInqRows-1].product_inq_answer}">
+								<input type="hidden" name="product_inq_idx" value="${productInqList[productInqRows-1].product_inq_idx}">
+								<input type="hidden" name="member_idx" value="${productInqList[productInqRows-1].member_idx}">
+								<input type="hidden" name="product_idx" value="${productVo.product_idx}">
+								<input type="hidden" name="member_nickname" value="${productInqList[productInqRows-1].member_nickname}">
+							</div>
+							</form>
+							<form class="delete_form" name="inq_delete_form" action="product_inq_delete.do" method="post">
+							<input type="hidden" name="product_inq_idx" value="${productInqList[productInqRows-1].product_inq_idx}">
+							<input type="hidden" name="product_idx" value="${productVo.product_idx}">
+							</form>
+							<div class="modal_inq_btn">
+							    <button class="modalCloseButton edit_cancelButton">취소</button>
+							    <button class="edit_updateButton">
+							    수정</button>
+							</div>
+					    </div>				    
 						</div>
-						<input type="hidden" class="product_inq_content" value="${productInqList[productInqRows-1].product_inq_content}">
-						<input type="hidden" class="product_inq_answer" value="${productInqList[productInqRows-1].product_inq_answer}">
-						<input type="hidden" name="product_inq_idx" value="${productInqList[productInqRows-1].product_inq_idx}">
-						<input type="hidden" name="member_idx" value="${productInqList[productInqRows-1].member_idx}">
-						<input type="hidden" name="product_idx" value="${productVo.product_idx}">
-						<input type="hidden" name="member_nickname" value="${productInqList[productInqRows-1].member_nickname}">
-					</div>
-					</form>
-					<form class="delete_form" name="inq_delete_form" action="product_inq_delete.do" method="post">
-					<input type="hidden" name="product_inq_idx" value="${productInqList[productInqRows-1].product_inq_idx}">
-					<input type="hidden" name="product_idx" value="${productVo.product_idx}">
-					</form>
-					<div class="modal_inq_btn">
-					    <button class="modalCloseButton edit_cancelButton">취소</button>
-					    <button class="edit_updateButton">
-					    등록</button>
-					</div>
-			    </div>				    
-				</div>
-                    
-                </c:forEach>
+		                    
+		                </c:forEach>	                    
+	                    </c:otherwise>                    
+                    </c:choose>                   
+                  
                 </div>
                 <!-- 페이지 네비게이션 -->
                 <div class="pageing">

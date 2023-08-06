@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -149,7 +150,7 @@ $(function(){
         .title{background-color: #eef3f5; font-weight: bold; font-size: 15px;}
         
         select:focus, input[type="text"]:focus {outline:none; border: 1px solid #7d99a4;}
-        #delivery_address_name, #delivery_get_name{width: 193px; height: 26px; border-width: 1px; border-style: solid; border-radius: 5px; padding-left: 8px;}
+        #delivery_address_name, #delivery_get_name, #delivery_get_method{width: 193px; height: 26px; border-width: 1px; border-style: solid; border-radius: 5px; padding-left: 8px;}
         #delivery_handphone_begin{width: 83px; height: 26px; border-width: 1px; border-style: solid; border-radius: 5px; padding-left: 5px;}
         #delivery_handphone_middle, #delivery_handphone_end, #delivery_postNum{width: 68px; height: 26px; border-width: 1px; border-style: solid;  border-radius: 5px; padding: 0 10px;}
         #delivery_postNum_btn{width: 88px; height: 26px; border: 2px solid #7d99a4; color:#7d99a4; background-color: white; border-radius: 5px; padding: 0 5px; font-size: 12px; font-weight: bold;}
@@ -350,20 +351,32 @@ $(function(){
 	<h2 class="sub_title">배송지 정보</h2>
 	<div id="delivery_info">
         <table id="tb_delivery_info">
-            <tr>
-                <td class="td_delivery_title top bottom title">배송지선택</td>
-                <td class="td_delivery_content top bottom">
-                    <select name="delivery_address_name" id="delivery_address_name">
-                        <option value="1">집</option>
-                        <option value="2">학원</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="td_delivery_title bottom title">배송지명</td>
-                <!-- 배송지선택의 select값에 따라 변경 -->
-                <td class="td_delivery_content bottom">집</td>
-            </tr>
+        	<c:choose>
+        		<c:when test="${!empty member}">
+        			<!-- 회원만 배송지 정보 선택할 수 있게 처리 -->
+		            <tr>
+		                <td class="td_delivery_title top bottom title">배송지선택</td>
+		                <td class="td_delivery_content top bottom">
+		                    <select name="delivery_address_name" id="delivery_address_name">
+		                        <option value="1">집</option>
+		                        <option value="2">학원</option>
+		                    </select>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td class="td_delivery_title bottom title">배송지명</td>
+		                <!-- 배송지선택의 select값에 따라 변경 -->
+		                <td class="td_delivery_content bottom">집</td>
+		            </tr>
+        		</c:when>
+        		<c:otherwise>
+		            <tr>
+		                <td class="top"></td>
+		                <td class="top">
+		            </tr>
+        		</c:otherwise>
+        	</c:choose>
+            
             <tr>
                 <td class="td_delivery_title bottom title">받는분</td>
                 <td class="td_delivery_content bottom">
@@ -442,7 +455,7 @@ $(function(){
             <tr id="delivery_input_method">
                 <td class="td_delivery_title bottom title">공동현관 비밀번호</td>
                 <td class="td_delivery_content bottom">
-                    <input class="input_focus" type="text" name="delivery_get_name" id="delivery_get_name" value="">
+                    <input class="input_focus" type="text" name="delivery_get_name" id="delivery_get_method" value="">
                 </td>
             </tr> 
         </table>
@@ -458,57 +471,38 @@ $(function(){
                 <th id="th_buy_price">구매가</th>
             </tr>
             <!-- 장바구니 개수 따라서 forEach, el문 -->
+            <c:forEach var="rowNum" begin="1" end="${listCount}">
             <tr class="tr_delivery_content">
                <td class="td_product_info">
                     <div class="basket_item">
-                        <a class="prd_name" href="#">
-                            <img src="../resources/img/test01.jpg" width="85px" height="85px" alt="다람쥐1">
+                        <a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${basketList[rowNum-1].product_idx}">
+                            <img src="../resources/img/${basketList[rowNum-1].saveFile}" width="85px" height="85px" alt="썸네일 이미지">
                         </a>
-                        <a class="prd_name" href="#">
-                            <span class="prd_seller">람쥐천국</span>
-                            <p class="prd_title">람쥐천국 기획행사 한국산 다람쥐털 볶음밥 1+1기획</p>
+                        <a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${basketList[rowNum-1].product_idx}">
+	                        <span class="prd_seller">${basketList[rowNum-1].member_nickname}</span>
+	                        <p class="prd_title">${basketList[rowNum-1].product_name}</p>
                         </a>
                     </div>
                </td>
                <td class="td_sell_price">
-                    4,500원
+                    <fmt:formatNumber value="${basketList[rowNum-1].product_price}" pattern="###,###" />원
                </td>
                <td class="td_product_count">
-                    1
+                    ${basketList[rowNum-1].basket_count}
                </td>
                <td class="td_buy_price">
-                    4,500원
+                     <fmt:formatNumber value="${basketList[rowNum-1].product_price * basketList[rowNum-1].basket_count}" pattern="###,###" />원
                </td>
             </tr>
-            <tr class="tr_delivery_content">
-                <td class="td_product_info">
-                    <div class="basket_item">
-                        <a class="prd_name" href="#">
-                            <img src="../resources/img/test02.jpg" width="85px" height="85px" alt="다람쥐1">
-                        </a>
-                        <a class="prd_name" href="#">
-                            <span class="prd_seller">라쿤보호협회</span>
-                            <p class="prd_title">라쿤보호협회 이벤트상품 한정판 고급 라쿤뒷다리살튀김 </p>
-                        </a>
-                    </div>
-               </td>
-               <td class="td_sell_price">
-                    13,500원
-               </td>
-               <td class="td_product_count">
-                    2
-               </td>
-               <td class="td_buy_price">
-                    27,000원
-               </td>
-            </tr> 
+            </c:forEach>            
         </table>
     </div>	
 
     <!-- 결제관련한 사항들 div -->
     <div class="order_payment_box">
         <div class="left_area">
-
+        
+			<c:if test="${!empty member}">
             <!-- 쿠폰은 로그인된 회원에게만 보이게 처리 -->
             <h2 class="sub_title">쿠폰 할인</h2>
             <div id="coupon_info">
@@ -522,12 +516,13 @@ $(function(){
                                 <option value="1">신규 가입 환영 20% 할인</option>
                             </select>
                             <!-- 결제금액에 할인정보 계산한 결과 값 -->
-                            <p class="txt_right_discount"> - 6,300원</p>
+                            <p class="txt_right_discount"> - 0원</p>
                         </td>
                     </tr>                   
                 </table>
             </div>	
-
+			</c:if>
+			
             <!-- 결제 API에 따라 변경 가능성 많음 -->
             <h2 class="sub_title">결제 수단 선택</h2>
             <div id="coupon_info">
@@ -576,19 +571,19 @@ $(function(){
                     <tr>
                         <td class="td_pay_title">총 상품금액</td>
                         <td class="td_pay_content">
-                            34,000원
+                            <fmt:formatNumber value="${total_price}" pattern="###,###" />원
                         </td>
                     </tr>
                     <tr>
                         <td class="td_pay_title bottom pay_bottom">쿠폰할인금액</td>
                         <td class="td_pay_content bottom discount">
-                            - 6,300원
+                            - 0원
                         </td>
                     </tr>
                     <tr>
                         <td class="td_pay_title middle">총 배송비</td>
                         <td class="td_pay_content middle">
-                            + 2,500원
+                            + <fmt:formatNumber value="${total_delivery}" pattern="###,###" />원
                         </td>
                     </tr>
                     <tr>
@@ -596,7 +591,9 @@ $(function(){
                             최종 결제금액
                         </td>
                         <td class="td_pay_content top discount middle">
-                            <span class="total_pay_price">30,200</span>원
+                            <span class="total_pay_price">
+                            <fmt:formatNumber value="${total_price + total_delivery}" pattern="###,###" />
+                            </span>원
                         </td>
                     </tr>
                     <tr>
