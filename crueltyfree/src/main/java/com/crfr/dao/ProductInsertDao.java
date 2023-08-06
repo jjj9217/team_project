@@ -33,10 +33,11 @@ public class ProductInsertDao{
 		return sqlSession.insert(MAPPER+".insertFile", vo);
 	}
 	
-	public ProductVo findProductIdx(String product_name, String member_nickname) {
+	public int findProductIdx(String product_name, String member_nickname) {
 		Map<String, String> map = new HashMap<>();
 		map.put("product_name", product_name);
 		map.put("member_nickname", member_nickname);
+		
 		return sqlSession.selectOne(MAPPER+".findProductIdx", map);
 	}
 }

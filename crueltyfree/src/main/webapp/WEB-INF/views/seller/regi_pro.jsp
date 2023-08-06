@@ -235,6 +235,9 @@ function validateForm(){
 <form name="form_insert" method="post" action="regi_pro_process.do" enctype="multipart/form-data" 
           onsubmit="return validateForm()">
           
+
+	<input type="hidden" name="member_nickname" value="${member.member_nickname}">
+	<input type="hidden" name="member_idx" value="${member.member_idx}">
 	<div class="regi_line">
 		<article class="regi_left" style="vertical-align: top;">
 			&nbsp;&nbsp;<a>카테고리</a>
@@ -248,7 +251,7 @@ function validateForm(){
 				<option value="e">헤어케어</option>
 				<option value="f">미용소품</option>
 			</select>
-			<select id="categorySmall" name="categorySmall" class="regi_box">
+			<select id="categorySmall" name="category_code" class="regi_box">
 				<option>소분류</option>
 			</select>
 		</article>
@@ -296,7 +299,7 @@ function validateForm(){
 		</article>
 		<article class="regi_right">
 			<select class="regi_box" name="delivery_company">
-				
+				<option value="0">무료</option>
 			</select>
 		</article>
 	</div>

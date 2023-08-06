@@ -6,23 +6,25 @@
 
 	<!-- 상품 추가 처리 구문 -->
 	<insert id="insertProduct" parameterType="ProductVo">
-		insert into ProductVo (category_code,
+		insert into Product (category_code,
 								member_nickname,
 								product_name,
 								product_price,
 								product_capa,
-								delivery_company
+								delivery_company,
+								member_idx
 								)
 			   			 values(#{category_code},
 			   			 	    #{member_nickname},
 			   			 	    #{product_name},
 			   			 	    #{product_price},
 			   			 	    #{product_capa},
-			   			 	    #{delivery_company}
+			   			 	    #{delivery_company},
+			   			 	    #{member_idx}
 			   			 	    )
 	</insert>
 	<insert id="insertProductInfo" parameterType="ProductInfoVo">
-		insert into ProductInfoVo (product_idx,
+		insert into ProductInfo (product_idx,
 								product_info_amount,
 								product_info_useMethod,
 								product_info_maker,
@@ -36,7 +38,7 @@
 			   			 	    )
 	</insert>
 	<insert id="insertFile" parameterType="FileVo">
-		insert into FileVo (product_idx,
+		insert into File (product_idx,
 								originFile,
 								saveFile
 								)
@@ -45,8 +47,8 @@
 								#{saveFile}
 			   			 	    )
 	</insert>
-	<select id="FindProductIdx" parameterType="map" resultType="ProductVo">
-		select * from product where product_name = #{product_name} AND member_nickname = #{member_nickname};
+	<select id="findProductIdx" parameterType="map" resultType="_int">
+		select product_idx from `product` where product_name = #{product_name} AND member_nickname = #{member_nickname}
 	</select>
 	
 </mapper>
