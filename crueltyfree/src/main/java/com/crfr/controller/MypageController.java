@@ -106,7 +106,7 @@ public class MypageController {
 	
 	
 	@PostMapping("/mypage_review_write_process.do")
-	public String mypage_review_insert1(List<MultipartFile> attachedFile, ReviewVo vo, String pageNum, String pageBlock, HttpServletRequest request) {
+	public String mypage_review_insert1(MultipartFile[] attachedFile, ReviewVo vo, String pageNum, String pageBlock, HttpServletRequest request) {
 		
 		//아래 내용이 성공적으로 이루어지지 않으면 실패페이지 주소 반환
 		String viewpage = "mypage_review_err";	
@@ -119,12 +119,15 @@ public class MypageController {
 		//review_idx값 조회
 		int searchReview_idx = mpInsert.selectReview_idx(vo);
 				
-		//리뷰사진 작성 및 searchReview_idx에서 얻은값까지 같이 건네주기
-		int insertreviewimg = mpInsert.insertreviewimg(attachedFile, request, searchReview_idx);
+				
+		int insertreviewimg=0;
 		
+		//리뷰사진 작성 및 searchReview_idx에서 얻은값까지 같이 건네주기 		
+		insertreviewimg = mpInsert.insertreviewimg(attachedFile, request, searchReview_idx);
+		    			
 		//리뷰내용과 리뷰사진이 둘 다 제대로 sql에 삽입되었다면 맨 처음 나의리뷰페이지 주소값을 반환  
 		if(insertreview == 1 && insertreviewimg == 1) {
-			viewpage="redirect:mypage/mypage_review";
+			viewpage="redirect:/mypage/test.do";
 		}		
 		return viewpage; 
 	}
