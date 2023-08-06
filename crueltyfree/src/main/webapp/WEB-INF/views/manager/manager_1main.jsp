@@ -72,8 +72,6 @@
   		text-decoration-line: none;
   		color:black;
   	}
-  	
-  	
   	table.tbl_list {
   		border-collapse: collapse;
   		text-align: left;
@@ -83,7 +81,7 @@
 	table.tbl_list thead th {
   		padding: 7px;
   		font-weight: bold;
-  		vertical-align: top;
+  		
   		border-bottom: 3px solid #7d99a4;
   		width:320px;
 	}
@@ -91,7 +89,7 @@
 		text-align:right;
 		font-size:20px;
 		color:gray;
-		margin-right:-13px;
+		margin-right:0px;
 	}
 	table.tbl_list tbody th {
   		width: 150px;
@@ -123,9 +121,6 @@
 		line-height: 20px;
 		background-color: #eef3f5;	
 	}
-	
- 	
- 	
  	.list{
   		list-style-type: none;
   		padding: 0px;
@@ -137,7 +132,6 @@
   		width:230px;
   		height:430px;
 	}
-	
 	#li a{
   	text-decoration: none;
   	padding: 10px;
@@ -147,14 +141,7 @@
   	font-size:17px;
   	background-color:rgb(221, 219, 214);
   	width:170px;
-	}
-	
-	
- 
- 	
- 	
-  	
-  	
+	} 	
 </style>
 
 
@@ -183,35 +170,32 @@
 	</ul>
 	</div>
 	<div id="content">
-	
 	<div id="sub">
 	<table class="tbl_list">
 	<thead>
  	 <tr>
-  			<th scope="cols">1:1 문의</th>
-    		<th scope="cols" id="right"><a href="" id="right">더보기 〉</a></th>
+ 	 	<th>1:1 문의</th>
+ 	 	<th></th>
+		<th></th>
+  		<th id="right"><a href="manager_41d1.do" id="right">더보기 〉</a></th>
  	 </tr>
  	 </thead>
  	 <tbody>
         <!-- 글목록 내용-->
 		<c:choose>
-			<c:when test="${empty boardList}">
+			<c:when test="${empty oneinqList}">
 				<tr>
 					<td colspan="3"> 등록된 1:1문의가 없습니다. </td>
 				</tr>
 			</c:when>
 			<c:otherwise>
 			
-				<c:forEach var="rowNum" begin="${startNum}" end="${endNum}">
+				<c:forEach var="rowNum" begin="1" end="5">
 					<tr>
-						<td>${rowNum}</td>
-						<td id="td_title">
-							
-							<a href="view.jsp?no=${boardList[rowNum-1].board_idx}">${boardList[rowNum-1].title}</a>
-						</td>
-						<td>${boardList[rowNum-1].member_name}</td>
-						<td>${boardList[rowNum-1].read_count}</td>
-						<td>${boardList[rowNum-1].post_date}</td>
+						<td>${oneinqList[rowNum-1].one_inq_idx}</td>
+						<td>${oneinqList[rowNum-1].member_nickname}</td>
+						<td>${oneinqList[rowNum-1].one_inq_content}</td>
+					    <td>${oneinqList[rowNum-1].one_inq_content}</td>
 					</tr>
 				</c:forEach>		
 			</c:otherwise>
@@ -224,7 +208,7 @@
 	<thead>
  	 <tr>
   			<th scope="cols">판매자 등록문의</th>
-    		<th scope="cols" id="right"><a href="" id="right">더보기 〉</a></th>
+    		<th scope="cols" id="right"><a href="manager_5sign.do" id="right">더보기 〉</a></th>
  	 </tr>
  	 </thead>
  	 <tbody>
@@ -239,9 +223,7 @@
 			
 				<c:forEach var="rowNum" begin="${startNum}" end="${endNum}">
 					<tr>
-						<td>${rowNum}</td>
-						<td id="td_title">
-							
+						<td id="td_title">						
 							<a href="view.jsp?no=${boardList[rowNum-1].board_idx}">${boardList[rowNum-1].title}</a>
 						</td>
 						<td>${boardList[rowNum-1].member_name}</td>
@@ -260,7 +242,7 @@
 	<thead>
  	 <tr>
   			<th scope="cols">게시글 관리</th>
-    		<th scope="cols" id="right"><a href="" id="right">더보기 〉</a></th>
+    		<th scope="cols" id="right"><a href="manager_6post.do" id="right">더보기 〉</a></th>
  	 </tr>
  	 </thead>
  	 <tbody>

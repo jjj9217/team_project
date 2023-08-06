@@ -123,7 +123,7 @@
 	  border-collapse: separate;
   		border-spacing: 0;
   		width: 100%;
-  		font-size:15px;
+  		font-size:11px;
 	}
 	th,
 	td {
@@ -167,20 +167,20 @@
 		color:white; 
 		border-radius:5px;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	#edit{
+		border:0;
+		background-color:#7d99a4; 
+		color:white;
+		border-radius:3px;
+		width:30px;
+	}
+	#delete{
+		border:0;
+		background-color:rgb(216, 98, 98);
+		color:white;
+		border-radius:3px;
+		width:30px;
+	}
 	
 </style>
 </head>
@@ -238,38 +238,31 @@
     <!-- 글목록 테이블 -->
     <table id="tbl_list">
         <tr>
-            <th width="">번호</th>
-            <th width="">이름</th>
-            <th width="">아이디</th>
-            <th width="">이메일</th>
-            <th width="">집주소</th>
-            <th width="">등등</th>
+            <th width="50px">리뷰번호</th>
+            <th width="50px">상품번호</th>
+            <th width="50px">작성자</th>
+            <th width="300px">리뷰내용</th>
+            <th width="">기능</th>
         </tr>
 
         <!-- 글목록 내용-->
 		<c:choose>
-			<c:when test="${empty boardList}">
+			<c:when test="${empty reviewList}">
 				<tr>
 					<td colspan="6"> 데이터가 없습니다. </td>
 				</tr>
 			</c:when>
 			<c:otherwise>
 			
-				<c:forEach var="rowNum" begin="${startNum}" end="${endNum}">
+				<c:forEach var="rowNum" begin="1" end="10">
 					<tr>
-						<td>${rowNum}</td>
-						<td id="td_title">
-							<a href="view.jsp?no=${boardList[rowNum-1].board_idx}">${boardList[rowNum-1].title}</a>
-						</td>
-						<td>${boardList[rowNum-1].member_name}</td>
-						<td>${boardList[rowNum-1].read_count}</td>
-						<td>${boardList[rowNum-1].post_date}</td>
-						<td style="padding-left:20px">
-							<c:if test="${!empty boardList[rowNum-1].originFile}">
-								<a href="download.jsp?oName=${boardList[rowNum-1].originFile}&sName=${boardList[rowNum-1].saveFile}">
-									<img src="../resources/img/download.png" width="15px" height="17px">
-								</a>
-							</c:if>
+						<td>${reviewList[rowNum-1].review_idx}</td>
+						<td>${reviewList[rowNum-1].product_idx}</td>
+						<td>${reviewList[rowNum-1].member_nickname}</td>
+						<td>${reviewList[rowNum-1].review_content}</td>
+						<td>
+						<input type="button" id="edit" value="수정">
+						<input type="button" id="delete" value="삭제">
 						</td>
 					</tr>
 				</c:forEach>

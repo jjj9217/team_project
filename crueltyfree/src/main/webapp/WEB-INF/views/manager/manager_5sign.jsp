@@ -123,7 +123,7 @@
 	  border-collapse: separate;
   		border-spacing: 0;
   		width: 100%;
-  		font-size:15px;
+  		font-size:11px;
 	}
 	th,
 	td {
