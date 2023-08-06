@@ -32,7 +32,7 @@ public interface MypageService {
 	
 	default int selectReview_idx(ReviewVo vo) {return 0;}
 	
-	default int insertreviewimg(List<MultipartFile> attachedFile, HttpServletRequest request,int searchReview_idx) {return 0;}	
+	default int insertreviewimg(MultipartFile[] attachedFile, HttpServletRequest request,int searchReview_idx) {return 0;}	
 
 
 }

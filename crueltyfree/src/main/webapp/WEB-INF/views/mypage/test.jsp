@@ -68,5 +68,58 @@ test시작
 	inputImage.addEventListener("change", e => {
 	    readImage(e.target)
 	})
-    </script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	$("#XXXmypage_review_write_process.do").click(function(){
+        //선택된 체크박스 담을 변수 설정
+        var selectedValues = [];
+        
+        //체크된 체크박스의 value를 넣음
+        $(".checkboxes:checked").each(function() {
+            selectedValues.push($(this).val());
+        });
+        
+        // 체크된 항목이 없을 경우 알림을 띄우고 함수를 종료
+        if (selectedValues.length === 0) {
+            alert("상품을 선택해 주세요.");
+            return;
+        }
+        
+        $.ajax({
+            type: "post",
+            url: "basket_delete_multiple.do",
+            data: { "basket_idxs": selectedValues},
+            success: function(data) {
+                if (data == "success") {
+                    alert("선택한 상품의 삭제를 성공하였습니다.");
+                    window.location.href = "basket.do";
+                } else {
+                    alert("선택한 상품의 삭제를 실패하였습니다.");
+                }
+            },
+            error: function(error) {
+                alert("ajax 에러 발생");
+            }
+        });//end of ajax
+    });
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    </script>         
 </html>
