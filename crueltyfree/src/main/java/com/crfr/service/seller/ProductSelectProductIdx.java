@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class ProductSelectProductIdx implements ProductSellerService{
 	private final ProductInsertDao dao;
 	
-	public ProductVo findProductIdx (String product_name, String member_nickname) {
+	public int findProductIdx (String product_name, String member_nickname) {
 		return dao.findProductIdx (product_name, member_nickname);
 	}
 }
