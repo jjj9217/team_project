@@ -24,6 +24,7 @@ import com.crfr.vo.BasketVo;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.MemberVo;
 import com.crfr.vo.ProductVo;
+import com.google.gson.Gson;
 
 import lombok.Setter;
 
@@ -34,7 +35,7 @@ public class PurchaseController {
 	//서비스 클래스로 사용할 클래스들을 멤버변수로 정의하고 의존 자동 주입받도록 함
 	@Setter(onMethod_={ @Autowired })	
 	PurchaseService bSelectCount, bSelectList, bPlusBasketCount, bMinusBasketCount, bUpdateBasketCount,
-	bBasketInsert, bBasketDeleteOne;
+	bBasketInsert, bBasketDeleteOne, oSelectBasket;
 	
 	@Setter(onMethod_={ @Autowired })	
 	ProductViewService pSelectView, pSelectThumbnail;
@@ -288,11 +289,82 @@ public class PurchaseController {
 		return message;
 	}
 	
-	@GetMapping("/order.do")
-	public String order() {		
+	//주문/결제 페이지
+	@PostMapping("/order.do")
+	public String order(HttpServletRequest request, Model model) {
+		
+		String selectedValuesStr = request.getParameter("selectedValuesStr"); //JSon형식으로 받은것
+		String[] selectedValues = new Gson().fromJson(selectedValuesStr, String[].class);//배열로 풀기
+		
+		String product_idx = request.getParameter("product_idx");
+		String cart_cnt = request.getParameter("cart_cnt");
+		
+		List<BasketListVo> basketList = new ArrayList<>(); // 빈 리스트로 초기화. 구매목록
+		int listCount = 0; //구매목록 개수
+		int total_price = 0; //총 상품 금액
+		int total_delivery = 0; //총 배송비용
+		
+		if(selectedValuesStr != null) {
+			for (String selectedValue : selectedValues) {//String배열 값마다 처리
+				//selectedValue = basket_idx
+				BasketVo basketVo = oSelectBasket.selectBasket(selectedValue);
+				
+				int productIdx = basketVo.getProduct_idx(); //장바구니목록의 상품 번호를 얻음
+			    ProductVo productVo = pSelectView.selectView(productIdx); //상품번호의 상품Vo
+			    FileVo fileVo = pSelectThumbnail.selectThumbnail(productIdx); //상품번호의 파일Vo중 1번째
+				
+				BasketListVo basketListVo = new BasketListVo(); // BasketListVo 객체 생성
+				
+			    basketListVo.setBasket_idx(basketVo.getBasket_idx());
+			    basketListVo.setProduct_idx(basketVo.getProduct_idx());
+			    basketListVo.setOriginFile(fileVo.getOriginFile());
+			    basketListVo.setSaveFile(fileVo.getSaveFile());
+			    basketListVo.setMember_nickname(productVo.getMember_nickname());
+			    basketListVo.setProduct_name(productVo.getProduct_name());
+			    basketListVo.setProduct_price(productVo.getProduct_price());
+			    basketListVo.setBasket_count(basketVo.getBasket_count());
+			    basketListVo.setDelivery_company(productVo.getDelivery_company());	
+				
+				basketList.add(basketListVo); // basketList에 추가
+				
+				listCount++;
+				total_price +=  productVo.getProduct_price() * basketVo.getBasket_count();
+				total_delivery += productVo.getDelivery_company();
+			}
+		}else {
+			int productIdx = Integer.parseInt(product_idx); //상품 번호
+			int cartCnt = Integer.parseInt(cart_cnt); //상품 번호
+			
+		    ProductVo productVo = pSelectView.selectView(productIdx); //상품번호의 상품Vo
+		    FileVo fileVo = pSelectThumbnail.selectThumbnail(productIdx); //상품번호의 파일Vo중 1번째
+			
+			BasketListVo basketListVo = new BasketListVo(); // BasketListVo 객체 생성
+			
+		    basketListVo.setProduct_idx(productIdx);
+		    basketListVo.setOriginFile(fileVo.getOriginFile());
+		    basketListVo.setSaveFile(fileVo.getSaveFile());
+		    basketListVo.setMember_nickname(productVo.getMember_nickname());
+		    basketListVo.setProduct_name(productVo.getProduct_name());
+		    basketListVo.setProduct_price(productVo.getProduct_price());
+		    basketListVo.setBasket_count(cartCnt);
+		    basketListVo.setDelivery_company(productVo.getDelivery_company());	
+			
+			basketList.add(basketListVo); // basketList에 추가
+			
+			listCount++;
+			total_price +=  productVo.getProduct_price() * cartCnt;
+			total_delivery += productVo.getDelivery_company();
+		}
+		
+		model.addAttribute("listCount", listCount); 
+		model.addAttribute("total_price", total_price); 
+		model.addAttribute("total_delivery", total_delivery); 
+		model.addAttribute("basketList", basketList); // basketList를 모델에 추가
 		return "purchase/order";
 	}
-		
+	
+	
+	
 	
 	@GetMapping("/order_complete.do")
 	public String order_complete() {		
