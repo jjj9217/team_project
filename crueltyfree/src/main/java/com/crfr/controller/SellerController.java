@@ -68,7 +68,7 @@ public class SellerController {
 		int result1 = pInsertProduct.insertProduct (member_nickname, 
 				category_code, product_name, product_price, product_capa, delivery_company);
 
-//		ProductVo productVo = p-----.셀렉트해오기(상품이름,닉네임);
+//		int productIdx = p-----.셀렉트해오기(상품이름,닉네임);
 //		
 //		String product_idx = String.valueOf(productVo.getProduct_idx()); 
 		

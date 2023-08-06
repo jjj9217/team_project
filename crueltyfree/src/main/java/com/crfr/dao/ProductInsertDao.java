@@ -3,9 +3,9 @@ package com.crfr.dao;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.crfr.vo.ProductVo;
-import com.crfr.vo.ProductInfoVo;
 import com.crfr.vo.FileVo;
+import com.crfr.vo.ProductInfoVo;
+import com.crfr.vo.ProductVo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,5 +28,9 @@ public class ProductInsertDao{
 	}
 	public int insertFile(FileVo vo) {
 		return sqlSession.insert(MAPPER+".insertFile", vo);
+	}
+	
+	public ProductVo findProductIdx(String product_find) {
+		return sqlSession.selectOne(MAPPER+".findProductIdx", product_find);
 	}
 }

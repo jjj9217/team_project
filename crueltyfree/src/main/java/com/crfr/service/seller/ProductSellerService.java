@@ -9,7 +9,7 @@ import com.crfr.vo.FileVo;
 import com.crfr.vo.ProductVo;
 
 public interface ProductSellerService {
-	default ProductVo selectView (int Product_idx) {return null;}
+	default ProductVo findProductIdx (String product_name, String member_nickname) {return null;}
 	default int insertFile (MultipartFile attachedFile, String product_idx, 
 							HttpServletRequest request) {return 0;}
 	default int insertProduct (String category_code,
