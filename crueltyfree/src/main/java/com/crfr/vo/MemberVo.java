@@ -22,5 +22,5 @@ public class MemberVo {
 	private Date join_date;
 	private Date update_date;
 	private Date cancel_date;
-	private int cancel_or_not;	
+	private int cancel_or_not;
 }
