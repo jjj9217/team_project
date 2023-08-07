@@ -20,32 +20,28 @@ height:width:500px;}
 <body>
 test시작
 
-<form name="fileForm" action="mypage_review_write_process.do" method="post" enctype="multipart/form-data">
+        <form name="fileForm" enctype="multipart/form-data" action="mypage_review_write_process.do" method="post">    
         <input type="file" name="attachedFile">
         <input type="file" name="attachedFile">
         <input type="file" name="attachedFile">
         <input type="file" name="attachedFile">
         <input type="file" name="attachedFile">
-        
-                       
+                              
         <input type="hidden" name="member_idx" value="1">
         <input type="hidden" name="product_idx" value="1">
         <input type="hidden" name="review_score" value="1">
         <input type="hidden" name="member_nickname" value="k">                
         <input type="text" name="review_content">        
-        <button>전송</button>        
-    
-        
-
-<!-- 
-<div class="image-container">
-    <img style="width: 150px;" id="preview-image" src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image">
-    <input style="display: block; float:left;" type="file" id="input-image" name="attachedFile">
-</div>
-
- -->
-
+        <button id="file_submit_btn">전송</button>        
+        </form>
+<%-- 
+<input type="hidden" name="temp2" id="asd"value="3">
+<form name="fileForm" enctype="multipart/form-data" action="" method="">
+<c:forEach var="asd" begin="1" end="3">
+<input type="hidden" name="temp2" id="result_contain"value="">
+</c:forEach> --%>
 </form>
+
 </body>
  <script>
  function readImage(input) {
@@ -69,34 +65,42 @@ test시작
 	    readImage(e.target)
 	})
 	
+		
 	
+2가지 문제	
+name$("fileForm")
+	id$("#fileForm")
+$("fileForm").eq(3).click(function(){
 	
-	
-	
-	
-	
-	
-	
-	
-	$("#XXXmypage_review_write_process.do").click(function(){
-        //선택된 체크박스 담을 변수 설정
-        var selectedValues = [];
-        
-        //체크된 체크박스의 value를 넣음
-        $(".checkboxes:checked").each(function() {
-            selectedValues.push($(this).val());
-        });
-        
-        // 체크된 항목이 없을 경우 알림을 띄우고 함수를 종료
-        if (selectedValues.length === 0) {
-            alert("상품을 선택해 주세요.");
-            return;
-        }
-        
+}
+	2.text type과 hidden type도 다 전송이 되는건지
+	1.선택자가 이것이 맞는건지 .click가 맞는건지
+	$("#file_submit_btn").click(function(){  
+		
+		var fileCheck = document.getElementByName("attachedFile").value;
+	    
+	    for (var i=0; i<5; i++){
+	        if(fileCheck[i].value == 0){
+	            fileCheck[i].splice(i,1)
+	        }	        
+
+	    }
+	    
+	    var length = fileCheck.length;
+	    
+	    ㅁㄴㅇ = json형식으로 변환 .(fileCheck)
+	    
+	    $("#result_contain").val(ㅁㄴㅇ);
+	    
+	    document.fileForm.submit();
+	}
+	    	    
+	    
+	    
         $.ajax({
             type: "post",
-            url: "basket_delete_multiple.do",
-            data: { "basket_idxs": selectedValues},
+            url: "mypage_review_write_process.do",
+            data: { "basket_idxs": fileCheck},
             success: function(data) {
                 if (data == "success") {
                     alert("선택한 상품의 삭제를 성공하였습니다.");
@@ -110,16 +114,6 @@ test시작
             }
         });//end of ajax
     });
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
     </script>         
 </html>

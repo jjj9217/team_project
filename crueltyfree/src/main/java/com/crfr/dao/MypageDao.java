@@ -1,10 +1,10 @@
 package com.crfr.dao;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.ReviewExploreVo;
 import com.crfr.vo.ReviewVo;
@@ -62,9 +62,42 @@ public class MypageDao {
 	}
 
 	
+	
+	//배송지에 관한 Dao
+	
+	//배송지 목록에 관한 Dao
+	public List<DeliveryVo> selectdeliveryList(int member_idx) {
+		return sqlSession.selectList(MAPPER+".selectdeliveryList", member_idx);
+		}
+		
+	//배송지 개수세기
+	public int selectdeliveryCount(int member_idx) {
+		return sqlSession.selectOne(MAPPER+".selectdeliveryCount", member_idx);
+	}
+	
+	//배송지 등록하기
+	public int insertdeliveryPost(DeliveryVo vo) {
+		return sqlSession.insert(MAPPER+".insertdeliveryPost", vo);
+	}
 
+	//기본배송지 설정하기
+	public int updatedeliveryPostdefault (DeliveryVo vo) {
+		return sqlSession.update(MAPPER+".updatedeliveryPostdefault", vo);
+	}
 	
+	public int updatedeliveryPostchangedefault(DeliveryVo vo) {
+		return sqlSession.update(MAPPER+".updatedeliveryPostchangedefault", vo);
+	}
 	
+	//배송지 수정하기
+	public int updatedeliveryPost(DeliveryVo vo) {
+		return sqlSession.update(MAPPER+".updatedeliveryPost", vo);
+	}
+	
+	//배송지 삭제하기
+	public int deletedeliveryPost(DeliveryVo vo) {
+		return sqlSession.delete(MAPPER+".deletedeliveryPost", vo);
+	}
 	
 	
 }

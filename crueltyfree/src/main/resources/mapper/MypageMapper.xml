@@ -67,6 +67,7 @@
      </select>
      
           
+          
      <!-- 작성한 리뷰 목록 -->
      
      <!-- 작성한 리뷰 목록 사진 -->
@@ -131,8 +132,6 @@
      </select>
      
  
- 
- 
   
     <!--  리뷰 작성 -->
     
@@ -176,7 +175,102 @@
                            ) 
     </insert>
     
-    
+ 
+ 
+    <!-- 배송지 -->
+    <!-- 배송지 목록 -->
+    <select id="selectdeliveryList" parameterType="_int" resultType="DeliveryVo">
+        select * from delivery
+            where member_idx=#{member_idx}            
+     </select>
+     
+     <!-- 배송지 목록 개수 세기 -->
+     <select id="selectdeliveryCount" parameterType="_int" resultType="_int">
+        select count(*) from delivery
+            where member_idx=#{member_idx}
+     </select>
 
+    <!-- 배송지 등록 -->
+    <insert id="insertdeliveryPost" parameterType="DeliveryVo">
+        insert into delivery(member_idx, 
+		                     delivery_address_name, 
+		                     delivery_get_name, 
+		                     delivery_handphone, 
+		                     delivery_message, 
+		                     delivery_pass, 
+		                     delivery_pass_content, 
+		                     delivery_postNum, 
+		                     delivery_address, 
+		                     delivery_address2)
+		              values(#{member_idx},
+		                     #{delivery_address_name},
+		                     #{delivery_get_name},
+		                     #{delivery_handphone},
+		                     #{delivery_message},
+		                     #{delivery_pass},
+		                     #{delivery_pass_content},
+		                     #{delivery_postNum},
+		                     #{delivery_address},
+		                     #{delivery_address2}) 
+    </insert>
+
+    <!-- 기본배송지 설정 -->
+    <update id="updatedeliveryPostdefault" parameterType="DeliveryVo">
+         update delivery set defaultpost=1
+                        where delivery_idx=#{delivery_idx}
+    </update>
+         <!-- and member_idx=#{member_idx} -->
+    
+    <update id="updatedeliveryPostchangedefault" parameterType="DeliveryVo">
+         update delivery set defaultpost=0
+                        where delivery_idx!=#{delivery_idx}
+    </update>
+         <!-- and member_idx=#{member_idx} -->
+
+    <!-- 배송지 수정 -->
+    <update id="updatedeliveryPost" parameterType="DeliveryVo">
+        update delivery
+                <set>
+                    <if test="delivery_address_name != null">
+                        delivery_address_name=#{delivery_address_name},    
+                    </if>
+                    <if test="delivery_get_name != delivery_get_name">
+                        delivery_get_name=#{delivery_get_name},
+                    </if>
+                    <if test="delivery_handphone != null">
+                        delivery_handphone=#{delivery_handphone},        
+                    </if>
+                    <if test="delivery_message != null">
+                        delivery_message=#{delivery_message}        
+                    </if>                                                           
+                    <if test="delivery_pass != null">
+                        delivery_pass=#{delivery_pass}        
+                    </if>
+                    <if test="delivery_pass_content != null">
+                        delivery_pass_content=#{delivery_pass_content}        
+                    </if>
+                    <if test="delivery_postNum != null">
+                        delivery_postNum=#{delivery_postNum}        
+                    </if>
+                    <if test="delivery_address != null">
+                        delivery_address=#{delivery_address}        
+                    </if>
+                    <if test="delivery_address2 != null">
+                        delivery_address2=#{delivery_address2}        
+                    </if>                    
+                </set>                     
+                where delivery_idx=#{delivery_idx}
+                  and member_idx=#{member_idx}   
+    </update>
+    
+    <!-- 배송지 삭제 -->
+    <delete id="deletedeliveryPost" parameterType="DeliveryVo">
+        delete from delivery
+            where delivery_idx=#{delivery_idx};
+    </delete>
+
+    <!-- and member_idx=#{member_idx} -->
+    
+    
          
 </mapper>

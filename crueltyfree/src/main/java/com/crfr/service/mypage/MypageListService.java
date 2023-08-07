@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.crfr.dao.MypageDao;
+import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.ReviewExploreVo;
 
@@ -32,6 +33,10 @@ public class MypageListService implements MypageService {
 	
 	public List<ReviewExploreVo> selectmyreviewList(int member_idx) {
 		return dao.selectmyreviewList(member_idx);	
+	}
+	
+	public List<DeliveryVo> selectdeliveryList(int member_idx) {
+		return dao.selectdeliveryList(member_idx);	
 	}
 	
 	
