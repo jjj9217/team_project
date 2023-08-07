@@ -7,27 +7,78 @@
 <head>
 <meta charset="UTF-8">
 <title>주문/결제 | CrueltyFree</title>
-<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<!-- 결제 -->
+<!-- 우편번호 -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-const userCode = {imp36534356};
-IMP.init(userCode);
+function kakaopost(){
+    var width = 500; // 팝업의 너비
+    var height = 600; // 팝업의 높이
+   
+    var top = (window.screen.height / 2) - (height / 2);
 
-function doPayment(){
+    new daum.Postcode({
+        width: width,
+        height: height,
+        oncomplete: function(data) {
+            $("#delivery_postNum").val(data.zonecode);
+            $("#delivery_address").val(data.address);
+        }
+    }).open({
+        left: 1700,
+        top: top
+    });
+}
+</script>
+
+<!-- 결제 -->
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script>
+
+//yymmdd형태로 날짜 얻기
+function formatDateToYYMMDD(date) {
+    const year = date.getFullYear().toString().slice(-2);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return year+month+day;
+}
+
+//난수생성
+function generateRandomNumber(length) {
+    const randomNumber = Math.random().toString().slice(2, 2 + length);
+    return randomNumber.padStart(length, '0');
+}
+
+const currentDate = new Date();
+const formattedDate = formatDateToYYMMDD(currentDate);
+const randomDigits = generateRandomNumber(8);  //8자리의 난수생성
+
+var IMP = window.IMP;
+IMP.init("imp36534356");
+
+function doPayment(name, amount, buyer_email, buyer_name, buyer_tel, buyer_addr, buyer_postcode){
 	IMP.request_pay({
-	      pg: "kcp.{상점ID}",
+	      pg: "html5_inicis.INIpayTest",
 	      pay_method: "card",
-	      merchant_uid: "ORD20180131-0000011",   // 주문번호
-	      name: "노르웨이 회전 의자",
-	      amount: 64900,                         // 숫자 타입
-	      buyer_email: "gildong@gmail.com",
-	      buyer_name: "홍길동",
-	      buyer_tel: "010-4242-4242",
-	      buyer_addr: "서울특별시 강남구 신사동",
-	      buyer_postcode: "01181"
+	      merchant_uid: "CF"+formattedDate+randomDigits,   // 주문번호
+	      name: name,
+	      amount: amount,                         // 숫자 타입
+	      buyer_email: buyer_email,
+	      buyer_name: buyer_name,
+	      buyer_tel: buyer_tel,
+	      buyer_addr: buyer_addr,
+	      buyer_postcode: buyer_postcode
 	    }, function (rsp) { // callback
 	      //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+	          if (rsp.success) {
+	        	  var msg = '결제가 완료되었습니다.';
+			      alert(msg);
+// 			      location.href = "결제 완료 후 이동할 페이지 url"
+			    } else {
+			      var msg = '결제에 실패하였습니다.';
+			      msg += '에러내용 : ' + rsp.error_msg;
+			      alert(msg);
+			    }
 	    });	
 }
 </script>
@@ -102,46 +153,68 @@ $(function(){
 	    }
 	});
 	
-	//약관동의 모달창	
-	$(".agree_check_btn").click(function(){
-		//현재 클릭한 버튼의 인덱스 가져오기
-		var index = $(".agree_check_btn").index(this);
-		
-		//현재 index값의 modalContainer클래스에 hidden클래스 제거
-		$(".modalContainer").eq(index).removeClass("hidden");
-	});
-	//모달창 내부 닫기 버튼
-	$(".modalCloseButton").click(function(){
-		//현재 클릭한 버튼의 인덱스 가져오기
-		var index = $(".modalCloseButton").index(this);
-		
-		//현재 index값의 modalContainer클래스에 hidden클래스 추가
-		$(".modalContainer").eq(index).addClass("hidden");
+	//우편번호찾기
+	$("#delivery_postNum_btn").click(function(){
+		kakaopost();
 	});
 	
 	//결제하기 버튼 클릭
-	$("#order_btn").click(function(){
-		 var allChecked = $(".agree_check:checked").length == $(".agree_check").length;
-		
-	    // 체크된 항목이 없을 경우 알림을 띄우고 함수를 종료
-	    if (!allChecked) {
-	        alert("약관동의에 체크해 주세요.");
-	        return;
-	    }
-	    
+	$("#order_btn").click(function(){		
 	    var client_num = "";
 	    if(${!empty member}){
-	    	client_num = $("#order_member_idx").val()
+	    	client_num = $("#order_member_idx").val();
 	    }else{
-	    	client_num = $("#order_client_num").val()
+	    	client_num = $("#order_client_num").val();
 	    }
 	    
 	    $("#clientNum").val(client_num);
 	    
+	    //상품이름설정
+	    var name = "";
+	    if(${listCount} > 1){
+	    	name = $(".prd_title").eq(0).text() + " 외 " + ${listCount - 1} + "건";	    	
+	    }else{
+	    	name = $(".prd_title").eq(0).text();
+	    }
 	    
+	    //상품가격설정
+	    var amount = parseInt(${total_price + total_delivery});
+	    
+	    //주문자이메일설정
+	    var buyer_email = "";
+	    if(${!empty member}){
+	    	buyer_email = $("#order_member_email").val();
+	    }else{
+	    	buyer_email = $("#guest_email").val();
+	    }
+	    
+	    //주문자이름설정
+	    var buyer_name = "";
+	    if(${!empty member}){
+	    	buyer_name = $("#order_member_name").val();
+	    }else{
+	    	buyer_name = $("#guest_name").val();
+	    }
+	    
+	    //주문자 전화번호 설정
+	    var buyer_tel = "";
+	    if(${!empty member}){
+	    	buyer_tel = $("#order_member_phone").val();
+	    }else{
+	    	buyer_tel = $("#guest_phone").val();
+	    }
+	    //주문자 주소
+	    var buyer_addr = $("#delivery_address").val() + " " + $("#delivery_address2").val();
+	    
+	    //주문자 우편번호
+	    var buyer_postcode = $("#delivery_postNum").val();
+	    
+	    doPayment(name, amount, buyer_email, buyer_name, buyer_tel, buyer_addr, buyer_postcode);
 	});
 })
+  
 </script>
+
     <style>
         *{margin: 0; padding: 0;}
         a{text-decoration: none;}
@@ -439,10 +512,10 @@ $(function(){
             <tr>
                 <td class="td_delivery_address_title bottom title">주소</td>
                 <td class="td_delivery_address_content bottom">
-                    <input type="text" class="gray_bg" name="delivery_postNum" id="delivery_postNum" value="31572" readonly="readonly">
+                    <input type="text" class="gray_bg" name="delivery_postNum" id="delivery_postNum" value="" readonly="readonly">
                     <input type="button" name="delivery_postNum_btn" id="delivery_postNum_btn" value="우편번호찾기"><br>
-                    <input type="text" class="gray_bg" name="delivery_address" id="delivery_address" value="도로명:충남 아산시 어의정로 46(용화동, 온천마을아파트)" readonly="readonly"><br>
-                    <input type="text" name="delivery_address2" id="delivery_address2" value="102-1107">
+                    <input type="text" class="gray_bg" name="delivery_address" id="delivery_address" value="" readonly="readonly"><br>
+                    <input type="text" name="delivery_address2" id="delivery_address2" value="">
                 </td>
             </tr>
         </table>
@@ -469,10 +542,10 @@ $(function(){
             <tr>
                 <td class="td_delivery_title bottom title">공동현관 출입방법</td>
                 <td class="td_delivery_content bottom">
-                    <span class="dv_input"><input type="radio" name="dv_input" id="dv_input_1" value="1"><label for="dv_input_1"> 비밀번호</label></span>
-                    <span class="dv_input"><input type="radio" name="dv_input" id="dv_input_2" value="2"><label for="dv_input_2"> 경비실 호출</label></span>
-                    <span class="dv_input"><input type="radio" name="dv_input" id="dv_input_3" value="3"><label for="dv_input_3"> 자유출입가능</label></span>
-                    <span class="dv_input"><input type="radio" name="dv_input" id="dv_input_4" value="4"><label for="dv_input_4"> 기타사항</label></span>
+                    <span class="dv_input"><input type="radio" name="dv_input" id="dv_input_1" value="0"><label for="dv_input_1"> 비밀번호</label></span>
+                    <span class="dv_input"><input type="radio" name="dv_input" id="dv_input_2" value="1"><label for="dv_input_2"> 경비실 호출</label></span>
+                    <span class="dv_input"><input type="radio" name="dv_input" id="dv_input_3" value="2"><label for="dv_input_3"> 자유출입가능</label></span>
+                    <span class="dv_input"><input type="radio" name="dv_input" id="dv_input_4" value="3"><label for="dv_input_4"> 기타사항</label></span>
                 </td>
             </tr>
             <tr id="delivery_input_method">
@@ -527,7 +600,7 @@ $(function(){
         
 			<c:if test="${!empty member}">
             <!-- 쿠폰은 로그인된 회원에게만 보이게 처리 -->
-            <h2 class="sub_title">쿠폰 할인</h2>
+            <h2 class="sub_title">[회원] 쿠폰 할인</h2>
             <div id="coupon_info">
                 <table id="tb_coupon_info">
                     <tr>
@@ -571,45 +644,7 @@ $(function(){
                 </table>
             </div>	
 			</c:if>
-            <!-- 결제 API에 따라 변경 가능성 많음 -->
-            <h2 class="sub_title">결제 수단 선택</h2>
-            <div id="coupon_info">
-                <table id="tb_coupon_info">
-                    <tr>
-                        <td class="td_payment_method top bottom" colspan="2">
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_1" value="1"><label for="payment_method_1"> 신용카드</label></span>
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_2" value="2"><label for="payment_method_2"> 무통장입금</label></span>
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_3" value="3"><label for="payment_method_3"> PAYCO</label></span>
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_4" value="4"><label for="payment_method_4"> 카카오페이</label></span>
-                            <br>
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_5" value="5"><label for="payment_method_5"> 네이버페이</label></span>
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_6" value="6"><label for="payment_method_6"> 휴대폰결제</label></span>
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_7" value="7"><label for="payment_method_7"> 계좌이체</label></span>
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_8" value="8"><label for="payment_method_8"> 도서상품권</label></span>
-                            <br>
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_9" value="9"><label for="payment_method_9"> 문화상품권</label></span>
-                        </td>                        
-                    </tr>
-                    <tr>
-                        <td class="td_coupon_title bottom title">카드 종류</td>
-                        <td class="td_coupon_content bottom">
-                            <select name="credit_card" id="credit_card">
-                                <option value>카드를 선택해주세요</option>
-                                <option value="1">BC 카드</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td_coupon_title bottom title">할부 종류</td>
-                        <td class="td_coupon_content bottom">
-                            <select name="credit_card" id="credit_card">
-                                <option value="0">일시불</option>
-                                <option value="1">1개월</option>
-                            </select>
-                        </td>
-                    </tr>                              
-                </table>
-            </div>	
+            
         </div>
 
         <div class="right_area">
@@ -648,6 +683,9 @@ $(function(){
                         <td colspan="2" class="td_order_btn">
                             <input type="submit" name="order_btn" id="order_btn" value="결제하기">
 	                        <input type="hidden" id="order_member_idx" value="${member.member_idx}">
+	                        <input type="hidden" id="order_member_email" value="${member.member_email}">
+	                        <input type="hidden" id="order_member_name" value="${member.member_name}">
+	                        <input type="hidden" id="order_member_phone" value="${member.member_handphone}">
 	                        <input type="hidden" id="order_client_num" value="${client_num}">
                         </td>
                     </tr>
@@ -661,87 +699,10 @@ $(function(){
             <input type="hidden" id="order_form_delivery_message" name="delivery_message" value="">
             <input type="hidden" id="order_form_delivery_pass" name="delivery_pass" value="">
             <input type="hidden" id="order_form_delivery_pass_content" name="delivery_pass_content" value="">
-            <input type="hidden" id="delivery_postNum" name="delivery_postNum" value="">
-            <input type="hidden" id="delivery_address" name="delivery_address" value="">
-            <input type="hidden" id="delivery_address2" name="delivery_address2" value="">
-            
-            </form>            
-            <!-- 약관동의 창 -->
-            <div class="agree_payment_box">
-                <div class="all_agree">
-                    주문 상품정보 및 결제대행 서비스 이용약관에 모두 동의하십니까?<br><br>
-                    <input type="checkbox" name="all_agree_check" id="all_agree_check">
-                    <span class="all_agree_text"><label for="all_agree_check"> 모두동의</label></span>
-                    <span id="all_agree_open">^</span>
-                </div>
-                <section class="other_agree">
-                    <table class="tb_other_agree">
-                        <tr>
-                            <td class="all_agree_text">
-                                주문 상품정보에 대한 동의
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="bottom">
-                                <div class="agree_box">
-                                    <span class="agree_check_area"><input type="checkbox" name="agree_check" id="agree_check_1" class="agree_check"></span>
-                                    <label for="agree_check_1"><span class="agree_check_text"> 주문하실 상품, 가격, 배송정보, 할인내역등을 최종 확인하였으며, 구매에 동의합니다.</span></label>
-                                </div>                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="all_agree_text">
-                                결제대행 서비스 이용약관 동의
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="agree_check_area"><input type="checkbox" name="agree_check" id="agree_check_2"  class="agree_check"></span>
-                                <label for="agree_check_2"><span class="agree_check_text_small"> 전자금융거래기본약관</span></label>
-                                <span class="agree_check_btn_area">
-                                    <input type="button" class="agree_check_btn" id="agree_check_btn_1" value="약관보기">
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="agree_check_area"><input type="checkbox" name="agree_check" id="agree_check_3" class="agree_check"></span>
-                                <label for="agree_check_3"><span class="agree_check_text_small"> 개인정보 수집 및 이용동의</span></label>
-                                <span class="agree_check_btn_area">
-                                    <input type="button" class="agree_check_btn" id="agree_check_btn_2" value="약관보기">
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="agree_check_area"><input type="checkbox" name="agree_check" id="agree_check_4" class="agree_check"></span>
-                                <label for="agree_check_4"><span class="agree_check_text_small"> 개인정보 제공 및 위탁 동의</span></label>
-                                <span class="agree_check_btn_area">
-                                    <input type="button" class="agree_check_btn" id="agree_check_btn_3" value="약관보기">
-                                </span>
-                            </td>
-                        </tr>
-                    </table>
-                </section> <!-- end of other_agree -->
-                <div class="modalContainer hidden">
-					<div class="modalContent">
-						<p>약관동의 창 1.</p>
-					    <button class="modalCloseButton">닫기</button>
-				    </div>				    
-				</div>
-				<div class="modalContainer hidden">
-					<div class="modalContent">
-						<p>약관동의 창 2.</p>
-					    <button class="modalCloseButton">닫기</button>
-				    </div>				    
-				</div>
-				<div class="modalContainer hidden">
-					<div class="modalContent">
-						<p>약관동의 창 3.</p>
-					    <button class="modalCloseButton">닫기</button>
-				    </div>				    
-				</div>
-            </div> <!-- end of agree_payment_box -->
+            <input type="hidden" id="order_form_delivery_postNum" name="delivery_postNum" value="">
+            <input type="hidden" id="order_form_delivery_address" name="delivery_address" value="">
+            <input type="hidden" id="order_form_delivery_address2" name="delivery_address2" value="">            
+            </form>                       
         </div> <!-- end of right_area -->
     </div> <!-- end of order_payment_box -->
 

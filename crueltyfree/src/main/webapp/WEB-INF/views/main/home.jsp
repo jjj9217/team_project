@@ -311,6 +311,15 @@
 	<a href="${pageContext.request.contextPath}/product/product_list_enter_searchword.do">상품목록검색어진입</a><br>
 	<a href="${pageContext.request.contextPath}/mypage/test.do">TEST</a><br>
 	
+	
+	<form name="caq" action="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do" method="get">
+                        <input type="hidden" name="member_idx" value="1">
+                    </form>
+                    <a href="#" onclick="document.forms['caq'].submit();">
+            배송지TEST</a>
+	
+	
+	
 <footer>
 	<jsp:include page="../main/footer.jsp" />
 </footer>

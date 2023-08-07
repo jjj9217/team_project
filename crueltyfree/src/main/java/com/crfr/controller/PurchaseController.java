@@ -313,7 +313,6 @@ public class PurchaseController {
 		}			
 		model.addAttribute("client_num", client_num);
 		
-		
 		String selectedValuesStr = request.getParameter("selectedValuesStr"); //JSon형식으로 받은것
 		String[] selectedValues = new Gson().fromJson(selectedValuesStr, String[].class);//배열로 풀기
 		

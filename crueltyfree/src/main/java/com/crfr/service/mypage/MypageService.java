@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.PageNav;
 import com.crfr.vo.ReviewExploreVo;
@@ -32,7 +33,18 @@ public interface MypageService {
 	
 	default int selectReview_idx(ReviewVo vo) {return 0;}
 	
-	default int insertreviewimg(MultipartFile[] attachedFile, HttpServletRequest request,int searchReview_idx) {return 0;}	
-
-
+	default int insertreviewimg(MultipartFile[] attachedFile, HttpServletRequest request,int searchReview_idx) {return 0;}
+	
+	default List<DeliveryVo> selectdeliveryList(int member_idx) {return null;}
+	
+	default public int selectdeliveryCount(int member_idx) {return 0;}
+	
+	default int insertdeliveryPost(DeliveryVo vo) {return 0;}
+	
+	default int deletedeliveryPost(DeliveryVo vo) {return 0;}
+	
+	default int updatedeliveryPostdefault (DeliveryVo vo) {return 0;}
+	
+	default int updatedeliveryPostchangedefault(DeliveryVo vo) {return 0;}
+	
 }
