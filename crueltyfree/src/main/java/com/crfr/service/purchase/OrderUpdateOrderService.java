@@ -6,12 +6,12 @@ import com.crfr.dao.OrderDao;
 
 import lombok.RequiredArgsConstructor;
 
-@Service("oSelectDeliveryCount")
+@Service("oUpdateOrder")
 @RequiredArgsConstructor
-public class SelectDeliveryCountService implements PurchaseService {
+public class OrderUpdateOrderService implements PurchaseService {
 	private final OrderDao dao;
 	
-	public int selectDeliveryCount(String client_num) {		
-		return dao.selectDeliveryCount(client_num);
+	public void updateOrder(String order_idx) {		
+		dao.updateOrder(order_idx);
 	}
 }

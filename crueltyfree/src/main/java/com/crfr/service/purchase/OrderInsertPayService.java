@@ -1,20 +1,21 @@
 package com.crfr.service.purchase;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import com.crfr.dao.OrderDao;
+import com.crfr.vo.BasketVo;
 import com.crfr.vo.DeliveryVo;
+import com.crfr.vo.OrderVo;
+import com.crfr.vo.PayVo;
 
 import lombok.RequiredArgsConstructor;
 
-@Service("oSelectDeliveryList")
+@Service("oInsertPay")
 @RequiredArgsConstructor
-public class SelectDeliveryListService implements PurchaseService {
+public class OrderInsertPayService implements PurchaseService {
 	private final OrderDao dao;
 	
-	public List<DeliveryVo> selectDeliveryList(String client_num) {		
-		return dao.selectDeliveryList(client_num);
+	public int insertPay(PayVo payVo){	
+		return dao.insertPay(payVo);
 	}
 }
