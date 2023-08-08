@@ -21,6 +21,7 @@ import com.crfr.service.productView.ProductViewService;
 import com.crfr.service.purchase.PurchaseService;
 import com.crfr.vo.BasketListVo;
 import com.crfr.vo.BasketVo;
+import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.MemberVo;
 import com.crfr.vo.ProductVo;
@@ -35,7 +36,7 @@ public class PurchaseController {
 	//서비스 클래스로 사용할 클래스들을 멤버변수로 정의하고 의존 자동 주입받도록 함
 	@Setter(onMethod_={ @Autowired })	
 	PurchaseService bSelectCount, bSelectList, bPlusBasketCount, bMinusBasketCount, bUpdateBasketCount,
-	bBasketInsert, bBasketDeleteOne, oSelectBasket;
+	bBasketInsert, bBasketDeleteOne, oSelectBasket, oSelectDeliveryCount,oSelectDeliveryList;
 	
 	@Setter(onMethod_={ @Autowired })	
 	ProductViewService pSelectView, pSelectThumbnail;
@@ -50,7 +51,7 @@ public class PurchaseController {
 		
 		String client_num = null;
 		if(vo != null) {//로그인 되어있을때
-			client_num = vo.getMember_id();	//Vo의 member_id를 넣음
+			client_num = Integer.toString(vo.getMember_idx());	//Vo의 member_idx를 넣음
 		}else {//로그인 되어있지 않을때
 		    Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
 		    if (cookies != null) {
@@ -107,7 +108,7 @@ public class PurchaseController {
 		
 		String client_num = null;
 		if(vo != null) {//로그인 되어있을때
-			client_num = vo.getMember_id();	//Vo의 member_id를 넣음
+			client_num = Integer.toString(vo.getMember_idx());	//Vo의 member_idx를 넣음
 		}else {//로그인 되어있지 않을때
 		    Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
 		    if (cookies != null) {
@@ -145,7 +146,7 @@ public class PurchaseController {
 		
 		String client_num = null;
 		if(vo != null) {//로그인 되어있을때
-			client_num = vo.getMember_id();	//Vo의 member_id를 넣음
+			client_num = Integer.toString(vo.getMember_idx());	//Vo의 member_idx를 넣음
 		}else {//로그인 되어있지 않을때
 		    Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
 		    if (cookies != null) {
@@ -183,7 +184,7 @@ public class PurchaseController {
 		
 		String client_num = null;
 		if(vo != null) {//로그인 되어있을때
-			client_num = vo.getMember_id();	//Vo의 member_id를 넣음
+			client_num = Integer.toString(vo.getMember_idx());	//Vo의 member_idx를 넣음
 		}else {//로그인 되어있지 않을때
 		    Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
 		    if (cookies != null) {
@@ -253,7 +254,7 @@ public class PurchaseController {
 		
 		String client_num = null;
 		if(vo != null) {//로그인 되어있을때
-			client_num = vo.getMember_id();	//Vo의 member_id를 넣음
+			client_num = Integer.toString(vo.getMember_idx());	//Vo의 member_idx를 넣음
 		}else {//로그인 되어있지 않을때
 		    Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
 		    if (cookies != null) {
@@ -299,7 +300,7 @@ public class PurchaseController {
 		
 		String client_num = null;
 		if(vo != null) {//로그인 되어있을때
-			client_num = vo.getMember_id();	//Vo의 member_id를 넣음
+			client_num = Integer.toString(vo.getMember_idx());	//Vo의 member_idx를 넣음				
 		}else {//로그인 되어있지 않을때
 		    Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
 		    if (cookies != null) {
@@ -312,6 +313,23 @@ public class PurchaseController {
 		    }//end of if - cookie null값 조건문
 		}			
 		model.addAttribute("client_num", client_num);
+		
+		//배송지 목록 받아오기	
+		List<DeliveryVo> deliveryList = new ArrayList<>(); // 빈 리스트로 초기화
+		DeliveryVo deliveryVo = null;
+		//배송지 목록의 수
+		int delivery_count =  oSelectDeliveryCount.selectDeliveryCount(client_num);
+		model.addAttribute("delivery_count", delivery_count);
+		//배송지목록
+		if(vo != null) {//로그인 되어있을때
+			deliveryList = oSelectDeliveryList.selectDeliveryList(client_num);		
+			model.addAttribute("deliveryList", deliveryList); 
+		}else {
+			
+			deliveryList.add(deliveryVo); // 비회원:deliveryList에 값이 null인 deliveryVo 1개추가
+			model.addAttribute("deliveryList", deliveryList); 
+		}
+		
 		
 		String selectedValuesStr = request.getParameter("selectedValuesStr"); //JSon형식으로 받은것
 		String[] selectedValues = new Gson().fromJson(selectedValuesStr, String[].class);//배열로 풀기

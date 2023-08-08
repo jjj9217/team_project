@@ -8,5 +8,14 @@
 	<select id="selectBasket" parameterType="string" resultType="BasketVo">
 		select * from basket where basket_idx=#{basket_idx}
 	</select>
+	
+	<!-- 배송지 리스트 -->
+	<select id="selectDeliveryList" parameterType="string" resultType="DeliveryVo">
+		select * from `delivery` where member_idx=#{client_num};
+	</select>
 
+	<!-- 배송지 목록 수량 -->
+	<select id="selectDeliveryCount" parameterType="string" resultType="_int">
+		select count(*) from `delivery` where member_idx=#{client_num}
+	</select>	
 </mapper>

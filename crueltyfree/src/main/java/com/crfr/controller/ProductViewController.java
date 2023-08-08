@@ -105,7 +105,7 @@ public class ProductViewController {
 		
 		String client_num = null;
 		if(vo != null) {//로그인 되어있을때
-			client_num = vo.getMember_id();	//Vo의 member_id를 넣음
+			client_num = Integer.toString(vo.getMember_idx());	//Vo의 member_idx를 넣음
 		}else {//로그인 되어있지 않을때
 		    Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
 		    if (cookies != null) {
