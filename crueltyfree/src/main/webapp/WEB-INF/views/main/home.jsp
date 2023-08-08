@@ -317,8 +317,8 @@
                     </form>
                     <a href="#" onclick="document.forms['caq'].submit();">
             배송지TEST</a>
-	
-	
+	<br>
+	<a href="${pageContext.request.contextPath}/purchase/refund.do">환불테스트</a><br>
 	
 <footer>
 	<jsp:include page="../main/footer.jsp" />

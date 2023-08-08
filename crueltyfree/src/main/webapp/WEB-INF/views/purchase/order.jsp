@@ -72,7 +72,7 @@ function doPayment(name, amount, buyer_email, buyer_name, buyer_tel, buyer_addr,
 	      //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
 	          if (rsp.success) {
 	        	  var msg = '결제가 완료되었습니다.';
-	        	  var pay_uid = rsp.merchant_uid;
+	        	  var pay_uid = rsp.imp_uid;
 	        	  $("#order_form_pay_uid").val(pay_uid);
 			      alert(msg);
 			      //폼전송해서 결제처리하기
@@ -87,6 +87,92 @@ function doPayment(name, amount, buyer_email, buyer_name, buyer_tel, buyer_addr,
 </script>
 <script>
 $(function(){
+	
+	//초기세팅
+	if($(".order_basket_idx").eq(0).val() != 0){//장바구니번호가 있을때
+		var basketIdxValues = $(".order_basket_idx").map(function() {
+		    return $(this).val();
+		}).get(); //장바구니 번호를 basketIdxValues배열에 저장
+		
+		//장바구니 번호를 문자열로 변환
+	    var basketIdxValuesStr = JSON.stringify(basketIdxValues);
+		//값넣기
+		$("#order_form_basket_idx").val(basketIdxValuesStr);
+		alert($(".order_basket_idx").eq(0).val());
+	}else{//바로구매에서 진입했을시 상품번호,구매수량 넘겨주기		
+		$("#order_form_product_idx").val($(".order_product_idx").eq(0).val());
+		$("#order_form_buy_cnt").val($(".order_basket_cnt").eq(0).val());
+	}
+	
+	if($("#delivery_count").val() != undefined){		
+		//디폴트값이 1:기본배송지 인 요소의 순서 얻어옴
+		var setIndex = $(".val_default[value='1']").index(".val_default");	
+	
+		$(".del_addr_name").val(setIndex).change();
+		
+		//회원 배송지 정보 세팅
+		$("#del_addr_name").text($(".del_addr_name option:selected").text());
+		$("#delivery_get_name").val($(".val_get_name").eq(setIndex).val());
+		$("#delivery_handphone").val($(".val_handphone").eq(setIndex).val());
+		$("#delivery_postNum").val($(".val_postNum").eq(setIndex).val());
+		$("#delivery_address").val($(".val_addr1").eq(setIndex).val());
+		$("#delivery_address2").val($(".val_addr2").eq(setIndex).val());	
+		
+		//배송요청사항 배송메시지 선택		
+		var delivery_msg = $(".val_message").eq(setIndex).val();
+		var delivery_msg_index = 0;
+		if(delivery_msg == "그냥 문 앞에 놓아주시면 돼요."){
+			delivery_msg_index = 1;
+			$("#delivery_message_text").prop("type", "hidden");
+			$("#delivery_message_text").val("그냥 문 앞에 놓아주시면 돼요.");
+		}else if(delivery_msg == "직접 받을게요.(부재시 문앞)"){
+			delivery_msg_index = 2;
+			$("#delivery_message_text").prop("type", "hidden");
+			$("#delivery_message_text").val("직접 받을게요.(부재시 문앞)");
+		}else if(delivery_msg == "벨을 누르지 말아주세요."){
+			delivery_msg_index = 3;
+			$("#delivery_message_text").prop("type", "hidden");
+			$("#delivery_message_text").val("벨을 누르지 말아주세요.");
+		}else if(delivery_msg == "도착 후 전화주시면 직접 받으러 갈게요."){
+			delivery_msg_index = 4;
+			$("#delivery_message_text").prop("type", "hidden");
+			$("#delivery_message_text").val("도착 후 전화주시면 직접 받으러 갈게요.");
+		}else{
+			delivery_msg_index = 5;
+			$("#delivery_message_text").prop("type", "text");
+			$("#delivery_message_text").val(delivery_msg);
+		}		
+		$("#delivery_message").prop("selectedIndex", delivery_msg_index);
+		
+		//공동현관 출입방법 선택
+		var method_index = $(".val_pass").eq(setIndex).val();
+		$(".val_method").eq(method_index).prop("checked", true);
+		var passContentText = $(".val_pass_content").eq(setIndex).val();
+		if(method_index == 0){
+			$(".td_delivery_title").eq(6).text("공동현관 비밀번호")
+			$("#delivery_get_method").val(passContentText);
+			$("#delivery_input_method").show();
+		}else if(method_index == 1){
+			$(".td_delivery_title").eq(6).text("경비실 호출 방법")
+			$("#delivery_get_method").val(passContentText);
+			$("#delivery_input_method").show();
+		}else if(method_index == 2 || method_index == ""){
+			$(".td_delivery_title").eq(6).text("자유출입가능")
+			$("#delivery_get_method").val(passContentText);
+			$("#delivery_input_method").hide();
+		}else{
+			$(".td_delivery_title").eq(6).text("기타 상세 내용")
+			$("#delivery_get_method").val(passContentText);
+			$("#delivery_input_method").show();
+		}
+	//if "#delivery_count" 값이 0이 아닐때	
+	}else{
+		//배송메세지 기본상태로
+		$("#delivery_message").prop("selectedIndex", 0);
+		$("#delivery_message_text").prop("type", "hidden");
+		$("#delivery_message_text").val("");				
+	}
+	//초기세팅 종료
 	
 	//배송지 선택 옵션변경
 	$(".del_addr_name").change(function() {
@@ -145,68 +231,7 @@ $(function(){
 			$("#delivery_get_method").val(passContentText);
 			$("#delivery_input_method").show();
 		}
-				
-		
 	});
-	
-	//초기세팅 - 나중에 디폴트값 들어오면 eq 값 바꾸기
-	if($("#delivery_count").val() != undefined){
-		//배송요청사항 배송메시지 선택		
-		var delivery_msg = $(".val_message").eq(0).val();
-		var delivery_msg_index = 0;
-		if(delivery_msg == "그냥 문 앞에 놓아주시면 돼요."){
-			delivery_msg_index = 1;
-			$("#delivery_message_text").prop("type", "hidden");
-			$("#delivery_message_text").val("그냥 문 앞에 놓아주시면 돼요.");
-		}else if(delivery_msg == "직접 받을게요.(부재시 문앞)"){
-			delivery_msg_index = 2;
-			$("#delivery_message_text").prop("type", "hidden");
-			$("#delivery_message_text").val("직접 받을게요.(부재시 문앞)");
-		}else if(delivery_msg == "벨을 누르지 말아주세요."){
-			delivery_msg_index = 3;
-			$("#delivery_message_text").prop("type", "hidden");
-			$("#delivery_message_text").val("벨을 누르지 말아주세요.");
-		}else if(delivery_msg == "도착 후 전화주시면 직접 받으러 갈게요."){
-			delivery_msg_index = 4;
-			$("#delivery_message_text").prop("type", "hidden");
-			$("#delivery_message_text").val("도착 후 전화주시면 직접 받으러 갈게요.");
-		}else{
-			delivery_msg_index = 5;
-			$("#delivery_message_text").prop("type", "text");
-			$("#delivery_message_text").val(delivery_msg);
-		}		
-		$("#delivery_message").prop("selectedIndex", delivery_msg_index);
-		
-		//공동현관 출입방법 선택
-		var method_index = $(".val_pass").eq(0).val();
-		$(".val_method").eq(method_index).prop("checked", true);
-		var passContentText = $(".val_pass_content").eq(0).val();
-		if(method_index == 0){
-			$(".td_delivery_title").eq(6).text("공동현관 비밀번호")
-			$("#delivery_get_method").val(passContentText);
-			$("#delivery_input_method").show();
-		}else if(method_index == 1){
-			$(".td_delivery_title").eq(6).text("경비실 호출 방법")
-			$("#delivery_get_method").val(passContentText);
-			$("#delivery_input_method").show();
-		}else if(method_index == 2 || method_index == ""){
-			$(".td_delivery_title").eq(6).text("자유출입가능")
-			$("#delivery_get_method").val(passContentText);
-			$("#delivery_input_method").hide();
-		}else{
-			$(".td_delivery_title").eq(6).text("기타 상세 내용")
-			$("#delivery_get_method").val(passContentText);
-			$("#delivery_input_method").show();
-		}
-	//if "#delivery_count" 값이 0이 아닐때	
-	}else{
-		//배송메세지 기본상태로
-		$("#delivery_message").prop("selectedIndex", 0);
-		$("#delivery_message_text").prop("type", "hidden");
-		$("#delivery_message_text").val("");				
-	}
-	//초기세팅 종료
-	
 	
 	//배송메시지 옵션변경
 	$("#delivery_message").change(function() {
@@ -234,21 +259,18 @@ $(function(){
 	
 	//공동현관 출입방법 
 	$("input[name='dv_input']").change(function(){
-	    var selectedOptionValue = $(this).val();
-	    var deliveryInputMethod = $("#delivery_input_method");
-	    var deliveryTitle = $(".td_delivery_title").eq(6);	
-	    
+	    var selectedOptionValue = $(this).val();	    
 	    if (selectedOptionValue == "0") {
-	    	deliveryInputMethod.show();
-	        deliveryTitle.text("공동현관 비밀번호");
+	    	$("#delivery_input_method").show();
+	    	$(".dlvMth").text("공동현관 비밀번호");
 	    } else if(selectedOptionValue == "1"){
-	        deliveryInputMethod.show();
-	        deliveryTitle.text("경비실 호출 방법");
+	    	$("#delivery_input_method").show();
+	    	$(".dlvMth").text("경비실 호출 방법");
 	    } else if(selectedOptionValue == "2"){
-	        deliveryInputMethod.hide();
+	    	$("#delivery_input_method").hide();
 	    } else{
-	    	deliveryInputMethod.show();
-	        deliveryTitle.text("기타 상세 내용");
+	    	$(".dlvMth").text("기타 상세 내용");
+	    	$("#delivery_input_method").show();
 	    }
 	});
 	
@@ -366,6 +388,14 @@ $(function(){
 	    var buyer_postcode = $("#delivery_postNum").val();
 	    
 	    
+	    //배송지 이름 설정
+	    var dlvAddrName = "";
+	    if(${!empty member}){
+	    	dlvAddrName = $("#del_addr_name").text();
+	    }else{
+	    	dlvAddrName = "비회원: "+client_num+"님의 배송지";
+	    }
+	    
 	    //배송메시지
 	    var selected_dlvMsg = $("#delivery_message").val();
 	    var dlvMsg = "";
@@ -387,7 +417,7 @@ $(function(){
 	    $("#order_form_order_salePrice").val($("#val_salePrice").val());
 	    $("#order_form_order_dlvPrice").val($("#val_dlvPrice").val());
 	    $("#order_totalPrice").val($("#val_totalPrice").val());
-	    $("#order_form_delivery_address_name").val("비회원: "+client_num+"님의 배송지");
+	    $("#order_form_delivery_address_name").val(dlvAddrName);
 	    $("#order_form_delivery_get_name").val($("#delivery_get_name").val());
 	    $("#order_form_delivery_handphone").val($("#delivery_handphone").val());
 	    $("#order_form_delivery_message").val(dlvMsg);
@@ -690,6 +720,7 @@ $(function(){
 	                    		<input type="hidden" class="val_postNum" value="${deliveryList[del_row-1].delivery_postNum}">
 	                    		<input type="hidden" class="val_addr1" value="${deliveryList[del_row-1].delivery_address}">
 	                    		<input type="hidden" class="val_addr2" value="${deliveryList[del_row-1].delivery_address2}">
+	                    		<input type="hidden" class="val_default" value="${deliveryList[del_row-1].defaultpost}">
 	                    	</c:forEach>
 		                </td>
 		            </tr>		            
@@ -697,8 +728,7 @@ $(function(){
 			            <tr>
 			                <td class="td_delivery_title bottom title">배송지명</td>
 			                <td class="td_delivery_content bottom" id="del_addr_name">
-			                ${deliveryList[0].delivery_address_name}
-			                
+			                ${deliveryList[0].delivery_address_name}			                
 			                </td>
 			            </tr>
 		            </c:if>                   
@@ -763,7 +793,7 @@ $(function(){
                 </td>
             </tr>
             <tr id="delivery_input_method">
-                <td class="td_delivery_title bottom title">공동현관 비밀번호</td>
+                <td class="td_delivery_title bottom title dlvMth">공동현관 비밀번호</td>
                 <td class="td_delivery_content bottom">
                     <input class="input_focus" type="text" name="delivery_get_name" id="delivery_get_method" value="${deliveryList[0].delivery_pass_content}">
                 </td>
@@ -793,6 +823,9 @@ $(function(){
 	                        <p class="prd_title">${basketList[rowNum-1].product_name}</p>
                         </a>
                     </div>
+                    <input type="hidden" class="order_basket_idx" value="${basketList[rowNum-1].basket_idx}">
+                    <input type="hidden" class="order_product_idx" value="${basketList[rowNum-1].product_idx}">
+                    <input type="hidden" class="order_basket_cnt" value="${basketList[rowNum-1].basket_count}">
                </td>
                <td class="td_sell_price">
                     <fmt:formatNumber value="${basketList[rowNum-1].product_price}" pattern="###,###" />원
@@ -910,7 +943,7 @@ $(function(){
                 </table>
             </div>
             <!-- 결제하기 버튼 누를시 전송되는 값들 -->
-            <form name="order_form" id="order_form" action="order_process.do" method="post">
+            <form name="order_form" id="order_form" action="order_complete.do" method="post">
             <input type="hidden" id="order_form_client_num" name="client_num" value="">
             <input type="hidden" id="order_form_order_num" name="order_num" value="">
             <input type="hidden" id="order_form_order_name" name="order_name" value="">
@@ -928,7 +961,10 @@ $(function(){
             <input type="hidden" id="order_form_delivery_postNum" name="delivery_postNum" value="">
             <input type="hidden" id="order_form_delivery_address" name="delivery_address" value="">
             <input type="hidden" id="order_form_delivery_address2" name="delivery_address2" value=""> 
-            <input type="hidden" id="order_form_pay_uid" name="pay_uid" value="">            
+            <input type="hidden" id="order_form_pay_uid" name="pay_uid" value="">
+            <input type="hidden" id="order_form_basket_idx" name="basketIdxStr" value="">
+            <input type="hidden" id="order_form_product_idx" name="buyPrdIdx" value="">
+            <input type="hidden" id="order_form_buy_cnt" name="buyCnt" value="">              
             </form>                       
         </div> <!-- end of right_area -->
     </div> <!-- end of order_payment_box -->
