@@ -1,9 +1,12 @@
 package com.crfr.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.crfr.vo.BasketVo;
+import com.crfr.vo.DeliveryVo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,4 +25,13 @@ public class OrderDao {
 		return sqlSession.selectOne(MAPPER+".selectBasket", basket_idx);
 	}
 	
+	//회원의 배송지목록 불러오기
+	public List<DeliveryVo> selectDeliveryList(String client_num) {		
+		return sqlSession.selectList(MAPPER+".selectDeliveryList", client_num);
+	}	
+	
+	//배송지목록 수량
+	public int selectDeliveryCount(String client_num) {
+		return sqlSession.selectOne(MAPPER+".selectDeliveryCount", client_num);
+	}	
 }

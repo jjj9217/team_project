@@ -1,8 +1,5 @@
 package com.crfr.dao;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -31,13 +28,8 @@ public class ProductInsertDao{
 	}
 	public int insertFile(FileVo vo) {
 		return sqlSession.insert(MAPPER+".insertFile", vo);
-	}
-	
-	public int findProductIdx(String product_name, String member_nickname) {
-		Map<String, String> map = new HashMap<>();
-		map.put("product_name", product_name);
-		map.put("member_nickname", member_nickname);
-		
-		return sqlSession.selectOne(MAPPER+".findProductIdx", map);
+	}	
+	public int selectProductIdx(ProductVo vo) {		
+		return sqlSession.selectOne(MAPPER+".selectProductIdx", vo);
 	}
 }

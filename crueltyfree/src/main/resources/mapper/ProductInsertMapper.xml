@@ -23,8 +23,14 @@
 			   			 	    #{member_idx}
 			   			 	    )
 	</insert>
+	
+	<!-- 상품 Idx 찾기 -->
+	<select id="selectProductIdx" parameterType="ProductVo" resultType="_int">
+		select product_idx from product where product_name = #{product_name} and product_price = #{product_price} and member_nickname = #{member_nickname} 
+	</select>			
+	
 	<insert id="insertProductInfo" parameterType="ProductInfoVo">
-		insert into ProductInfo (product_idx,
+		insert into Product_info (product_idx,
 								product_info_amount,
 								product_info_useMethod,
 								product_info_maker,
@@ -47,8 +53,7 @@
 								#{saveFile}
 			   			 	    )
 	</insert>
-	<select id="findProductIdx" parameterType="map" resultType="_int">
-		select product_idx from `product` where product_name = #{product_name} AND member_nickname = #{member_nickname}
-	</select>
+		
+	
 	
 </mapper>

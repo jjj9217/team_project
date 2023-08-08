@@ -230,7 +230,7 @@ $(function(){
         });
 		
 	    // 체크된 항목이 없을 경우 알림을 띄우고 함수를 종료
-	    if (selectedValues.length === 0) {
+	    if (selectedValues.length == 0) {
 	        alert("상품을 선택해 주세요.");
 	        return;
 	    }
@@ -286,7 +286,7 @@ $(function(){
         });
 		
 	    // 체크된 항목이 없을 경우 알림을 띄우고 함수를 종료
-	    if (selectedValues.length === 0) {
+	    if (selectedValues.length == 0) {
 	        alert("상품을 선택해 주세요.");
 	        return;
 	    }
