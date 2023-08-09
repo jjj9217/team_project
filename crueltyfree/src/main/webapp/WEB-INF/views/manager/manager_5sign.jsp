@@ -146,19 +146,6 @@
 	tr:nth-child(even) td {
   		background: #eaeaed;
 	}
-	
-	#searchField{
-		width:100px; 
-		height:33px; 
-		border-radius:5px; 
-		border-width:2px;
-	}
-	#searchWord{
-		height:30px; 
-		border-radius:5px; 
-		border-width:2px; 
-		border-color:gray;
-	}
 	#search_btn{
 		width:50px;
 		height:30px;
@@ -166,8 +153,34 @@
 		border:none; 
 		color:white; 
 		border-radius:5px;
+		font: bold 15px Arial, Sans-serif;
 	}
-	
+	#searchField{
+		width:100px;
+		height:33px;
+		border-style:solid;
+		border-width:2px;
+		border-radius:5px;
+	}
+	#searchWord{
+		height:29px;
+		border-style:solid;
+		border-width:2px;
+		border-radius:5px;
+	}
+	#main{
+		margin-top:30px;
+	}
+	#total{
+		float:left;
+		font-size:20px;
+	}
+	#total2{
+		color:#7d99a4; 
+	}
+	#search{
+		float:right;
+	}	
 	
 	
 	
@@ -213,30 +226,22 @@
 	 
 	 
 	
-	
-	 <form>
-        <table id="tbl_search" style="margin-top:30px;">
-            <tr>
-                <td id="td_total">
-                	총제품수: ${totalRows}
-                </td>
-                <td id="td_search" style="text-align:right;">
+		<div id="main">
+    	<div id="total">
+                	<span>총 판매자 등록문의수 :</span> <span id="total2">${pageNav.totalRows}</span></div>
+           		<div id ="search" >
                     <select name="searchField" id="searchField">
                         <option value="title">상품이름</option>
-                        <option value="content">판매자이름</option>
-                        <option value="content">등등</option>
+                        <option value="content">상품번호</option>
                     </select>
                     <input type="text" name="searchWord" id="searchWord">
                     <input type="submit" id="search_btn" value="검색">
-
-                </td>
-            </tr>
-        </table>
-    </form>
+              </div>
+         </div>
 
 
     <!-- 글목록 테이블 -->
-    <table id="tbl_list">
+    <table id="tbl_list" style="margin-top:80px;">
         <tr>
             <th width="">번호</th>
             <th width="">이름</th>
@@ -276,12 +281,6 @@
 				
 			</c:otherwise>
 		</c:choose>
-		<tr>
-			<td id="td_paging" colspan="6">
-				<!-- 페이지 네비게이션 구현 -->
-				<%@ include file="paging.jsp" %>
-			</td>
-		</tr>
     </table>
 	
 	 

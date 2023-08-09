@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ page import="java.util.List, java.util.HashMap, java.util.Map" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,9 +95,6 @@
 		line-height: 20px;
 		background-color: #eef3f5;	
 	}
-	
- 	
- 	
  	.list{
   		list-style-type: none;
   		padding: 0px;
@@ -146,18 +145,6 @@
   		background: #eaeaed;
 	}
 	
-	#searchField{
-		width:100px; 
-		height:33px; 
-		border-radius:5px; 
-		border-width:2px;
-	}
-	#searchWord{
-		height:30px; 
-		border-radius:5px; 
-		border-width:2px; 
-		border-color:gray;
-	}
 	#search_btn{
 		width:50px;
 		height:30px;
@@ -165,34 +152,54 @@
 		border:none; 
 		color:white; 
 		border-radius:5px;
+		font: bold 15px Arial, Sans-serif;
+		
 	}
 	#edit{
 		border:0;
 		background-color:#7d99a4; 
 		color:white;
 		border-radius:3px;
-		width:30px;
+		width:37px;
+		font: bold 13px Arial, Sans-serif;
 	}
 	#delete{
 		border:0;
 		background-color:rgb(216, 98, 98);
 		color:white;
 		border-radius:3px;
-		width:30px;
+		width:37px;
+		font: bold 13px Arial, Sans-serif;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	#paging{
+		width:300px; height:100px; margin:0 auto; margin-top:70px; width:600px; text-align:center; font-size:17px;
+	}
+	#searchField{
+		width:100px;
+		height:33px;
+		border-style:solid;
+		border-width:2px;
+		border-radius:5px;
+	}
+	#searchWord{
+		height:29px;
+		border-style:solid;
+		border-width:2px;
+		border-radius:5px;
+	}
+	#main{
+		margin-top:30px;
+	}
+	#total{
+		float:left;
+		font-size:20px;
+	}
+	#total2{
+		color:#7d99a4; 
+	}
+	#search{
+		float:right;
+	}
 </style>
 </head>
 <body>
@@ -221,33 +228,23 @@
 		<h5>판매자 제품 정보 관리</h5>
 	<hr style="margin-top:30px;">
 	
-	
-	
-	
-	
-	 <form>
-        <table id="tbl_search" style="margin-top:30px;">
-            <tr>
-                <td id="td_total">
-                	총제품수: ${totalRows}
-                </td>
-                <td id="td_search" style="text-align:right;">
+		<div id="main">
+    	<div id="total">
+                	<span>총 제품수 :</span> <span id="total2">${pageNav.totalRows}</span></div>
+           		<div id ="search" >
+           		<form name="searching">
                     <select name="searchField" id="searchField">
                         <option value="title">상품이름</option>
-                        <option value="content">판매자이름</option>
-                        <option value="content">등등</option>
+                        <option value="content">상품번호</option>
                     </select>
                     <input type="text" name="searchWord" id="searchWord">
                     <input type="submit" id="search_btn" value="검색">
-
-                </td>
-            </tr>
-        </table>
-    </form>
-
+                    </form>
+              </div>
+         </div>
 
     <!-- 글목록 테이블 -->
-    <table id="tbl_list">
+    <table id="tbl_list" style="margin-top:80px;">
         <tr>
             <th width="">상품번호</th>
             <th width="">상품이름</th>
@@ -264,15 +261,20 @@
 					<td colspan="6"> 데이터가 없습니다. </td>
 				</tr>
 			</c:when>
+			<c:when test="${empty proSelectList}">
+				<tr>
+					<td colspan="6"> 데이터가 없습니다. </td>
+				</tr>
+			</c:when>
 			<c:otherwise>
 			
-				<c:forEach var="rowNum" begin="1" end="10">
+				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
 					<tr>
-						<td>${productList[rowNum-1].product_idx}</td>					
-						<td>${productList[rowNum-1].product_name}</td>
-						<td>${productList[rowNum-1].product_price}</td>
-						<td>${productList[rowNum-1].delivery_company}</td>
-						<td>${productList[rowNum-1].member_nickname}</td>
+						<td>${proSelectList[rowNum-1].product_idx}</td>					
+						<td>${proSelectList[rowNum-1].product_name}</td>
+						<td>${proSelectList[rowNum-1].product_price}</td>
+						<td>${proSelectList[rowNum-1].delivery_company}</td>
+						<td>${proSelectList[rowNum-1].member_nickname}</td>
 						<td>
 						<input type="button" id="edit" value="수정">
 						<input type="button" id="delete" value="삭제">
@@ -285,23 +287,13 @@
 				
 			</c:otherwise>
 		</c:choose>
-		<tr>
-			<td id="td_paging" colspan="6">
-				<!-- 페이지 네비게이션 구현 -->
-				<%@ include file="paging.jsp" %>
-			</td>
-		</tr>
     </table>
-	
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	
-      
+		<div id="paging" class="pull-left">
+				<div id="td_paging">
+					<%@ include file="../manager/paging_product.jsp" %>					
+				</div>				
+		</div>
+	       
 			
 	<div id="sub">
 		

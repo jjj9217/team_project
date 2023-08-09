@@ -44,6 +44,7 @@
 		border-width:1px;
 		outline-color: #7d99a4;
 		padding-left:10px;
+		border-style:solid;
 	}
 	input[type="button"]{
 		background-color:rgb(59, 58, 58);

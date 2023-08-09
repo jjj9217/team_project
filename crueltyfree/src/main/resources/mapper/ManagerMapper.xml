@@ -5,18 +5,181 @@
 <mapper namespace="ManagerMapper">
 	
 	<select id="getList" resultType="OneInqVo">
-		select * from one_inq
+		select * from one_inq order by one_inq_idx desc
 	</select>
 	<select id="productList" resultType="ProductVo">
-		select * from product
+		select * from product order by product_idx desc
 	</select>
 	<select id="memberList" resultType="MemberVo">
-		select * from member
+		select * from member 
 	</select>
 		<select id="productinqList" resultType="ProductInqVo">
-		select * from product_inq
+		select * from product_inq order by product_inq_idx desc
 	</select>
 		<select id="reviewList" resultType="ReviewVo">
-		select * from review
+		select * from review order by review_idx desc
 	</select>
+
+	<select id="proselectCount" parameterType="map" resultType="_int">
+		select count(*) from product
+			<if test="searchWord != null">
+				<where>
+					<choose>
+						<when test="searchField == 'title'">
+							product_name like CONCAT( '%',#{searchWord},'%')
+						</when>
+						<when test="searchField == 'content'">
+							product_idx like CONCAT( '%',#{searchWord},'%')
+						</when>					
+					</choose>
+				</where>
+				</if>
+				order by product_idx desc
+	</select>
+	<select id="proSelectList" parameterType="map" resultType="ProductVo">
+		select * from product
+			<if test="searchWord != null">
+				<where>
+					<choose>
+						<when test="searchField == 'title'">
+							product_name like CONCAT( '%',#{searchWord},'%')
+						</when>
+						<when test="searchField == 'content'">
+							product_idx like CONCAT( '%',#{searchWord},'%')
+						</when>				
+					</choose>
+				</where>
+			</if>
+			order by product_idx desc
+	</select>	
+	<select id="memselectCount" parameterType="map" resultType="_int">
+		select count(*) from member
+			<if test="searchWord != null">
+				<where>
+					<choose>
+						<when test="searchField == 'title'">
+							member_idx like CONCAT( '%',#{searchWord},'%')
+						</when>
+						<when test="searchField == 'content'">
+							member_id like CONCAT( '%',#{searchWord},'%')
+						</when>				
+					</choose>
+				</where>
+				</if>
+				order by member_idx desc
+	</select>
+	<select id="memSelectList" parameterType="map" resultType="MemberVo">
+		select * from member
+			<if test="searchWord != null">
+				<where>
+					<choose>
+						<when test="searchField == 'title'">
+							member_idx like CONCAT( '%',#{searchWord},'%')
+						</when>
+						<when test="searchField == 'content'">
+							member_id like CONCAT( '%',#{searchWord},'%')
+						</when>				
+					</choose>
+				</where>
+			</if>
+			order by member_idx desc
+	</select>	
+	<select id="oneselectCount" parameterType="hashMap" resultType="_int">
+		select count(*) from one_inq
+			<if test="searchWord != null">
+				<where>
+					<choose>
+						<when test="searchField == 'title'">
+							one_inq_idx like CONCAT( '%',#{searchWord},'%')
+						</when>
+						<when test="searchField == 'content'">
+							member_nickname like CONCAT( '%',#{searchWord},'%')
+						</when>				
+					</choose>
+				</where>
+				</if>
+				order by one_inq_idx desc
+	</select>
+	<select id="oneSelectList" parameterType="map" resultType="OneInqVo">
+		select * from one_inq
+			<if test="searchWord != null">
+				<where>
+					<choose>
+						<when test="searchField == 'title'">
+							one_inq_idx like CONCAT( '%',#{searchWord},'%')
+						</when>
+						<when test="searchField == 'content'">
+							member_nickname like CONCAT( '%',#{searchWord},'%')
+						</when>				
+					</choose>
+				</where>
+			</if>
+			order by one_inq_idx desc
+	</select>	
+	<select id="proinqselectCount" parameterType="hashMap" resultType="_int">
+		select count(*) from product_inq
+			<if test="searchWord != null">
+				<where>
+					<choose>
+						<when test="searchField == 'title'">
+							product_inq_idx like CONCAT( '%',#{searchWord},'%')
+						</when>
+						<when test="searchField == 'content'">
+							member_nickname like CONCAT( '%',#{searchWord},'%')
+						</when>				
+					</choose>
+				</where>
+				</if>
+				order by product_inq_idx desc
+	</select>
+	<select id="proinqSelectList" parameterType="map" resultType="ProductInqVo">
+		select * from product_inq
+			<if test="searchWord != null">
+				<where>
+					<choose>
+						<when test="searchField == 'title'">
+							product_inq_idx like CONCAT( '%',#{searchWord},'%')
+						</when>
+						<when test="searchField == 'content'">
+							member_nickname like CONCAT( '%',#{searchWord},'%')
+						</when>				
+					</choose>
+				</where>
+			</if>
+			order by product_inq_idx desc
+	</select>
+	<select id="selectCount" parameterType="hashMap" resultType="_int">
+		select count(*) from review
+			<if test="searchWord != null">
+				<where>
+					<choose>
+						<when test="searchField == 'title'">
+							review_idx like CONCAT( '%',#{searchWord},'%')
+						</when>
+						<when test="searchField == 'content'">
+							member_nickname like CONCAT( '%',#{searchWord},'%')
+						</when>				
+					</choose>
+				</where>
+				</if>
+				order by review_idx desc
+	</select>
+	<select id="rvSelectList" parameterType="map" resultType="ReviewVo">
+		select * from review
+			<if test="searchWord != null">
+				<where>
+					<choose>
+						<when test="searchField == 'title'">
+							review_idx like CONCAT( '%',#{searchWord},'%')
+						</when>
+						<when test="searchField == 'content'">
+							member_nickname like CONCAT( '%',#{searchWord},'%')
+						</when>				
+					</choose>
+				</where>
+			</if>
+			order by review_idx desc
+	</select>
+
+	
 </mapper>

@@ -1,6 +1,7 @@
 package com.crfr.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,37 @@ public class ManagerDao{
 	}
 	public List<ReviewVo> reviewList(){
 		return sqlSession.selectList(MAPPER+".reviewList");
+	}
+	//검색 조건에 맞는 게시물 수를 반환하는 메소드
+	public int selectCount(Map<String, Object> map) {
+		return sqlSession.selectOne(MAPPER+".selectCount",map);
+	}
+	public int proselectCount(Map<String, Object> map) {
+		return sqlSession.selectOne(MAPPER+".proselectCount",map);
+	}
+	public int memselectCount(Map<String, Object> map) {
+		return sqlSession.selectOne(MAPPER+".memselectCount",map);
+	}
+	public int oneselectCount(Map<String, Object> map) {
+		return sqlSession.selectOne(MAPPER+".oneselectCount",map);
+	}
+	public int proinqselectCount(Map<String, Object> map) {
+		return sqlSession.selectOne(MAPPER+".proinqselectCount",map);
+	}
+	//검색 조건에 맞는 게시물 목록을 반환하는 메소드
+	public List<ProductVo> proSelectList(Map<String, Object> map) {		
+		return sqlSession.selectList(MAPPER+".proSelectList",map);
+	}
+	public List<MemberVo> memSelectList(Map<String, Object> map) {		
+		return sqlSession.selectList(MAPPER+".memSelectList",map);
+	}
+	public List<OneInqVo> oneSelectList(Map<String, Object> map) {		
+		return sqlSession.selectList(MAPPER+".oneSelectList",map);
+	}
+	public List<ProductInqVo> proinqSelectList(Map<String, Object> map) {		
+		return sqlSession.selectList(MAPPER+".proinqSelectList",map);
+	}
+	public List<ReviewVo> rvSelectList(Map<String, Object> map) {		
+		return sqlSession.selectList(MAPPER+".rvSelectList",map);
 	}
 }
