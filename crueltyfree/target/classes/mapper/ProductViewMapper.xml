@@ -72,5 +72,20 @@
 	<select id="selectReviewCount" parameterType="_int" resultType="_int">
 		select count(*) from review where product_idx=#{product_idx}
 	</select>
+	
+	<!-- 해당 상품 문의 수 -->
+	<select id="selectReviewListCount" parameterType="map" resultType="_int">
+		select count(*) from review
+		where product_idx=#{product_idx} 
+		<if test="textReview != null and photoReview == null">
+			AND review_idx IN (SELECT review_idx FROM `file`);
+		</if>
+		<if test="textReview == null and photoReview != null">
+			AND review_idx NOT IN (SELECT review_idx FROM `file` WHERE review_idx IS NOT NULL);
+		</if> 
+		<if test="textReview != null and photoReview != null">
+			AND member_idx="0"
+		</if>		
+	</select>	
 							
 </mapper>

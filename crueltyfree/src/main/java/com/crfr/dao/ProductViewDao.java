@@ -107,6 +107,12 @@ public class ProductViewDao {
 	//지정상품의 리뷰 수
 	public int selectReviewCount(int product_idx) {
 		return sqlSession.selectOne(MAPPER+".selectReviewCount", product_idx);
-	}		
+	}	
+	
+	//사용자 조건에 따른 리뷰 수
+	public int selectReviewListCount(Map<String, Object> map) {
+		return sqlSession.selectOne(MAPPER+".selectReviewListCount", map);
+	}	
+		
 	
 }
