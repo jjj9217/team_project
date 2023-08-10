@@ -9,7 +9,86 @@
 <title>${productVo.product_name} | CrueltyFree</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
+function pageNav(prdNum, pageNum, pageBlock) { 
+	// 클래스 정보 추출
+	var productInfoClass = $("#product_info").attr("class");
+    var buyInfoClass = $("#buy_info").attr("class");
+    var reviewInfoClass = $("#review_info").attr("class");
+    var qnaInfoClass = $("#qna_info").attr("class"); 
+    
+    var prdContentClass = $("#prd_content_box").attr("class"); 
+	var buyContentClass = $("#buy_content_box").attr("class"); 
+	var reviewContentClass = $("#review_content_box").attr("class"); 
+	var qnaContentClass = $("#qna_content_box").attr("class"); 
+    
+    // 현재 스크롤 위치
+	var scrollY = window.scrollY || window.pageYOffset;
+	// 새 URL 구성
+    var newURL = "product_view.do" + 
+            "?prdNum=" + prdNum +
+            "&pageNum=" + pageNum +
+            "&pageBlock=" + pageBlock +
+            "&scrollY=" + scrollY +
+            "&productInfoClass=" + productInfoClass +
+            "&buyInfoClass=" + buyInfoClass +
+            "&reviewInfoClass=" + reviewInfoClass +
+            "&qnaInfoClass=" + qnaInfoClass +
+            "&prdContentClass=" + prdContentClass +
+            "&buyContentClass=" + buyContentClass +
+            "&reviewContentClass=" + reviewContentClass +
+            "&qnaContentClass=" + qnaContentClass;
+    
+    // URL로 이동        
+    window.location.href = newURL;
+}
+
 $(function(){
+	
+	
+    // GET 파라미터 추출
+    var urlParams = new URLSearchParams(window.location.search);
+    var scrollY = urlParams.get("scrollY");
+    
+    // 스크롤 위치로 이동
+    if (scrollY !== null) {
+        $(window).scrollTop(parseInt(scrollY));
+    }
+    
+    // GET 파라미터 추출
+    var productInfoClass = urlParams.get("productInfoClass");
+    var buyInfoClass = urlParams.get("buyInfoClass");
+    var reviewInfoClass = urlParams.get("reviewInfoClass");
+    var qnaInfoClass = urlParams.get("qnaInfoClass");
+    var prdContentClass = urlParams.get("prdContentClass");
+    var buyContentClass = urlParams.get("buyContentClass");
+    var reviewContentClass = urlParams.get("reviewContentClass");
+    var qnaContentClass = urlParams.get("qnaContentClass");
+    
+    // 클래스정보 세팅
+	if (productInfoClass !== null) {
+		$("#product_info").removeClass().addClass(productInfoClass);
+    }
+	if (buyInfoClass !== null) {
+		$("#buy_info").removeClass().addClass(buyInfoClass);
+    }
+	if (reviewInfoClass !== null) {
+		$("#review_info").removeClass().addClass(reviewInfoClass);
+    }
+	if (qnaInfoClass !== null) {
+		$("#qna_info").removeClass().addClass(qnaInfoClass);
+    }
+	if (prdContentClass !== null) {
+		$("#prd_content_box").removeClass().addClass(prdContentClass);
+    }
+	if (buyContentClass !== null) {
+		$("#buy_content_box").removeClass().addClass(buyContentClass);
+    }
+	if (reviewContentClass !== null) {
+		$("#review_content_box").removeClass().addClass(reviewContentClass);
+    }
+	if (qnaContentClass !== null) {
+		$("#qna_content_box").removeClass().addClass(qnaContentClass);
+    }
 	
 	//수량 + 클릭
 	$("#prd_cart_plus_btn").click(function(){			
@@ -885,6 +964,9 @@ $(function(){
                         <div id="align_new" class="bold">최신순</div>
                         <div id="align_score" class="">평점순</div>
                         <div id="align_recom" class="">추천순</div>
+                        <a href="http://localhost:9090/crueltyfree/product/product_view.do?prdNum=3&textReview=fail&photoReview=">테스트1(일반언체크)</a>
+                        <a href="http://localhost:9090/crueltyfree/product/product_view.do?prdNum=3&textReview=&photoReview=fail">테스트2(포토언체크)</a>
+                        <a>테스트3</a>
                     </div>
                     <div class="align_reivew">
                         <div id="align_space" class="">                            
@@ -1051,6 +1133,8 @@ $(function(){
 		                        	<c:choose>
 		                        		<c:when test="${productInqList[productInqRows-1].member_idx != member.member_idx}">
 		                        			<div class="member_nickname">${productInqList[productInqRows-1].member_nickname}</div>
+		                        			<input type="hidden" class="qna_update_btn">
+		                        			<input type="hidden" class="qna_delete_btn">
 		                        		</c:when>
 		                        		<c:otherwise><!-- 본인글이면 수정/삭제 표시 -->
 		                        			<div class="nickname_txt">${productInqList[productInqRows-1].member_nickname}</div>                            
@@ -1131,8 +1215,8 @@ $(function(){
                 <!-- 페이지 네비게이션 -->
                 <div class="pageing">
 		    		<c:if test="${pviPageNav.pageNum > pviPageNav.pages_per_block}">
-				    	<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=1&pageBlock=1">&lt;&lt;</a>&nbsp;
-			    		<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=${(pviPageNav.pageBlock - 2)*pviPageNav.pages_per_block + 1}&pageBlock=${pviPageNav.pageBlock-1}">
+				    	<a href="#" onclick="pageNav('${productVo.product_idx}',1,1)">&lt;&lt;</a>&nbsp;
+			    		<a href="#"onclick="pageNav('${productVo.product_idx}','${(pviPageNav.pageBlock - 2)*pviPageNav.pages_per_block + 1}','${pviPageNav.pageBlock-1}')">
 			    			&lt;이전페이지
 			    		</a>   	
 			    	</c:if>
@@ -1141,20 +1225,20 @@ $(function(){
 			    		<c:if test="${i le pviPageNav.totalPageNum}">
 			    			<c:choose>
 			    				<c:when test = "${pviPageNav.pageNum eq i}">
-			    					<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=${i}&pageBlock=${pviPageNav.pageBlock}">
+			    					<a href="#" onclick="pageNav('${productVo.product_idx}',${i},${pviPageNav.pageBlock})">
 			    						<span style="color:red">${i}&nbsp;</span>
 			    					</a>
 			    				</c:when>
 			    				<c:otherwise>
-			    					<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=${i}&pageBlock=${pviPageNav.pageBlock}">${i}&nbsp;</a>
+			    					<a href="#" onclick="pageNav('${productVo.product_idx}',${i},${pviPageNav.pageBlock})">${i}&nbsp;</a>
 			    				</c:otherwise>
 			   			</c:choose>
 			    		</c:if>
 			    	</c:forEach>
 			    
 			    	<c:if test="${((pviPageNav.rows_per_page*pviPageNav.pages_per_block) lt pviPageNav.totalRows) and (pviPageNav.pageBlock ne pviPageNav.lastPageBlock) }">
-			    		<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=${pviPageNav.pageBlock*pviPageNav.pages_per_block+1}&pageBlock=${pviPageNav.pageBlock+1}">다음페이지&gt;</a>&nbsp;
-			    		<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=${pviPageNav.totalPageNum}&pageBlock=${pviPageNav.lastPageBlock}">&gt;&gt;</a>
+			    		<a href="#" onclick="pageNav('${productVo.product_idx}',${pviPageNav.pageBlock*pviPageNav.pages_per_block+1},${pviPageNav.pageBlock+1})">다음페이지&gt;</a>&nbsp;
+			    		<a href="#" onclick="pageNav('${productVo.product_idx}',${pviPageNav.totalPageNum},${pviPageNav.lastPageBlock})">&gt;&gt;</a>
 			    	</c:if>
                 </div>
             </section>

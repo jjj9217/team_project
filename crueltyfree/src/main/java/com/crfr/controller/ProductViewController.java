@@ -1,6 +1,8 @@
 package com.crfr.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +28,7 @@ import com.crfr.vo.PageNav;
 import com.crfr.vo.ProductInfoVo;
 import com.crfr.vo.ProductInqVo;
 import com.crfr.vo.ProductVo;
+import com.crfr.vo.ReviewVo;
 
 import lombok.Setter;
 
@@ -42,7 +45,7 @@ public class ProductViewController {
 	@Setter(onMethod_={ @Autowired })	
 	ProductViewService pSelectView, pSelectThumbnail, pSelectFile, pSelectProductInfo, pSelectProductInq,
 	pSelectProductInqCount, pInsertProductInq, pUpdateProductInq, pDeleteProductInq, pSelectLike,
-	pInsertLike, pDeleteLike, pviPage, pSelectReviewCount;		
+	pInsertLike, pDeleteLike, pviPage, pSelectReviewCount, pSelectReviewListCount;		
 	
 	PageNav pageNav = new PageNav();
 	
@@ -83,9 +86,37 @@ public class ProductViewController {
 		model.addAttribute("pviPageNav", pageNav); //문의 페이지 네비게이션 모델에 추가
 		
 		//리뷰리스트
-		int productReviewRows = pSelectReviewCount.selectReviewCount(product_idx);//상품의 리뷰 수
+		int productReviewRows = pSelectReviewCount.selectReviewCount(product_idx);//상품의 전체리뷰 수	
+		model.addAttribute("productReviewRows", productReviewRows); //전체리뷰수 모델에 추가
 		
-		model.addAttribute("productReviewRows", productReviewRows); //리뷰수 모델에 추가
+		//사용자로부터 받은 조건을 Map에 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+		String sortOrder = request.getParameter("sortOrder");
+		String textReview = request.getParameter("textReview");
+		String photoReview = request.getParameter("photoReview");
+		
+		map.put("product_idx", product_idx);
+		if(sortOrder != null){
+		    map.put("sortOrder", sortOrder);
+		}
+		if(textReview != null){
+		    map.put("textReview", textReview);
+		}
+		if(photoReview != null){
+		    map.put("photoReview", photoReview);
+		}
+		int reviewListCount = pSelectReviewListCount.selectReviewListCount(map); //조건에 맞는 수
+		System.out.println(reviewListCount);
+		/*
+		List<ReviewVo> reviewList = pSelectReviewList.selectReviewList(map); //조건에 맞는 리스트
+		for(ReviewVo reviewVo : reviewList) {
+			int review_idx = reviewVo.getReview_idx(); 
+			
+			//리뷰번호로 이미지파일 받기
+			List<FileVo> reviewImgList = pSelectReviewImage.selectReviewImage(review_idx); 
+			//reviewImgList의 0번째 요소가 null이면 이미지x 
+		}
+		*/
 		//리뷰 페이지 네비게이션
 		
 		return "product/product_view";

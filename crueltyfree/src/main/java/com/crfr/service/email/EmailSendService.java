@@ -22,7 +22,7 @@ public class EmailSendService implements EmailService {
 
 		int authNumber = (int)(Math.random()*888889)+111111;
 		
-		String setFrom = "park0110301@gmail.com";
+		String setFrom = "albireo9217@gmail.com";
 		String toMail = email;
 		String title = "회원가입 인증 이메일입니다.";
 		String content = "홈페이지를 방문해주셔서 감사합니다."+

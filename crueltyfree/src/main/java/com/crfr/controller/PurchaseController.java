@@ -3,7 +3,6 @@ package com.crfr.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.crfr.service.email.EmailService;
 import com.crfr.service.productView.ProductViewService;
 import com.crfr.service.purchase.PurchaseService;
 import com.crfr.vo.BasketListVo;
@@ -47,6 +47,9 @@ public class PurchaseController {
 	
 	@Setter(onMethod_={ @Autowired })	
 	ProductViewService pSelectView, pSelectThumbnail;
+	
+	@Setter(onMethod_={ @Autowired })	
+	EmailService eSendOrderNum;
 	
 	//환불 테스트 페이지
 	@GetMapping("/refund.do")
@@ -448,7 +451,7 @@ public class PurchaseController {
 		HttpSession session = request.getSession();
 		MemberVo memberVo = (MemberVo)session.getAttribute("member");		
 		
-		String[] orderForm = new String[18];
+		String[] orderForm = new String[19];
 		orderForm[0] = request.getParameter("client_num");
 		orderForm[1] = request.getParameter("order_num");
 		orderForm[2] = request.getParameter("order_name");
@@ -467,7 +470,7 @@ public class PurchaseController {
 		orderForm[15] = request.getParameter("delivery_address");
 		orderForm[16] = request.getParameter("delivery_address2");
 		orderForm[17] = request.getParameter("pay_uid");
-		
+		orderForm[18] = request.getParameter("buyer_email");
 		
 		for(String test : orderForm) {
 			System.out.println("테스트: "+test);
@@ -560,6 +563,11 @@ public class PurchaseController {
 		String viewPage = "purchase/order";	
 		
 		if(payInsertResult != 0) {
+			//주문성공시 비회원의 경우 이메일 발송
+			if(memberVo == null) {
+				eSendOrderNum.orderEmail(orderForm[18],orderForm[1]);				
+			}
+			
 			if(basketIdxValues == null) {
 				//단일구매 상품 주문상품 테이블에 등록하기
 				int resultInsertOrderProduct = 
@@ -573,7 +581,6 @@ public class PurchaseController {
 					String basketCnt = Integer.toString(basketVo.getBasket_count());
 					int resultInsertOrderProduct =
 							oInsertOrderProduct.insertOrderProduct(strOrderIdx, basketPrdIdx, orderForm[0], basketCnt);
-					//결제 성공시 장바구니에서 넘어왔다면 장바구니에서 선택된 항목들을 제거
 					deleteBasketResult = oDeleteBasket.deleteBasket(basket_idx);					
 				}				
 			}

@@ -1,6 +1,7 @@
 package com.crfr.service.productView;
 
 import java.util.List;
+import java.util.Map;
 
 import com.crfr.vo.FileVo;
 import com.crfr.vo.LikeVo;
@@ -24,5 +25,6 @@ public interface ProductViewService {
 	default int insertlike(String product_idx, String member_idx) {return 0;}
 	default int deletelike(String product_idx, String member_idx) {return 0;}
 	default PageNav setPageNav(PageNav pageNav, String pageNum, String pageBlock) {return null;}//상품문의페이징
-	default int selectReviewCount(int product_idx) {return 0;}	
+	default int selectReviewCount(int product_idx) {return 0;}
+	default int selectReviewListCount(Map<String, Object> map) {return 0;}	
 }

@@ -98,7 +98,6 @@ $(function(){
 	    var basketIdxValuesStr = JSON.stringify(basketIdxValues);
 		//값넣기
 		$("#order_form_basket_idx").val(basketIdxValuesStr);
-		alert($(".order_basket_idx").eq(0).val());
 	}else{//바로구매에서 진입했을시 상품번호,구매수량 넘겨주기		
 		$("#order_form_product_idx").val($(".order_product_idx").eq(0).val());
 		$("#order_form_buy_cnt").val($(".order_basket_cnt").eq(0).val());
@@ -426,6 +425,7 @@ $(function(){
 	    $("#order_form_delivery_postNum").val($("#delivery_postNum").val());
 	    $("#order_form_delivery_address").val($("#delivery_address").val());
 	    $("#order_form_delivery_address2").val($("#delivery_address2").val());
+	    $("#order_form_buyer_email").val(buyer_email);
 	    //결제번호는 함수쪽에서 생성
 	    
 	    doPayment(name, amount, buyer_email, buyer_name, buyer_tel, buyer_addr, buyer_postcode);
@@ -964,7 +964,8 @@ $(function(){
             <input type="hidden" id="order_form_pay_uid" name="pay_uid" value="">
             <input type="hidden" id="order_form_basket_idx" name="basketIdxStr" value="">
             <input type="hidden" id="order_form_product_idx" name="buyPrdIdx" value="">
-            <input type="hidden" id="order_form_buy_cnt" name="buyCnt" value="">              
+            <input type="hidden" id="order_form_buy_cnt" name="buyCnt" value="">
+            <input type="hidden" id="order_form_buyer_email" name="buyer_email" value="">              
             </form>                       
         </div> <!-- end of right_area -->
     </div> <!-- end of order_payment_box -->
