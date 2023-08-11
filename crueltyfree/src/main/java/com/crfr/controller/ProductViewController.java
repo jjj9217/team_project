@@ -49,7 +49,7 @@ public class ProductViewController {
 	ProductViewService pSelectView, pSelectThumbnail, pSelectFile, pSelectProductInfo, pSelectProductInq,
 	pSelectProductInqCount, pInsertProductInq, pUpdateProductInq, pDeleteProductInq, pSelectLike,
 	pInsertLike, pDeleteLike, pviPage, pvrPage,pSelectReviewCount, pSelectReviewListCount, pSelectReviewList,
-	pSelectReviewImage, pSelectReviewRecom, pSelectReviewScoreAvg, pInsertRecom, pDeleteRecom,
+	pSelectReviewImage, pSelectReviewRecom, pSelectReviewVo, pInsertRecom, pDeleteRecom,
 	pSelectRecom, pUpdateRecom;		
 	
 	PageNav pageNav1 = new PageNav();
@@ -94,8 +94,20 @@ public class ProductViewController {
 		int productReviewRows = pSelectReviewCount.selectReviewCount(product_idx);//상품의 전체리뷰 수	
 		model.addAttribute("productReviewRows", productReviewRows); //전체리뷰수 모델에 추가
 		
-		double reviewScoreAvg = pSelectReviewScoreAvg.selectReviewScoreAvg(product_idx);
-		double roundedAvg = Math.round(reviewScoreAvg * 10.0) / 10.0;
+		//평점 평균 세팅
+		List<ReviewVo> ReviewList = pSelectReviewVo.selectReviewVo(product_idx);//상품번호 전체리뷰불러오기
+		int sumReviewScore = 0;
+		int reviewCount = 0;
+		for(ReviewVo reviewVo : ReviewList) {			
+			sumReviewScore += reviewVo.getReview_score();
+			if(reviewVo.getReview_score() != 0) {
+				reviewCount++;
+			}
+		}
+		double roundedAvg = 0;
+		if(sumReviewScore != 0) {
+			roundedAvg = (double) Math.round(sumReviewScore / reviewCount * 10) / 10;		
+		}
 		model.addAttribute("reviewScoreAvg", roundedAvg); //전체리뷰평점평균 모델에 추가
 		
 		//사용자로부터 받은 조건을 Map에 저장

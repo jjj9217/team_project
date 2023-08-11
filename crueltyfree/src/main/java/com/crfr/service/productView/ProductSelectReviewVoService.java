@@ -1,18 +1,21 @@
 package com.crfr.service.productView;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.crfr.dao.ProductViewDao;
 import com.crfr.vo.ProductVo;
+import com.crfr.vo.ReviewVo;
 
 import lombok.RequiredArgsConstructor;
 
-@Service("pSelectReviewScoreAvg")
+@Service("pSelectReviewVo")
 @RequiredArgsConstructor
-public class ProductSelectReviewRecomAvgService implements ProductViewService{
+public class ProductSelectReviewVoService implements ProductViewService{
 	private final ProductViewDao dao;
 	
-	public double selectReviewScoreAvg(int product_idx) {
-		return dao.selectReviewScoreAvg(product_idx);
+	public List<ReviewVo> selectReviewVo(int product_idx) {
+		return dao.selectReviewVo(product_idx);
 	}
 }

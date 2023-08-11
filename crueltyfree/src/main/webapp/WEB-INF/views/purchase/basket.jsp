@@ -609,7 +609,7 @@ $(function(){
 			                    <td class="td_product_info">
 			                        <div class="basket_item">
 			                        	<a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${basketList[rowNum-1].product_idx}">
-			                            	<img src="../resources/img/${basketList[rowNum-1].saveFile}" width="85px" height="85px" alt="썸네일이미지">
+			                            	<img src="../resources/uploads/${basketList[rowNum-1].saveFile}" width="85px" height="85px" alt="썸네일이미지">
 			                            </a>
 			                            <a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${basketList[rowNum-1].product_idx}">
 			                                <span class="prd_seller">${basketList[rowNum-1].member_nickname}</span>
@@ -671,7 +671,7 @@ $(function(){
 			                    <td class="td_product_info">
 			                        <div class="basket_item">
 			                        	<a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${basketList[rowNum-1].product_idx}">
-			                            	<img src="../resources/img/${basketList[rowNum-1].saveFile}" width="85px" height="85px" alt="썸네일이미지">
+			                            	<img src="../resources/uploads/${basketList[rowNum-1].saveFile}" width="85px" height="85px" alt="썸네일이미지">
 			                            </a>
 			                            <a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${basketList[rowNum-1].product_idx}">
 			                                <span class="prd_seller">${basketList[rowNum-1].member_nickname}</span>

@@ -32,7 +32,7 @@ public interface ProductViewService {
 	default List<ReviewVo> selectReviewList(Map<String, Object> map) {return null;}
 	default List<FileVo> selectReviewImage(int review_idx) {return null;}
 	default ReviewRecomVo selectReviewRecom(int review_idx, int member_idx) {return null;}
-	default double selectReviewScoreAvg(int product_idx) {return 0;}
+	default List<ReviewVo> selectReviewVo(int product_idx) {return null;}
 	default int insertRecom(String review_idx, String member_idx) {return 0;}
 	default int deleteRecom(String review_idx, String member_idx) {return 0;}
 	default int selectRecom(String review_idx) {return 0;}
