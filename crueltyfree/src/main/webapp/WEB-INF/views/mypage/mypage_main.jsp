@@ -269,28 +269,29 @@
 <div id="Container">
     <div id="mypage">       
         <table>
-            <th><h3><a href="#" id="mylink">마이페이지</a></h3></th>         
+            <th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th>         
             <tr><td class="mypagetable">마이 쇼핑</td></tr>
-            <tr><td>주문/배송조회</td></tr>
-            <tr><td>취소/반품내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td>장바구니</td></tr>
-            <tr><td>좋아요</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
             <tr><td>쿠폰</td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이활동</td></tr>
             <tr><td>1:1문의내역</td></tr>
             <tr><td>
-            <form name="caa" action="${pageContext.request.contextPath}/mypage/mypage_nonreview.do" method="get">
+<%--             <form name="caa" action="${pageContext.request.contextPath}/mypage/mypage_nonreview.do" method="get">
                         <input type="hidden" name="member_idx" value="1">
                     </form>
-                    <a href="#" onclick="document.forms['caa'].submit();">리뷰</a></td></tr>
+                    <a href="#" onclick="document.forms['caa'].submit();">리뷰</a></td></tr> --%>
+                    <a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰테스트</a>
                     
-            <tr><td>상품문의내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
-            <tr><td>회원정보 수정</td></tr>
-            <tr><td>배송지/환불계좌</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지/환불계좌</a></td></tr>
         </table>        
     </div>
     

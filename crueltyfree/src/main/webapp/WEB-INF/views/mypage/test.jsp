@@ -20,7 +20,7 @@ height:width:500px;}
 <body>
 test시작
 
-        <form name="fileForm" enctype="multipart/form-data" action="mypage_review_write_process.do" method="post">    
+        <form name="fileForm" enctype="multipart/form-data" action="mypage_reviewReg_process.do" method="post">    
         <input type="file" name="attachedFile">
         <input type="file" name="attachedFile">
         <input type="file" name="attachedFile">

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import com.crfr.dao.MypageDao;
 import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.FileVo;
+import com.crfr.vo.LikeExploreVo;
 import com.crfr.vo.ReviewExploreVo;
+import com.crfr.vo.ReviewVo;
 
 @Service("mpList")
 public class MypageListService implements MypageService {
@@ -39,7 +41,21 @@ public class MypageListService implements MypageService {
 		return dao.selectdeliveryList(member_idx);	
 	}
 	
+	public List<FileVo> selectlikeListimg(int member_idx) {
+		return dao.selectlikeListimg(member_idx);
+	}
+	
+	public List<LikeExploreVo> selectlikeList(int member_idx) {
+		return dao.selectlikeList(member_idx);
+	}
+	
+	public List<FileVo> reviewRegList(FileVo vo) {
+	return dao.reviewRegList(vo);
+	}
 	
 	
-
+	public List<ReviewVo> reviewRegList2(ReviewVo vo) {
+		return dao.reviewRegList2(vo);
+		}
+	
 }

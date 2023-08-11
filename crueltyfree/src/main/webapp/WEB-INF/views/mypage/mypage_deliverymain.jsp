@@ -10,139 +10,27 @@
 <meta charset="UTF-8">
 <title>Header</title>
 <style>
-
-    .head {
-        margin-left: 5%;
-        margin-right: 5%;
+    *{margin: 0; padding: 0;}
+    a{text-decoration: none;}
+    input[type="button"], input[type="submit"], input[type="checkbox"], select, input[type="radio"], label, button{cursor: pointer;}
+    header{
+    top: 0px;
+    width: 100%;
+    height: 165px;
+    background-color: white;
     }
     
-    .small_menu {
-        text-align: right;
-    }
-    
-    .small_menu a {
-        font-size: 12px; 
-        color: black;
-        text-decoration-line: none;
-    }
-    
-    .head_logo {
-        margin-right: 7%;
-        text-align: left;
-        width: 180px;
-        display: inline-block;
-    }
-    
-    .head_search {
-        width: 300px;
-        height: 40px;
-        margin: 22px 0 0 90px;
-        padding: 0 45px 0 20px;
-        border: 2px solid #7d99a4;
-        background: #ffffff;
-        border-radius: 20px;
-        display: inline-block;
-        white-space : nowrap;
-    }
-    
-    #head_searchWord {
-        width: 290px;
-        color: #a4a4a4;
-        font-size: 12px;
+    footer{
+        bottom: 0px;
+        width: 100%;
+        height: 250px;
         line-height: 20px;
-        letter-spacing: -.04em;
-        border: #ffffff;
-        margin-top: 5px;
-        position: relative;
-        vertical-align: middle;
-        display: inline-block;
+        background-color: #eef3f5;  
     }
-    
-    #head_searchBtn {
-        width: 30px;
-        height: 30px;
-        margin-top: 5px;
-        vertical-align: middle;
-        display: inline;
-        border: #ffffff;
-        background-color: #ffffff;
-    }
-    
-    .recent_pro {
-        margin-top: -35px;
-        text-align: right;
-        background-color: #fff;
-        vertical-align: middle;
-    }
-    
-    .recent_pro a {
-        font-size: 15.5px; 
-        color: black;
-        text-decoration-line: none;
-    }
-    
-    .menu_box {
-        width: 100%;
-        height: 40px;
-        text-align: center;
-        margin-top: 40px;
-        border-top: 1px solid #a4a4a4;
-        border-bottom: 2px solid #000000;
-    }
-    
-    .menu {
-        margin-top: -0%;
-        margin-left: 2%;
-        text-align: center;
-        width: 100%;
-        list-style: none;
-    }
-    
-    .menu > li {
-        width: 12.8%; /* 90 * 7 */
-        float: left;
-        text-align: center;
-        line-height: 40px;
-        background-color: white;
-    }
-    
-    .menu a {
-        color: #000000;
-        font-weight: bold;
-        text-decoration-line: none;
-    }
-    
-    .submenu {
-        height: 0; /*ul의 높이를 안보이게 처리*/
-        overflow: hidden;
-        list-style: none;
-    }
-    
-    .submenu a {
-        height: 0; /*ul의 높이를 안보이게 처리*/
-        overflow: hidden;
-        list-style: none;
-        font-size: 12px;
-    }
-    
-    .submenu > li {
-        line-height: 50px;
-        background-color: #7d99a4;
-    }
-    
-    .menu > li:hover {
-        background-color: #7d99a4;
-        transition-duration: 0.5s;
-    }
-    
-    .menu > li:hover .submenu {
-        height: 150px; /*서브메뉴 li한개의 높이 50*5*/
-        transition-duration: 1s;
+     body{
+         width: 1020px; height: auto; margin: 0 auto;
+         background-color: white;
      }
-     
-     .menu > li:hover a {
-        color: #ffffff;
-    }
     
     /* 바디 CSS */
 
@@ -248,30 +136,7 @@
         text-align: center;
     }
 
-    /* footer Css */
-
-    .foot {
-        text-align: center;
-        border-top: 2px solid #a4a4a4;
-    }
-    
-    .foot_logo {
-        width: 20%;
-        vertical-align: top;
-        margin-top: 7%;
-        display: inline-block;
-    }
-    
-    .foot_content {
-        width: 70%;
-        margin-top: 3%;
-        display: inline-block;
-    }
-    
-    .foot_content a {
-        font-size: 13px;
-    }
-
+  
     .addrees_reg_background{
         width: 100%;
         height: 80px;
@@ -313,8 +178,28 @@ function deletedeliveryPost(delivery_idx) {
 
 
 
-
-
+function vieweditdeliveryPost(delivery_idx) {
+    
+    var confirmAns = confirm("테스트");
+    
+    if (confirmAns) {
+        alert('성공');
+        frm_view.method = "post"; // 전송 방식 
+        frm_view.action = "edit_deliveryreg.do?no="+delivery_idx; // 전송 경로
+        frm_view.submit(); // 폼값 전송
+        
+    }else{
+        alert('불가');
+    }
+    
+}
+	
+	
+	
+	
+	
+	
+	
 function updatedeliveryPostdefault(delivery_idx) {
     
     var confirmAns = confirm("정말로 기본배송지로 설정하겠습니까?");
@@ -336,89 +221,9 @@ function updatedeliveryPostdefault(delivery_idx) {
 
 </script>
 <body>
-<div class="head">
-
-    <!-- 상단 작은 메뉴 (조건에 따라 회원용/비회원용 구분) -->
-    <c:choose>
-        <c:when test="${!empty member}">
-            <!-- 회원용 -->
-            <article class="small_menu">
-                <a>${member.member_name}님</a>&nbsp;&nbsp;<a href="#">로그아웃</a>&nbsp;&nbsp;<a href="#">마이페이지</a>&nbsp;&nbsp;<a href="#">장바구니</a>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="#">고객센터</a>
-            </article>
-        </c:when>
-        <c:otherwise>
-            <!-- 일반용 -->
-            <article class="small_menu">
-                <a href="#">회원가입</a>&nbsp;&nbsp;<a href="#">로그인</a>&nbsp;&nbsp;<a href="#">장바구니</a>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="#">고객센터</a>
-            </article>
-        </c:otherwise>
-    </c:choose>
-    
-    <!-- 로고 -->
-    <a href="../index/index.jsp">
-        <img src="../resources/CrueltyFree_logo.png" class="head_logo" />
-    </a>
-    
-    <!-- 검색창 -->
-    <div class="head_search">
-        <input type="text" name="searchWord" id="head_searchWord" value="검색어를 입력해 주세요">
-        <button type="submit" name="searchBtn" id="head_searchBtn"><img src="../resources/search_img.png" style="width: 21px; height: 21px; margin-left: -4px; margin-top: -1px;"></button>
-    </div>
-    
-    <!-- 최근 본 상품 -->
-    <div class="recent_pro">
-        <a href="#">최근 본 상품 ▼</a>
-    </div>
-
-</div>
-
-<div class="menu_box">
-    <ul class="menu">
-        <li>
-            <a href="#">베스트</a>
-        </li>
-        <li>
-            <a href="#">스킨케어</a>
-            <ul class="submenu">
-                <li class="sub3"><a href="#">토너/로션/올인원</a></li>
-                <li class="sub3"><a href="#">에센스/크림</a></li>
-                <li class="sub3"><a href="#">미스트/오일</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">클렌징</a>
-            <ul class="submenu">
-                <li class="sub2"><a href="#">클렌징폼/젤</a></li>
-                <li class="sub2"><a href="#">오일/워터/리무버</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">메이크업</a>
-            <ul class="submenu">
-                <li class="sub3"><a href="#">립메이크업</a></li>
-                <li class="sub3"><a href="#">베이스메이크업</a></li>
-                <li class="sub3"><a href="#">아이메이크업</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">바디케어</a>
-            <ul class="submenu">
-                <li class="sub2"><a href="#">샤워/입욕</a></li>
-                <li class="sub2"><a href="#">로션/오일</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">헤어케어</a>
-            <ul class="submenu">
-                <li class="sub2"><a href="#">샴푸/린스/트리트먼트</a></li>
-                <li class="sub2"><a href="#">염색약/펌</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">미용소품</a>
-        </li>
-    </ul>
-</div>
+    <header>    
+        <jsp:include page="../main/header.jsp"/>    
+    </header>
 
 <!-- body시작 -->
 
@@ -491,7 +296,7 @@ function updatedeliveryPostdefault(delivery_idx) {
 				                        </c:if>
 				                    <td>${deliveryList[rowNum-1].delivery_handphone}연락처</td>
 				                    <td>
-				                        <button>수정</button></td>
+				                        <input type="button" onclick="vieweditdeliveryPost(${deliveryList[rowNum-1].delivery_idx});" value="수정"></td>
 				                </tr>
 			                </c:if>
 	                    </c:when>
@@ -511,10 +316,12 @@ function updatedeliveryPostdefault(delivery_idx) {
 	                                <td>
 	                                    
 				                        <input type="button" onclick="updatedeliveryPostdefault(${deliveryList[rowNum-1].delivery_idx});" value="기본배송지 설정">
-				                      				                        
+
+				                      	<input type="button" onclick="vieweditdeliveryPost(${deliveryList[rowNum-1].delivery_idx});" value="수정">			                        
+				                        
 				                        <input type="button" onclick="deletedeliveryPost(${deliveryList[rowNum-1].delivery_idx});" value="삭제하기">
                                         
-				                        <button>수정</button></td>
+				                        <%-- <input type="button" onclick="updatedeliveryPost(${deliveryList[rowNum-1].delivery_idx});" value="수정"> --%></td>
 				                        
 				                </tr>
 				                
@@ -543,21 +350,9 @@ function updatedeliveryPostdefault(delivery_idx) {
 </div>
 
 <!-- footer -->
-<div class="foot">
-    <div class="foot_logo">
-        <img src="../resources/CrueltyFree_logo.png" style="width: 70%;" />
-    </div>
-    
-    <div class="foot_content">
-        <a style="font-weight: bold; color:#000000;">크루얼티프리 주식회사</a><br><br>
-        <a style="text-align: left; color:#4a4a4a;"> 대표이사: 정종진<br>
-            주소: (31144) 충남 천안시 동남구 대흥로 215 7층, 8층<br><br>
-            크루얼티프리에서 판매되는 상품 중에는 크루얼티프리에 입점한 개별 판매자가 판매하는 상품이 포함되어
-            있습니다. 개별 판매자 판매 상품의 경우, 크루얼티프리는 통신판매중개자로서 통신판매의 당사자가 아니며
-            판매자가 등록한 상품정보 및 거래 정보 등에 대하여 책임을 부담하지 않습니다.
-        </a>
-    </div>
-</div>
+    <footer>
+        <jsp:include page="../main/footer.jsp"/>        
+    </footer>
 </body>
 </body>
 </html>
