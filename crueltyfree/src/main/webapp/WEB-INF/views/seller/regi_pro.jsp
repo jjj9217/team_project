@@ -169,7 +169,7 @@ function categoryLarge(cate_large) {
 	var categorySmall_f = ["-"];
 	var target = document.getElementById("categorySmall");
 
-	if(cate_large.value == "skin") var cate_small = categorySmall_a;
+	if(cate_large.value == "Skin") var cate_small = categorySmall_a;
 	else if(cate_large.value == "clensing") var cate_small = categorySmall_b;
 	else if(cate_large.value == "makeup") var cate_small = categorySmall_c;
 	else if(cate_large.value == "body") var cate_small = categorySmall_d;
@@ -184,7 +184,7 @@ function categoryLarge(cate_large) {
     var categorySmall_f_val = ["prop_1"];
     var target = document.getElementById("categorySmall");
 	
-    if(cate_large.value == "skin") var cate_small_val = categorySmall_a_val;
+    if(cate_large.value == "Skin") var cate_small_val = categorySmall_a_val;
     else if(cate_large.value == "clensing") var cate_small_val = categorySmall_b_val;
     else if(cate_large.value == "makeup") var cate_small_val = categorySmall_c_val;
     else if(cate_large.value == "body") var cate_small_val = categorySmall_d_val;
@@ -259,7 +259,7 @@ function validateForm(){
 		</article>
 		<article class="regi_right">
 			<select name="category_code" class="regi_box" onchange="categoryLarge(this)">
-				<option value="skin">스킨케어</option>
+				<option value="Skin">스킨케어</option>
 				<option value="clensing">클렌징</option>
 				<option value="makeup">메이크업</option>
 				<option value="body">바디케어</option>

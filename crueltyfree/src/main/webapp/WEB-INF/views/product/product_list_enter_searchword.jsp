@@ -3,7 +3,7 @@
 <%@ page import="java.util.List, java.util.HashMap, java.util.Map" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -268,7 +268,11 @@
     #category_code_btn{
     }
 
-
+	#isearchWord{
+		color:rgb(110, 206, 14);
+		font-size: 25px;
+	}
+	
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
@@ -468,7 +472,7 @@ function ProductDetail(searchWord, category_code, category_code_small,
 
 <div id="Container">
     <div id="list_tit">
-        ${exploreVo.searchWord}검색결과(전체 ${pageNav.totalRows}개의 상품)
+        <span id=isearchWord>${exploreVo.searchWord}</span> 검색결과 (전체 ${pageNav.totalRows}개의 상품)
     </div>
     <div class="detailSearch">      
         <div class="serach_category_big">
@@ -490,7 +494,7 @@ function ProductDetail(searchWord, category_code, category_code_small,
                     
                     <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', 'hair', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">헤어케어</a></li>
                     
-                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '1', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">미용소품</a></li>                    
+                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', 'prop', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">미용소품</a></li>                    
                    
                 </ul>                
             </div>
@@ -498,8 +502,8 @@ function ProductDetail(searchWord, category_code, category_code_small,
     <c:if test="${pageNav.totalRows ne 0}">
         <div class="serach_category_small">
             <div class="inner">
-	            <c:if test="${!empty exploreVo.category_code}">	                
-	                <c:if test="${exploreVo.category_code ne 6}">
+ 	            <c:if test="${!empty exploreVo.category_code}">	                 
+ 	                <c:if test="${not fn:contains(exploreVo.category_code, 'prop')}">
 		                <div class="tit_classification">
 		                    <h4 class="tit_classification2">카테고리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                        <button class="classification">+</button>
@@ -508,39 +512,39 @@ function ProductDetail(searchWord, category_code, category_code_small,
 	                </c:if>
    	                
 	                <ul class="list_classification">
-	                    <%-- <c:if test="${pageNav.totalRows ne 0}"> --%>                    
-		                    <c:if test="${exploreVo.category_code eq 1}">
-			                    <li><a href="#">토너/로션/올인원</a></li>
-			                    <li><a href="#" name="2">에센스/크림</a></li>
-			                    <li><a href="#" name="3">미스트/오일</a></li>
+	                    <c:if test="${pageNav.totalRows ne 0}">                 
+		                    <c:if test="${fn:contains(exploreVo.category_code, 'Skin')}">
+			                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'skin_1', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">토너/로션/올인원</a></li>
+			                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'skin_2', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">에센스/크림</a></li>
+			                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'skin_3', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">미스트/오일</a></li>
 		                    </c:if>
 		                    
-		                    <c:if test="${exploreVo.category_code eq 2}">
-			                    <li><a href="#">폼</a></li>
-			                    <li><a href="#">오일</a></li>
+		                    <c:if test="${fn:contains(exploreVo.category_code, 'clensing')}">
+			                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'clensing_1', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">폼</a></li>
+			                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'clensing_2', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">오일</a></li>
 			                </c:if>
 			                
-			                <c:if test="${exploreVo.category_code eq 3}">
-			                    <li><a href="#">립</a></li>
-			                    <li><a href="#">베이스</a></li>
-			                    <li><a href="#">아이</a></li>
+			                <c:if test="${fn:contains(exploreVo.category_code, 'makeup')}">
+			                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'makeup_1', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">립</a></li>
+			                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'makeup_2', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">베이스</a></li>
+			                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'makeup_3', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">아이</a></li>
 			                </c:if>    
 		
-			                <c:if test="${exploreVo.category_code eq 4}">    
-			                    <li><a href="#">샤워</a></li>
-			                    <li><a href="#">로션</a></li>
+			                <c:if test="${fn:contains(exploreVo.category_code, 'body')}">    
+			                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'body_1', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">샤워</a></li>
+			                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'body_2', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">로션</a></li>
 			                </c:if>
 			                
-			                <c:if test="${exploreVo.category_code eq 'clensing'}">    
-			                    <li><a href="#">샴푸</a></li>
-			                    <li><a href="#">염색</a></li>
+			                <c:if test="${fn:contains(exploreVo.category_code, 'hair')}">    
+			                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'hair_1', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">샴푸</a></li>
+			                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'hair_2', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">염색</a></li>
 			                </c:if>
-		                <%-- </c:if>	    --%>               
+		                </c:if>             
 	                </ul>
-	            </c:if>  
+ 	            </c:if>
 	        </div>	        
         </div>
-    </c:if>
+     </c:if> 
         <div class="saerch_price">
             <div class="inner">
                 <div class="tit_classification">                    
