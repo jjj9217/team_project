@@ -32,7 +32,7 @@ import com.crfr.vo.ReviewVo;
 public class ManagerController {
 	
 	ManagerService oneList, proList, memList, selList, proinqList, rvList, mPage, rvCount, proCount, memCount, oneCount, selCount, proinqCount,
-	proSList, memSList, oneSList, selSList, proinqSList, rvSList, proDelete, memDelete, proinqDelete, oneDelete, selDelete, rvDelete, pUpdateProduct, pfineProductPost
+	proSList, memSList, oneSList, selSList, proinqSList, rvSList, proDelete, memDelete, proinqDelete, oneDelete, selDelete, rvDelete, aUpdateProduct, pfineProductPost1
 	,memUpdate, oneUpdate, proinqUpdate, rvUpdate;
 	PageNav1 pageNav;
 	
@@ -138,12 +138,12 @@ public class ManagerController {
 		this.rvDelete = rvDelete;
 	}
 	@Autowired
-	public void setPUpdateProduct(@Qualifier("pUpdateProduct") ManagerService pUpdateProduct) {
-		this.pUpdateProduct = pUpdateProduct;
+	public void setPUpdateProduct(@Qualifier("aUpdateProduct") ManagerService pUpdateProduct) {
+		this.aUpdateProduct = pUpdateProduct;
 	}
 	@Autowired
-	public void setPfineProductPost(@Qualifier("pfineProductPost") ManagerService pfineProductPost) {
-		this.pfineProductPost = pfineProductPost;
+	public void setpfineProductPost(@Qualifier("pfineProductPost1") ManagerService pfineProductPost) {
+		this.pfineProductPost1 = pfineProductPost;
 	}
 	@Autowired
 	public void setMemUpdate(@Qualifier("memUpdate") ManagerService memUpdate) {
@@ -220,7 +220,7 @@ public class ManagerController {
 	@GetMapping("/manager_2product_edit.do")
 	public String manager_2product_edit(@RequestParam("no")String product_idx, Model model) {
 		//게시물 가져오기 - 
-		ProductVo vo = pfineProductPost.findProductPost(product_idx);
+		ProductVo vo = pfineProductPost1.findProductPost(product_idx);
 		model.addAttribute("ProductVo", vo);
 		
 		return "manager/manager_2product_edit";
@@ -236,7 +236,7 @@ public class ManagerController {
 
 		String viewPage = "manager/manager_2product_edit"; //글수정 실패시 보여지는 페이지
 		//첨부파일과 함께 글내용 수정을 BoardFileUpdateService클래스 이용
-		int result1 = pUpdateProduct.productUpdate(product_name1, 
+		int result1 = aUpdateProduct.productUpdate(product_name1, 
 				product_price1, product_capa1, delivery_company1, product_idx1);
 
 		if(result1 == 1) { //글 수정 성공시 보여지는 페이지

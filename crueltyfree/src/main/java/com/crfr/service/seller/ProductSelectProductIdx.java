@@ -7,16 +7,12 @@ import com.crfr.vo.ProductVo;
 
 import lombok.RequiredArgsConstructor;
 
-@Service("pSelectProductIdx")
+@Service("pfindProductIdx")
 @RequiredArgsConstructor
 public class ProductSelectProductIdx implements ProductSellerService{
 	private final ProductInsertDao dao;
 	
-	public int selectProductIdx (String product_name, String product_price, String member_nickname) {	
-		ProductVo vo = new ProductVo();
-		vo.setProduct_name(product_name);
-		vo.setProduct_price(Integer.parseInt(product_price));
-		vo.setMember_nickname(member_nickname);
-		return dao.selectProductIdx(vo);
+	public int findProductIdx (String product_name, String member_nickname) {
+		return dao.findProductIdx (product_name, member_nickname);
 	}
 }
