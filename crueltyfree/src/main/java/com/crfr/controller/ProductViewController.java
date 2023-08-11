@@ -1,6 +1,9 @@
 package com.crfr.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +29,9 @@ import com.crfr.vo.PageNav;
 import com.crfr.vo.ProductInfoVo;
 import com.crfr.vo.ProductInqVo;
 import com.crfr.vo.ProductVo;
+import com.crfr.vo.ReviewListVo;
+import com.crfr.vo.ReviewRecomVo;
+import com.crfr.vo.ReviewVo;
 
 import lombok.Setter;
 
@@ -42,10 +48,12 @@ public class ProductViewController {
 	@Setter(onMethod_={ @Autowired })	
 	ProductViewService pSelectView, pSelectThumbnail, pSelectFile, pSelectProductInfo, pSelectProductInq,
 	pSelectProductInqCount, pInsertProductInq, pUpdateProductInq, pDeleteProductInq, pSelectLike,
-	pInsertLike, pDeleteLike, pviPage, pSelectReviewCount;		
+	pInsertLike, pDeleteLike, pviPage, pvrPage,pSelectReviewCount, pSelectReviewListCount, pSelectReviewList,
+	pSelectReviewImage, pSelectReviewRecom, pSelectReviewScoreAvg, pInsertRecom, pDeleteRecom,
+	pSelectRecom, pUpdateRecom;		
 	
-	PageNav pageNav = new PageNav();
-	
+	PageNav pageNav1 = new PageNav();
+	PageNav pageNav2 = new PageNav();
 	//상품 상세보기
 	@GetMapping("/product_view.do")
 	public String product_view(@RequestParam("prdNum") int product_idx, Model model,
@@ -78,16 +86,88 @@ public class ProductViewController {
 		model.addAttribute("productInqList", productInqList); //productInqList를 모델에 추가
 		
 		//상품문의 페이지 네비게이션
-		pageNav.setTotalRows(productInqRows); //게시물 수 세팅
-		pageNav = pviPage.setPageNav(pageNav, pageNum, pageBlock);
-		model.addAttribute("pviPageNav", pageNav); //문의 페이지 네비게이션 모델에 추가
+		pageNav1.setTotalRows(productInqRows); //게시물 수 세팅
+		pageNav1 = pviPage.setPageNav(pageNav1, pageNum, pageBlock);
+		model.addAttribute("pviPageNav", pageNav1); //문의 페이지 네비게이션 모델에 추가
 		
 		//리뷰리스트
-		int productReviewRows = pSelectReviewCount.selectReviewCount(product_idx);//상품의 리뷰 수
+		int productReviewRows = pSelectReviewCount.selectReviewCount(product_idx);//상품의 전체리뷰 수	
+		model.addAttribute("productReviewRows", productReviewRows); //전체리뷰수 모델에 추가
 		
-		model.addAttribute("productReviewRows", productReviewRows); //리뷰수 모델에 추가
+		double reviewScoreAvg = pSelectReviewScoreAvg.selectReviewScoreAvg(product_idx);
+		double roundedAvg = Math.round(reviewScoreAvg * 10.0) / 10.0;
+		model.addAttribute("reviewScoreAvg", roundedAvg); //전체리뷰평점평균 모델에 추가
+		
+		//사용자로부터 받은 조건을 Map에 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+		String sortOrder = request.getParameter("sortOrder");
+		String textReview = request.getParameter("textReview");
+		String photoReview = request.getParameter("photoReview");
+		
+		map.put("product_idx", product_idx);
+		if(sortOrder != null){
+		    map.put("sortOrder", sortOrder);
+		}
+		if(textReview != null){
+		    map.put("textReview", textReview);
+		}
+		if(photoReview != null){
+		    map.put("photoReview", photoReview);
+		}
+		int reviewListCount = pSelectReviewListCount.selectReviewListCount(map); //조건에 맞는 수(페이징용)
+		
+		List <ReviewListVo> reviewList = new ArrayList<>(); // 리뷰목록 구성할 리스트 초기화
+				
+		List<ReviewVo> reviewVoList = pSelectReviewList.selectReviewList(map); //조건에 맞는 리스트Vo
+		
+		
+		for(ReviewVo reviewVo : reviewVoList) {
+			int review_idx = reviewVo.getReview_idx(); 
+			
+			ReviewListVo reviewListVo = new ReviewListVo(); //세팅할 Vo 생성
+			
+			//리뷰번호로 이미지파일 받기
+			List<FileVo> reviewImgList = pSelectReviewImage.selectReviewImage(review_idx);
+			int fileIndex = 0;
+			for(FileVo fileVo : reviewImgList) {				
+				String originFile = fileVo.getOriginFile();
+				String saveFile = fileVo.getSaveFile();
+				
+				reviewListVo.setOriginFile(fileIndex, originFile);
+				reviewListVo.setSaveFile(fileIndex, saveFile);
+				
+				fileIndex++;
+			}
+			ReviewRecomVo reviewRecomVo = null;
+			if(vo != null) {
+				int member_idx = vo.getMember_idx();
+				reviewRecomVo = pSelectReviewRecom.selectReviewRecom(review_idx, member_idx);
+				if(reviewRecomVo != null) {
+					reviewListVo.setReview_recom_idx(reviewRecomVo.getReview_recom_idx());					
+				}
+			}//회원 추천했는지 안했는지 확인용
+			
+			reviewListVo.setReview_idx(review_idx);
+			reviewListVo.setMember_idx(reviewVo.getMember_idx());
+			reviewListVo.setProduct_idx(reviewVo.getProduct_idx());
+			reviewListVo.setReview_score(reviewVo.getReview_score());
+			reviewListVo.setReview_content(reviewVo.getReview_content());
+			reviewListVo.setReview_regDate(reviewVo.getReview_regDate());
+			reviewListVo.setMember_nickname(reviewVo.getMember_nickname());
+			reviewListVo.setReview_recom_count(reviewVo.getReview_recom_count());
+			
+			reviewList.add(reviewListVo);
+			
+			
+		}
+		model.addAttribute("reviewListCount", reviewListCount); //조건에 맞는 리뷰리스트수 모델에추가
+		model.addAttribute("reviewList", reviewList); //조건에 맞는 리뷰리스트 모델에추가
+		
 		//리뷰 페이지 네비게이션
-		
+		pageNav2.setTotalRows(reviewListCount); //게시물 수 세팅
+		pageNav2 = pvrPage.setPageNav(pageNav2, pageNum, pageBlock);
+		model.addAttribute("pvrPageNav", pageNav2); //문의 페이지 네비게이션 모델에 추가
+				
 		return "product/product_view";
 		
 	}
@@ -105,7 +185,7 @@ public class ProductViewController {
 		
 		String client_num = null;
 		if(vo != null) {//로그인 되어있을때
-			client_num = vo.getMember_id();	//Vo의 member_id를 넣음
+			client_num = Integer.toString(vo.getMember_idx());	//Vo의 member_idx를 넣음
 		}else {//로그인 되어있지 않을때
 		    Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
 		    if (cookies != null) {
@@ -239,4 +319,41 @@ public class ProductViewController {
 		return msg;
 	}
 	
+	//추천 등록
+	@PostMapping("/recom_insert.do")
+	@ResponseBody
+	public String recom_insert(@RequestParam("member_idx") String member_idx, 
+			@RequestParam("review_idx") String review_idx) {
+		String msg = null;
+		
+		int result = pInsertRecom.insertRecom(review_idx, member_idx); 
+		int recomCount = pSelectRecom.selectRecom(review_idx);
+		pUpdateRecom.updateRecom(review_idx, recomCount);
+		
+		if(result == 1){//등록 성공시
+			msg = "success";
+		}else { //등록 실패시
+			msg = "fail";
+		}
+		return msg;
+	}	
+
+	//추천 삭제
+	@PostMapping("/recom_delete.do")
+	@ResponseBody
+	public String recom_delete(@RequestParam("member_idx") String member_idx, 
+			@RequestParam("review_idx") String review_idx) {
+		String msg = null;
+		
+		int result = pDeleteRecom.deleteRecom(review_idx, member_idx); 
+		int recomCount = pSelectRecom.selectRecom(review_idx);
+		pUpdateRecom.updateRecom(review_idx, recomCount);
+		
+		if(result == 1){//삭제 성공시
+			msg = "success";
+		}else { //삭제 실패시
+			msg = "fail";
+		}
+		return msg;
+	}
 }

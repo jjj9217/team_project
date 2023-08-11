@@ -24,7 +24,9 @@ public class MypageCountService implements MypageService {
 		return dao.selectmyreviewCount(member_idx);
 	}
 	
-
+	public int selectdeliveryCount(int member_idx) {
+		return dao.selectdeliveryCount(member_idx);
+	}
 
 	
 }

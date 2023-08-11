@@ -2,6 +2,7 @@ package com.crfr.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -12,17 +13,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.crfr.service.email.EmailService;
 import com.crfr.service.productView.ProductViewService;
 import com.crfr.service.purchase.PurchaseService;
 import com.crfr.vo.BasketListVo;
 import com.crfr.vo.BasketVo;
+import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.MemberVo;
+import com.crfr.vo.OrderVo;
+import com.crfr.vo.PayVo;
 import com.crfr.vo.ProductVo;
 import com.google.gson.Gson;
 
@@ -35,10 +41,47 @@ public class PurchaseController {
 	//서비스 클래스로 사용할 클래스들을 멤버변수로 정의하고 의존 자동 주입받도록 함
 	@Setter(onMethod_={ @Autowired })	
 	PurchaseService bSelectCount, bSelectList, bPlusBasketCount, bMinusBasketCount, bUpdateBasketCount,
-	bBasketInsert, bBasketDeleteOne, oSelectBasket;
+	bBasketInsert, bBasketDeleteOne, oSelectBasket, oSelectDeliveryCount,oSelectDeliveryList,
+	oInsertDelivery, oSelectDeliveryVo, oInsertOrder, oSelectOrderIdx, oInsertPay, oDeleteBasket,
+	oImportService, oInsertOrderProduct, oUpdateOrder, oUpdatePay;
 	
 	@Setter(onMethod_={ @Autowired })	
 	ProductViewService pSelectView, pSelectThumbnail;
+	
+	@Setter(onMethod_={ @Autowired })	
+	EmailService eSendOrderNum;
+	
+	//환불 테스트 페이지
+	@GetMapping("/refund.do")
+	public String refund() {		
+		return "purchase/refund";
+	}
+	
+	//환불하기 버튼
+	@PostMapping("/refund_process.do")
+	@ResponseBody
+	public String refund_process(@RequestBody Map<String, String> refundMap) {
+				
+		String merchant_uid = refundMap.get("merchant_uid");
+		String order_idx = refundMap.get("order_idx");
+		String token = oImportService.getImportToken();
+		int result_refund = oImportService.cancelPay(token, merchant_uid);
+
+		System.out.println("token: "+token);
+		System.out.println("merchant_uid: "+merchant_uid);
+		System.out.println("result_refund: "+result_refund);
+		
+		String result = "";
+		if(result_refund == 1) {//성공시 결제 테이블,주문테이블 환불여부 바꾸기 -> order_idx받아오기
+			oUpdateOrder.updateOrder(order_idx); //주문테이블 업데이트
+			oUpdatePay.updatePay(order_idx); //결제테이블 업데이트
+			result = "success";			
+		}else {
+			result = "fail";
+		}
+		
+		return result;
+	}
 	
 	//장바구니 페이지
 	@GetMapping("/basket.do")
@@ -50,7 +93,7 @@ public class PurchaseController {
 		
 		String client_num = null;
 		if(vo != null) {//로그인 되어있을때
-			client_num = vo.getMember_id();	//Vo의 member_id를 넣음
+			client_num = Integer.toString(vo.getMember_idx());	//Vo의 member_idx를 넣음
 		}else {//로그인 되어있지 않을때
 		    Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
 		    if (cookies != null) {
@@ -107,7 +150,7 @@ public class PurchaseController {
 		
 		String client_num = null;
 		if(vo != null) {//로그인 되어있을때
-			client_num = vo.getMember_id();	//Vo의 member_id를 넣음
+			client_num = Integer.toString(vo.getMember_idx());	//Vo의 member_idx를 넣음
 		}else {//로그인 되어있지 않을때
 		    Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
 		    if (cookies != null) {
@@ -145,7 +188,7 @@ public class PurchaseController {
 		
 		String client_num = null;
 		if(vo != null) {//로그인 되어있을때
-			client_num = vo.getMember_id();	//Vo의 member_id를 넣음
+			client_num = Integer.toString(vo.getMember_idx());	//Vo의 member_idx를 넣음
 		}else {//로그인 되어있지 않을때
 		    Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
 		    if (cookies != null) {
@@ -183,7 +226,7 @@ public class PurchaseController {
 		
 		String client_num = null;
 		if(vo != null) {//로그인 되어있을때
-			client_num = vo.getMember_id();	//Vo의 member_id를 넣음
+			client_num = Integer.toString(vo.getMember_idx());	//Vo의 member_idx를 넣음
 		}else {//로그인 되어있지 않을때
 		    Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
 		    if (cookies != null) {
@@ -253,7 +296,7 @@ public class PurchaseController {
 		
 		String client_num = null;
 		if(vo != null) {//로그인 되어있을때
-			client_num = vo.getMember_id();	//Vo의 member_id를 넣음
+			client_num = Integer.toString(vo.getMember_idx());	//Vo의 member_idx를 넣음
 		}else {//로그인 되어있지 않을때
 		    Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
 		    if (cookies != null) {
@@ -292,6 +335,43 @@ public class PurchaseController {
 	//주문/결제 페이지
 	@PostMapping("/order.do")
 	public String order(HttpServletRequest request, Model model) {
+		
+		//세션에서 "member"를 얻어옴
+		HttpSession session = request.getSession();
+		MemberVo vo = (MemberVo)session.getAttribute("member");
+		
+		String client_num = null;
+		if(vo != null) {//로그인 되어있을때
+			client_num = Integer.toString(vo.getMember_idx());	//Vo의 member_idx를 넣음				
+		}else {//로그인 되어있지 않을때
+		    Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
+		    if (cookies != null) {
+		        for (Cookie cookie : cookies) {
+		            if ("guestId".equals(cookie.getName())) { //이름이 "guestId"인 쿠키의 value를
+		            	client_num  = cookie.getValue();	//client_num에 넣음
+		                break;
+		            }//end of if - cookie 이름 조건문
+		        }//end of for
+		    }//end of if - cookie null값 조건문
+		}			
+		model.addAttribute("client_num", client_num);
+		
+		//배송지 목록 받아오기	
+		List<DeliveryVo> deliveryList = new ArrayList<>(); // 빈 리스트로 초기화
+		DeliveryVo deliveryVo = null;
+		//배송지 목록의 수
+		int delivery_count =  oSelectDeliveryCount.selectDeliveryCount(client_num);
+		model.addAttribute("delivery_count", delivery_count);
+		//배송지목록
+		if(vo != null) {//로그인 되어있을때
+			deliveryList = oSelectDeliveryList.selectDeliveryList(client_num);		
+			model.addAttribute("deliveryList", deliveryList); 
+		}else {
+			
+			deliveryList.add(deliveryVo); // 비회원:deliveryList에 값이 null인 deliveryVo 1개추가
+			model.addAttribute("deliveryList", deliveryList); 
+		}
+		
 		
 		String selectedValuesStr = request.getParameter("selectedValuesStr"); //JSon형식으로 받은것
 		String[] selectedValues = new Gson().fromJson(selectedValuesStr, String[].class);//배열로 풀기
@@ -333,7 +413,7 @@ public class PurchaseController {
 			}
 		}else {
 			int productIdx = Integer.parseInt(product_idx); //상품 번호
-			int cartCnt = Integer.parseInt(cart_cnt); //상품 번호
+			int cartCnt = Integer.parseInt(cart_cnt); //상품 개수
 			
 		    ProductVo productVo = pSelectView.selectView(productIdx); //상품번호의 상품Vo
 		    FileVo fileVo = pSelectThumbnail.selectThumbnail(productIdx); //상품번호의 파일Vo중 1번째
@@ -363,11 +443,155 @@ public class PurchaseController {
 		return "purchase/order";
 	}
 	
-	
-	
-	
-	@GetMapping("/order_complete.do")
-	public String order_complete() {		
-		return "purchase/order_complete";
+	//주문완료페이지
+	@PostMapping("/order_complete.do")
+	public String order_complete(HttpServletRequest request, Model model) {	
+		
+		//세션에서 "member"를 얻어옴
+		HttpSession session = request.getSession();
+		MemberVo memberVo = (MemberVo)session.getAttribute("member");		
+		
+		String[] orderForm = new String[19];
+		orderForm[0] = request.getParameter("client_num");
+		orderForm[1] = request.getParameter("order_num");
+		orderForm[2] = request.getParameter("order_name");
+		orderForm[3] = request.getParameter("order_handphone");
+		orderForm[4] = request.getParameter("order_prdPrice");
+		orderForm[5] = request.getParameter("order_salePrice");
+		orderForm[6] = request.getParameter("order_dlvPrice");
+		orderForm[7] = request.getParameter("order_totalPrice");
+		orderForm[8] = request.getParameter("delivery_address_name");
+		orderForm[9] = request.getParameter("delivery_get_name");
+		orderForm[10] = request.getParameter("delivery_handphone");
+		orderForm[11] = request.getParameter("delivery_message");
+		orderForm[12] = request.getParameter("delivery_pass");
+		orderForm[13] = request.getParameter("delivery_pass_content");
+		orderForm[14] = request.getParameter("delivery_postNum");
+		orderForm[15] = request.getParameter("delivery_address");
+		orderForm[16] = request.getParameter("delivery_address2");
+		orderForm[17] = request.getParameter("pay_uid");
+		orderForm[18] = request.getParameter("buyer_email");
+		
+		for(String test : orderForm) {
+			System.out.println("테스트: "+test);
+		}
+		
+		//배송지 정보 담을 vo객체 생성
+		DeliveryVo deliveryVo = new DeliveryVo();
+		
+		if(memberVo != null) {//회원일때
+			deliveryVo.setMember_idx(Integer.parseInt(orderForm[0]));			
+		}else {//비회원일때
+			deliveryVo.setDelivery_guest(orderForm[0]);
+		}
+		deliveryVo.setDelivery_address_name(orderForm[8]);
+		deliveryVo.setDelivery_get_name(orderForm[9]);
+		deliveryVo.setDelivery_handphone(orderForm[10]);
+		deliveryVo.setDelivery_message(orderForm[11]);
+		deliveryVo.setDelivery_pass(Integer.parseInt(orderForm[12]));
+		deliveryVo.setDelivery_pass_content(orderForm[13]);
+		deliveryVo.setDelivery_postNum(Integer.parseInt(orderForm[14]));
+		deliveryVo.setDelivery_address(orderForm[15]);
+		deliveryVo.setDelivery_address2(orderForm[16]);
+		
+		//주문 정보 담을 vo객체 생성
+		OrderVo orderVo = new OrderVo();
+		orderVo.setClient_num(orderForm[0]);
+		orderVo.setOrder_num(orderForm[1]);
+		orderVo.setOrder_name(orderForm[2]);
+		orderVo.setOrder_handphone(orderForm[3]);
+		orderVo.setOrder_prdPrice(Integer.parseInt(orderForm[4]));
+		orderVo.setOrder_salePrice(Integer.parseInt(orderForm[5]));
+		orderVo.setOrder_dlvPrice(Integer.parseInt(orderForm[6]));
+		orderVo.setOrder_totalPrice(Integer.parseInt(orderForm[7]));
+		
+		
+		int dlvInsertResult = 0;		
+		DeliveryVo deliveryResult = null;
+		if(memberVo == null) {//비회원인 경우
+			//배송지 테이블 등록
+			dlvInsertResult = oInsertDelivery.insertDelivery(deliveryVo);			
+		}else {
+			//deliveryVo의 정보로 테이블 검색
+			deliveryResult = oSelectDeliveryVo.selectDeliveryVo(deliveryVo);
+			if(deliveryResult == null) {//검색결과 0이면 등록
+				dlvInsertResult = oInsertDelivery.insertDelivery(deliveryVo);
+			}else {
+				dlvInsertResult = 1;
+			}
+		}
+		
+		if(dlvInsertResult != 0) {
+			//delivery_idx 불러오기
+			deliveryResult = oSelectDeliveryVo.selectDeliveryVo(deliveryVo);
+			int delivery_idx = deliveryResult.getDelivery_idx();
+			//delivery_idx를 orderVo에 넣기
+			orderVo.setDelivery_idx(delivery_idx);
+		}
+		
+		//주문 테이블 등록
+		int orderInsertResult = oInsertOrder.insertOrder(orderVo);
+		
+		int payInsertResult = 0;
+		int order_idx = 0;
+		if(orderInsertResult != 0) {
+			//order_idx 불러오기
+			order_idx = oSelectOrderIdx.selectOrderIdx(orderVo);
+			//order_idx를 orderVo에 넣기
+			orderVo.setOrder_idx(order_idx);
+			
+			//결제 정보 담을 vo객체 생성
+			PayVo payVo = new PayVo();
+			payVo.setOrder_idx(order_idx);
+			payVo.setPay_price(Integer.parseInt(orderForm[7]));
+			payVo.setPay_uid(orderForm[17]);
+			
+			//결제 테이블 등록
+			payInsertResult = oInsertPay.insertPay(payVo);
+		}
+		
+		String basketIdxValuesStr = request.getParameter("basketIdxStr"); //JSon형식으로 받은것
+		System.out.println(basketIdxValuesStr);
+		String[] basketIdxValues = new Gson().fromJson(basketIdxValuesStr, String[].class);//배열로 풀기
+		
+		String buyPrdIdx = request.getParameter("buyPrdIdx");//단일 구매 상품번호
+		String buyCnt = request.getParameter("buyCnt");//단일 구매 수량
+		
+		String strOrderIdx = Integer.toString(order_idx);
+		
+		int deleteBasketResult = 0;
+		String viewPage = "purchase/order";	
+		
+		if(payInsertResult != 0) {
+			//주문성공시 비회원의 경우 이메일 발송
+			if(memberVo == null) {
+				eSendOrderNum.orderEmail(orderForm[18],orderForm[1]);				
+			}
+			
+			if(basketIdxValues == null) {
+				//단일구매 상품 주문상품 테이블에 등록하기
+				int resultInsertOrderProduct = 
+						oInsertOrderProduct.insertOrderProduct(strOrderIdx, buyPrdIdx, orderForm[0], buyCnt);
+			}else {
+				for(String basket_idx : basketIdxValues) {		
+					//장바구니에서 제거전에 주문상품테이블에 등록하기
+					//장바구니 번호로 장바구니 정보 불러오기
+					BasketVo basketVo = oSelectBasket.selectBasket(basket_idx);
+					String basketPrdIdx = Integer.toString(basketVo.getProduct_idx());
+					String basketCnt = Integer.toString(basketVo.getBasket_count());
+					int resultInsertOrderProduct =
+							oInsertOrderProduct.insertOrderProduct(strOrderIdx, basketPrdIdx, orderForm[0], basketCnt);
+					deleteBasketResult = oDeleteBasket.deleteBasket(basket_idx);					
+				}				
+			}
+			
+			
+			//모델에 추가
+			model.addAttribute("orderResult", orderVo); 
+			model.addAttribute("deliveryResult", deliveryVo); 
+			viewPage = "purchase/order_complete";
+		}
+		
+		return viewPage;
 	}
 }

@@ -94,6 +94,11 @@
 		color:rgb(231, 76, 60);
 		font-size:13px;
 	}
+	#member_id,#member_pw{
+		border-style:solid;
+		border-width:1px;
+	}
+
 
 </style>
 

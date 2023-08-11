@@ -8,41 +8,238 @@
 <meta charset="UTF-8">
 <title>주문/결제 | CrueltyFree</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- 우편번호 -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+function kakaopost(){
+    var width = 500; // 팝업의 너비
+    var height = 600; // 팝업의 높이
+   
+    var top = (window.screen.height / 2) - (height / 2);
+
+    new daum.Postcode({
+        width: width,
+        height: height,
+        oncomplete: function(data) {
+            $("#delivery_postNum").val(data.zonecode);
+            $("#delivery_address").val(data.address);
+        }
+    }).open({
+        left: 1700,
+        top: top
+    });
+}
+</script>
+
+<!-- 결제 -->
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script>
+
+//yymmdd형태로 날짜 얻기
+function formatDateToYYMMDD(date) {
+    const year = date.getFullYear().toString().slice(-2);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return year+month+day;
+}
+
+//난수생성
+function generateRandomNumber(length) {
+    const randomNumber = Math.random().toString().slice(2, 2 + length);
+    return randomNumber.padStart(length, '0');
+}
+
+const currentDate = new Date();
+const formattedDate = formatDateToYYMMDD(currentDate);
+const randomDigits = generateRandomNumber(8);  //8자리의 난수생성
+
+var IMP = window.IMP;
+IMP.init("imp36534356");
+
+function doPayment(name, amount, buyer_email, buyer_name, buyer_tel, buyer_addr, buyer_postcode){
+	IMP.request_pay({
+	      pg: "html5_inicis.INIpayTest",
+	      pay_method: "card",
+	      merchant_uid: "CF"+formattedDate+randomDigits,   // 주문번호
+	      name: name,
+	      amount: amount,                         // 숫자 타입
+	      buyer_email: buyer_email,
+	      buyer_name: buyer_name,
+	      buyer_tel: buyer_tel,
+	      buyer_addr: buyer_addr,
+	      buyer_postcode: buyer_postcode
+	    }, function (rsp) { // callback
+	      //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+	          if (rsp.success) {
+	        	  var msg = '결제가 완료되었습니다.';
+	        	  var pay_uid = rsp.imp_uid;
+	        	  $("#order_form_pay_uid").val(pay_uid);
+			      alert(msg);
+			      //폼전송해서 결제처리하기
+			      $("#order_form").submit();
+			    } else {
+			      var msg = '결제에 실패하였습니다.';
+			      msg += '에러내용 : ' + rsp.error_msg;
+			      alert(msg);
+			    }
+	    });	
+}
+</script>
 <script>
 $(function(){
-	//전체 체크박스 클릭
-	$("#all_agree_check").click(function(){
-		const checkAllState = $(this).prop("checked");
+	
+	//초기세팅
+	if($(".order_basket_idx").eq(0).val() != 0){//장바구니번호가 있을때
+		var basketIdxValues = $(".order_basket_idx").map(function() {
+		    return $(this).val();
+		}).get(); //장바구니 번호를 basketIdxValues배열에 저장
 		
-		$(".agree_check").prop("checked", checkAllState);
-	});
-	//개별 체크박스 클릭
-	$(".agree_check").click(function() {
-        const anyUnchecked = $(".agree_check:not(:checked)").length > 0;
-
-        $("#all_agree_check").prop("checked", !anyUnchecked);
-    });
-	//동의 탭 클릭
-	$("#all_agree_open").click(function(){
-	    var index = $(".other_agree").index(this);
-	    var targetDetail = $(".other_agree").eq(index);
-	    
-	    $(".other_agree").not(targetDetail).removeClass("show");
-	    targetDetail.toggleClass("show");
-	    
-	    var allAgreeOpenText = $("#all_agree_open").text();
-	    $("#all_agree_open").text(allAgreeOpenText == "^" ? "v" : "^");
+		//장바구니 번호를 문자열로 변환
+	    var basketIdxValuesStr = JSON.stringify(basketIdxValues);
+		//값넣기
+		$("#order_form_basket_idx").val(basketIdxValuesStr);
+	}else{//바로구매에서 진입했을시 상품번호,구매수량 넘겨주기		
+		$("#order_form_product_idx").val($(".order_product_idx").eq(0).val());
+		$("#order_form_buy_cnt").val($(".order_basket_cnt").eq(0).val());
+	}
+	
+	if($("#delivery_count").val() != undefined){		
+		//디폴트값이 1:기본배송지 인 요소의 순서 얻어옴
+		var setIndex = $(".val_default[value='1']").index(".val_default");	
+	
+		$(".del_addr_name").val(setIndex).change();
+		
+		//회원 배송지 정보 세팅
+		$("#del_addr_name").text($(".del_addr_name option:selected").text());
+		$("#delivery_get_name").val($(".val_get_name").eq(setIndex).val());
+		$("#delivery_handphone").val($(".val_handphone").eq(setIndex).val());
+		$("#delivery_postNum").val($(".val_postNum").eq(setIndex).val());
+		$("#delivery_address").val($(".val_addr1").eq(setIndex).val());
+		$("#delivery_address2").val($(".val_addr2").eq(setIndex).val());	
+		
+		//배송요청사항 배송메시지 선택		
+		var delivery_msg = $(".val_message").eq(setIndex).val();
+		var delivery_msg_index = 0;
+		if(delivery_msg == "그냥 문 앞에 놓아주시면 돼요."){
+			delivery_msg_index = 1;
+			$("#delivery_message_text").prop("type", "hidden");
+			$("#delivery_message_text").val("그냥 문 앞에 놓아주시면 돼요.");
+		}else if(delivery_msg == "직접 받을게요.(부재시 문앞)"){
+			delivery_msg_index = 2;
+			$("#delivery_message_text").prop("type", "hidden");
+			$("#delivery_message_text").val("직접 받을게요.(부재시 문앞)");
+		}else if(delivery_msg == "벨을 누르지 말아주세요."){
+			delivery_msg_index = 3;
+			$("#delivery_message_text").prop("type", "hidden");
+			$("#delivery_message_text").val("벨을 누르지 말아주세요.");
+		}else if(delivery_msg == "도착 후 전화주시면 직접 받으러 갈게요."){
+			delivery_msg_index = 4;
+			$("#delivery_message_text").prop("type", "hidden");
+			$("#delivery_message_text").val("도착 후 전화주시면 직접 받으러 갈게요.");
+		}else{
+			delivery_msg_index = 5;
+			$("#delivery_message_text").prop("type", "text");
+			$("#delivery_message_text").val(delivery_msg);
+		}		
+		$("#delivery_message").prop("selectedIndex", delivery_msg_index);
+		
+		//공동현관 출입방법 선택
+		var method_index = $(".val_pass").eq(setIndex).val();
+		$(".val_method").eq(method_index).prop("checked", true);
+		var passContentText = $(".val_pass_content").eq(setIndex).val();
+		if(method_index == 0){
+			$(".td_delivery_title").eq(6).text("공동현관 비밀번호")
+			$("#delivery_get_method").val(passContentText);
+			$("#delivery_input_method").show();
+		}else if(method_index == 1){
+			$(".td_delivery_title").eq(6).text("경비실 호출 방법")
+			$("#delivery_get_method").val(passContentText);
+			$("#delivery_input_method").show();
+		}else if(method_index == 2 || method_index == ""){
+			$(".td_delivery_title").eq(6).text("자유출입가능")
+			$("#delivery_get_method").val(passContentText);
+			$("#delivery_input_method").hide();
+		}else{
+			$(".td_delivery_title").eq(6).text("기타 상세 내용")
+			$("#delivery_get_method").val(passContentText);
+			$("#delivery_input_method").show();
+		}
+	//if "#delivery_count" 값이 0이 아닐때	
+	}else{
+		//배송메세지 기본상태로
+		$("#delivery_message").prop("selectedIndex", 0);
+		$("#delivery_message_text").prop("type", "hidden");
+		$("#delivery_message_text").val("");				
+	}
+	//초기세팅 종료
+	
+	//배송지 선택 옵션변경
+	$(".del_addr_name").change(function() {
+		var selectedOptionText = $(this).find("option:selected").text();
+		$("#del_addr_name").text(selectedOptionText);
+		
+		var index =  String($(this).find("option:selected").val());
+				
+		//회원 배송지 정보 세팅
+		$("#delivery_get_name").val($(".val_get_name").eq(index).val());
+		$("#delivery_handphone").val($(".val_handphone").eq(index).val());
+		$("#delivery_postNum").val($(".val_postNum").eq(index).val());
+		$("#delivery_address").val($(".val_addr1").eq(index).val());
+		$("#delivery_address2").val($(".val_addr2").eq(index).val());
+		
+		//배송요청사항 배송메시지 선택
+		var delivery_msg = $(".val_message").eq(index).val();
+		var delivery_msg_index = 0;
+		if(delivery_msg == "그냥 문 앞에 놓아주시면 돼요."){
+			delivery_msg_index = 1;
+			$("#delivery_message_text").prop("type", "hidden");
+		}else if(delivery_msg == "직접 받을게요.(부재시 문앞)"){
+			delivery_msg_index = 2;
+			$("#delivery_message_text").prop("type", "hidden");
+		}else if(delivery_msg == "벨을 누르지 말아주세요."){
+			delivery_msg_index = 3;
+			$("#delivery_message_text").prop("type", "hidden");
+		}else if(delivery_msg == "도착 후 전화주시면 직접 받으러 갈게요."){
+			delivery_msg_index = 4;
+			$("#delivery_message_text").prop("type", "hidden");
+		}else{
+			delivery_msg_index = 5;
+			$("#delivery_message_text").prop("type", "text");
+		}		
+		$("#delivery_message").prop("selectedIndex", delivery_msg_index);
+		
+		//공동현관 출입방법 선택
+		var method_index = $(".val_pass").eq(index).val();
+		$(".val_method").eq(method_index).prop("checked", true);		
+		var passContentText = $(".val_pass_content").eq(index).val();
+		
+		if(method_index == 0){
+			$(".td_delivery_title").eq(6).text("공동현관 비밀번호")
+			$("#delivery_get_method").val(passContentText);
+			$("#delivery_input_method").show();
+		}else if(method_index == 1){
+			$(".td_delivery_title").eq(6).text("경비실 호출 방법")
+			$("#delivery_get_method").val(passContentText);
+			$("#delivery_input_method").show();
+		}else if(method_index == 2){
+			$(".td_delivery_title").eq(6).text("자유출입가능")
+			$("#delivery_get_method").val(passContentText);
+			$("#delivery_input_method").hide();
+		}else{
+			$(".td_delivery_title").eq(6).text("기타 상세 내용")
+			$("#delivery_get_method").val(passContentText);
+			$("#delivery_input_method").show();
+		}
 	});
 	
 	//배송메시지 옵션변경
 	$("#delivery_message").change(function() {
-	    var deliveryOption = $("#delivery_message_option");
-	    var deliveryText = $("#delivery_message_text");
-
-	    if (deliveryOption.is(":selected")) {
-	      deliveryText.prop("type", "text");
+	    if ($("#delivery_message_option").is(":selected")) {
+	    	$("#delivery_message_text").prop("type", "text");
+	    	$("#delivery_message_text").val("");
 	    } else {
-	      deliveryText.prop("type", "hidden");
+	    	$("#delivery_message_text").prop("type", "hidden");
+	    	$("#delivery_message_text").val($("#delivery_message").val());
 	    }
 	});
 	
@@ -61,42 +258,182 @@ $(function(){
 	
 	//공동현관 출입방법 
 	$("input[name='dv_input']").change(function(){
-	    var selectedOptionValue = $(this).val();
-	    var deliveryInputMethod = $("#delivery_input_method");
-	    var deliveryTitle = $(".td_delivery_title").eq(6);	
-	    
-	    if (selectedOptionValue == "1") {
-	    	deliveryInputMethod.show();
-	        deliveryTitle.text("공동현관 비밀번호");
+	    var selectedOptionValue = $(this).val();	    
+	    if (selectedOptionValue == "0") {
+	    	$("#delivery_input_method").show();
+	    	$(".dlvMth").text("공동현관 비밀번호");
+	    } else if(selectedOptionValue == "1"){
+	    	$("#delivery_input_method").show();
+	    	$(".dlvMth").text("경비실 호출 방법");
 	    } else if(selectedOptionValue == "2"){
-	        deliveryInputMethod.show();
-	        deliveryTitle.text("경비실 호출 방법");
-	    } else if(selectedOptionValue == "3"){
-	        deliveryInputMethod.hide();
+	    	$("#delivery_input_method").hide();
 	    } else{
-	    	deliveryInputMethod.show();
-	        deliveryTitle.text("기타 상세 내용");
+	    	$(".dlvMth").text("기타 상세 내용");
+	    	$("#delivery_input_method").show();
 	    }
 	});
 	
-	//약관동의 모달창	
-	$(".agree_check_btn").click(function(){
-		//현재 클릭한 버튼의 인덱스 가져오기
-		var index = $(".agree_check_btn").index(this);
-		
-		//현재 index값의 modalContainer클래스에 hidden클래스 제거
-		$(".modalContainer").eq(index).removeClass("hidden");
+	//우편번호찾기
+	$("#delivery_postNum_btn").click(function(){
+		kakaopost();
 	});
-	//모달창 내부 닫기 버튼
-	$(".modalCloseButton").click(function(){
-		//현재 클릭한 버튼의 인덱스 가져오기
-		var index = $(".modalCloseButton").index(this);
+	
+	//결제하기 버튼 클릭
+	$("#order_btn").click(function(){
+		//유효성 검사
+		if(${empty member}){
+			if($("#guest_name").val().length == 0){//주문자 이름 입력
+				alert("결제 전에 모든 정보를 입력해주세요.");
+				$("#guest_name").focus();
+				return false;
+			}else if($("#guest_phone").val().length == 0){//주문자 연락처 입력
+				alert("결제 전에 모든 정보를 입력해주세요.");
+				$("#guest_phone").focus();
+				return false;
+			}else if($("#guest_email").val().length == 0){//주문자 이메일 입력
+				alert("결제 전에 모든 정보를 입력해주세요.");
+				$("#guest_email").focus();
+				return false;
+			}
+		}
+	    // 선택된 라디오버튼의 값을 가져오기
+	    var selected_dv_input = $("input[name='dv_input']:checked").val();
+
+	    // 라디오버튼이 선택되지 않았을 경우
+	    if (selected_dv_input === undefined) {
+	    	selected_dv_input = "fail"; 
+	    }
 		
-		//현재 index값의 modalContainer클래스에 hidden클래스 추가
-		$(".modalContainer").eq(index).addClass("hidden");
+		if($("#delivery_get_name").val().length == 0){//받는분 입력
+			alert("결제 전에 모든 정보를 입력해주세요.");
+			$("#delivery_get_name").focus();
+			return false;
+		}else if($("#delivery_handphone").val().length == 0){
+			alert("결제 전에 모든 정보를 입력해주세요.");
+			$("#delivery_handphone").focus();
+			return false;
+		}else if($("#delivery_message_text").val().length == 0){
+			alert("결제 전에 모든 정보를 입력해주세요.");
+			$("#delivery_message").focus();
+			return false;
+		}else if(selected_dv_input == "fail"){
+			alert("결제 전에 모든 정보를 입력해주세요.");
+			$("#dv_input_1").focus()
+			return false;
+		}else if((selected_dv_input == "0" || selected_dv_input == "1" || selected_dv_input == "3") && $("#delivery_get_method").val().length == 0){
+			alert("결제 전에 모든 정보를 입력해주세요.");
+			$("#delivery_get_method").focus()
+			return false;
+		}else if($("#delivery_postNum").val().length == 0){
+			alert("결제 전에 모든 정보를 입력해주세요.");
+			$("#delivery_postNum").focus()
+			return false;
+		}else if($("#delivery_address").val().length == 0){
+			alert("결제 전에 모든 정보를 입력해주세요.");
+			$("#delivery_address").focus()
+			return false;
+		}else if($("#delivery_address2").val().length == 0){
+			alert("결제 전에 모든 정보를 입력해주세요.");
+			$("#delivery_address2").focus()
+			return false;
+		}
+		
+		
+	    var client_num = "";
+	    if(${!empty member}){
+	    	client_num = $("#order_member_idx").val();
+	    }else{
+	    	client_num = $("#order_client_num").val();
+	    }
+	    
+	    //상품이름설정
+	    var name = "";
+	    if(${listCount} > 1){
+	    	name = $(".prd_title").eq(0).text() + " 외 " + ${listCount - 1} + "건";	    	
+	    }else{
+	    	name = $(".prd_title").eq(0).text();
+	    }
+	    
+	    //상품가격설정
+	    var amount = parseInt(${total_price + total_delivery});
+	    
+	    //주문자이메일설정
+	    var buyer_email = "";
+	    if(${!empty member}){
+	    	buyer_email = $("#order_member_email").val();
+	    }else{
+	    	buyer_email = $("#guest_email").val();
+	    }
+	    
+	    //주문자이름설정
+	    var buyer_name = "";
+	    if(${!empty member}){
+	    	buyer_name = $("#order_member_name").val();
+	    }else{
+	    	buyer_name = $("#guest_name").val();
+	    }
+	    
+	    //주문자 전화번호 설정
+	    var buyer_tel = "";
+	    if(${!empty member}){
+	    	buyer_tel = $("#order_member_phone").val();
+	    }else{
+	    	buyer_tel = $("#guest_phone").val();
+	    }
+	    //주문자 주소
+	    var buyer_addr = $("#delivery_address").val() + " " + $("#delivery_address2").val();
+	    
+	    //주문자 우편번호
+	    var buyer_postcode = $("#delivery_postNum").val();
+	    
+	    
+	    //배송지 이름 설정
+	    var dlvAddrName = "";
+	    if(${!empty member}){
+	    	dlvAddrName = $("#del_addr_name").text();
+	    }else{
+	    	dlvAddrName = "비회원: "+client_num+"님의 배송지";
+	    }
+	    
+	    //배송메시지
+	    var selected_dlvMsg = $("#delivery_message").val();
+	    var dlvMsg = "";
+	    if(selected_dlvMsg == "직접 입력하기"){
+	    	dlvMsg = $("#delivery_message_text").val();
+	    }else{
+	    	dlvMsg = selected_dlvMsg;
+	    }
+	    
+	    //출입방법
+	    var selected_pass = $("input[name='dv_input']:checked").val();	    
+	    
+	    //결제완료시 form값 보낼 input:hidden 세팅
+	    $("#order_form_client_num").val(client_num);
+	    $("#order_form_order_num").val("CF"+formattedDate+randomDigits);
+	    $("#order_form_order_name").val(buyer_name);
+	    $("#order_form_order_handphone").val(buyer_tel);
+	    $("#order_form_order_prdPrice").val($("#val_prdPrice").val());
+	    $("#order_form_order_salePrice").val($("#val_salePrice").val());
+	    $("#order_form_order_dlvPrice").val($("#val_dlvPrice").val());
+	    $("#order_totalPrice").val($("#val_totalPrice").val());
+	    $("#order_form_delivery_address_name").val(dlvAddrName);
+	    $("#order_form_delivery_get_name").val($("#delivery_get_name").val());
+	    $("#order_form_delivery_handphone").val($("#delivery_handphone").val());
+	    $("#order_form_delivery_message").val(dlvMsg);
+	    $("#order_form_delivery_pass").val(selected_pass);
+	    $("#order_form_delivery_pass_content").val($("#delivery_get_method").val());
+	    $("#order_form_delivery_postNum").val($("#delivery_postNum").val());
+	    $("#order_form_delivery_address").val($("#delivery_address").val());
+	    $("#order_form_delivery_address2").val($("#delivery_address2").val());
+	    $("#order_form_buyer_email").val(buyer_email);
+	    //결제번호는 함수쪽에서 생성
+	    
+	    doPayment(name, amount, buyer_email, buyer_name, buyer_tel, buyer_addr, buyer_postcode);
 	});
 })
+  
 </script>
+
     <style>
         *{margin: 0; padding: 0;}
         a{text-decoration: none;}
@@ -321,6 +658,8 @@ $(function(){
 		.hidden {
 		  display: none;
 		}     	
+		
+		.guest_input {width: 193px; height: 26px; border-width: 1px; border-style: solid; border-radius: 5px; padding-left: 8px;}
     </style>
 </head>
 <body>
@@ -355,19 +694,44 @@ $(function(){
         		<c:when test="${!empty member}">
         			<!-- 회원만 배송지 정보 선택할 수 있게 처리 -->
 		            <tr>
-		                <td class="td_delivery_title top bottom title">배송지선택</td>
-		                <td class="td_delivery_content top bottom">
-		                    <select name="delivery_address_name" id="delivery_address_name">
-		                        <option value="1">집</option>
-		                        <option value="2">학원</option>
-		                    </select>
+		                <td class="td_delivery_title top bottom title">
+		                배송지선택
+		                <input type="hidden" id="delivery_count" value="${delivery_count}">
 		                </td>
-		            </tr>
-		            <tr>
-		                <td class="td_delivery_title bottom title">배송지명</td>
-		                <!-- 배송지선택의 select값에 따라 변경 -->
-		                <td class="td_delivery_content bottom">집</td>
-		            </tr>
+		                <td class="td_delivery_content top bottom">
+		                    <select name="delivery_address_name" class="del_addr_name" id="delivery_address_name">
+		                    	<c:choose>
+		                    	<c:when test="${delivery_count != 0}">
+			                    	<c:forEach var="del_row" begin="1" end="${delivery_count}">
+				                        <option value="${del_row - 1}">${deliveryList[del_row-1].delivery_address_name}</option>		                        
+			                    	</c:forEach>
+		                    	</c:when>
+		                    	<c:otherwise>
+		                    			<option value="">등록된 배송지가 없습니다.</option>
+		                    	</c:otherwise>
+		                    	</c:choose>
+		                    </select>
+	                    	<c:forEach var="del_row" begin="1" end="${delivery_count}">
+	                    		<input type="hidden" class="val_get_name" value="${deliveryList[del_row-1].delivery_get_name}">
+	                    		<input type="hidden" class="val_handphone" value="${deliveryList[del_row-1].delivery_handphone}">
+	                    		<input type="hidden" class="val_message" value="${deliveryList[del_row-1].delivery_message}">
+	                    		<input type="hidden" class="val_pass" value="${deliveryList[del_row-1].delivery_pass}">
+	                    		<input type="hidden" class="val_pass_content" value="${deliveryList[del_row-1].delivery_pass_content}">
+	                    		<input type="hidden" class="val_postNum" value="${deliveryList[del_row-1].delivery_postNum}">
+	                    		<input type="hidden" class="val_addr1" value="${deliveryList[del_row-1].delivery_address}">
+	                    		<input type="hidden" class="val_addr2" value="${deliveryList[del_row-1].delivery_address2}">
+	                    		<input type="hidden" class="val_default" value="${deliveryList[del_row-1].defaultpost}">
+	                    	</c:forEach>
+		                </td>
+		            </tr>		            
+		            <c:if test="${delivery_count != 0}">
+			            <tr>
+			                <td class="td_delivery_title bottom title">배송지명</td>
+			                <td class="td_delivery_content bottom" id="del_addr_name">
+			                ${deliveryList[0].delivery_address_name}			                
+			                </td>
+			            </tr>
+		            </c:if>                   
         		</c:when>
         		<c:otherwise>
 		            <tr>
@@ -380,46 +744,22 @@ $(function(){
             <tr>
                 <td class="td_delivery_title bottom title">받는분</td>
                 <td class="td_delivery_content bottom">
-                    <input class="input_focus" type="text" name="delivery_get_name" id="delivery_get_name" value="정종진">
+                    <input class="input_focus" type="text" name="delivery_get_name" id="delivery_get_name" value="${deliveryList[0].delivery_get_name}">
                 </td>
             </tr>
             <tr>
                 <td class="td_delivery_title bottom title">연락처</td>
                 <td class="td_delivery_content bottom">
-                    <select name="delivery_handphone_begin" id="delivery_handphone_begin">
-                        <option value>선택</option>
-                        <option value="010" selected="selected">010</option>
-                        <option value="011">011</option>
-                        <option value="016">016</option>
-                        <option value="017">017</option>
-                        <option value="018">018</option>
-                        <option value="019">019</option>
-                        <option value="02">02</option>
-                        <option value="031">031</option>
-                        <option value="032">032</option>
-                        <option value="033">033</option>
-                        <option value="041">041</option>
-                        <option value="042">042</option>
-                        <option value="043">043</option>
-                        <option value="051">051</option>
-                        <option value="052">052</option>
-                        <option value="053">053</option>
-                        <option value="061">061</option>
-                        <option value="062">062</option>
-                        <option value="063">063</option>
-                        <option value="064">064</option>
-                    </select>-
-                    <input type="text" name="delivery_handphone_middle" id="delivery_handphone_middle" value="9388">-
-                    <input type="text" name="delivery_handphone_end" id="delivery_handphone_end" value="8058">
+                    <input type="text" class="guest_input" id="delivery_handphone" placeholder="-없이 연락처를 입력해주세요." value="${deliveryList[0].delivery_handphone}">
                 </td>
             </tr>
             <tr>
                 <td class="td_delivery_address_title bottom title">주소</td>
                 <td class="td_delivery_address_content bottom">
-                    <input type="text" class="gray_bg" name="delivery_postNum" id="delivery_postNum" value="31572" readonly="readonly">
+                    <input type="text" class="gray_bg" name="delivery_postNum" id="delivery_postNum" value="${deliveryList[0].delivery_postNum}" readonly="readonly">
                     <input type="button" name="delivery_postNum_btn" id="delivery_postNum_btn" value="우편번호찾기"><br>
-                    <input type="text" class="gray_bg" name="delivery_address" id="delivery_address" value="도로명:충남 아산시 어의정로 46(용화동, 온천마을아파트)" readonly="readonly"><br>
-                    <input type="text" name="delivery_address2" id="delivery_address2" value="102-1107">
+                    <input type="text" class="gray_bg" name="delivery_address" id="delivery_address" value="${deliveryList[0].delivery_address}" readonly="readonly"><br>
+                    <input type="text" name="delivery_address2" id="delivery_address2" value="${deliveryList[0].delivery_address2}">
                 </td>
             </tr>
         </table>
@@ -437,25 +777,25 @@ $(function(){
                         <option value="직접 받을게요.(부재시 문앞)">직접 받을게요.(부재시 문앞)</option>
                         <option value="벨을 누르지 말아주세요.">벨을 누르지 말아주세요.</option>
                         <option value="도착 후 전화주시면 직접 받으러 갈게요.">도착 후 전화주시면 직접 받으러 갈게요.</option>
-                        <option id="delivery_message_option" value="">직접 입력하기</option>
+                        <option id="delivery_message_option" value="직접 입력하기">직접 입력하기</option>
                     </select>
                     <br>
-                    <input id="delivery_message_text" type="hidden">
+                    <input id="delivery_message_text" type="hidden" value="">
                 </td>
             </tr>
             <tr>
                 <td class="td_delivery_title bottom title">공동현관 출입방법</td>
                 <td class="td_delivery_content bottom">
-                    <span class="dv_input"><input type="radio" name="dv_input" id="dv_input_1" value="1"><label for="dv_input_1"> 비밀번호</label></span>
-                    <span class="dv_input"><input type="radio" name="dv_input" id="dv_input_2" value="2"><label for="dv_input_2"> 경비실 호출</label></span>
-                    <span class="dv_input"><input type="radio" name="dv_input" id="dv_input_3" value="3"><label for="dv_input_3"> 자유출입가능</label></span>
-                    <span class="dv_input"><input type="radio" name="dv_input" id="dv_input_4" value="4"><label for="dv_input_4"> 기타사항</label></span>
+                    <span class="dv_input"><input type="radio" name="dv_input" class="val_method" id="dv_input_1" value="0"><label for="dv_input_1"> 비밀번호</label></span>
+                    <span class="dv_input"><input type="radio" name="dv_input" class="val_method" id="dv_input_2" value="1"><label for="dv_input_2"> 경비실 호출</label></span>
+                    <span class="dv_input"><input type="radio" name="dv_input" class="val_method" id="dv_input_3" value="2"><label for="dv_input_3"> 자유출입가능</label></span>
+                    <span class="dv_input"><input type="radio" name="dv_input" class="val_method" id="dv_input_4" value="3"><label for="dv_input_4"> 기타사항</label></span>
                 </td>
             </tr>
             <tr id="delivery_input_method">
-                <td class="td_delivery_title bottom title">공동현관 비밀번호</td>
+                <td class="td_delivery_title bottom title dlvMth">공동현관 비밀번호</td>
                 <td class="td_delivery_content bottom">
-                    <input class="input_focus" type="text" name="delivery_get_name" id="delivery_get_method" value="">
+                    <input class="input_focus" type="text" name="delivery_get_name" id="delivery_get_method" value="${deliveryList[0].delivery_pass_content}">
                 </td>
             </tr> 
         </table>
@@ -483,6 +823,9 @@ $(function(){
 	                        <p class="prd_title">${basketList[rowNum-1].product_name}</p>
                         </a>
                     </div>
+                    <input type="hidden" class="order_basket_idx" value="${basketList[rowNum-1].basket_idx}">
+                    <input type="hidden" class="order_product_idx" value="${basketList[rowNum-1].product_idx}">
+                    <input type="hidden" class="order_basket_cnt" value="${basketList[rowNum-1].basket_count}">
                </td>
                <td class="td_sell_price">
                     <fmt:formatNumber value="${basketList[rowNum-1].product_price}" pattern="###,###" />원
@@ -504,7 +847,7 @@ $(function(){
         
 			<c:if test="${!empty member}">
             <!-- 쿠폰은 로그인된 회원에게만 보이게 처리 -->
-            <h2 class="sub_title">쿠폰 할인</h2>
+            <h2 class="sub_title">[회원] 쿠폰 할인</h2>
             <div id="coupon_info">
                 <table id="tb_coupon_info">
                     <tr>
@@ -523,45 +866,32 @@ $(function(){
             </div>	
 			</c:if>
 			
-            <!-- 결제 API에 따라 변경 가능성 많음 -->
-            <h2 class="sub_title">결제 수단 선택</h2>
+			<c:if test="${empty member}">
+			<h2 class="sub_title">[비회원] 주문자 정보 입력</h2>
             <div id="coupon_info">
                 <table id="tb_coupon_info">
                     <tr>
-                        <td class="td_payment_method top bottom" colspan="2">
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_1" value="1"><label for="payment_method_1"> 신용카드</label></span>
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_2" value="2"><label for="payment_method_2"> 무통장입금</label></span>
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_3" value="3"><label for="payment_method_3"> PAYCO</label></span>
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_4" value="4"><label for="payment_method_4"> 카카오페이</label></span>
-                            <br>
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_5" value="5"><label for="payment_method_5"> 네이버페이</label></span>
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_6" value="6"><label for="payment_method_6"> 휴대폰결제</label></span>
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_7" value="7"><label for="payment_method_7"> 계좌이체</label></span>
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_8" value="8"><label for="payment_method_8"> 도서상품권</label></span>
-                            <br>
-                            <span class="payment_method_radio"><input type="radio" name="payment_method" id="payment_method_9" value="9"><label for="payment_method_9"> 문화상품권</label></span>
-                        </td>                        
-                    </tr>
-                    <tr>
-                        <td class="td_coupon_title bottom title">카드 종류</td>
-                        <td class="td_coupon_content bottom">
-                            <select name="credit_card" id="credit_card">
-                                <option value>카드를 선택해주세요</option>
-                                <option value="1">BC 카드</option>
-                            </select>
+                        <td class="td_coupon_title top bottom title">이름</td>
+                        <td class="td_coupon_content top bottom">
+                            <input type="text" class="guest_input"  id="guest_name"> 
                         </td>
-                    </tr>
+                    </tr> 
                     <tr>
-                        <td class="td_coupon_title bottom title">할부 종류</td>
+                        <td class="td_coupon_title bottom title">연락처</td>
                         <td class="td_coupon_content bottom">
-                            <select name="credit_card" id="credit_card">
-                                <option value="0">일시불</option>
-                                <option value="1">1개월</option>
-                            </select>
+                            <input type="text" class="guest_input" id="guest_phone" placeholder="-없이 연락처를 입력해주세요."> 
                         </td>
-                    </tr>                              
+                    </tr> 
+                    <tr>
+                        <td class="td_coupon_title bottom title">이메일</td>
+                        <td class="td_coupon_content bottom">
+                            <input type="text" class="guest_input"  id="guest_email"> 
+                        </td>
+                    </tr>                                                           
                 </table>
             </div>	
+			</c:if>
+            
         </div>
 
         <div class="right_area">
@@ -572,18 +902,21 @@ $(function(){
                         <td class="td_pay_title">총 상품금액</td>
                         <td class="td_pay_content">
                             <fmt:formatNumber value="${total_price}" pattern="###,###" />원
+                        	<input type="hidden" id="val_prdPrice" value="${total_price}">
                         </td>
                     </tr>
                     <tr>
                         <td class="td_pay_title bottom pay_bottom">쿠폰할인금액</td>
                         <td class="td_pay_content bottom discount">
                             - 0원
+                            <input type="hidden" id="val_salePrice" value="0">
                         </td>
                     </tr>
                     <tr>
                         <td class="td_pay_title middle">총 배송비</td>
                         <td class="td_pay_content middle">
                             + <fmt:formatNumber value="${total_delivery}" pattern="###,###" />원
+                            <input type="hidden" id="val_dlvPrice" value="${total_delivery}">
                         </td>
                     </tr>
                     <tr>
@@ -594,92 +927,46 @@ $(function(){
                             <span class="total_pay_price">
                             <fmt:formatNumber value="${total_price + total_delivery}" pattern="###,###" />
                             </span>원
+                            <input type="hidden" id="val_totalPrice" value="${total_price + total_delivery}">
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" class="td_order_btn">
                             <input type="submit" name="order_btn" id="order_btn" value="결제하기">
+	                        <input type="hidden" id="order_member_idx" value="${member.member_idx}">
+	                        <input type="hidden" id="order_member_email" value="${member.member_email}">
+	                        <input type="hidden" id="order_member_name" value="${member.member_name}">
+	                        <input type="hidden" id="order_member_phone" value="${member.member_handphone}">
+	                        <input type="hidden" id="order_client_num" value="${client_num}">
                         </td>
                     </tr>
                 </table>
             </div>
-            
-            <!-- 약관동의 창 -->
-            <div class="agree_payment_box">
-                <div class="all_agree">
-                    주문 상품정보 및 결제대행 서비스 이용약관에 모두 동의하십니까?<br><br>
-                    <input type="checkbox" name="all_agree_check" id="all_agree_check">
-                    <span class="all_agree_text"><label for="all_agree_check"> 모두동의</label></span>
-                    <span id="all_agree_open">^</span>
-                </div>
-                <section class="other_agree">
-                    <table class="tb_other_agree">
-                        <tr>
-                            <td class="all_agree_text">
-                                주문 상품정보에 대한 동의
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="bottom">
-                                <div class="agree_box">
-                                    <span class="agree_check_area"><input type="checkbox" name="agree_check" id="agree_check_1" class="agree_check"></span>
-                                    <label for="agree_check_1"><span class="agree_check_text"> 주문하실 상품, 가격, 배송정보, 할인내역등을 최종 확인하였으며, 구매에 동의합니다.</span></label>
-                                </div>                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="all_agree_text">
-                                결제대행 서비스 이용약관 동의
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="agree_check_area"><input type="checkbox" name="agree_check" id="agree_check_2"  class="agree_check"></span>
-                                <label for="agree_check_2"><span class="agree_check_text_small"> 전자금융거래기본약관</span></label>
-                                <span class="agree_check_btn_area">
-                                    <input type="button" class="agree_check_btn" id="agree_check_btn_1" value="약관보기">
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="agree_check_area"><input type="checkbox" name="agree_check" id="agree_check_3" class="agree_check"></span>
-                                <label for="agree_check_3"><span class="agree_check_text_small"> 개인정보 수집 및 이용동의</span></label>
-                                <span class="agree_check_btn_area">
-                                    <input type="button" class="agree_check_btn" id="agree_check_btn_2" value="약관보기">
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="agree_check_area"><input type="checkbox" name="agree_check" id="agree_check_4" class="agree_check"></span>
-                                <label for="agree_check_4"><span class="agree_check_text_small"> 개인정보 제공 및 위탁 동의</span></label>
-                                <span class="agree_check_btn_area">
-                                    <input type="button" class="agree_check_btn" id="agree_check_btn_3" value="약관보기">
-                                </span>
-                            </td>
-                        </tr>
-                    </table>
-                </section> <!-- end of other_agree -->
-                <div class="modalContainer hidden">
-					<div class="modalContent">
-						<p>모달 창1 입니다.</p>
-					    <button class="modalCloseButton">닫기</button>
-				    </div>				    
-				</div>
-				<div class="modalContainer hidden">
-					<div class="modalContent">
-						<p>모달 창2 입니다.</p>
-					    <button class="modalCloseButton">닫기</button>
-				    </div>				    
-				</div>
-				<div class="modalContainer hidden">
-					<div class="modalContent">
-						<p>모달 창3 입니다.</p>
-					    <button class="modalCloseButton">닫기</button>
-				    </div>				    
-				</div>
-            </div> <!-- end of agree_payment_box -->
+            <!-- 결제하기 버튼 누를시 전송되는 값들 -->
+            <form name="order_form" id="order_form" action="order_complete.do" method="post">
+            <input type="hidden" id="order_form_client_num" name="client_num" value="">
+            <input type="hidden" id="order_form_order_num" name="order_num" value="">
+            <input type="hidden" id="order_form_order_name" name="order_name" value="">
+            <input type="hidden" id="order_form_order_handphone" name="order_handphone" value="">
+            <input type="hidden" id="order_form_order_prdPrice" name="order_prdPrice" value="">
+            <input type="hidden" id="order_form_order_salePrice" name="order_salePrice" value="">
+            <input type="hidden" id="order_form_order_dlvPrice" name="order_dlvPrice" value="">
+            <input type="hidden" id="order_totalPrice" name="order_totalPrice" value="">
+            <input type="hidden" id="order_form_delivery_address_name" name="delivery_address_name" value="">
+            <input type="hidden" id="order_form_delivery_get_name" name="delivery_get_name" value="">
+            <input type="hidden" id="order_form_delivery_handphone" name="delivery_handphone" value="">
+            <input type="hidden" id="order_form_delivery_message" name="delivery_message" value="">
+            <input type="hidden" id="order_form_delivery_pass" name="delivery_pass" value="">
+            <input type="hidden" id="order_form_delivery_pass_content" name="delivery_pass_content" value="">
+            <input type="hidden" id="order_form_delivery_postNum" name="delivery_postNum" value="">
+            <input type="hidden" id="order_form_delivery_address" name="delivery_address" value="">
+            <input type="hidden" id="order_form_delivery_address2" name="delivery_address2" value=""> 
+            <input type="hidden" id="order_form_pay_uid" name="pay_uid" value="">
+            <input type="hidden" id="order_form_basket_idx" name="basketIdxStr" value="">
+            <input type="hidden" id="order_form_product_idx" name="buyPrdIdx" value="">
+            <input type="hidden" id="order_form_buy_cnt" name="buyCnt" value="">
+            <input type="hidden" id="order_form_buyer_email" name="buyer_email" value="">              
+            </form>                       
         </div> <!-- end of right_area -->
     </div> <!-- end of order_payment_box -->
 

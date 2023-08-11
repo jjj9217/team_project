@@ -250,9 +250,9 @@ function validateForm(){
 <form name="form_insert" method="post" action="regi_pro_process.do" enctype="multipart/form-data" 
           onsubmit="return validateForm()">
           
+
 	<input type="hidden" name="member_nickname" value="${member.member_nickname}">
 	<input type="hidden" name="member_idx" value="${member.member_idx}">
-	
 	<div class="regi_line">
 		<article class="regi_left" style="vertical-align: top;">
 			&nbsp;&nbsp;<a>카테고리</a>

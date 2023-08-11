@@ -9,8 +9,258 @@
 <title>${productVo.product_name} | CrueltyFree</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-$(function(){
+
+function getParameterValue(parameterName) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    if (urlParams.has(parameterName)) {
+        return urlParams.get(parameterName);
+    }
+
+    return null; // 파라미터가 없으면 null 반환
+}
+
+function pageNav(prdNum, pageNum, pageBlock, sortOrder, photoReview, textReview) { 
+	// 클래스 정보 추출
+	var productInfoClass = $("#product_info").attr("class");
+    var buyInfoClass = $("#buy_info").attr("class");
+    var reviewInfoClass = $("#review_info").attr("class");
+    var qnaInfoClass = $("#qna_info").attr("class"); 
+    
+    var prdContentClass = $("#prd_content_box").attr("class"); 
+	var buyContentClass = $("#buy_content_box").attr("class"); 
+	var reviewContentClass = $("#review_content_box").attr("class"); 
+	var qnaContentClass = $("#qna_content_box").attr("class"); 
 	
+	var insertSortOrder = "";
+	const paramSortOrder = getParameterValue("sortOrder"); //url에서 파라미터값 가져오기
+	
+	if (sortOrder === 'empty') {
+		if(paramSortOrder === null){//조건 아에 안넣은 초기상황
+			insertSortOrder = 'date';			
+		}else{//기존에 있던 조건상황(url파라미터)
+			insertSortOrder = paramSortOrder;
+		}
+	}else{
+		insertSortOrder = sortOrder;
+	}
+	
+	var insertPhotoReview = "";	
+	const paramPhotoReview = getParameterValue("photoReview");
+	
+	if (photoReview === 'empty') {
+		if(paramPhotoReview === null){
+			insertPhotoReview = 'ok';
+		}else{
+			insertPhotoReview = paramPhotoReview;
+		}
+	}else{
+		insertPhotoReview = photoReview;
+	}
+	
+	var insertTextReview = "";
+	const paramTextReview = getParameterValue("textReview");
+	
+	if (textReview === 'empty') {
+		if(paramTextReview === null){
+			insertTextReview = 'ok';
+		}else{
+			insertTextReview = paramTextReview;
+		}
+	}else{
+		insertTextReview = textReview;
+	}
+	
+    // 현재 스크롤 위치
+	var scrollY = window.scrollY || window.pageYOffset;
+    
+    
+    
+	// 새 URL 구성
+    var newURL = "product_view.do" + 
+            "?prdNum=" + prdNum +
+            "&pageNum=" + pageNum +
+            "&pageBlock=" + pageBlock +
+            "&scrollY=" + scrollY +
+            "&productInfoClass=" + productInfoClass +
+            "&buyInfoClass=" + buyInfoClass +
+            "&reviewInfoClass=" + reviewInfoClass +
+            "&qnaInfoClass=" + qnaInfoClass +
+            "&prdContentClass=" + prdContentClass +
+            "&buyContentClass=" + buyContentClass +
+            "&reviewContentClass=" + reviewContentClass +
+            "&qnaContentClass=" + qnaContentClass +
+            "&qnaContentClass=" + qnaContentClass +
+            "&sortOrder=" + insertSortOrder +
+            "&photoReview=" + insertPhotoReview +
+            "&textReview=" + insertTextReview;
+    
+    
+    
+    // URL로 이동        
+    window.location.href = newURL;
+}
+
+$(function(){	
+	
+	$("#align_photo_check").click(function(){
+	    if ($(this).prop("checked")) { // photo 체크 상태일 때
+	        var prdNum = getParameterValue("prdNum");	    
+	        var pageNum = getParameterValue("pageNum");
+	        if (pageNum == null) {
+	            pageNum = 1; 
+	        }
+	        var pageBlock = getParameterValue("pageBlock");
+	        if (pageBlock == null) {
+	        	pageBlock = 1;
+	        }
+	        var sortOrder = getParameterValue("sortOrder");
+	        if (sortOrder == null) {
+	        	sortOrder = 'date';
+	        }
+	        if($("#align_text_check").prop("checked")){ //photo:체크 text:체크
+		        pageNav(prdNum, pageNum, pageBlock, sortOrder, 'ok', 'ok');	        	
+	        }else{//photo:체크 text:언체크
+	        	pageNav(prdNum, pageNum, pageBlock, sortOrder, 'ok', 'fail');
+	        }
+	    } else { // 체크가 해제되었을 때
+	        var prdNum = getParameterValue("prdNum");	    
+	        var pageNum = getParameterValue("pageNum");
+	        if (pageNum == null) {
+	            pageNum = 1; 
+	        }
+	        var pageBlock = getParameterValue("pageBlock");
+	        if (pageBlock == null) {
+	        	pageBlock = 1;
+	        }
+	        var sortOrder = getParameterValue("sortOrder");
+	        if (sortOrder == null) {
+	        	sortOrder = 'date';
+	        }
+	        if($("#align_text_check").prop("checked")){ //photo: 언체크 text:체크
+		        pageNav(prdNum, pageNum, pageBlock, sortOrder, 'fail', 'ok');	        	
+	        }else{//photo:언체크 text:언체크
+	        	pageNav(prdNum, pageNum, pageBlock, sortOrder, 'fail', 'fail');
+	        }
+	    }
+	});
+	
+	$("#align_text_check").click(function(){
+	    if ($(this).prop("checked")) { // text 체크 상태일 때
+	        var prdNum = getParameterValue("prdNum");	    
+	        var pageNum = getParameterValue("pageNum");
+	        if (pageNum == null) {
+	            pageNum = 1; 
+	        }
+	        var pageBlock = getParameterValue("pageBlock");
+	        if (pageBlock == null) {
+	        	pageBlock = 1;
+	        }
+	        var sortOrder = getParameterValue("sortOrder");
+	        if (sortOrder == null) {
+	        	sortOrder = 'date';
+	        }
+	        if($("#align_photo_check").prop("checked")){ //photo:체크 text:체크
+		        pageNav(prdNum, pageNum, pageBlock, sortOrder, 'ok', 'ok');	        	
+	        }else{//photo:언체크 text:체크
+	        	pageNav(prdNum, pageNum, pageBlock, sortOrder, 'fail', 'ok');
+	        }
+	    } else { // 체크가 해제되었을 때
+	        var prdNum = getParameterValue("prdNum");	    
+	        var pageNum = getParameterValue("pageNum");
+	        if (pageNum == null) {
+	            pageNum = 1; 
+	        }
+	        var pageBlock = getParameterValue("pageBlock");
+	        if (pageBlock == null) {
+	        	pageBlock = 1;
+	        }
+	        var sortOrder = getParameterValue("sortOrder");
+	        if (sortOrder == null) {
+	        	sortOrder = 'date';
+	        }
+	        if($("#align_photo_check").prop("checked")){ //photo: 체크 text:언체크
+		        pageNav(prdNum, pageNum, pageBlock, sortOrder, 'ok', 'fail');	        	
+	        }else{//photo:언체크 text:언체크
+	        	pageNav(prdNum, pageNum, pageBlock, sortOrder, 'fail', 'fail');
+	        }
+	    }
+	});
+	
+    // GET 파라미터 추출
+    var urlParams = new URLSearchParams(window.location.search);
+    var scrollY = getParameterValue("scrollY");
+    
+    // 스크롤 위치로 이동
+    if (scrollY !== null) {
+        $(window).scrollTop(parseInt(scrollY));
+    }
+    
+    // GET 파라미터 추출
+    var productInfoClass = getParameterValue("productInfoClass");
+    var buyInfoClass = getParameterValue("buyInfoClass");
+    var reviewInfoClass = getParameterValue("reviewInfoClass");
+    var qnaInfoClass = getParameterValue("qnaInfoClass");
+    var prdContentClass = getParameterValue("prdContentClass");
+    var buyContentClass = getParameterValue("buyContentClass");
+    var reviewContentClass = getParameterValue("reviewContentClass");
+    var qnaContentClass = getParameterValue("qnaContentClass");
+    var reviewContentClass = getParameterValue("reviewContentClass");
+    var sortOrder = getParameterValue("sortOrder");
+    var photoReview = getParameterValue("photoReview");
+    var textReview = getParameterValue("textReview");
+    
+    // 클래스정보 세팅
+	if (productInfoClass !== null) {
+		$("#product_info").removeClass().addClass(productInfoClass);
+    }
+	if (buyInfoClass !== null) {
+		$("#buy_info").removeClass().addClass(buyInfoClass);
+    }
+	if (reviewInfoClass !== null) {
+		$("#review_info").removeClass().addClass(reviewInfoClass);
+    }
+	if (qnaInfoClass !== null) {
+		$("#qna_info").removeClass().addClass(qnaInfoClass);
+    }
+	if (prdContentClass !== null) {
+		$("#prd_content_box").removeClass().addClass(prdContentClass);
+    }
+	if (buyContentClass !== null) {
+		$("#buy_content_box").removeClass().addClass(buyContentClass);
+    }
+	if (reviewContentClass !== null) {
+		$("#review_content_box").removeClass().addClass(reviewContentClass);
+    }
+	if (qnaContentClass !== null) {
+		$("#qna_content_box").removeClass().addClass(qnaContentClass);
+    }
+	if (sortOrder != null){
+		if(sortOrder == "score"){			
+			$("#align_new").removeClass();
+			$("#align_score").addClass("bold");
+		}else if(sortOrder == "recom"){
+			$("#align_new").removeClass();
+			$("#align_recom").addClass("bold");
+		}
+	}
+	if (photoReview != null){
+		if(photoReview == "ok"){
+			$("#align_photo_check").prop("checked", true);			
+		}else{
+			$("#align_photo_check").prop("checked", false);
+			$("#align_photo").removeClass();
+		}
+	}
+	if (textReview != null){
+		if(textReview == "ok"){
+			$("#align_text_check").prop("checked", true);			
+		}else{
+			$("#align_text_check").prop("checked", false);
+			$("#align_text").removeClass();
+		}
+	}
 	//수량 + 클릭
 	$("#prd_cart_plus_btn").click(function(){			
 		//현재 상품의 count 값 가져오기
@@ -129,6 +379,9 @@ $(function(){
 		$("#buy_content_box").removeClass("show");
 		$("#prd_content_box").removeClass("show");
 		$("#qna_content_box").removeClass("show");
+		
+		var prdNum = getParameterValue("prdNum");
+		pageNav(prdNum, 1, 1, 'empty', 'empty', 'empty');
 	});
 	//상세보기탭 상품문의 클릭
 	$("#qna_info").click(function(){
@@ -140,6 +393,9 @@ $(function(){
 		$("#buy_content_box").removeClass("show");
 		$("#review_content_box").removeClass("show");
 		$("#prd_content_box").removeClass("show");
+		
+		var prdNum = getParameterValue("prdNum");
+		pageNav(prdNum, 1, 1, 'empty', 'empty', 'empty');
 	});
 	
 	//상품문의 질문 클릭
@@ -410,6 +666,83 @@ $(function(){
         document.basket_order_form.submit();
 	});
 	
+	//추천 초기세팅
+	var recomValues = []; // 결과를 저장할 배열
+	$(".recom_recom_idx").each(function() {
+	    var value = $(this).val(); // 클래스가 recom_recom_idx인 요소의 값
+
+	    // 조건에 따라 'F' 또는 'T'로 변환하여 배열에 추가
+	    var result = value === '0' ? 'T' : 'F';
+	    recomValues.push(result);
+	});
+	
+	//추천 클릭시
+	$(".recom_btn").click(function(){
+		var index = $(".recom_btn").index(this);
+		var member_idx = $(".recom_member_idx").eq(index).val();
+		var review_member_idx = $(".review_member_idx").eq(index).val();
+		var review_idx = $(".recom_review_idx").eq(index).val();
+		var recom_idx = $(".recom_recom_idx").eq(index).val();
+		var recom_recom_count = $(".recom_recom_count").eq(index).val();
+		var recom_plus = parseInt($(".recom_recom_count").eq(index).val()) + 1;
+			
+		
+		if(${empty member}){//비회원의 경우 로그인 페이지로 이동
+			alert("로그인한 회원만 추천을 할 수 있습니다.");
+			window.location.href = "${pageContext.request.contextPath}/member/login.do";			
+		}else{
+			if(member_idx == review_member_idx){
+				alert("본인 리뷰에는 추천을 할 수 없습니다.");
+			}else{
+				if(recomValues[index] == 'T'){//추천하지않은 리뷰
+					$.ajax({
+				        type: "post",
+				        url: "recom_insert.do",
+				        data: { "review_idx": review_idx,
+				        		"member_idx": member_idx },
+				        success: function(data) {
+				        	if(data == "success"){
+				        		$(".recom_change").eq(index).css("border", "2px solid #7d99a4");
+				        		$(".recom_change").eq(index).css("color", "#7d99a4");
+				        		$(".recom_change").eq(index).css("background-color", "#eef3f5");
+				        		$(".recom_change").eq(index).css("font-weight", "bold");
+				        		$(".recom_target").eq(index).text(recom_plus);
+				        		recomValues[index] = 'F';
+				        	}else{
+				        		alert("리뷰 추천 등록에 실패하였습니다.");
+				        	}
+				        },
+				        error: function(error) {
+				        	alert("ajax 에러 발생");
+				        }
+				    });//end of ajax		
+				}else{//추천한 리뷰
+					$.ajax({
+				        type: "post",
+				        url: "recom_delete.do",
+				        data: { "review_idx": review_idx,
+				        		"member_idx": member_idx },
+				        success: function(data) {
+				        	if(data == "success"){
+				        		$(".recom_change").eq(index).css("border", "1px solid #4a4a4a");
+				        		$(".recom_change").eq(index).css("color", "#4a4a4a");
+				        		$(".recom_change").eq(index).css("background-color", "#fff");
+				        		$(".recom_change").eq(index).css("font-weight", "normal");
+				        		$(".recom_target").eq(index).text(recom_recom_count);
+				        		recomValues[index] = 'T';				        	
+				        	}else{
+				        		alert("리뷰 추천 삭제에 실패하였습니다.");
+				        	}
+				        },
+				        error: function(error) {
+				        	alert("ajax 에러 발생");
+				        }
+				    });//end of ajax	
+				}
+			}//본인리뷰 추천막기						
+		}//로그인한 회원만 추천하기
+		
+	});
 });
 </script>
 <style>
@@ -515,16 +848,17 @@ $(function(){
      .review_list{margin-top: 40px;}
      .review_list, .tb_review_list{width: 1020px; height: auto;}
      .tb_review_list{border-collapse: collapse;}
-     .td_review_title, .td_review_content{border-bottom: 1px solid #4a4a4a; padding: 20px;}
+     .td_review_title, .td_review_content{border-bottom: 1px solid #a4a4a4; padding: 20px;}
      .td_review_title{width: 225px; height: auto; font-weight: bold; padding-left: 30px; vertical-align: top;}
      .td_review_content, .review_content{width: 765px; height: auto;}
+     .td_review_empty{width: 1020px; height: auto; text-align:center; font-size:24px; color: #4a4a4a;}
      .score_area{display: flex; flex-wrap: wrap; width: 765px; height: 22px; margin-bottom: 15px; justify-items: center;}
      .review_score, .review_score img{width: 112px; height: 20px;}
      .review_regDate{width: 85px; height: 20px; margin-left: 15px; color: #a4a4a4; font-weight: bold;}
      .txt_inner{width: 765px; height: auto; margin-bottom: 15px;}
      .recom_area{display: flex; flex-wrap: wrap; width: 765px; height: 32px; margin-top: 20px;}
      .recom_btn{border: 0px; background-color: #fff; font-size: 16px;}
-     .recom_num{
+     .recom_num_x{
          height: 28px;
          margin-left: 14px; 
          padding: 3px 25px;
@@ -532,6 +866,16 @@ $(function(){
          border: 1px solid #4a4a4a;
          border-radius: 14px;            
      }
+     .recom_num_o{
+         height: 28px;
+         margin-left: 14px; 
+         padding: 3px 25px;
+         color: #7d99a4;
+         font-weight: bold;
+         border: 2px solid #7d99a4;
+         background-color: #eef3f5;
+         border-radius: 14px;            
+     }    
 
      .pageing{width: 1020px; height: 30px; padding-top: 30px; margin-bottom: 20px; text-align: center;}
      
@@ -659,7 +1003,7 @@ $(function(){
 	 .modal_inq_btn{width:550px; display: flex; justify-content: center; border-top: 1px solid #a4a4a4; padding-top: 20px; padding-bottom: 20px;}
 	 .cancelButton, .edit_cancelButton{width:130px; height:40px; margin-right: 10px; border-radius: 2px; background-color: #fff; color:#7d99a4; font-weight: bold; border: 1px solid #7d99a4}
 	 .writeButton, .edit_updateButton{width:130px; height:40px; margin-left: 10px; border-radius: 2px; background-color: #7d99a4; color:#fff; font-weight: bold; border: 1px solid #7d99a4}
-	 
+	 .sortClass{color:black}
 	 
 </style>
 </head>
@@ -677,7 +1021,7 @@ $(function(){
             </div>
             
             <div class="prd_review_score_avg">
-                <b>고객리뷰 <span class="txt_blue">4.8</span></b> (${productReviewRows}건)
+                <b>고객리뷰 <span class="txt_blue">${reviewScoreAvg}</span></b> (${productReviewRows}건)
             </div>
         </div>
         <div class="right_area">
@@ -882,9 +1226,15 @@ $(function(){
             <section id="review_content_box" class="">
                 <div class="category_align_box">
                     <div class="align_sort">
-                        <div id="align_new" class="bold">최신순</div>
-                        <div id="align_score" class="">평점순</div>
-                        <div id="align_recom" class="">추천순</div>
+                        <div id="align_new" class="bold">
+                        <a class="sortClass" id="sortDate" href="#" onclick="pageNav(${productVo.product_idx},1,1,'date','empty','empty')">최신순</a>                       
+                        </div>
+                        <div id="align_score" class="">
+                        <a class="sortClass" id="sortScore" href="#" onclick="pageNav(${productVo.product_idx},1,1,'score','empty','empty')">평점순</a>
+                        </div>
+                        <div id="align_recom" class="">
+                        <a class="sortClass" id="sortRecom" href="#" onclick="pageNav(${productVo.product_idx},1,1,'recom','empty','empty')">추천순</a>
+                        </div>
                     </div>
                     <div class="align_reivew">
                         <div id="align_space" class="">                            
@@ -893,7 +1243,7 @@ $(function(){
                             <input type="checkbox" name="align_photo_check" id="align_photo_check" checked>
                             <label for="align_photo_check">포토리뷰</label>
                         </div>
-                        <div id="align_text" class="">
+                        <div id="align_text" class="bold">
                             <input type="checkbox" name="align_text_check" id="align_text_check" checked>
                             <label for="align_text_check">일반리뷰</label>
                         </div>
@@ -901,71 +1251,104 @@ $(function(){
                 </div>
                 <div class="review_list">
                     <table class="tb_review_list">
-                        <!-- forEach문 통한 상품별 리뷰 불러오기 -->
-                        <tr>
+						<c:choose>
+	                    <c:when test="${reviewListCount == 0}">
+						<tr>
+                            <td class="td_review_empty" colspan="2">
+                                등록된 리뷰가 없습니다.
+                            </td>
+                        </tr>
+	                    </c:when>
+	                    <c:otherwise>
+		  				<c:forEach var="productReviewRows" begin="${pvrPageNav.startNum}" end="${pvrPageNav.endNum}">
+						<tr>
                             <td class="td_review_title">
-                                라쿤러버
+                                ${reviewList[productReviewRows-1].member_nickname}
                             </td>
                             <td class="td_review_content">
                                 <div class="review_content">
                                     <div class="score_area">
                                         <span class="review_score">
-                                            <img src="../resources/img/review_score_5.png"  alt="5점">
+                                        	<!-- 점수에 따른 이미지 처리 해야됨 -->
+                                            ${reviewList[productReviewRows-1].review_score}
                                         </span>
                                         <span class="review_regDate">
-                                            2023.07.27
+                                            <fmt:formatDate value="${reviewList[productReviewRows-1].review_regDate}" pattern="yyyy.MM.dd" />
                                         </span>
                                     </div>
                                     <div class="txt_inner">
                                         <!-- 첨부파일 있으면 img 불러오기 -->
-                                        정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 정말 맛있어요! 
+                                        ${reviewList[productReviewRows-1].review_content}
+                                        <c:if test="${!empty reviewList[productReviewRows-1].saveFiles[0]}">
+                                        <br><br>
+                                        </c:if>
+                                        <c:forEach var="imgIndex" begin="1" end="5">
+                                        <c:if test="${!empty reviewList[productReviewRows-1].saveFiles[imgIndex-1]}">
+                                        <img src="../resources/img/${reviewList[productReviewRows-1].saveFiles[imgIndex-1]}" width="145px" height="145px">
+                                        </c:if>
+                                        </c:forEach>
                                     </div>
                                     <div class="recom_area">
+                                    	<input type="hidden" class="recom_member_idx" value="${member.member_idx}">
+                                        <input type="hidden" class="recom_review_idx" value="${reviewList[productReviewRows-1].review_idx}">
+                                        <input type="hidden" class="recom_recom_idx" value="${reviewList[productReviewRows-1].review_recom_idx}">
+                                        <input type="hidden" class="recom_recom_count" value="${reviewList[productReviewRows-1].review_recom_count}">
+                                        <input type="hidden" class="review_member_idx" value="${reviewList[productReviewRows-1].member_idx}">
+                                        <input type="hidden" class="recom_temp" value="base">
                                         <button class="recom_btn">
                                             <b>리뷰 추천하기</b>
-                                            <span class="recom_num">
+                                            <c:choose>
+                                            <c:when test="${reviewList[productReviewRows-1].review_recom_idx != 0}">
+                                            <span class="recom_num_o recom_change">
                                                 <img src="../resources/img/icon_recom_off.png" width="15px" height="15px">
-                                                2
+                                                <span class=" recom_target">${reviewList[productReviewRows-1].review_recom_count}</span>
+                                            </span>                                            
+                                            </c:when>
+                                            <c:otherwise>
+                                            <span class="recom_num_x recom_change">
+                                                <img src="../resources/img/icon_recom_off.png" width="15px" height="15px">
+                                                <span class=" recom_target">${reviewList[productReviewRows-1].review_recom_count}</span>
                                             </span>
+                                            </c:otherwise>
+                                            </c:choose>
                                         </button>
                                     </div>
                                 </div>
                             </td>
-                        </tr>
-                        <tr>
-                            <td class="td_review_title">
-                                라쿤맘
-                            </td>
-                            <td class="td_review_content">
-                                <div class="review_content">
-                                    <div class="score_area">
-                                        <span class="review_score">
-                                            <img src="../resources/img/review_score_5.png" alt="5점">
-                                        </span>
-                                        <span class="review_regDate">
-                                            2023.07.27
-                                        </span>
-                                    </div>
-                                    <div class="txt_inner">
-                                        정말 맛있어요!
-                                    </div>
-                                    <div class="recom_area">
-                                        <button class="recom_btn">
-                                            <b>리뷰 추천하기</b>
-                                            <span class="recom_num">
-                                                <img src="../resources/img/icon_recom_off.png" width="15px" height="15px">
-                                                3                                                
-                                            </span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                        </tr>		  				
+		  				</c:forEach>
+		  				</c:otherwise>
+		  				</c:choose>
                     </table>
                 </div>
                 <!-- 페이지 네비게이션 -->
                 <div class="pageing">
-                    페이징 들어갈 자리
+		    		<c:if test="${pvrPageNav.pageNum > pvrPageNav.pages_per_block}">
+				    	<a href="#" onclick="pageNav(${productVo.product_idx},1,1,'empty','empty','empty')">&lt;&lt;</a>&nbsp;
+			    		<a href="#"onclick="pageNav(${productVo.product_idx},${(pvrPageNav.pageBlock - 2)*pvrPageNav.pages_per_block + 1},${pvrPageNav.pageBlock-1},'empty','empty','empty')">
+			    			&lt;이전페이지
+			    		</a>   	
+			    	</c:if>
+			    	
+			    	<c:forEach var="i" begin="${(pvrPageNav.pageBlock-1)*pvrPageNav.pages_per_block + 1}" end="${pvrPageNav.pageBlock*pvrPageNav.pages_per_block}">
+			    		<c:if test="${i le pvrPageNav.totalPageNum}">
+			    			<c:choose>
+			    				<c:when test = "${pvrPageNav.pageNum eq i}">
+			    					<a href="#" onclick="pageNav(${productVo.product_idx},${i},${pvrPageNav.pageBlock},'empty','empty','empty')">
+			    						<span style="color:red">${i}&nbsp;</span>
+			    					</a>
+			    				</c:when>
+			    				<c:otherwise>
+			    					<a href="#" onclick="pageNav(${productVo.product_idx},${i},${pvrPageNav.pageBlock},'empty','empty','empty')">${i}&nbsp;</a>
+			    				</c:otherwise>
+			   			</c:choose>
+			    		</c:if>
+			    	</c:forEach>
+			    
+			    	<c:if test="${((pvrPageNav.rows_per_page*pvrPageNav.pages_per_block) lt pvrPageNav.totalRows) and (pvrPageNav.pageBlock ne pvrPageNav.lastPageBlock) }">
+			    		<a href="#" onclick="pageNav(${productVo.product_idx},${pvrPageNav.pageBlock*pvrPageNav.pages_per_block+1},${pvrPageNav.pageBlock+1},'empty','empty','empty')">다음페이지&gt;</a>&nbsp;
+			    		<a href="#" onclick="pageNav(${productVo.product_idx},${pvrPageNav.totalPageNum},${pvrPageNav.lastPageBlock},'empty','empty','empty')">&gt;&gt;</a>
+			    	</c:if>
                 </div>
             </section>
             <!-- 상품문의 -->
@@ -1051,6 +1434,8 @@ $(function(){
 		                        	<c:choose>
 		                        		<c:when test="${productInqList[productInqRows-1].member_idx != member.member_idx}">
 		                        			<div class="member_nickname">${productInqList[productInqRows-1].member_nickname}</div>
+		                        			<input type="hidden" class="qna_update_btn">
+		                        			<input type="hidden" class="qna_delete_btn">
 		                        		</c:when>
 		                        		<c:otherwise><!-- 본인글이면 수정/삭제 표시 -->
 		                        			<div class="nickname_txt">${productInqList[productInqRows-1].member_nickname}</div>                            
@@ -1131,8 +1516,8 @@ $(function(){
                 <!-- 페이지 네비게이션 -->
                 <div class="pageing">
 		    		<c:if test="${pviPageNav.pageNum > pviPageNav.pages_per_block}">
-				    	<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=1&pageBlock=1">&lt;&lt;</a>&nbsp;
-			    		<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=${(pviPageNav.pageBlock - 2)*pviPageNav.pages_per_block + 1}&pageBlock=${pviPageNav.pageBlock-1}">
+				    	<a href="#" onclick="pageNav(${productVo.product_idx},1,1,'empty','empty','empty')">&lt;&lt;</a>&nbsp;
+			    		<a href="#"onclick="pageNav(${productVo.product_idx},${(pviPageNav.pageBlock - 2)*pviPageNav.pages_per_block + 1},${pviPageNav.pageBlock-1},'empty','empty','empty')">
 			    			&lt;이전페이지
 			    		</a>   	
 			    	</c:if>
@@ -1141,20 +1526,20 @@ $(function(){
 			    		<c:if test="${i le pviPageNav.totalPageNum}">
 			    			<c:choose>
 			    				<c:when test = "${pviPageNav.pageNum eq i}">
-			    					<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=${i}&pageBlock=${pviPageNav.pageBlock}">
+			    					<a href="#" onclick="pageNav(${productVo.product_idx},${i},${pviPageNav.pageBlock},'empty','empty','empty')">
 			    						<span style="color:red">${i}&nbsp;</span>
 			    					</a>
 			    				</c:when>
 			    				<c:otherwise>
-			    					<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=${i}&pageBlock=${pviPageNav.pageBlock}">${i}&nbsp;</a>
+			    					<a href="#" onclick="pageNav(${productVo.product_idx},${i},${pviPageNav.pageBlock},'empty','empty','empty')">${i}&nbsp;</a>
 			    				</c:otherwise>
 			   			</c:choose>
 			    		</c:if>
 			    	</c:forEach>
 			    
 			    	<c:if test="${((pviPageNav.rows_per_page*pviPageNav.pages_per_block) lt pviPageNav.totalRows) and (pviPageNav.pageBlock ne pviPageNav.lastPageBlock) }">
-			    		<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=${pviPageNav.pageBlock*pviPageNav.pages_per_block+1}&pageBlock=${pviPageNav.pageBlock+1}">다음페이지&gt;</a>&nbsp;
-			    		<a href="product_view.do?prdNum=${productVo.product_idx}&pageNum=${pviPageNav.totalPageNum}&pageBlock=${pviPageNav.lastPageBlock}">&gt;&gt;</a>
+			    		<a href="#" onclick="pageNav(${productVo.product_idx},${pviPageNav.pageBlock*pviPageNav.pages_per_block+1},${pviPageNav.pageBlock+1},'empty','empty','empty')">다음페이지&gt;</a>&nbsp;
+			    		<a href="#" onclick="pageNav(${productVo.product_idx},${pviPageNav.totalPageNum},${pviPageNav.lastPageBlock},'empty','empty','empty')">&gt;&gt;</a>
 			    	</c:if>
                 </div>
             </section>

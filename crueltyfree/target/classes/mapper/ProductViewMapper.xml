@@ -72,5 +72,108 @@
 	<select id="selectReviewCount" parameterType="_int" resultType="_int">
 		select count(*) from review where product_idx=#{product_idx}
 	</select>
-							
+	
+	<!-- 조건에 따른 리뷰 수 -->
+	<select id="selectReviewListCount" parameterType="map" resultType="_int">
+		select count(*) from review
+		where product_idx=#{product_idx} 
+		<if test="textReview == 'fail' and photoReview == 'ok'">
+			AND review_idx IN (SELECT review_idx FROM `file`)
+		</if>
+		<if test="textReview == 'ok' and photoReview == 'fail'">
+			AND review_idx NOT IN (SELECT review_idx FROM `file` WHERE review_idx IS NOT NULL)
+		</if> 
+		<if test="textReview == 'fail' and photoReview == 'fail'">
+			AND member_idx="0"
+		</if>
+		<choose>
+		<when test="sortOrder == null">
+			order by review_regDate DESC
+		</when>
+		<otherwise>
+			<choose>
+				<when test="sortOrder =='date'">
+					order by review_regDate DESC
+				</when>
+				<when test="sortOrder =='score'">
+					order by review_score
+				</when>
+				<when test="sortOrder =='recom'">
+					order by review_recom_count
+				</when>
+			</choose>
+		</otherwise>
+		</choose>		
+	</select>	
+
+	<!-- 조건에 따른 리뷰 목록 -->
+	<select id="selectReviewList" parameterType="map" resultType="ReviewVo">
+		select * from review
+		where product_idx=#{product_idx} 
+		<if test="textReview == 'fail' and photoReview == 'ok'">
+			AND review_idx IN (SELECT review_idx FROM `file`)
+		</if>
+		<if test="textReview == 'ok' and photoReview == 'fail'">
+			AND review_idx NOT IN (SELECT review_idx FROM `file` WHERE review_idx IS NOT NULL)
+		</if> 
+		<if test="textReview == 'fail' and photoReview == 'fail'">
+			AND member_idx="0"
+		</if>
+		<choose>
+		<when test="sortOrder == null">
+			order by review_regDate DESC
+		</when>
+		<otherwise>
+			<choose>
+				<when test="sortOrder =='date'">
+					order by review_regDate DESC
+				</when>
+				<when test="sortOrder =='score'">
+					order by review_score DESC
+				</when>
+				<when test="sortOrder =='recom'">
+					order by review_recom_count DESC
+				</when>
+			</choose>
+		</otherwise>
+		</choose>		
+	</select>	
+	
+	<!-- 리뷰번호에 해당하는 파일 목록 -->
+	<select id="selectReviewImage" parameterType="_int" resultType="FileVo">
+		select * from file where review_idx=#{review_idx} 
+	</select>	
+	
+	<!-- 리뷰추천 정보 반환 -->
+	<select id="selectReviewRecom" parameterType="map" resultType="ReviewRecomVo">
+		select * from `review_recom` where review_idx = #{review_idx} and member_idx = #{member_idx}
+	</select>			
+	
+	<!-- 전체 리뷰 평점 평균 -->
+	<select id="selectReviewScoreAvg" parameterType="_int" resultType="_double">
+		SELECT AVG(review_score) FROM review WHERE product_idx = #{product_idx};
+	</select>
+	
+	<!-- 리뷰 추천 등록 -->
+	<insert id="insertRecom" parameterType="map">
+		insert into `review_recom` (member_idx, review_idx)
+		values(#{member_idx}, #{review_idx})						
+	</insert>	
+
+	<!-- 리뷰 추천 삭제 -->
+	<delete id="deleteRecom" parameterType="map">
+		delete from `review_recom` where member_idx = #{member_idx} and review_idx = #{review_idx}
+	</delete>	
+	
+	<!-- 리뷰 추천수 불러오기 -->
+	<select id="selectRecom" parameterType="string" resultType="_int">
+		SELECT count(*) from `review_recom` where review_idx = #{review_idx}
+	</select>
+	
+	<!-- 리뷰 추천수 업데이트 -->
+	<update id="updateRecom" parameterType="map">
+		update `review`
+		set review_recom_count=#{strRecomCount}
+		where review_idx = #{review_idx}					
+	</update>									
 </mapper>

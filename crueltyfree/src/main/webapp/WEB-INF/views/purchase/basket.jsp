@@ -230,7 +230,7 @@ $(function(){
         });
 		
 	    // 체크된 항목이 없을 경우 알림을 띄우고 함수를 종료
-	    if (selectedValues.length === 0) {
+	    if (selectedValues.length == 0) {
 	        alert("상품을 선택해 주세요.");
 	        return;
 	    }
@@ -286,7 +286,7 @@ $(function(){
         });
 		
 	    // 체크된 항목이 없을 경우 알림을 띄우고 함수를 종료
-	    if (selectedValues.length === 0) {
+	    if (selectedValues.length == 0) {
 	        alert("상품을 선택해 주세요.");
 	        return;
 	    }
@@ -310,6 +310,25 @@ $(function(){
 		$(".checkboxes").each(function() {
             selectedValues.push($(this).val());
         });
+		
+		//상품 정보를 문자열로 변환
+        var selectedValuesStr = JSON.stringify(selectedValues);
+		
+	    //값 넣기
+	    $("#basket_order").val(selectedValuesStr);
+	    
+	 	// 폼 제출 (submit)
+        document.basket_order_form.submit();
+	});
+	
+	//바로구매 버튼 클릭시
+	$(".select_item_buy").click(function(){
+		//체크박스 담을 변수 설정
+		var selectedValues = [];
+		var index = $(".select_item_buy").index(this); // 클릭한 요소의 인덱스 가져오기
+		
+		 var basketIdxValue = $(".basket_item_basket_idx").eq(index).val(); // 해당 인덱스의 값 가져오기
+		selectedValues.push(basketIdxValue);
 		
 		//상품 정보를 문자열로 변환
         var selectedValuesStr = JSON.stringify(selectedValues);

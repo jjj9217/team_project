@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class DeliveryVo {
-	private int order_idx;
+	private int delivery_idx;
 	private int member_idx;
 	private String delivery_address_name;
 	private String delivery_get_name;
@@ -15,4 +15,6 @@ public class DeliveryVo {
 	private int delivery_postNum;	
 	private String delivery_address;
 	private String delivery_address2;
+	private int defaultpost;
+	private String delivery_guest;
 }

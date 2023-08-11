@@ -3,6 +3,9 @@ package com.crfr.service.purchase;
 import java.util.List;
 
 import com.crfr.vo.BasketVo;
+import com.crfr.vo.DeliveryVo;
+import com.crfr.vo.OrderVo;
+import com.crfr.vo.PayVo;
 
 public interface PurchaseService {
 	default int selectCount(String client_num) {return 0;}
@@ -14,4 +17,18 @@ public interface PurchaseService {
 	default void plusBasketMultipleCount(int product_idx, int prd_cart_cnt, String client_num) {}
 	default int basketDeleteOne(String basket_idx) {return 0;}
 	default BasketVo selectBasket(String basket_idx) {return null;}
+	default int selectDeliveryCount(String client_num) {return 0;}
+	default List<DeliveryVo> selectDeliveryList(String client_num) {return null;}
+	default int insertDelivery(DeliveryVo deliveryVo){return 0;}
+	default DeliveryVo selectDeliveryVo(DeliveryVo deliveryVo) {return null;}
+	default int insertOrder(OrderVo orderVo){return 0;}
+	default int selectOrderIdx(OrderVo orderVo){return 0;}
+	default int insertPay(PayVo payVo){return 0;}
+	default int deleteBasket(String basket_idx){return 0;}
+	default String getImportToken() {return null;}
+	default int cancelPay(String token, String merchant_uid) {return 0;}
+	default int insertOrderProduct(String order_idx, String product_idx, 
+			String client_num, String order_product_count) {return 0;}
+	default void updateOrder(String order_idx) {}
+	default void updatePay(String order_idx) {}
 }
