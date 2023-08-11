@@ -14,11 +14,11 @@ public class ProductInsertService implements ProductSellerService {
 			String product_name, String product_price, String product_capa,
 			String delivery_company, String member_nickname, String member_idx) {
 		
-		//다른 폼의 전달값을 FileVo에 저장하기
+		//다른 폼의 전달값을 ProductVo에 저장하기
 		ProductVo vo = new ProductVo();
 		vo.setCategory_code(category_code);
-		vo.setCategory_code_small(category_code_small);
 		vo.setProduct_name(product_name);
+		vo.setCategory_code_small(category_code_small);
 		vo.setProduct_price(Integer.parseInt(product_price));
 		vo.setProduct_capa(Integer.parseInt(product_capa));
 		vo.setDelivery_company(Integer.parseInt(delivery_company));
