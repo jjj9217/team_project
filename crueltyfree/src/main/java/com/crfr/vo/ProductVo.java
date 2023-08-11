@@ -13,8 +13,7 @@ public class ProductVo {
 	private int delivery_company;
 	private String member_nickname;
 	private String category_code;
-	private int product_del_or_not;
-	
+	private int product_del_or_not;	
 	private String category_code_small;
 	
 	public String getCategory_code_small() {
