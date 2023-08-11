@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.crfr.OrderMapper">
+
+	<!-- 장바구니 Vo불러오기 -->
+	<select id="selectBasket" parameterType="string" resultType="BasketVo">
+		select * from basket where basket_idx=#{basket_idx}
+	</select>
+	
+	<!-- 배송지 리스트 -->
+	<select id="selectDeliveryList" parameterType="string" resultType="DeliveryVo">
+		select * from `delivery` where member_idx=#{client_num};
+	</select>
+
+	<!-- 배송지 목록 수량 -->
+	<select id="selectDeliveryCount" parameterType="string" resultType="_int">
+		select count(*) from `delivery` where member_idx=#{client_num}
+	</select>	
+
+	<!-- 배송지 등록 -->
+	<insert id="insertDelivery" parameterType="DeliveryVo">		
+		insert into `delivery` (delivery_address_name, delivery_get_name, delivery_handphone,
+		delivery_message, delivery_pass, delivery_pass_content, delivery_postNum, delivery_address, 
+		delivery_address2, defaultpost
+		<if test="member_idx != 0">
+     		, member_idx
+  		</if>
+   		<if test="delivery_guest != null">
+  		   , delivery_guest
+   		</if>
+		)
+		values(#{delivery_address_name},#{delivery_get_name},#{delivery_handphone},
+		#{delivery_message},#{delivery_pass},#{delivery_pass_content},#{delivery_postNum},
+		#{delivery_address},#{delivery_address2},"0"
+		<if test="member_idx != 0">
+     		, #{member_idx}
+  		</if>
+   		<if test="delivery_guest != null">
+  		   , #{delivery_guest}
+   		</if>
+		) 
+	</insert>
+	
+	<!-- 배송지 Vo불러오기 -->
+	<select id="selectDeliveryVo" parameterType="DeliveryVo" resultType="DeliveryVo">
+		select * from `delivery` where delivery_address_name=#{delivery_address_name} and 
+		delivery_get_name=#{delivery_get_name} and delivery_handphone=#{delivery_handphone} and
+		delivery_message=#{delivery_message} and delivery_pass=#{delivery_pass} and delivery_pass_content=#{delivery_pass_content} and 
+		delivery_postNum=#{delivery_postNum} and delivery_address=#{delivery_address} and delivery_address2=#{delivery_address2}
+		<if test="member_idx != 0">
+     		and member_idx=#{member_idx}
+  		</if>
+   		<if test="delivery_guest != null">
+  		  	and delivery_guest=#{delivery_guest}
+   		</if>
+	</select>
+	
+	<!-- 주문테이블 등록 -->
+	<insert id="insertOrder" parameterType="OrderVo">		
+		insert into `order` (client_num, delivery_idx, order_num, order_name,
+		order_handphone, order_prdPrice, order_salePrice, order_dlvPrice, order_totalPrice)
+		values(#{client_num},#{delivery_idx},#{order_num},
+		#{order_name},#{order_handphone},#{order_prdPrice},#{order_salePrice},
+		#{order_dlvPrice},#{order_totalPrice}) 
+	</insert>			
+	
+	<!-- order_idx 불러오기 -->
+	<select id="selectOrderIdx" parameterType="OrderVo" resultType="_int">
+		select `order_idx` from `order` where order_num=#{order_num}
+	</select>	
+	
+	<!-- 결제 테이블 등록 -->
+	<insert id="insertPay" parameterType="PayVo">		
+		insert into `pay` (order_idx, pay_price, pay_uid)
+		values(#{order_idx},#{pay_price},#{pay_uid}) 
+	</insert>		
+	
+	<!-- 장바구니 삭제 -->
+	<delete id="deleteBasket" parameterType="string">
+		delete from `basket` where basket_idx = #{basket_idx}
+	</delete>	
+	
+	<!-- 주문상품 테이블 등록 -->
+	<insert id="insertOrderProduct" parameterType="map">		
+		insert into `order_product` (order_idx, product_idx, client_num, order_product_count)
+		values(#{order_idx},#{product_idx},#{client_num},#{order_product_count}) 
+	</insert>	
+
+	<!-- 환불후 주문테이블 업데이트 -->
+	<update id="updateOrder" parameterType="map">
+		update `order` 
+			set order_status = "2"
+			where order_idx = #{order_idx}
+	</update>	
+
+	<!-- 환불후 결제테이블 업데이트 -->
+	<update id="updatePay" parameterType="map">
+		update `pay` 
+			set pay_refund = "-1"
+			where order_idx = #{order_idx}
+	</update>				
+</mapper>

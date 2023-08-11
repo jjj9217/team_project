@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -130,7 +131,7 @@
             <span>완료</span>되었습니다.
         </p>
         <span class="order_num_info">
-            주문번호 : <b>CF2307261234567</b>
+            주문번호 : <b>${orderResult.order_num}</b>
         </span>
     </div>
 
@@ -142,25 +143,25 @@
                 <tr>
                     <td class="td_payment_title top bottom title">총상품금액</td>
                     <td class="td_payment_content top bottom">
-                        34,000원
+                        <fmt:formatNumber value="${orderResult.order_prdPrice}" pattern="###,###" />원
                     </td>
                 </tr>
                 <tr>
                     <td class="td_payment_title bottom title">총할인금액</td>
                     <td class="td_payment_content bottom txt_color">
-                        6,300원
+                        <fmt:formatNumber value="${orderResult.order_salePrice}" pattern="###,###" />원
                     </td>
                 </tr>
                 <tr>
                     <td class="td_payment_title bottom title">총배송비</td>
                     <td class="td_payment_content bottom">
-                        2,500원
+                        <fmt:formatNumber value="${orderResult.order_dlvPrice}" pattern="###,###" />원
                     </td>
                 </tr>
                 <tr>
                     <td class="td_payment_title bottom title big">최종 결제금액</td>
                     <td class="td_payment_content bottom txt_color">
-                        <span class="big">30,200</span>원
+                        <span class="big"><fmt:formatNumber value="${orderResult.order_totalPrice}" pattern="###,###" /></span>원
                     </td>
                 </tr> 
             </table>
@@ -172,27 +173,62 @@
                 <tr>
                     <td class="td_delivery_title top bottom title">받는분</td>
                     <td class="td_delivery_content top bottom">
-                        정종진
+                        ${deliveryResult.delivery_get_name}
                     </td>
                 </tr>
                 <tr>
                     <td class="td_delivery_title bottom title">연락처</td>
                     <td class="td_delivery_content bottom">
-                        010-9388-8058
+                        ${deliveryResult.delivery_handphone}
                     </td>
                 </tr>
                 <tr>
                     <td class="td_delivery_title bottom title">주소</td>
                     <td class="td_delivery_content bottom">
-                        도로명 주소: 충남 아산시 어의정로 46(용화동, 온천마을아파트) 102-1107
+                        ${deliveryResult.delivery_address} ${deliveryResult.delivery_address2}
                     </td>
                 </tr>
                 <tr>
                     <td class="td_delivery_title bottom title">공동현관 출입방법</td>
-                    <td class="td_delivery_content bottom">
-                        자유출입가능
+                    <td class="td_delivery_content bottom">                        
+                        <c:choose>
+                        <c:when test="${deliveryResult.delivery_pass == 0}">
+                        	비밀번호
+                        </c:when>
+                        <c:when test="${deliveryResult.delivery_pass == 1}">
+                        	경비실 호출
+                        </c:when>
+                        <c:when test="${deliveryResult.delivery_pass == 2}">
+                        	자유출입가능
+                        </c:when>
+                        <c:otherwise>
+                        	기타사항
+                        </c:otherwise>
+                        </c:choose>
                     </td>
                 </tr>
+                <c:choose>
+                <c:when test="${deliveryResult.delivery_pass == 0}">
+                <tr>
+                    <td class="td_delivery_title bottom title">공동현관 비밀번호</td>
+                    <td class="td_delivery_content bottom">${deliveryResult.delivery_pass_content}</td> 
+                </tr>       
+                </c:when>
+                <c:when test="${deliveryResult.delivery_pass == 1}">
+                <tr>
+                    <td class="td_delivery_title bottom title">경비실 호출 방법</td>
+                    <td class="td_delivery_content bottom">${deliveryResult.delivery_pass_content}</td> 
+                </tr>  
+                </c:when>
+                <c:when test="${deliveryResult.delivery_pass == 2}">                	
+                </c:when>
+                <c:otherwise>
+                <tr>
+                    <td class="td_delivery_title bottom title">기타 상세 내용</td>
+                    <td class="td_delivery_content bottom">${deliveryResult.delivery_pass_content}</td> 
+                </tr>  
+                </c:otherwise>
+                </c:choose>
                 <tr>
                     <td class="td_delivery_title bottom title">배송완료 메시지 전송</td>
                     <td class="td_delivery_content bottom">

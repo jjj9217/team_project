@@ -121,7 +121,9 @@
 		font-weight: bold;
 		text-decoration-line: none;
 	}
-	
+	.clear{
+		clear:both;
+	}
 </style>
 
 </head>
@@ -130,7 +132,7 @@
 <header>
 	<jsp:include page="../main/header.jsp" /><br><br>
 </header>
-
+<div class="clear"></div>
 <nav id="ad">
 	<a href="#">
 		<img src="${pageContext.request.contextPath}/resources/img/home_ad1.png" class="home_ad1" style="width: 1020px;" />
@@ -298,11 +300,28 @@
 	
 </section>
 	<a href="${pageContext.request.contextPath}/main/home.do">홈(로고)</a><br>
-	<a href="${pageContext.request.contextPath}/product/product_view.do">상품상세보기</a><br>
+	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=1">상품상세보기1</a><br>
+	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=2">상품상세보기2</a><br>
+	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=3">상품상세보기3</a><br>
+	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=4">상품상세보기4</a><br>
 	<a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a><br>
 	<a href="${pageContext.request.contextPath}/purchase/order.do">주문/결제</a><br>
 	<a href="${pageContext.request.contextPath}/purchase/order_complete.do">주문완료</a><br>
 	<a href="${pageContext.request.contextPath}/manager/manager_1main.do">관리자메인</a><br>
+	<a href="${pageContext.request.contextPath}/seller/regi_pro.do">판매자 - 상품 등록</a><br>
+	<a href="${pageContext.request.contextPath}/mypage/mypage_main.do">마이페이지</a><br>
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_searchword.do">상품목록검색어진입</a><br>
+	<a href="${pageContext.request.contextPath}/mypage/test.do">TEST</a><br>
+	
+	<form name="caq" action="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do" method="get">
+                        <input type="hidden" name="member_idx" value="1">
+                    </form>
+                    <a href="#" onclick="document.forms['caq'].submit();">
+            배송지TEST</a>
+	<br>
+	<a href="${pageContext.request.contextPath}/purchase/refund.do">환불테스트</a><br>
+	<a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문배송조회</a><br>
+	<a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">환불취소조회</a><br>
 <footer>
 	<jsp:include page="../main/footer.jsp" />
 </footer>

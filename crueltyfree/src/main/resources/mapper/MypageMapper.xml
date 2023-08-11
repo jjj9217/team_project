@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.crfr.MypageMapper">       
+     <!-- 작성하지 않은 리뷰 목록 -->
+     
+     <!-- 작성하지 않은 리뷰 목록 사진 -->
+     <select id="selectmynonreviewListimg" parameterType="_int" resultType="FileVo">
+        select * from `order_product`
+		    inner join `order`
+		    on `order_product`.client_num = `order`.client_num
+		    inner join product
+		    on `order_product`.product_idx = product.product_idx
+		    inner join review
+		    on `order_product`.product_idx = review.product_idx
+		    inner join file
+		    on review.product_idx = file.product_idx
+		    <where>
+		        `order`.client_num=#{member_idx}
+		        and
+		        review.member_idx!=#{member_idx}
+		        and
+		        file.product_idx IS NOT NULL
+		        AND (file.product_idx, file.file_idx) 
+		            IN (
+		            SELECT file.product_idx, MIN(file.file_idx)                   
+		            FROM file
+		            GROUP BY file.product_idx
+		            )
+            </where>		            
+		        order by order_date desc
+     </select>
+     
+     <!-- 작성하지 않은 리뷰 목록 -->
+     <select id="selectmynonreviewList" parameterType="_int" resultType="ReviewExploreVo">
+        select * from `order_product`
+            inner join `order`
+            on `order_product`.client_num = `order`.client_num
+            inner join product
+            on `order_product`.product_idx = product.product_idx
+            inner join review
+            on `order_product`.product_idx = review.product_idx
+            <where>
+                `order`.client_num=#{member_idx}
+                and
+                review.member_idx!=#{member_idx}
+            </where>                
+                order by order_date desc
+     </select>
+          
+     <!-- 작성하지 않은 리뷰 목록 개수 세기 -->
+     <select id="selectmynonreviewCount" parameterType="_int" resultType="_int">
+        select count(*) from `order_product`
+            inner join `order`
+            on `order_product`.client_num = `order`.client_num
+            inner join product
+            on `order_product`.product_idx = product.product_idx
+            inner join review
+            on `order_product`.product_idx = review.product_idx
+            <where>
+                `order`.client_num=#{member_idx}
+                and
+                review.member_idx!=#{member_idx}
+            </where>                
+                order by order_date desc;
+     </select>
+     
+          
+          
+     <!-- 작성한 리뷰 목록 -->
+     
+     <!-- 작성한 리뷰 목록 사진 -->
+     <select id="selectmyreviewListimg" parameterType="_int" resultType="FileVo">
+        select * from `order_product`
+            inner join `order`
+            on `order_product`.client_num = `order`.client_num
+            inner join product
+            on `order_product`.product_idx = product.product_idx
+            inner join review
+            on `order_product`.product_idx = review.product_idx
+            inner join file
+            on review.product_idx = file.product_idx
+            <where>
+                `order`.client_num=#{member_idx}
+                and
+                review.member_idx=#{member_idx}
+                and
+                file.product_idx IS NOT NULL
+                AND (file.product_idx, file.file_idx) 
+                    IN (
+                    SELECT file.product_idx, MIN(file.file_idx)                   
+                    FROM file
+                    GROUP BY file.product_idx
+                    )
+            </where>                    
+                order by order_date desc;
+     </select>
+     
+     <!-- 작성한 리뷰 목록 -->
+     <select id="selectmyreviewList" parameterType="_int" resultType="ReviewExploreVo">
+        select * from `order_product`
+            inner join `order`
+            on `order_product`.client_num = `order`.client_num
+            inner join product
+            on `order_product`.product_idx = product.product_idx
+            inner join review
+            on `order_product`.product_idx = review.product_idx
+            <where>
+                `order`.client_num=#{member_idx}
+                and
+                review.member_idx=#{member_idx}
+            </where>                
+                order by order_date desc;
+     </select>
+     
+     <!-- 작성한 리뷰 목록 개수 세기 -->
+     <select id="selectmyreviewCount" parameterType="_int" resultType="_int">
+        select count(*) from `order_product`
+            inner join `order`
+            on `order_product`.client_num = `order`.client_num
+            inner join product
+            on `order_product`.product_idx = product.product_idx
+            inner join review
+            on `order_product`.product_idx = review.product_idx
+            <where>
+                `order`.client_num=#{member_idx}
+                and
+                review.member_idx=#{member_idx}
+            </where>                
+                order by order_date desc;
+     </select>
+     
+ 
+  
+    <!--  리뷰 작성 -->
+    
+    <!--  리뷰 내용 작성 -->
+    <insert id="insertreview" parameterType="ReviewVo">
+        insert into review (member_idx, 
+		                    product_idx,                                
+		                    review_score,
+		                    review_content,
+		                    review_regDate,
+		                    member_nickname,
+		                    review_recom_count)
+                     values(#{member_idx}, 
+		                    #{product_idx},                                
+		                    #{review_score},
+		                    #{review_content},
+                            now(),
+                            #{member_nickname},
+                            1)
+    </insert>
+    
+    <!--  리뷰 번호 반환하기 -->
+    <select id="selectReview_idx" parameterType="ReviewVo" resultType="_int">
+        select review_idx from review 
+            <where> 
+            member_idx= #{member_idx}
+            and product_idx = #{product_idx}
+            </where>
+    </select>
+    
+    <!--  리뷰 사진 작성 -->
+    <insert id="insertreviewimg" parameterType="map">
+        insert into file  (review_idx, 
+                           originFile, 
+                           saveFile)
+                    values                            
+                          (                          
+                            #{review_idx},               
+                            #{originFile},
+                            #{saveFile}                           
+                           ) 
+    </insert>
+    
+ 
+ 
+    <!-- 배송지 -->
+    <!-- 배송지 목록 -->
+    <select id="selectdeliveryList" parameterType="_int" resultType="DeliveryVo">
+        select * from delivery
+            where member_idx=#{member_idx}            
+     </select>
+     
+     <!-- 배송지 목록 개수 세기 -->
+     <select id="selectdeliveryCount" parameterType="_int" resultType="_int">
+        select count(*) from delivery
+            where member_idx=#{member_idx}
+     </select>
+
+    <!-- 배송지 등록 -->
+    <insert id="insertdeliveryPost" parameterType="DeliveryVo">
+        insert into delivery(member_idx, 
+		                     delivery_address_name, 
+		                     delivery_get_name, 
+		                     delivery_handphone, 
+		                     delivery_message, 
+		                     delivery_pass, 
+		                     delivery_pass_content, 
+		                     delivery_postNum, 
+		                     delivery_address, 
+		                     delivery_address2)
+		              values(#{member_idx},
+		                     #{delivery_address_name},
+		                     #{delivery_get_name},
+		                     #{delivery_handphone},
+		                     #{delivery_message},
+		                     #{delivery_pass},
+		                     #{delivery_pass_content},
+		                     #{delivery_postNum},
+		                     #{delivery_address},
+		                     #{delivery_address2}) 
+    </insert>
+
+    <!-- 기본배송지 설정 -->
+    <update id="updatedeliveryPostdefault" parameterType="DeliveryVo">
+         update delivery set defaultpost=1
+                        where delivery_idx=#{delivery_idx}
+    </update>
+         <!-- and member_idx=#{member_idx} -->
+    
+    <update id="updatedeliveryPostchangedefault" parameterType="DeliveryVo">
+         update delivery set defaultpost=0
+                        where delivery_idx!=#{delivery_idx}
+    </update>
+         <!-- and member_idx=#{member_idx} -->
+
+    <!-- 배송지 수정 -->
+    <update id="updatedeliveryPost" parameterType="DeliveryVo">
+        update delivery
+                <set>
+                    <if test="delivery_address_name != null">
+                        delivery_address_name=#{delivery_address_name},    
+                    </if>
+                    <if test="delivery_get_name != delivery_get_name">
+                        delivery_get_name=#{delivery_get_name},
+                    </if>
+                    <if test="delivery_handphone != null">
+                        delivery_handphone=#{delivery_handphone},        
+                    </if>
+                    <if test="delivery_message != null">
+                        delivery_message=#{delivery_message}        
+                    </if>                                                           
+                    <if test="delivery_pass != null">
+                        delivery_pass=#{delivery_pass}        
+                    </if>
+                    <if test="delivery_pass_content != null">
+                        delivery_pass_content=#{delivery_pass_content}        
+                    </if>
+                    <if test="delivery_postNum != null">
+                        delivery_postNum=#{delivery_postNum}        
+                    </if>
+                    <if test="delivery_address != null">
+                        delivery_address=#{delivery_address}        
+                    </if>
+                    <if test="delivery_address2 != null">
+                        delivery_address2=#{delivery_address2}        
+                    </if>                    
+                </set>                     
+                where delivery_idx=#{delivery_idx}
+                  and member_idx=#{member_idx}   
+    </update>
+    
+    <!-- 배송지 삭제 -->
+    <delete id="deletedeliveryPost" parameterType="DeliveryVo">
+        delete from delivery
+            where delivery_idx=#{delivery_idx};
+    </delete>
+
+    <!-- and member_idx=#{member_idx} -->
+    
+    
+         
+</mapper>

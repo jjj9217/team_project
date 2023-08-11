@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.crfr.ProductViewMapper">
+	
+	<!-- 상품번호 입력후 상품 Vo반환 -->
+	<select id="selectView" parameterType="_int" resultType="ProductVo">
+		select * from product where product_idx = #{product_idx}
+	</select>		
+	
+	<!-- 상품번호 입력후 상품 파일Vo중 썸네일만 반환 -->
+	<select id="selectThumbnail" parameterType="_int" resultType="FileVo">
+		select * from file where product_idx = #{product_idx} ORDER BY file_idx LIMIT 1;
+	</select>	
+	
+	<!-- 상품번호 입력후 상품 파일 반환 -->
+	<select id="selectFile" parameterType="_int" resultType="FileVo">
+		select * from file where product_idx = #{product_idx} ORDER BY file_idx;
+	</select>	
+	
+	<!-- 상품번호 입력후 상품정보 Vo반환 -->
+	<select id="selectInfo" parameterType="_int" resultType="ProductInfoVo">
+		select * from product_info where product_idx = #{product_idx}
+	</select>		
+
+	<!-- 상품번호 입력후 상품 문의 반환 -->
+	<select id="selectProductInq" parameterType="_int" resultType="ProductInqVo">
+		select * from product_inq where product_idx = #{product_idx} ORDER BY product_inq_regDate DESC;
+	</select>		
+
+	<!-- 해당 상품 문의 수 -->
+	<select id="selectProductInqCount" parameterType="_int" resultType="_int">
+		select count(*) from product_inq where product_idx=#{product_idx}
+	</select>
+
+	<!-- 상품 문의 등록 -->
+	<insert id="insertProductInq" parameterType="map">
+		insert into product_inq (member_idx, product_idx, product_inq_content, member_nickname)
+		values(#{member_idx}, #{product_idx}, #{product_inq_content}, #{member_nickname})						
+	</insert>	
+
+	<!-- 상품 문의 수정 -->
+	<update id="updateProductInq" parameterType="map">
+		update product_inq 
+		set product_inq_content=#{product_inq_content}
+		where product_inq_idx = #{product_inq_idx}					
+	</update>		
+	
+	<!-- 상품 문의 삭제 -->
+	<delete id="deleteProductInq" parameterType="_int">
+		delete from product_inq where product_inq_idx = #{productInqIdx}
+	</delete>		
+
+	<!-- 좋아요 정보 반환 -->
+	<select id="selectLike" parameterType="map" resultType="LikeVo">
+		select * from `like` where product_idx = #{product_idx} and member_idx = #{member_idx}
+	</select>	
+	
+	<!-- 상품 좋아요 등록 -->
+	<insert id="insertlike" parameterType="map">
+		insert into `like` (member_idx, product_idx)
+		values(#{member_idx}, #{product_idx})						
+	</insert>	
+
+	<!-- 상품 좋아요 삭제 -->
+	<delete id="deletelike" parameterType="map">
+		delete from `like` where product_idx = #{product_idx} and member_idx = #{member_idx}
+	</delete>
+
+	<!-- 해당 상품 문의 수 -->
+	<select id="selectReviewCount" parameterType="_int" resultType="_int">
+		select count(*) from review where product_idx=#{product_idx}
+	</select>
+	
+	<!-- 조건에 따른 리뷰 수 -->
+	<select id="selectReviewListCount" parameterType="map" resultType="_int">
+		select count(*) from review
+		where product_idx=#{product_idx} 
+		<if test="textReview == 'fail' and photoReview == 'ok'">
+			AND review_idx IN (SELECT review_idx FROM `file`)
+		</if>
+		<if test="textReview == 'ok' and photoReview == 'fail'">
+			AND review_idx NOT IN (SELECT review_idx FROM `file` WHERE review_idx IS NOT NULL)
+		</if> 
+		<if test="textReview == 'fail' and photoReview == 'fail'">
+			AND member_idx="0"
+		</if>
+		<choose>
+		<when test="sortOrder == null">
+			order by review_regDate DESC
+		</when>
+		<otherwise>
+			<choose>
+				<when test="sortOrder =='date'">
+					order by review_regDate DESC
+				</when>
+				<when test="sortOrder =='score'">
+					order by review_score
+				</when>
+				<when test="sortOrder =='recom'">
+					order by review_recom_count
+				</when>
+			</choose>
+		</otherwise>
+		</choose>		
+	</select>	
+
+	<!-- 조건에 따른 리뷰 목록 -->
+	<select id="selectReviewList" parameterType="map" resultType="ReviewVo">
+		select * from review
+		where product_idx=#{product_idx} 
+		<if test="textReview == 'fail' and photoReview == 'ok'">
+			AND review_idx IN (SELECT review_idx FROM `file`)
+		</if>
+		<if test="textReview == 'ok' and photoReview == 'fail'">
+			AND review_idx NOT IN (SELECT review_idx FROM `file` WHERE review_idx IS NOT NULL)
+		</if> 
+		<if test="textReview == 'fail' and photoReview == 'fail'">
+			AND member_idx="0"
+		</if>
+		<choose>
+		<when test="sortOrder == null">
+			order by review_regDate DESC
+		</when>
+		<otherwise>
+			<choose>
+				<when test="sortOrder =='date'">
+					order by review_regDate DESC
+				</when>
+				<when test="sortOrder =='score'">
+					order by review_score DESC
+				</when>
+				<when test="sortOrder =='recom'">
+					order by review_recom_count DESC
+				</when>
+			</choose>
+		</otherwise>
+		</choose>		
+	</select>	
+	
+	<!-- 리뷰번호에 해당하는 파일 목록 -->
+	<select id="selectReviewImage" parameterType="_int" resultType="FileVo">
+		select * from file where review_idx=#{review_idx} 
+	</select>	
+	
+	<!-- 리뷰추천 정보 반환 -->
+	<select id="selectReviewRecom" parameterType="map" resultType="ReviewRecomVo">
+		select * from `review_recom` where review_idx = #{review_idx} and member_idx = #{member_idx}
+	</select>			
+	
+	<!-- 전체 리뷰 평점 평균 -->
+	<select id="selectReviewScoreAvg" parameterType="_int" resultType="_double">
+		SELECT AVG(review_score) FROM review WHERE product_idx = #{product_idx};
+	</select>
+	
+	<!-- 리뷰 추천 등록 -->
+	<insert id="insertRecom" parameterType="map">
+		insert into `review_recom` (member_idx, review_idx)
+		values(#{member_idx}, #{review_idx})						
+	</insert>	
+
+	<!-- 리뷰 추천 삭제 -->
+	<delete id="deleteRecom" parameterType="map">
+		delete from `review_recom` where member_idx = #{member_idx} and review_idx = #{review_idx}
+	</delete>	
+	
+	<!-- 리뷰 추천수 불러오기 -->
+	<select id="selectRecom" parameterType="string" resultType="_int">
+		SELECT count(*) from `review_recom` where review_idx = #{review_idx}
+	</select>
+	
+	<!-- 리뷰 추천수 업데이트 -->
+	<update id="updateRecom" parameterType="map">
+		update `review`
+		set review_recom_count=#{strRecomCount}
+		where review_idx = #{review_idx}					
+	</update>									
+</mapper>
