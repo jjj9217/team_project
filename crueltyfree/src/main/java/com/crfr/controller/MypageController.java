@@ -703,17 +703,7 @@ public class MypageController {
 	
 	
 	
-	//마이페이지 주문/배송조회 페이지
-	@GetMapping("/mypage_orderinq.do")
-	public String mypage_orderinq() {
-		return "mypage/mypage_orderinq";
-	}
-	
-	//마이페이지 취소/반품내역 페이지
-	@GetMapping("/mypage_cancelinq.do")
-	public String mypage_cancelinq() {
-		return "mypage/mypage_cancelinq";
-	}
+
 	
 	
 }
