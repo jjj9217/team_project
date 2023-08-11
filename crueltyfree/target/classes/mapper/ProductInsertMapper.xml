@@ -7,7 +7,6 @@
 	<!-- 상품 추가 처리 구문 -->
 	<insert id="insertProduct" parameterType="ProductVo">
 		insert into Product (category_code,
-							 category_code_small,
 								member_nickname,
 								product_name,
 								product_price,
@@ -16,7 +15,6 @@
 								member_idx
 								)
 			   			 values(#{category_code},
-			   			 		#{category_code_small},
 			   			 	    #{member_nickname},
 			   			 	    #{product_name},
 			   			 	    #{product_price},
@@ -25,6 +23,12 @@
 			   			 	    #{member_idx}
 			   			 	    )
 	</insert>
+	
+	<!-- 상품 Idx 찾기 -->
+	<select id="selectProductIdx" parameterType="ProductVo" resultType="_int">
+		select product_idx from product where product_name = #{product_name} and product_price = #{product_price} and member_nickname = #{member_nickname} 
+	</select>			
+	
 	<insert id="insertProductInfo" parameterType="ProductInfoVo">
 		insert into Product_info (product_idx,
 								product_info_amount,
@@ -49,163 +53,7 @@
 								#{saveFile}
 			   			 	    )
 	</insert>
+		
 	
-	<!-- 상품의 이름, 판매자의 닉네임을 가져와 그에 해당되는 상품 번호를 불러오는 구문 -->
-	<select id="findProductIdx" parameterType="map" resultType="_int">
-		select product_idx from `product` where product_name = #{product_name} AND member_nickname = #{member_nickname}
-	</select>
-	
-	<!-- 검색조건에 맞는 게시물 목록 반환 구문 -->
-	<select id="checkProductList" parameterType="map" resultType="ProductVo">
-		select * from Product
-			<if test="searchWord != null">
-				<where>
-					<choose>
-						<when test="searchField == 'product_name'">
-							product_name like CONCAT('%',#{searchWord},'%')
-						</when>
-						<otherwise>
-							product_capa like CONCAT('%',#{searchWord},'%')
-						</otherwise>
-					</choose>
-				</where>
-			</if>
-			order by product_idx desc
-	</select>
-	
-	<!-- 검색조건에 맞는 게시물 수 반환 구문 -->
-	<select id="checkProductCount" parameterType="map" resultType="_int">
-		select count(*) from Product
-			<if test="searchWord != null">
-				<where>
-					<choose>
-						<when test="searchField == 'product_name'">
-							product_name like CONCAT('%',#{searchWord},'%')
-						</when>
-						<otherwise>
-							product_capa like CONCAT('%',#{searchWord},'%')
-						</otherwise>
-					</choose>
-				</where>
-			</if>
-			order by product_idx desc
-	</select>
-	
-	<!-- 지정한 상품 정보 반환 구문 -->
-	<select id="findProductPost" parameterType="string" resultType="ProductVo">
-		select * from Product where product_idx = #{product_idx}
-	</select>
-	
-	<!-- 지정한 상품 구매 정보 반환 구문 -->
-	<select id="findProductInfoPost" parameterType="string" resultType="ProductInfoVo">
-		select * from Product_info where product_idx = #{product_idx}
-	</select>
-	
-	<!-- 지정한 상품 파일 반환 구문 -->
-	<select id="findProductFilePost" parameterType="string" resultType="FileVo">
-		select * from File where product_idx = #{product_idx}
-	</select>
-	
-	
-	<!-- 지정한 게시글 파일 수정 구문 -->
-	<update id="productUpdateFile0" parameterType="FileVo">
-		update File
-				set originfile = #{originFile},
-				savefile = #{saveFile}
-				where file_idx = #{file_idx}
-	</update>
-	<update id="productUpdateFile1" parameterType="FileVo">
-		update File
-				<set>
-					<if test="originFile != null">
-						originfile = #{originFile},
-					</if>
-					<if test="saveFile != null">
-						savefile = #{saveFile}
-					</if>
-				</set>
-				where file_idx = #{file_idx}
-	</update>
-	<update id="productUpdateFile2" parameterType="FileVo">
-		update File
-				<set>
-					<if test="originFile != null">
-						originfile = #{originFile},
-					</if>
-					<if test="saveFile != null">
-						savefile = #{saveFile}
-					</if>
-				</set>
-				where file_idx = #{file_idx}
-	</update>
-	<update id="productUpdateFile3" parameterType="FileVo">
-		update File
-				<set>
-					<if test="originFile != null">
-						originfile = #{originFile},
-					</if>
-					<if test="saveFile != null">
-						savefile = #{saveFile}
-					</if>
-				</set>
-				where file_idx = #{file_idx}
-	</update>
-	
-	<!-- 지정한 게시글 내용 수정 구문 -->
-	<update id="productUpdate" parameterType="ProductVo">
-		update Product
-			<set>
-				<if test="category_code != null">
-					category_code = #{category_code},
-				</if>
-				<if test="product_name != null">
-					product_name = #{product_name},
-				</if>
-				<if test="product_price != null">
-					product_price = #{product_price},
-				</if>
-				<if test="product_capa != null">
-					product_capa = #{product_capa},
-				</if>
-				<if test="delivery_company != null">
-					delivery_company = #{delivery_company},
-				</if>
-				<if test="member_nickname != null">
-					member_nickname = #{member_nickname},
-				</if>
-			</set>
-		where member_idx = #{member_idx} AND product_idx = #{product_idx}
-	</update>
-	
-	<!-- 지정한 게시글 상세 내용 수정 구문 -->
-	<update id="updateProductInfo" parameterType="ProductInfoVo">
-		update Product_info
-			<set>
-				<if test="product_info_amount != null">
-					product_info_amount = #{product_info_amount},
-				</if>
-				<if test="product_info_useMethod != null">
-					product_info_useMethod = #{product_info_useMethod},
-				</if>
-				<if test="product_info_maker != null">
-					product_info_maker = #{product_info_maker},
-				</if>
-				<if test="product_info_handphone != null">
-					product_info_handphone = #{product_info_handphone},
-				</if>
-			</set>
-		where product_idx = #{product_idx}
-	</update>
-	
-	<!-- 상품 번호를 통해 파일 번호를 불러오는 구문 -->
-	<select id="findProductFileIdx" parameterType="string" resultType="FileVo">
-		select * from `file` where product_idx = #{product_idx}
-	</select>
-	
-	<!-- 지정한 상품 삭제 구문 -->
-	<update id="deleteProduct" parameterType="string">
-		update product set product_del_or_not = "-1"
-			where product_idx = #{product_idx}
-	</update>
 	
 </mapper>
