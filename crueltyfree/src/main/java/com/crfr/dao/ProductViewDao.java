@@ -12,6 +12,8 @@ import com.crfr.vo.LikeVo;
 import com.crfr.vo.ProductInfoVo;
 import com.crfr.vo.ProductInqVo;
 import com.crfr.vo.ProductVo;
+import com.crfr.vo.ReviewRecomVo;
+import com.crfr.vo.ReviewVo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -114,5 +116,61 @@ public class ProductViewDao {
 		return sqlSession.selectOne(MAPPER+".selectReviewListCount", map);
 	}	
 		
+	//사용자 조건에 따른 리뷰 목록
+	public List<ReviewVo> selectReviewList(Map<String, Object> map) {
+		return sqlSession.selectList(MAPPER+".selectReviewList", map);
+	}
+	
+	//리뷰번호로 파일검색하기
+	public List<FileVo> selectReviewImage(int review_idx) {
+		return sqlSession.selectList(MAPPER+".selectReviewImage", review_idx);
+	}
+	
+	//리뷰추천 정보 불러오기
+	public ReviewRecomVo selectReviewRecom(int review_idx, int member_idx) {
+	    String strReviewIdx = String.valueOf(review_idx);
+	    String strMemberIdx = String.valueOf(member_idx);		
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("review_idx", strReviewIdx);
+		map.put("member_idx", strMemberIdx);
+		
+		return sqlSession.selectOne(MAPPER+".selectReviewRecom", map);
+	}	
+	
+	//리뷰 전체 평점 평균 불러오기
+	public double selectReviewScoreAvg(int product_idx) {
+		return sqlSession.selectOne(MAPPER+".selectReviewScoreAvg", product_idx);
+	}
+
+	//추천등록
+	public int insertRecom(String review_idx, String member_idx) {
+		Map<String, String> map = new HashMap<>();
+		map.put("member_idx", member_idx);
+		map.put("review_idx", review_idx);
+		return sqlSession.insert(MAPPER+".insertRecom",map);
+	}
+
+	//추천 삭제
+	public int deleteRecom(String review_idx, String member_idx) {
+		Map<String, String> map = new HashMap<>();
+		map.put("member_idx", member_idx);
+		map.put("review_idx", review_idx);
+		return sqlSession.delete(MAPPER+".deleteRecom",map);
+	}
+	
+	//추천수 업데이트를 위한 수 불러오기
+	public int selectRecom(String review_idx) {
+		return sqlSession.selectOne(MAPPER+".selectRecom",review_idx);
+	}
+	
+	//추천수 업데이트
+	public  void updateRecom(String review_idx, int recomCount) {
+		String strRecomCount = Integer.toString(recomCount);
+		Map<String, String> map = new HashMap<>();
+		map.put("strRecomCount", strRecomCount);
+		map.put("review_idx", review_idx);
+		sqlSession.update(MAPPER+".updateRecom",map);
+	}
 	
 }
