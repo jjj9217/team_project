@@ -2,13 +2,13 @@ package com.crfr.service.manager;
 
 import org.springframework.stereotype.Service;
 
-import com.crfr.common.PageNav;
+import com.crfr.common.PageNav1;
 
 
 @Service("mPage")
 public class MPageService implements ManagerService {
 	
-	public PageNav setPageNav(PageNav pageNav, String pageNum, String pageBlock) {
+	public PageNav1 setPageNav(PageNav1 pageNav, String pageNum, String pageBlock) {
 		int totalRows = pageNav.getTotalRows();
 		int rows_per_page = 15;
 		int pages_per_block = 5;

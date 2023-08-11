@@ -29,10 +29,10 @@
 	<!-- 컴포넌트 스캔 -->	  	
 	<context:component-scan base-package="com.crfr.common" />
 	<context:component-scan base-package="com.crfr.controller" />
-  <context:component-scan base-package="com.crfr.service.manager" />
-  <context:component-scan base-package="com.crfr.vo" />
+    <context:component-scan base-package="com.crfr.service.manager" />
+    <context:component-scan base-package="com.crfr.vo" />
 	<context:component-scan base-package="com.crfr.dao" />
-  <context:component-scan base-package="com.crfr.service.mypage" />
+    <context:component-scan base-package="com.crfr.service.mypage" />
 	<context:component-scan base-package="com.crfr.service.purchase" />
 	<context:component-scan base-package="com.crfr.service.productView" />
  	<context:component-scan base-package="com.crfr.service.product" />
