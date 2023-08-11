@@ -16,4 +16,5 @@ public class DeliveryVo {
 	private String delivery_address;
 	private String delivery_address2;
 	private int defaultpost;
+	private String delivery_guest;
 }

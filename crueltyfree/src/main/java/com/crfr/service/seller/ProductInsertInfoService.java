@@ -14,7 +14,7 @@ public class ProductInsertInfoService implements ProductSellerService {
 			String product_info_useMethod, String product_info_maker,
 			String product_info_handphone) {
 		
-		//다른 폼의 전달값을 FileVo에 저장하기
+		//다른 폼의 전달값을 ProductInfoVo에 저장하기
 		ProductInfoVo vo = new ProductInfoVo();
 		vo.setProduct_idx(Integer.parseInt(product_idx));
 		vo.setProduct_info_amount(product_info_amount);

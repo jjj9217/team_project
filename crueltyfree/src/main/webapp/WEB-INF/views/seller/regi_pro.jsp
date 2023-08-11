@@ -295,7 +295,7 @@ function validateForm(){
 			&nbsp;&nbsp;<a>가격</a>
 		</article>
 		<article class="regi_right">
-			<input type="text" name="product_price" class="regi_box">
+			<input type="text" name="product_price" class="regi_box" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
 		</article>
 	</div>
 	
@@ -304,7 +304,7 @@ function validateForm(){
 			&nbsp;&nbsp;<a>상품 재고</a>
 		</article>
 		<article class="regi_right">
-			<input type="text" name="product_capa" class="regi_box">
+			<input type="text" name="product_capa" class="regi_box" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
 		</article>
 	</div>
 	
@@ -358,8 +358,8 @@ function validateForm(){
 	
 	<!-- 등록 버튼 -->
 	<div class="div_write">
-		<a href="#"><button id="regi_pro_btn">등록하기</button></a>
-		<a href="#"><button id="regi_pro_cancel">취소하기</button></a>
+		<input type="submit" id="regi_pro_btn" value="등록하기">
+		<input type="reset" id="regi_pro_cancel" value="취소하기">
 	</div>
 	
 </form>	
