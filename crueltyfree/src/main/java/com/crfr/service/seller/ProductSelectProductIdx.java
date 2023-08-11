@@ -3,7 +3,6 @@ package com.crfr.service.seller;
 import org.springframework.stereotype.Service;
 
 import com.crfr.dao.ProductInsertDao;
-import com.crfr.vo.ProductVo;
 
 import lombok.RequiredArgsConstructor;
 

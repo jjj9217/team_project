@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ page import="java.util.List, java.util.HashMap, java.util.Map" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,8 +13,9 @@
 	* {margin:0; padding:0;}
 	a {
 		text-decoration: none;
+		color: black;
 	} 
-	input[type="button"], input[type="submit"], input[type="checkbox"], select, label, button{cursor: pointer;}
+	input[type="button"], input[type="submit"], input[type="checkbox"], select, label, button, span{cursor: pointer;}
 	
 	body{
 		width:1020px;
@@ -98,10 +102,13 @@
 		margin-left:10px;
 	}
 	
+	#checkPro_search {
+		margin-bottom: 10px;
+	}
+	
 	.sub_title {
 		width: 700px;
 		height: 50px;
-		border-bottom: 1px solid #a4a4a4;
 	}
 	
 	th {
@@ -115,11 +122,41 @@
 		text-align: center;
 	}
 	
-	#history_tb {
-		width: 700px;
+	.product_list {
+		height: 400px;
 	}
+	
+	#pro_list_tb {
+		width: 700px;
+		border-top: 2px solid #a4a4a4;
+		border-bottom: 2px solid #a4a4a4;
+		
+	}
+	
+	#pro_list_tb td {
+		border-top: 1px solid #a4a4a4;
+	}
+	#clear{clear: both;}
 </style>
+
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+<script>
+$(function(){
+    $(".pro_delete").click(function(){
+    	let index = $(".pro_delete").index(this);    	
+    	let confirmAns = confirm("정말 삭제하시겠습니까?");
+		if(confirmAns){
+			$(".form_delete").eq(index).submit();
+	    	return true;
+		}
+    });
+})
+
+</script>
+
 </head>
+
 <body>
 <header>
 	<jsp:include page="../main/header.jsp" />
@@ -131,19 +168,39 @@
 	</div>
 	<div id="tap">
 		<ul class="list">
-			<li><a href="#">매출통계</a></li>
-			<li><a href="#">구매 내역</a></li>
-			<li><a href="#">문의 확인</a></li>
-			<li><a href="#" style="background-color: #7d99a4; color:#ffffff; font-weight: bold;">등록 상품 확인</a></li>
+			<li><a href="sale_stats.do">매출통계</a></li>
+			<li><a href="purchase_history.do">구매 내역</a></li>
+			<li><a href="confirm_inq.do">문의 확인</a></li>
+			<li><a href="check_pro.do" style="background-color: #7d99a4; color:#ffffff; font-weight: bold;">등록 상품 확인</a></li>
 		</ul>
-		<a href="#"><button class="pro_register">상품 등록하기</button></a>
+		<a href="regi_pro.do"><button class="pro_register">상품 등록하기</button></a>
 	</div>
 	<div id="content">
 		<article class="sub_title">
 			<h5>등록 상품 확인</h5>
 		</article>
-		<article class="history_list">
-			<table id="history_tb">
+		
+		<!-- 검색 폼 -->
+	    <form>
+	        <table id="checkPro_search">
+	            <tr>
+	                <td id="checkPro_total" style="width:415px; text-align:left; color:#4a4a4a;">
+	                	총 상품 개수: ${pageNav.totalRows}
+	                </td>
+	                <td id="checkPro_searchbar">
+	                    <select name="searchField">
+	                        <option value="product_name">상품명</option>
+	                        <option value="product_capa">재고</option>
+	                    </select>
+	                    <input type="text" name="searchWord" id="searchWord">
+	                    <input type="submit" id="search_btn" value="검색">
+	                </td>
+	            </tr>
+	        </table>
+	    </form>
+		
+		<article class="product_list">
+			<table id="pro_list_tb">
 		        <tr height="30px;">
 		            <th width="400px;">상품명</th>
 		            <th width="100px;">상품 재고</th>
@@ -151,21 +208,56 @@
 		            <th width="150px;">수정/삭제</th>
 		        </tr>
 		        
-		        <!-- 추후 c:choose, c:when 및 데이터베이스를 연동해 페이지 구현 -->
-				
-				<tr>
-					<td colspan="4" style="height: 300px; color: #a4a4a4;">등록한 상품이 없습니다.</td>
-				</tr>
+		        <!-- 글목록 내용-->
+				<c:choose>
+					<c:when test="${empty checkProList}">
+						<tr>
+							<td colspan="4" style="height: 300px; color: #a4a4a4;">등록한 상품이 없습니다.</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+					
+						<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
+							<c:if test="${checkProList[rowNum-1].product_name ne null}"> <!-- product에 저장된 값이 있을 경우에만 출력 -->
+								<tr>
+									<td id="td_title">
+										<a href="../product/product_view.do?no=${checkProList[rowNum-1].product_idx}">${checkProList[rowNum-1].product_name}</a>
+									</td>
+									<td>${checkProList[rowNum-1].product_capa}</td>
+									<c:choose>
+										<c:when test="${checkProList[rowNum-1].product_del_or_not eq 1}">
+											<td>판매</td>
+										</c:when>
+										<c:otherwise>
+											<td style="color: #a4a4a4;">삭제</td>
+										</c:otherwise>
+									</c:choose>
+									<td>
+										<span style="color:#7d99a4;" onclick="location.href='edit_pro.do?no=${checkProList[rowNum-1].product_idx}'">수정</span>  <span id="pro_delete" class="pro_delete">삭제</span>
+									</td>
+								</tr>
+							</c:if>
+							
+							<form action="delete_pro_process.do" class="form_delete" method="post">
+								<input type="hidden" name="product_idx" value="${checkProList[rowNum-1].product_idx}">
+							</form>
+							
+						</c:forEach>
+						
+					</c:otherwise>
+				</c:choose>
 		
 				<tr>
-					<td id="history_paging" colspan="6">
-						<!-- 추후 페이징 구현 -->
+					<td id="td_paging" colspan="4">
+						<!-- 페이지 네비게이션 구현 -->
+						<%@ include file="paging.jsp" %>
 					</td>
 				</tr>
     </table>
 		</article>
 	</div>
 </section>
+<div id="clear"></div>
 </body>
 
 <footer>

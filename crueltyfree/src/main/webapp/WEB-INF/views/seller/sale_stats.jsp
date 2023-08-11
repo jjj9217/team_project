@@ -122,6 +122,8 @@ input[type="button"], input[type="submit"], input[type="checkbox"], select, labe
 		height: 50px;
 		border-bottom: 1px solid #a4a4a4;
 	}
+	
+	#clear{clear: both;}
 </style>
 </head>
 <body>
@@ -135,12 +137,12 @@ input[type="button"], input[type="submit"], input[type="checkbox"], select, labe
 	</div>
 	<div id="tap">
 		<ul class="list">
-			<li><a href="#" style="background-color: #7d99a4; color:#ffffff; font-weight: bold;">매출통계</a></li>
-			<li><a href="#">구매 내역</a></li>
-			<li><a href="#">문의 확인</a></li>
-			<li><a href="#">등록 상품 확인</a></li>
+			<li><a href="sale_stats.do" style="background-color: #7d99a4; color:#ffffff; font-weight: bold;">매출통계</a></li>
+			<li><a href="purchase_history.do">구매 내역</a></li>
+			<li><a href="confirm_inq.do">문의 확인</a></li>
+			<li><a href="check_pro.do">등록 상품 확인</a></li>
 		</ul>
-		<a href="#"><button class="pro_register">상품 등록하기</button></a>
+		<a href="regi_pro.do"><button class="pro_register">상품 등록하기</button></a>
 	</div>
 	<div id="content">
 		<article class="sub_title">
@@ -165,6 +167,7 @@ input[type="button"], input[type="submit"], input[type="checkbox"], select, labe
 		</article>
 	</div>
 </section>
+<div id="clear"></div>
 </body>
 
 <footer>

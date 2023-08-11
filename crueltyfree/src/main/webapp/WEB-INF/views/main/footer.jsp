@@ -9,7 +9,7 @@
 	
 	.foot {
 		display: flex;
-        flex-wrap: wrap;             
+        flex-wrap: wrap;
         justify-content: center;            
 		border-top: 2px solid #a4a4a4;
 	}

@@ -307,6 +307,7 @@
 	<a href="${pageContext.request.contextPath}/purchase/order_complete.do">주문완료</a><br>
 	<a href="${pageContext.request.contextPath}/manager/manager_1main.do">관리자메인</a><br>
 	<a href="${pageContext.request.contextPath}/seller/regi_pro.do">판매자 - 상품 등록</a><br>
+	<a href="${pageContext.request.contextPath}/seller/check_pro.do">판매자 - 등록 상품 확인</a><br>
 	<a href="${pageContext.request.contextPath}/mypage/mypage_main.do">마이페이지</a><br>
 	<a href="${pageContext.request.contextPath}/product/product_list_enter_searchword.do">상품목록검색어진입</a><br>
 	<a href="${pageContext.request.contextPath}/mypage/test.do">TEST</a><br>

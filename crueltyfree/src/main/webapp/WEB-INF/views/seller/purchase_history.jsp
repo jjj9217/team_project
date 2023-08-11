@@ -118,6 +118,8 @@
 	#history_tb {
 		width: 700px;
 	}
+	
+	#clear{clear: both;}
 </style>
 </head>
 <body>
@@ -131,12 +133,12 @@
 	</div>
 	<div id="tap">
 		<ul class="list">
-			<li><a href="#">매출통계</a></li>
-			<li><a href="#" style="background-color: #7d99a4; color:#ffffff; font-weight: bold;">구매 내역</a></li>
-			<li><a href="#">문의 확인</a></li>
-			<li><a href="#">등록 상품 확인</a></li>
+			<li><a href="sale_stats.do">매출통계</a></li>
+			<li><a href="purchase_history.do" style="background-color: #7d99a4; color:#ffffff; font-weight: bold;">구매 내역</a></li>
+			<li><a href="confirm_inq.do">문의 확인</a></li>
+			<li><a href="check_pro.do">등록 상품 확인</a></li>
 		</ul>
-		<a href="#"><button class="pro_register">상품 등록하기</button></a>
+		<a href="regi_pro.do"><button class="pro_register">상품 등록하기</button></a>
 	</div>
 	<div id="content">
 		<article class="sub_title">
@@ -168,6 +170,7 @@
 		</article>
 	</div>
 </section>
+<div id="clear"></div>
 </body>
 
 <footer>
