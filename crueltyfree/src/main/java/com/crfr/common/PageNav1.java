@@ -3,7 +3,7 @@ package com.crfr.common;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PageNav {
+public class PageNav1 {
 	/*페이지 네비게이션 관련 변수 선언
 	1. 총 레코드 수: totalRows
 	2. 페이지당 테이블에 출력할 레코드 수: rows_per_page

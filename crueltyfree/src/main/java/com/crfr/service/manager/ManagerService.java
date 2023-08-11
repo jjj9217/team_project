@@ -2,7 +2,7 @@ package com.crfr.service.manager;
 
 import java.util.List;
 
-import com.crfr.common.PageNav;
+import com.crfr.common.PageNav1;
 import com.crfr.vo.MemberVo;
 import com.crfr.vo.OneInqVo;
 import com.crfr.vo.ProductInqVo;
@@ -16,7 +16,7 @@ public interface ManagerService {
 	default List<OneInqVo> sellersignList() {return null;}
 	default List<ProductInqVo> productinqList() {return null;}
 	default List<ReviewVo> reviewList() {return null;}
-	default PageNav setPageNav(PageNav pageNav, String pageNum, String pageBlock) {return null;}
+	default PageNav1 setPageNav(PageNav1 pageNav, String pageNum, String pageBlock) {return null;}
 	default int selectCount(String searchField, String searchWord){return 0;}
 	default int proselectCount(String searchField, String searchWord){return 0;}
 	default int memselectCount(String searchField, String searchWord){return 0;}

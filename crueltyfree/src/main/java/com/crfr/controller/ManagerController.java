@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.crfr.common.PageNav;
+import com.crfr.common.PageNav1;
 import com.crfr.service.manager.ManagerService;
 import com.crfr.vo.MemberVo;
 import com.crfr.vo.OneInqVo;
@@ -34,7 +34,7 @@ public class ManagerController {
 	ManagerService oneList, proList, memList, selList, proinqList, rvList, mPage, rvCount, proCount, memCount, oneCount, selCount, proinqCount,
 	proSList, memSList, oneSList, selSList, proinqSList, rvSList, proDelete, memDelete, proinqDelete, oneDelete, selDelete, rvDelete, pUpdateProduct, pfineProductPost
 	,memUpdate, oneUpdate, proinqUpdate, rvUpdate;
-	PageNav pageNav;
+	PageNav1 pageNav;
 	
 	@Autowired
 	public void setOneList(@Qualifier("oneList") ManagerService oneList) {
@@ -61,7 +61,7 @@ public class ManagerController {
 		this.rvList = rvList;
 	}
 	@Autowired
-	public void setMPage(@Qualifier("mPage") ManagerService mPage, PageNav pageNav) {
+	public void setMPage(@Qualifier("mPage") ManagerService mPage, PageNav1 pageNav) {
 		this.mPage = mPage;
 		this.pageNav = pageNav;
 	}
