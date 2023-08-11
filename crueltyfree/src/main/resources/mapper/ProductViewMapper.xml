@@ -149,9 +149,9 @@
 		select * from `review_recom` where review_idx = #{review_idx} and member_idx = #{member_idx}
 	</select>			
 	
-	<!-- 전체 리뷰 평점 평균 -->
-	<select id="selectReviewScoreAvg" parameterType="_int" resultType="_double">
-		SELECT AVG(review_score) FROM review WHERE product_idx = #{product_idx};
+	<!-- 전체 리뷰 Vo불러오기 -->
+	<select id="selectReviewVo" parameterType="_int" resultType="ReviewVo">
+		SELECT * FROM review WHERE product_idx = #{product_idx};
 	</select>
 	
 	<!-- 리뷰 추천 등록 -->

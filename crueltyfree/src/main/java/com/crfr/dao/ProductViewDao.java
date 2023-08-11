@@ -139,8 +139,8 @@ public class ProductViewDao {
 	}	
 	
 	//리뷰 전체 평점 평균 불러오기
-	public double selectReviewScoreAvg(int product_idx) {
-		return sqlSession.selectOne(MAPPER+".selectReviewScoreAvg", product_idx);
+	public List<ReviewVo> selectReviewVo(int product_idx) {		
+		return sqlSession.selectList(MAPPER+".selectReviewVo", product_idx);
 	}
 
 	//추천등록

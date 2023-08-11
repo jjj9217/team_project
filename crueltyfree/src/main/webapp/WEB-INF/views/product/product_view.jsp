@@ -1017,7 +1017,7 @@ $(function(){
         <div class="left_area">
             <!-- 상품 대표 이미지 -->
             <div class="prd_img">
-                <img src="../resources/img/${fileVoList[0].saveFile}" alt="상품 메인 이미지">
+                <img src="../resources/uploads/${fileVoList[0].saveFile}" alt="상품 메인 이미지">
             </div>
             
             <div class="prd_review_score_avg">
@@ -1121,7 +1121,7 @@ $(function(){
             	<div id="prd_content">	                
 	                <c:forEach items="${fileVoList}" var="fileVo" varStatus="status">
 					    <c:if test="${status.index != 0}">
-					        <img src="../resources/img/${fileVo.saveFile}" alt="상품 설명 이미지">
+					        <img src="../resources/uploads/${fileVo.saveFile}" alt="상품 설명 이미지">					        
 					    </c:if>
 					</c:forEach>
             	</div>
@@ -1284,7 +1284,7 @@ $(function(){
                                         </c:if>
                                         <c:forEach var="imgIndex" begin="1" end="5">
                                         <c:if test="${!empty reviewList[productReviewRows-1].saveFiles[imgIndex-1]}">
-                                        <img src="../resources/img/${reviewList[productReviewRows-1].saveFiles[imgIndex-1]}" width="145px" height="145px">
+                                        <img src="../resources/uploads/${reviewList[productReviewRows-1].saveFiles[imgIndex-1]}" width="145px" height="145px">
                                         </c:if>
                                         </c:forEach>
                                     </div>
