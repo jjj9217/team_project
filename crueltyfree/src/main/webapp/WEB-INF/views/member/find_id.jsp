@@ -44,6 +44,7 @@
 		border-width:1px;
 		outline-color: #7d99a4;
 		padding-left:10px;
+		border-style:solid;
 	}
 
 	input[type="button"]{
@@ -94,7 +95,7 @@
 		color:rgb(231, 76, 60);
 		font-size:13px;
 	}
-   
+
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>

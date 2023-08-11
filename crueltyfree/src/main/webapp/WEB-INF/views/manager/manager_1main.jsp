@@ -30,7 +30,7 @@
 	}
 	#full{
 		width: 1000px;
-        height: 1500px;
+        height: 1300px;
         margin: 0 auto;
         font: bold 25px Arial, Sans-serif;
       	margin-top:10px;
@@ -50,7 +50,7 @@
 	}
 	#content{
 		width:700px;
-		height:1200px;
+		height:1100px;
 		float:left;
 		margin-left:10px;
 	}
@@ -72,43 +72,44 @@
   		text-decoration-line: none;
   		color:black;
   	}
-  	
-  	
-  	table.tbl_list {
-  		border-collapse: collapse;
-  		text-align: left;
-	  	line-height: 1.5;
-
+	#name{
+		font-size:20px;
 	}
-	table.tbl_list thead th {
-  		padding: 7px;
-  		font-weight: bold;
-  		vertical-align: top;
-  		border-bottom: 3px solid #7d99a4;
-  		width:320px;
-	}
-	#right{
+  	#right{
 		text-align:right;
 		font-size:20px;
 		color:gray;
-		margin-right:-13px;
+		
 	}
-	table.tbl_list tbody th {
-  		width: 150px;
-  		padding: 10px;
-  		font-weight: bold;
-  		vertical-align: top;
-  		border-bottom: 1px solid #ccc;
-  		background: #f3f6f7;
-  		font-size:30px;
+	table {
+	  border-collapse: separate;
+  		border-spacing: 0;
+  		width: 100%;
+  		font-size:13px;
 	}
-	table.tbl_list td {
-  		width: 350px;
-  		padding: 10px;
-  		vertical-align: top;
-  		border-bottom: 1px solid #ccc;
- 		font-size: 13px;
+	th,
+	td {
+  		padding: 6px 15px;
+  		height:30px;
 	}
+	th {
+  		color: black;
+  		text-align: left;
+ 		border-bottom: 3px solid #7d99a4;
+
+	}
+	td {
+  		border-right: 0px solid #c6c9cc;
+  		border-bottom: 1px solid #c6c9cc;
+	}
+
+	td:first-child {
+  		border-left: 0px solid #c6c9cc;
+	}
+	tr:nth-child(even) td {
+  		background: #eaeaed;
+	}
+
 	header{
 		top: 0px;
 		width: 100%;
@@ -123,9 +124,6 @@
 		line-height: 20px;
 		background-color: #eef3f5;	
 	}
-	
- 	
- 	
  	.list{
   		list-style-type: none;
   		padding: 0px;
@@ -137,7 +135,6 @@
   		width:230px;
   		height:430px;
 	}
-	
 	#li a{
   	text-decoration: none;
   	padding: 10px;
@@ -147,14 +144,7 @@
   	font-size:17px;
   	background-color:rgb(221, 219, 214);
   	width:170px;
-	}
-	
-	
- 
- 	
- 	
-  	
-  	
+	} 	
 </style>
 
 
@@ -177,41 +167,33 @@
 		<li id="li"><a href="manager_3member.do" id="" >회원 정보 관리</a></li>
 		<li id="li"><a href="manager_41d1.do" id="" >1:1 문의</a></li>
 		<li id="li"><a href="manager_5sign.do" id="" >판매자 등록 문의</a></li>
-		<li id="li"><a href="manager_6post.do" id="" >게시글 관리</a></li>
 		<li id="li"><a href="manager_7goods.do" id="" >상품 문의</a></li>
 		<li id="li"><a href="manager_8review.do" id="" >리뷰</a></li>
 	</ul>
 	</div>
 	<div id="content">
-	
 	<div id="sub">
 	<table class="tbl_list">
 	<thead>
  	 <tr>
-  			<th scope="cols">1:1 문의</th>
-    		<th scope="cols" id="right"><a href="" id="right">더보기 〉</a></th>
+ 		<th width="300" id="name">1:1문의</th>
+ 		<th width="50" id="right"><a href="manager_41d1.do" id="right">더보기 〉</a></th>
  	 </tr>
  	 </thead>
  	 <tbody>
         <!-- 글목록 내용-->
 		<c:choose>
-			<c:when test="${empty boardList}">
+			<c:when test="${empty oneinqList}">
 				<tr>
-					<td colspan="3"> 등록된 1:1문의가 없습니다. </td>
+					<td colspan="2"> 등록된 1:1문의가 없습니다. </td>
 				</tr>
 			</c:when>
 			<c:otherwise>
 			
-				<c:forEach var="rowNum" begin="${startNum}" end="${endNum}">
+				<c:forEach var="rowNum" begin="1" end="5">
 					<tr>
-						<td>${rowNum}</td>
-						<td id="td_title">
-							
-							<a href="view.jsp?no=${boardList[rowNum-1].board_idx}">${boardList[rowNum-1].title}</a>
-						</td>
-						<td>${boardList[rowNum-1].member_name}</td>
-						<td>${boardList[rowNum-1].read_count}</td>
-						<td>${boardList[rowNum-1].post_date}</td>
+						<td>${oneinqList[rowNum-1].one_inq_content}</td>
+						<td>${oneinqList[rowNum-1].member_nickname}</td>
 					</tr>
 				</c:forEach>		
 			</c:otherwise>
@@ -223,30 +205,24 @@
 	<table class="tbl_list">
 	<thead>
  	 <tr>
-  			<th scope="cols">판매자 등록문의</th>
-    		<th scope="cols" id="right"><a href="" id="right">더보기 〉</a></th>
+ 		<th width="300" id="name">판매자 등록문의</th>
+ 		<th width="50" id="right"><a href="manager_5sign.do" id="right">더보기 〉</a></th>
  	 </tr>
  	 </thead>
  	 <tbody>
         <!-- 글목록 내용-->
 		<c:choose>
-			<c:when test="${empty boardList}">
+			<c:when test="${empty sellerList}">
 				<tr>
-					<td colspan="3"> 등록된 판매자 등록문의가 없습니다. </td>
+					<td colspan="2"> 등록된 판매자 등록문의가 없습니다. </td>
 				</tr>
 			</c:when>
 			<c:otherwise>
 			
-				<c:forEach var="rowNum" begin="${startNum}" end="${endNum}">
+				<c:forEach var="rowNum" begin="1" end="5">
 					<tr>
-						<td>${rowNum}</td>
-						<td id="td_title">
-							
-							<a href="view.jsp?no=${boardList[rowNum-1].board_idx}">${boardList[rowNum-1].title}</a>
-						</td>
-						<td>${boardList[rowNum-1].member_name}</td>
-						<td>${boardList[rowNum-1].read_count}</td>
-						<td>${boardList[rowNum-1].post_date}</td>
+						<td>${sellerList[rowNum-1].one_inq_content}</td>
+						<td>${sellerList[rowNum-1].member_nickname}</td>
 					</tr>
 				</c:forEach>		
 			</c:otherwise>
@@ -259,30 +235,24 @@
 	<table class="tbl_list">
 	<thead>
  	 <tr>
-  			<th scope="cols">게시글 관리</th>
-    		<th scope="cols" id="right"><a href="" id="right">더보기 〉</a></th>
+ 		<th width="300" id="name">상품 문의</th>
+ 		<th width="50" id="right"><a href="manager_41d1.do" id="right">더보기 〉</a></th>
  	 </tr>
  	 </thead>
  	 <tbody>
         <!-- 글목록 내용-->
 		<c:choose>
-			<c:when test="${empty boardList}">
+			<c:when test="${empty productinqList}">
 				<tr>
-					<td colspan="3"> 등록된 게시글이 없습니다. </td>
+					<td colspan="2"> 등록된 상품문의가 없습니다. </td>
 				</tr>
 			</c:when>
 			<c:otherwise>
 			
-				<c:forEach var="rowNum" begin="${startNum}" end="${endNum}">
+				<c:forEach var="rowNum" begin="1" end="5">
 					<tr>
-						<td>${rowNum}</td>
-						<td id="td_title">
-							
-							<a href="view.jsp?no=${boardList[rowNum-1].board_idx}">${boardList[rowNum-1].title}</a>
-						</td>
-						<td>${boardList[rowNum-1].member_name}</td>
-						<td>${boardList[rowNum-1].read_count}</td>
-						<td>${boardList[rowNum-1].post_date}</td>
+						<td>${productinqList[rowNum-1].product_inq_content}</td>
+						<td>${productinqList[rowNum-1].member_nickname}</td>
 					</tr>
 				</c:forEach>		
 			</c:otherwise>

@@ -44,6 +44,7 @@
 		border-width:1px;
 		outline-color: #7d99a4;
 		padding-left:10px;
+		border-style:solid;
 	}
 	input[type="button"]{
 		background-color:rgb(59, 58, 58);
@@ -186,8 +187,8 @@ function checkInput(){
 </header>
     <div id="container">
     <div id="home">
-    	<a href="" id="a"><img src="../resources/img/home.png" style="width: 21px; height: 21px;"></a>
-    	<a href="" id="a">〉 로그인</a>
+    	<a href="../main/home.do" id="a"><img src="../resources/img/home.png" style="width: 21px; height: 21px;"></a>
+    	<a href="login.do" id="a">〉 로그인</a>
     	<a href="" id="a">〉 비밀번호 찾기</a>
     </div>
     <h1>비밀번호 찾기</h1>
@@ -208,7 +209,7 @@ function checkInput(){
     	</div>
     	<div id="find_id">
     		<img src="../resources/img/find.png" style="width: 130px; height: 130px;">
-    		<p><input type="button" id="id_btn" name="id_btn" value="아이디 찾기" onclick="" style="width:200px;"></p>
+    		<p><input type="button" id="id_btn" name="id_btn" value="아이디 찾기" onclick="location.href='find_id.do';" style="width:200px;"></p>
     	</div>
 	</div>
 
