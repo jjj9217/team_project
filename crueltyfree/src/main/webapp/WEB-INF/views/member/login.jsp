@@ -96,7 +96,7 @@
 	}
 	#member_id,#member_pw{
 		border-style:solid;
-		border-width:2px;
+		border-width:1px;
 	}
 
 

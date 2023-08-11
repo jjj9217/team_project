@@ -7,6 +7,29 @@
 <meta charset="UTF-8">
 <title>관리자 페이지 | CrueltyFree</title>
 <style>
+	 .modalContainer {
+	 	width: 100%;
+	 	height: 100%;
+	 	position: fixed;
+	 	top: 0;
+	 	left: 0;
+	 	display: flex;
+	 	justify-content: center;
+	 	align-items: center;
+	 	background: rgba(0, 0, 0, 0.5);
+	 }
+		
+	 .modalContent {
+		position: absolute;
+	 	background-color: #ffffff;
+	 	border-radius: 5px;
+	 	width: 390px;
+	 	height: 600px;
+	 	padding: 15px;
+	 }
+	 	 .hidden {
+	 	display: none;
+	 }
 	* {margin:0; padding:0;}
 	a{text-decoration: none;}
     input[type="button"], input[type="submit"], input[type="checkbox"], select, label{cursor: pointer;}
@@ -30,7 +53,7 @@
 	}
 	#full{
 		width: 1000px;
-        height: 1500px;
+        height: 1300px;
         margin: 0 auto;
         font: bold 25px Arial, Sans-serif;
       	margin-top:10px;
@@ -49,7 +72,7 @@
 	}
 	#content{
 		width:700px;
-		height:1200px;
+		height:1100px;
 		float:left;
 		margin-left:10px;
 	}
@@ -187,6 +210,7 @@
 		border-style:solid;
 		border-width:2px;
 		border-radius:5px;
+		padding-left:5px;
 	}
 	#main{
 		margin-top:30px;
@@ -201,19 +225,99 @@
 	#search{
 		float:right;
 	}	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	.regi_line{
+		margin-top:30px;
+	}
+	.regi_left{
+		font-size:12px;
+		margin-top:7px;
+	}
+	.div_write{
+		margin-top:30px;
+		text-align:center;
+	}
+	.regi_box{
+		padding-left:10px;
+		border-color:#7d99a4; 
+		border-style:solid; 
+		width:375px; 
+		height:35px; 
+		border-radius:5px;
+	}
+	.text_regi_box{
+		padding-left:10px;
+		border-color:#7d99a4; 
+		border-style:solid; 
+		width:375px; 
+		height:35px; 
+		border-radius:5px;
+		border-width:2px;
+		height:100px;
+		padding-top:5px;
+	}
+	.regi_box2{
+		border-color:#7d99a4; 
+		border-width:2px; 
+		border-style:solid; 
+		width:387px; 
+		height:38px; 
+		border-radius:5px;
+	}
+	#num{
+		color:gray; 
+		font-size:17px;
+	}
+	#hr{
+		margin-top:10px; 
+		height:5px; 
+		background-color:#7d99a4;
+		border:0;
+	}
+	#edit_btn{
+		background-color:#7d99a4; 
+		color:white; 
+		border:0; 
+		border-radius:3px; 
+		width:170px; 
+		height:38px; 
+		font: bold 13px Arial, Sans-serif;
+	}
+	#cancel_btn{
+		background-color:rgb(221, 219, 214); 
+		border:0; 
+		border-radius:3px; 
+		width:170px; 
+		height:38px;	
+		font: bold 13px Arial, Sans-serif; 
+		cursor:pointer;
+	}
+
 </style>
+
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(function(){
+    $(".delete").click(function(){
+    	let index = $(".delete").index(this);    	
+    	let confirmAns = confirm("정말 삭제하시겠습니까?");
+		if(confirmAns){
+			$(".managerfrmClass").eq(index).submit();
+	    	return true;
+		}
+    });
+    $(".edit").click(function(){
+    	let index = $(".edit").index(this);
+    	$(".modalContainer").eq(index).removeClass("hidden");
+    });
+        $(".modalCloseButton").click(function(){
+        	let index = $(".modalCloseButton").index(this);
+        	$(".modalContainer").eq(index).addClass("hidden");
+    });
+})
+
+
+</script>
+
 </head>
 <body>
 <header>
@@ -232,7 +336,6 @@
 		<li id="li"><a href="manager_3member.do" id="" >회원 정보 관리</a></li>
 		<li id="li"><a href="manager_41d1.do" id=""  >1:1 문의</a></li>
 		<li id="li"><a href="manager_5sign.do" id="" >판매자 등록 문의</a></li>
-		<li id="li"><a href="manager_6post.do" id="" >게시글 관리</a></li>
 		<li id="li"><a href="manager_7goods.do" id=""  style="color:white; background-color:#7d99a4;" >상품 문의</a></li>
 		<li id="li"><a href="manager_8review.do" id="" >리뷰</a></li>
 	</ul>
@@ -250,8 +353,8 @@
            		<div id ="search" >
            			<form name="searching">
                     <select name="searchField" id="searchField">
-                        <option value="title">상품문의번호</option>
-                        <option value="content">닉네임</option>
+                        <option value="title">닉네임</option>
+                        <option value="content">문의등록일</option>
                     </select>
                     <input type="text" name="searchWord" id="searchWord">
                     <input type="submit" id="search_btn" value="검색">
@@ -267,6 +370,7 @@
             <th width="">회원닉네임</th>
             <th width="">상품번호</th>
             <th width="">상품문의내용</th>
+            <th width="">문의등록일</th>
             <th width="">기능</th>
         </tr>
 
@@ -289,9 +393,10 @@
 						<td>${proinqSelectList[rowNum-1].member_nickname}</td>
 						<td>${proinqSelectList[rowNum-1].product_idx}</td>
 						<td>${proinqSelectList[rowNum-1].product_inq_content}</td>
+						<td>${proinqSelectList[rowNum-1].product_inq_regDate}</td>
 						<td>
-						<input type="button" id="edit" value="답변">
-						<input type="button" id="delete" value="삭제">
+						<input type="button" id="edit" class="edit" value="상세">
+						<input type="button" id="delete" class="delete" value="삭제">
 						</td>
 					</tr>
 				</c:forEach>
@@ -305,7 +410,74 @@
 					<%@ include file="../manager/paging_goods.jsp" %>			
 				</div>				
 		</div>
-	 
+	<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
+    <form action="proinqdelete_process.do" class="managerfrmClass" name="managerfrm" method="post">
+	<input type="hidden" name="product_inq_idx" value="${proinqSelectList[rowNum-1].product_inq_idx}">
+	<input type="hidden" name="member_nickname" value="${proinqSelectList[rowNum-1].member_nickname}">
+	<input type="hidden" name="product_idx" value="${proinqSelectList[rowNum-1].product_idx}">
+	<input type="hidden" name="product_inq_content" value="${proinqSelectList[rowNum-1].product_inq_content}">
+	<input type="hidden" name="product_inq_regDate" value="${proinqSelectList[rowNum-1].product_inq_regDate}">
+	</form>
+	
+	
+	<div class="modalContainer hidden">
+	<div class="modalContent">
+	
+	<div class="modalCloseButton"><img src="../resources/img/cancel.png" style="width: 25px; height: 25px; cursor:pointer; float:right;"></div>
+	<span>상품문의</span> <span id="num">(상품문의번호:${proinqSelectList[rowNum-1].product_inq_idx})</span> 
+	<hr id="hr">	
+
+	<form name="form_update" method="post" action="edit_proinq_process.do" enctype="multipart/form-data" 
+          onsubmit="return validateForm()">
+          
+	<input type="hidden" name="product_inq_idx" value="${proinqSelectList[rowNum-1].product_inq_idx}" />
+	<div class="regi_line">
+		<article class="regi_left">
+			&nbsp;&nbsp;<a>닉네임</a>
+		</article>
+		<article class="regi_right">
+			<input type="text" name="member_nickname" class="regi_box" value="${proinqSelectList[rowNum-1].member_nickname}" disabled/>
+		</article>
+	</div>
+	
+	<div class="regi_line2">
+		<article class="regi_left" style="vertical-align: top;">
+			&nbsp;&nbsp;<a>문의내용</a>
+		</article>
+		<article class="regi_right">
+			<textarea name="product_inq_content" class="text_regi_box" disabled>${proinqSelectList[rowNum-1].product_inq_content}</textarea>
+		</article>
+	</div>
+	
+	<div class="regi_line3">
+		<article class="regi_left" style="vertical-align: top;">
+			&nbsp;&nbsp;<a>답변</a>
+		</article>
+		<article class="regi_right">
+			<textarea name="product_inq_answer" class="text_regi_box" disabled>${proinqSelectList[rowNum-1].product_inq_answer}</textarea>
+		</article>
+	</div>
+
+	
+	<!-- 등록 버튼 -->
+	<div class="div_write">
+		<input type="submit" id="edit_btn" value="수정하기">
+		<input type="reset" id="cancel_btn" value="취소하기" onclick="location.href='manager_7goods.do';">
+	</div>
+</form>
+		
+
+    </div>
+    </div>	
+	
+	
+
+	
+	
+	
+	
+	
+	</c:forEach>
 	 
 
 	<div id="sub">

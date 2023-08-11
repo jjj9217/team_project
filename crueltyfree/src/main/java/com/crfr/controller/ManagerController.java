@@ -6,13 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.crfr.common.PageNav;
 import com.crfr.service.manager.ManagerService;
@@ -28,8 +31,9 @@ import com.crfr.vo.ReviewVo;
 @RequestMapping("/manager")
 public class ManagerController {
 	
-	ManagerService oneList, proList, memList, proinqList, rvList, mPage, rvCount, proCount, memCount, oneCount, proinqCount,
-	proSList, memSList, oneSList, proinqSList, rvSList;
+	ManagerService oneList, proList, memList, selList, proinqList, rvList, mPage, rvCount, proCount, memCount, oneCount, selCount, proinqCount,
+	proSList, memSList, oneSList, selSList, proinqSList, rvSList, proDelete, memDelete, proinqDelete, oneDelete, selDelete, rvDelete, pUpdateProduct, pfineProductPost
+	,memUpdate, oneUpdate, proinqUpdate, rvUpdate;
 	PageNav pageNav;
 	
 	@Autowired
@@ -43,6 +47,10 @@ public class ManagerController {
 	@Autowired
 	public void setMemList(@Qualifier("memList") ManagerService memList) {
 		this.memList = memList;
+	}
+	@Autowired
+	public void setSelList(@Qualifier("selList") ManagerService selList) {
+		this.selList = selList;
 	}
 	@Autowired
 	public void setProinqList(@Qualifier("proinqList") ManagerService proinqList) {
@@ -74,6 +82,10 @@ public class ManagerController {
 		this.oneCount = oneCount;
 	}
 	@Autowired
+	public void setSelCount(@Qualifier("selCount") ManagerService selCount) {
+		this.selCount = selCount;
+	}
+	@Autowired
 	public void setProinqCount(@Qualifier("proinqCount") ManagerService proinqCount) {
 		this.proinqCount = proinqCount;
 	}
@@ -90,6 +102,10 @@ public class ManagerController {
 		this.oneSList = oneSList;
 	}
 	@Autowired
+	public void setSelSList(@Qualifier("selSList") ManagerService selSList) {
+		this.selSList = selSList;
+	}
+	@Autowired
 	public void setProinqSList(@Qualifier("proinqSList") ManagerService proinqSList) {
 		this.proinqSList = proinqSList;
 	}
@@ -97,6 +113,55 @@ public class ManagerController {
 	public void setRvSList(@Qualifier("rvSList") ManagerService rvSList) {
 		this.rvSList = rvSList;
 	}
+	@Autowired
+	public void setProDelete(@Qualifier("proDelete") ManagerService proDelete) {
+		this.proDelete = proDelete;
+	}
+	@Autowired
+	public void setMemDelete(@Qualifier("memDelete") ManagerService memDelete) {
+		this.memDelete = memDelete;
+	}
+	@Autowired
+	public void setOneDelete(@Qualifier("oneDelete") ManagerService oneDelete) {
+		this.oneDelete = oneDelete;
+	}
+	@Autowired
+	public void setSelDelete(@Qualifier("selDelete") ManagerService selDelete) {
+		this.selDelete = selDelete;
+	}
+	@Autowired
+	public void setProinqDelete(@Qualifier("proinqDelete") ManagerService proinqDelete) {
+		this.proinqDelete = proinqDelete;
+	}
+	@Autowired
+	public void setRvDelete(@Qualifier("rvDelete") ManagerService rvDelete) {
+		this.rvDelete = rvDelete;
+	}
+	@Autowired
+	public void setPUpdateProduct(@Qualifier("pUpdateProduct") ManagerService pUpdateProduct) {
+		this.pUpdateProduct = pUpdateProduct;
+	}
+	@Autowired
+	public void setPfineProductPost(@Qualifier("pfineProductPost") ManagerService pfineProductPost) {
+		this.pfineProductPost = pfineProductPost;
+	}
+	@Autowired
+	public void setMemUpdate(@Qualifier("memUpdate") ManagerService memUpdate) {
+		this.memUpdate = memUpdate;
+	}
+	@Autowired
+	public void setOneUpdate(@Qualifier("oneUpdate") ManagerService oneUpdate) {
+		this.oneUpdate = oneUpdate;
+	}
+	@Autowired
+	public void setProinqUpdate(@Qualifier("proinqUpdate") ManagerService proinqUpdate) {
+		this.proinqUpdate = proinqUpdate;
+	}
+	@Autowired
+	public void setRvUpdate(@Qualifier("rvUpdate") ManagerService rvUpdate) {
+		this.rvUpdate = rvUpdate;
+	}
+
 	
 	@GetMapping("/manager_1main.do")
 	public String manager_1main(Model model) {		
@@ -105,12 +170,24 @@ public class ManagerController {
 		if(oneinqList != null) {
 			model.addAttribute("oneinqList", oneinqList);
 		}
+		
+		List<OneInqVo> sellerList = selList.sellersignList();
+		
+		if(sellerList != null) {
+			model.addAttribute("sellerList", sellerList);
+		}
+		
+		List<ProductInqVo> productinqList = proinqList.productinqList();
+		
+		if(productinqList != null) {
+			model.addAttribute("productinqList", productinqList);
+		}
 		return "manager/manager_1main";
 	}
 	
 	@GetMapping("/manager_2product.do")
-	public String manager_2product(HttpServletRequest request,Model model,String searchField, String searchWord, String pageNum, String pageBlock) {
-
+	public String manager_2product(HttpServletRequest request, Model model, String searchField, String searchWord, String pageNum, String pageBlock) {
+						
 		Map<String, Object> map = new HashMap<String, Object>();
 		searchField = request.getParameter("searchField");
 		searchWord = request.getParameter("searchWord");
@@ -136,9 +213,127 @@ public class ManagerController {
 		pageNav.setTotalRows(totRows);
 		pageNav=mPage.setPageNav(pageNav, pageNum, pageBlock);
 		model.addAttribute("pageNav",pageNav);
+
 		
 		return "manager/manager_2product";
 	}
+	@GetMapping("/manager_2product_edit.do")
+	public String manager_2product_edit(@RequestParam("no")String product_idx, Model model) {
+		//게시물 가져오기 - 
+		ProductVo vo = pfineProductPost.findProductPost(product_idx);
+		model.addAttribute("ProductVo", vo);
+		
+		return "manager/manager_2product_edit";
+	}
+	// 글 수정 요청 처리
+	@PostMapping("/edit_pro_process.do")
+	public String edit_process(
+			String product_name1, String product_price1,
+			String product_capa1, String delivery_company1, 
+			String product_idx1,
+			HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+
+		String viewPage = "manager/manager_2product_edit"; //글수정 실패시 보여지는 페이지
+		//첨부파일과 함께 글내용 수정을 BoardFileUpdateService클래스 이용
+		int result1 = pUpdateProduct.productUpdate(product_name1, 
+				product_price1, product_capa1, delivery_company1, product_idx1);
+
+		if(result1 == 1) { //글 수정 성공시 보여지는 페이지
+
+			viewPage = "redirect:/manager/manager_2product.do";	
+		}
+			
+		return viewPage;
+	}
+	@PostMapping("/edit_mem_process.do")
+	public String edit4_process(
+			String member_id, String member_name,
+			String member_gender, String member_grade, 
+			String member_idx,
+			HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		
+		String viewPage = "manager/manager_3member"; //글수정 실패시 보여지는 페이지
+		//첨부파일과 함께 글내용 수정을 BoardFileUpdateService클래스 이용
+		int result1 = memUpdate.memberUpdate(member_id, 
+				member_name, member_gender, member_grade, member_idx);
+
+		if(result1 == 1) { //글 수정 성공시 보여지는 페이지
+
+			viewPage = "redirect:/manager/manager_3member.do";	
+		}
+			
+		return viewPage;
+	}
+	@PostMapping("/edit_one_process.do")
+	public String edit2_process(
+			String one_inq_answer, String one_inq_idx,
+			HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		
+		String viewPage = "manager/manager_41d1"; //글수정 실패시 보여지는 페이지
+		//첨부파일과 함께 글내용 수정을 BoardFileUpdateService클래스 이용
+		int result1 = oneUpdate.oneinqUpdate(one_inq_answer, one_inq_idx);
+
+		if(result1 == 1) { //글 수정 성공시 보여지는 페이지
+
+			viewPage = "redirect:/manager/manager_41d1.do";	
+		}
+			
+		return viewPage;
+	}
+	@PostMapping("/edit_sel_process.do")
+	public String edit5_process(
+			String one_inq_answer, String one_inq_idx,
+			HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		
+		String viewPage = "manager/manager_5sign"; //글수정 실패시 보여지는 페이지
+		//첨부파일과 함께 글내용 수정을 BoardFileUpdateService클래스 이용
+		int result1 = oneUpdate.oneinqUpdate(one_inq_answer, one_inq_idx);
+
+		if(result1 == 1) { //글 수정 성공시 보여지는 페이지
+
+			viewPage = "redirect:/manager/manager_5sign.do";	
+		}
+			
+		return viewPage;
+	}
+	@PostMapping("/edit_proinq_process.do")
+	public String edit_process(String product_inq_answer, String product_inq_idx,
+			HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		
+		String viewPage = "manager/manager_7goods"; //글수정 실패시 보여지는 페이지
+		//첨부파일과 함께 글내용 수정을 BoardFileUpdateService클래스 이용
+		int result1 = proinqUpdate.productinqUpdate(product_inq_answer, product_inq_idx);
+
+		if(result1 == 1) { //글 수정 성공시 보여지는 페이지
+
+			viewPage = "redirect:/manager/manager_7goods.do";	
+		}
+			
+		return viewPage;
+	}
+	@PostMapping("/edit_review_process.do")
+	public String edit3_process(String review_content, String review_idx, 
+			HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		
+		String viewPage = "manager/manager_8review"; //글수정 실패시 보여지는 페이지
+		//첨부파일과 함께 글내용 수정을 BoardFileUpdateService클래스 이용
+		int result1 = rvUpdate.reviewUpdate(review_content, review_idx);
+
+		if(result1 == 1) { //글 수정 성공시 보여지는 페이지
+
+			viewPage = "redirect:/manager/manager_8review.do";	
+		}
+			
+		return viewPage;
+	}
+	
+	
 	@GetMapping("/manager_3member.do")
 	public String manager_3member(HttpServletRequest request,Model model,String searchField, String searchWord, String pageNum, String pageBlock) {
 		
@@ -201,7 +396,34 @@ public class ManagerController {
 		return "manager/manager_41d1";
 	}
 	@GetMapping("/manager_5sign.do")
-	public String manager_5sign() {
+	public String manager_5sign(HttpServletRequest request,Model model,String searchField, String searchWord, String pageNum, String pageBlock) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		searchField = request.getParameter("searchField");
+		searchWord = request.getParameter("searchWord");
+		
+		
+		if(searchWord != null){
+		    map.put("searchField", searchField);
+		    map.put("searchWord", searchWord);
+		}
+		
+		model.addAttribute("searchField", searchField);
+		model.addAttribute("searchWord", searchWord);
+		
+		List<OneInqVo> selSelectList = selSList.selSelectList(searchField,searchWord);//게시물 목록
+		model.addAttribute("selSelectList",selSelectList);
+		
+		List<OneInqVo> sellerList = selList.sellersignList();
+		
+		if(sellerList != null) {
+			model.addAttribute("sellerList", sellerList);
+		}
+		int totRows = selCount.selselectCount(searchField,searchWord);
+		pageNav.setTotalRows(totRows);
+		pageNav=mPage.setPageNav(pageNav, pageNum, pageBlock);
+		model.addAttribute("pageNav",pageNav);
+		
 		return "manager/manager_5sign";
 	}
 	@GetMapping("/manager_6post.do")
@@ -276,6 +498,79 @@ public class ManagerController {
 		return "manager/manager_8review";
 	}
 	
+	@PostMapping("/delete_process.do")
+	public String delete(String product_idx) {
+		
+		String viewPage = "manager/manager_2product.do";//삭제 실패시 뷰페이지
+		int result = 0;
+		result = proDelete.delete(product_idx);
+		if(result == 1){//회원탈퇴 성공시
+			viewPage = "redirect:/manager/manager_2product.do";//삭제 성공시 메인페이지로
+		}
+		
+		return viewPage;
+	}
+	@PostMapping("/memdelete_process.do")
+	public String memdelete(String member_idx) {
+		
+		String viewPage = "manager/manager_3member.do";//삭제 실패시 뷰페이지
+		int result = 0;
+		result = memDelete.memdelete(member_idx);
+		if(result == 1){//회원탈퇴 성공시
+			viewPage = "redirect:/manager/manager_3member.do";//삭제 성공시 메인페이지로
+		}
+		
+		return viewPage;
+	}
+	@PostMapping("/onedelete_process.do")
+	public String onedelete(String one_inq_idx) {
+		
+		String viewPage = "manager/manager_41d1.do";//삭제 실패시 뷰페이지
+		int result = 0;
+		result = oneDelete.onedelete(one_inq_idx);
+		if(result == 1){//회원탈퇴 성공시
+			viewPage = "redirect:/manager/manager_41d1.do";//삭제 성공시 메인페이지로
+		}
+		
+		return viewPage;
+	}
+	@PostMapping("/seldelete_process.do")
+	public String seldelete(String one_inq_idx) {
+		
+		String viewPage = "manager/manager_5sign.do";//삭제 실패시 뷰페이지
+		int result = 0;
+		result = selDelete.seldelete(one_inq_idx);
+		if(result == 1){//회원탈퇴 성공시
+			viewPage = "redirect:/manager/manager_5sign.do";//삭제 성공시 메인페이지로
+		}
+		
+		return viewPage;
+	}
+	@PostMapping("/proinqdelete_process.do")
+	public String proinqdelete(String product_inq_idx) {
+		
+		String viewPage = "manager/manager_7goods.do";//삭제 실패시 뷰페이지
+		int result = 0;
+		result = proinqDelete.proinqdelete(product_inq_idx);
+		if(result == 1){//회원탈퇴 성공시
+			viewPage = "redirect:/manager/manager_7goods.do";//삭제 성공시 메인페이지로
+		}
+		
+		return viewPage;
+	}
+	@PostMapping("/reviewdelete_process.do")
+	public String reviewdelete(String review_idx) {
+		
+		String viewPage = "manager/manager_8review.do";//삭제 실패시 뷰페이지
+		int result = 0;
+		result = rvDelete.reviewdelete(review_idx);
+		if(result == 1){//회원탈퇴 성공시
+			viewPage = "redirect:/manager/manager_8review.do";//삭제 성공시 메인페이지로
+		}
+		
+		return viewPage;
+	}
+
 
 	
 }

@@ -18,7 +18,7 @@ public class MemberVo {
 	private int member_postNum;
 	private String member_address;
 	private String member_address2;
-	private int grade;
+	private int member_grade;
 	private Date join_date;
 	private Date update_date;
 	private Date cancel_date;

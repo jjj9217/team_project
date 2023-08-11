@@ -8,6 +8,29 @@
 <meta charset="UTF-8">
 <title>관리자 페이지 | CrueltyFree</title>
 <style>
+	 .modalContainer {
+	 	width: 100%;
+	 	height: 100%;
+	 	position: fixed;
+	 	top: 0;
+	 	left: 0;
+	 	display: flex;
+	 	justify-content: center;
+	 	align-items: center;
+	 	background: rgba(0, 0, 0, 0.5);
+	 }
+		
+	 .modalContent {
+		position: absolute;
+	 	background-color: #ffffff;
+	 	border-radius: 5px;
+	 	width: 390px;
+	 	height: 600px;
+	 	padding: 15px;
+	 }
+	 	 .hidden {
+	 	display: none;
+	 }
 	* {margin:0; padding:0;}
 	a{text-decoration: none;}
     input[type="button"], input[type="submit"], input[type="checkbox"], select, label{cursor: pointer;}
@@ -31,7 +54,7 @@
 	}
 	#full{
 		width: 1000px;
-        height: 1500px;
+        height: 1300px;
         margin: 0 auto;
         font: bold 25px Arial, Sans-serif;
       	margin-top:10px;
@@ -50,7 +73,7 @@
 	}
 	#content{
 		width:700px;
-		height:1200px;
+		height:1100px;
 		float:left;
 		margin-left:10px;
 	}
@@ -92,9 +115,7 @@
 		line-height: 20px;
 		background-color: #eef3f5;	
 	}
-	
- 	
- 	
+
  	.list{
   		list-style-type: none;
   		padding: 0px;
@@ -132,7 +153,6 @@
   		background: #7d99a4;
   		color: #fff;
   		text-align: left;
- 
 	}
 	td {
   		border-right: 0px solid #c6c9cc;
@@ -187,6 +207,7 @@
 		border-style:solid;
 		border-width:2px;
 		border-radius:5px;
+		padding-left:5px;
 	}
 	#main{
 		margin-top:30px;
@@ -201,20 +222,86 @@
 	#search{
 		float:right;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	.regi_line{
+		margin-top:30px;
+	}
+	.regi_left{
+		font-size:12px;
+		margin-top:7px;
+	}
+	.div_write{
+		margin-top:30px;
+		text-align:center;
+	}
+	.regi_box{
+		padding-left:10px;
+		border-color:#7d99a4; 
+		border-style:solid; 
+		width:375px; 
+		height:35px; 
+		border-radius:5px;
+	}
+	.regi_box2{
+		border-color:#7d99a4; 
+		border-width:2px; 
+		border-style:solid; 
+		width:387px; 
+		height:38px; 
+		border-radius:5px;
+	}
+	#num{
+		color:gray; 
+		font-size:17px;
+	}
+	#hr{
+		margin-top:10px; 
+		height:5px; 
+		background-color:#7d99a4;
+		border:0;
+	}
+	#edit_btn{
+		background-color:#7d99a4; 
+		color:white; 
+		border:0; 
+		border-radius:3px; 
+		width:170px; 
+		height:38px; 
+		font: bold 13px Arial, Sans-serif;
+	}
+	#cancel_btn{
+		background-color:rgb(221, 219, 214); 
+		border:0; 
+		border-radius:3px; 
+		width:170px; 
+		height:38px;	
+		font: bold 13px Arial, Sans-serif; 
+		cursor:pointer;
+	}
 </style>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(function(){
+    $(".delete").click(function(){
+    	let index = $(".delete").index(this);    	
+    	let confirmAns = confirm("정말 삭제하시겠습니까?");
+		if(confirmAns){
+			$(".managerfrmClass").eq(index).submit();
+	    	return true;
+		}
+    });
+    $(".edit").click(function(){
+    	let index = $(".edit").index(this);
+    	$(".modalContainer").eq(index).removeClass("hidden");
+    });
+        $(".modalCloseButton").click(function(){
+        	let index = $(".modalCloseButton").index(this);
+        	$(".modalContainer").eq(index).addClass("hidden");
+    });
+})
+
+
+</script>
+
 </head>
 <body>
 <header>
@@ -233,7 +320,6 @@
 		<li id="li"><a href="manager_3member.do" id="" style="color:white; background-color:#7d99a4;" >회원 정보 관리</a></li>
 		<li id="li"><a href="manager_41d1.do" id="" >1:1 문의</a></li>
 		<li id="li"><a href="manager_5sign.do" id="" >판매자 등록 문의</a></li>
-		<li id="li"><a href="manager_6post.do" id="" >게시글 관리</a></li>
 		<li id="li"><a href="manager_7goods.do" id="" >상품 문의</a></li>
 		<li id="li"><a href="manager_8review.do" id="" >리뷰</a></li>
 	</ul>
@@ -252,8 +338,8 @@
            		<div id ="search" >
            			<form name="searching">
                     <select name="searchField" id="searchField">
-                        <option value="title">회원번호</option>
-                        <option value="content">회원아이디</option>
+                        <option value="title">아이디</option>
+                        <option value="content">이름</option>
                     </select>
                     <input type="text" name="searchWord" id="searchWord">
                     <input type="submit" id="search_btn" value="검색">
@@ -265,50 +351,138 @@
     <!-- 글목록 테이블 -->
     <table id="tbl_list" style="margin-top:80px;">
         <tr>
-            <th width="">회원번호</th>
+            <th width="50">번호</th>
             <th width="">아이디</th>
+            <th width="40">이름</th>
             <th width="">휴대폰번호</th>
-            <th width="">성별</th>
-            <th width="">이메일</th>
-            <th width="">기능</th>
+            <th width="30">성별</th>
+            <th width="50">등급</th>
+            <th width="90">기능</th>
         </tr>
-
         <!-- 글목록 내용-->
 		<c:choose>
 			<c:when test="${empty memberList}">
 				<tr>
-					<td colspan="6"> 데이터가 없습니다. </td>
+					<td colspan="7"> 데이터가 없습니다. </td>
 				</tr>
 			</c:when>			
 			<c:when test="${empty memSelectList}">
 				<tr>
-					<td colspan="6"> 데이터가 없습니다. </td>
+					<td colspan="7"> 데이터가 없습니다. </td>
 				</tr>
 			</c:when>
 			<c:otherwise>
-			
+				<form id="" name="" method="post">			
 				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
 					<tr>
 						<td>${memSelectList[rowNum-1].member_idx}</td>
 						<td>${memSelectList[rowNum-1].member_id}</td>
+						<td>${memSelectList[rowNum-1].member_name}</td>
 						<td>${memSelectList[rowNum-1].member_handphone}</td>
 						<td>${memSelectList[rowNum-1].member_gender}</td>
-						<td>${memSelectList[rowNum-1].member_email}</td>
-						<td>
-						<input type="button" id="edit" value="수정">
-						<input type="button" id="delete" value="탈퇴">
+						<td>${memSelectList[rowNum-1].member_grade}</td>
+						<td>	
+						<input type="button" id="edit" class="edit" value="상세">
+						<input type="button" id="delete" class="delete" value="탈퇴">
 						</td>
 					</tr>
 				</c:forEach>
+				</form>
 			</c:otherwise>
 		</c:choose>
     </table>
+    
 		<div id="paging" class="pull-left">
 				<div id="td_paging">
 					<%@ include file="../manager/paging_member.jsp" %>					
 				</div>				
 		</div>
+	<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
+    <form action="memdelete_process.do" class="managerfrmClass" name="managerfrm" method="post">
+	<input type="hidden" name="member_idx" value="${memSelectList[rowNum-1].member_idx}">
+	<input type="hidden" name="member_id" value="${memSelectList[rowNum-1].member_id}">
+	<input type="hidden" name="member_name" value="${memSelectList[rowNum-1].member_name}">
+	<input type="hidden" name="member_handphone" value="${memSelectList[rowNum-1].member_handphone}">
+	<input type="hidden" name="member_gender" value="${memSelectList[rowNum-1].member_gender}">
+	<input type="hidden" name="grade" value="${memSelectList[rowNum-1].member_grade}">
+	</form>
+	
+	
+	
+	
+	<div class="modalContainer hidden">
+	<div class="modalContent">
+		
+		<div class="modalCloseButton"><img src="../resources/img/cancel.png" style="width: 25px; height: 25px; cursor:pointer; float:right;"></div>
+		<span>회원정보</span> <span id="num">(회원번호:${memSelectList[rowNum-1].member_idx})</span> 
+		<hr id="hr">
+	<form name="form_update" method="post" action="edit_mem_process.do" enctype="multipart/form-data" 
+          onsubmit="return validateForm()">
+          
+	<input type="hidden" name="member_idx" value="${memSelectList[rowNum-1].member_idx}" />
+	<div class="regi_line">
+		<article class="regi_left">
+			<a>아이디</a>
+		</article>
+		<article class="regi_right">
+			<input type="text" name="member_id" class="regi_box" value="${memSelectList[rowNum-1].member_id}" disabled/>
+		</article>
+	</div>
+	
+	<div class="regi_line2">
+		<article class="regi_left" style="vertical-align: top;">
+			<a>이름</a>
+		</article>
+		<article class="regi_right">
+			<input type="text" name="member_name" class="regi_box" value="${memSelectList[rowNum-1].member_name}" />
+		</article>
+	</div>
+	
+	<div class="regi_line3">
+		<article class="regi_left" style="vertical-align: top;">
+			<a>성별</a>
+		</article>
+		<article class="regi_right">
+			<input type="text" name="member_gender" class="regi_box" value="${memSelectList[rowNum-1].member_gender}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+			
+		</article>
+	</div>
+	
+	<div class="regi_line4">
+		<article class="regi_left" style="vertical-align: top;">
+			<a>회원등급</a>
+		</article>
+		<article class="regi_right">
+			<select class="regi_box2" name="member_grade" >
+				<option value="0">회원</option>
+				<option value="1">판매자</option>
+				<option value="2">관리자</option>
+			</select>
+		</article>
+	</div>
 
+	
+
+	
+	<!-- 등록 버튼 -->
+	<div class="div_write">
+		<input type="submit" id="edit_btn" value="수정하기">
+		<input type="reset" id="cancel_btn" value="취소하기" onclick="location.href='manager_3member.do';">
+	</div>
+</form>
+		
+
+    </div>
+    </div>
+    
+  		
+	
+	
+	
+	
+	
+	
+	</c:forEach>
 	
 	</div>
 </div>

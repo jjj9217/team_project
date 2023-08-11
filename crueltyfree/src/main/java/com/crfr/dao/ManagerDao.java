@@ -28,7 +28,9 @@ public class ManagerDao{
 	public List<OneInqVo> getList(){
 		return sqlSession.selectList(MAPPER+".getList");
 	}
-	
+	public List<OneInqVo> sellersignList(){
+		return sqlSession.selectList(MAPPER+".sellersignList");
+	}
 	public List<ProductVo> productList(){
 		return sqlSession.selectList(MAPPER+".productList");
 	}
@@ -54,6 +56,9 @@ public class ManagerDao{
 	public int oneselectCount(Map<String, Object> map) {
 		return sqlSession.selectOne(MAPPER+".oneselectCount",map);
 	}
+	public int selselectCount(Map<String, Object> map) {
+		return sqlSession.selectOne(MAPPER+".selselectCount",map);
+	}
 	public int proinqselectCount(Map<String, Object> map) {
 		return sqlSession.selectOne(MAPPER+".proinqselectCount",map);
 	}
@@ -67,10 +72,52 @@ public class ManagerDao{
 	public List<OneInqVo> oneSelectList(Map<String, Object> map) {		
 		return sqlSession.selectList(MAPPER+".oneSelectList",map);
 	}
+	public List<OneInqVo> selSelectList(Map<String, Object> map) {		
+		return sqlSession.selectList(MAPPER+".selSelectList",map);
+	}
 	public List<ProductInqVo> proinqSelectList(Map<String, Object> map) {		
 		return sqlSession.selectList(MAPPER+".proinqSelectList",map);
 	}
 	public List<ReviewVo> rvSelectList(Map<String, Object> map) {		
 		return sqlSession.selectList(MAPPER+".rvSelectList",map);
 	}
+	public int delete(String product_name) {
+		return sqlSession.update(MAPPER+".delete", product_name);
+	}
+	public int memdelete(String member_idx) {
+		return sqlSession.delete(MAPPER+".memdelete", member_idx);
+	}
+	public int onedelete(String one_inq_idx) {
+		return sqlSession.delete(MAPPER+".onedelete", one_inq_idx);
+	}
+	public int seldelete(String one_inq_idx) {
+		return sqlSession.delete(MAPPER+".onedelete", one_inq_idx);
+	}
+	public int proinqdelete(String product_inq_idx) {
+		return sqlSession.delete(MAPPER+".proinqdelete", product_inq_idx);
+	}
+	public int reviewdelete(String review_idx) {
+		return sqlSession.delete(MAPPER+".reviewdelete", review_idx);
+	}
+	//지정한 게시물의 내용을 수정하는 메소드
+	public int productUpdate(ProductVo vo) {
+		return sqlSession.update(MAPPER+".productUpdate", vo);
+	}
+	public int memberUpdate(MemberVo vo) {
+		return sqlSession.update(MAPPER+".memberUpdate", vo);
+	}
+	public int oneinqUpdate(OneInqVo vo) {
+		return sqlSession.update(MAPPER+".oneinqUpdate", vo);
+	}
+	public int productinqUpdate(ProductInqVo vo) {
+		return sqlSession.update(MAPPER+".productinqUpdate", vo);
+	}
+	public int reviewUpdate(ReviewVo vo) {
+		return sqlSession.update(MAPPER+".reviewUpdate", vo);
+	}
+	//지정한 게시물을 찾아 상품 정보를 반환하는 메소드
+	public ProductVo findProductPost(String product_idx) {
+		return sqlSession.selectOne(MAPPER+".findProductPost", product_idx);
+	}
+
 }
