@@ -7,7 +7,7 @@ import com.crfr.vo.ProductVo;
 
 import lombok.RequiredArgsConstructor;
 
-@Service("pfineProductPost")
+@Service("pfineProductPost1")
 @RequiredArgsConstructor
 public class ProductSelectPostService implements ManagerService {
 	private final ManagerDao dao;

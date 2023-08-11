@@ -7,7 +7,7 @@ import com.crfr.vo.ProductVo;
 
 import lombok.RequiredArgsConstructor;
 
-@Service("pUpdateProduct")
+@Service("aUpdateProduct")
 @RequiredArgsConstructor
 public class ProductUpdateService implements ManagerService {
 	private final ManagerDao dao;
