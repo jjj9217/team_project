@@ -27,6 +27,9 @@ public class MypageCountService implements MypageService {
 	public int selectdeliveryCount(int member_idx) {
 		return dao.selectdeliveryCount(member_idx);
 	}
-
+	
+	public int selectlikeListCount(int member_idx) {
+		return dao.selectlikeListCount(member_idx);
+	}
 	
 }

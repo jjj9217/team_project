@@ -58,15 +58,19 @@ public class SellerController {
 	public String regi_pro_process(@RequestParam("attachedFile") List<MultipartFile> attachedFile,
 			@RequestParam("member_nickname") String member_nickname,
 			@RequestParam("member_idx") String member_idx,
-			String category_code, String product_name, String product_price,
+			String category_code, String category_code_small, String product_name, String product_price,
 			String product_capa, String delivery_company, String product_info_amount,
 			String product_info_useMethod, String product_info_maker,
 			String product_info_handphone, HttpServletRequest request) {
 		
+		System.out.println("받은 카테고리코드:"+category_code);
+		System.out.println("받은 카테고리코드 소분류:"+category_code_small);
+		
+		
 		String viewPage = "seller/regi_pro"; //글등록 실패시 보여지는 페이지
 			
 		//작성 내용을 ProductInsertService 클래스를 이용하여 저장
-		int result1 = pInsertProduct.insertProduct (category_code, product_name, 
+		int result1 = pInsertProduct.insertProduct (category_code, category_code_small, product_name, 
 				product_price, product_capa, delivery_company, member_nickname, member_idx);
 
 		int productIdx = pfindProductIdx.findProductIdx(product_name, member_nickname);

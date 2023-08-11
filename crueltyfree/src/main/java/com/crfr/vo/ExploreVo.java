@@ -17,4 +17,5 @@ public class ExploreVo {
 	
 	//뷰목록개수
 	private int sort_view;
+
 }

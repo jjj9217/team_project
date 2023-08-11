@@ -7,6 +7,7 @@
 	<!-- 상품 추가 처리 구문 -->
 	<insert id="insertProduct" parameterType="ProductVo">
 		insert into Product (category_code,
+		                      category_code_small,
 								member_nickname,
 								product_name,
 								product_price,
@@ -15,6 +16,7 @@
 								member_idx
 								)
 			   			 values(#{category_code},
+			   			        #{category_code_small},
 			   			 	    #{member_nickname},
 			   			 	    #{product_name},
 			   			 	    #{product_price},

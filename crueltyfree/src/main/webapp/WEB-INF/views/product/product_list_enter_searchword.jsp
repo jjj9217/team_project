@@ -11,138 +11,27 @@
 <title>Header</title>
 <style>
 
-    .head {
-        margin-left: 5%;
-        margin-right: 5%;
+    *{margin: 0; padding: 0;}
+    a{text-decoration: none;}
+    input[type="button"], input[type="submit"], input[type="checkbox"], select, input[type="radio"], label, button{cursor: pointer;}
+    header{
+    top: 0px;
+    width: 100%;
+    height: 165px;
+    background-color: white;
     }
     
-    .small_menu {
-        text-align: right;
-    }
-    
-    .small_menu a {
-        font-size: 12px; 
-        color: black;
-        text-decoration-line: none;
-    }
-    
-    .head_logo {
-        margin-right: 7%;
-        text-align: left;
-        width: 180px;
-        display: inline-block;
-    }
-    
-    .head_search {
-        width: 300px;
-        height: 40px;
-        margin: 22px 0 0 90px;
-        padding: 0 45px 0 20px;
-        border: 2px solid #7d99a4;
-        background: #ffffff;
-        border-radius: 20px;
-        display: inline-block;
-        white-space : nowrap;
-    }
-    
-    #head_searchWord {
-        width: 290px;
-        color: #a4a4a4;
-        font-size: 12px;
+    footer{
+        bottom: 0px;
+        width: 100%;
+        height: 250px;
         line-height: 20px;
-        letter-spacing: -.04em;
-        border: #ffffff;
-        margin-top: 5px;
-        position: relative;
-        vertical-align: middle;
-        display: inline-block;
+        background-color: #eef3f5;  
     }
-    
-    #head_searchBtn {
-        width: 30px;
-        height: 30px;
-        margin-top: 5px;
-        vertical-align: middle;
-        display: inline;
-        border: #ffffff;
-        background-color: #ffffff;
-    }
-    
-    .recent_pro {
-        margin-top: -35px;
-        text-align: right;
-        background-color: #fff;
-        vertical-align: middle;
-    }
-    
-    .recent_pro a {
-        font-size: 15.5px; 
-        color: black;
-        text-decoration-line: none;
-    }
-    
-    .menu_box {
-        width: 100%;
-        height: 40px;
-        text-align: center;
-        margin-top: 40px;
-        border-top: 1px solid #a4a4a4;
-        border-bottom: 2px solid #000000;
-    }
-    
-    .menu {
-        margin-top: -0%;
-        margin-left: 2%;
-        text-align: center;
-        width: 100%;
-        list-style: none;
-    }
-    
-    .menu > li {
-        width: 12.8%; /* 90 * 7 */
-        float: left;
-        text-align: center;
-        line-height: 40px;
-        background-color: white;
-    }
-    
-    .menu a {
-        color: #000000;
-        font-weight: bold;
-        text-decoration-line: none;
-    }
-    
-    .submenu {
-        height: 0; /*ul의 높이를 안보이게 처리*/
-        overflow: hidden;
-        list-style: none;
-    }
-    
-    .submenu a {
-        height: 0; /*ul의 높이를 안보이게 처리*/
-        overflow: hidden;
-        list-style: none;
-        font-size: 12px;
-    }
-    
-    .submenu > li {
-        line-height: 50px;
-        background-color: #7d99a4;
-    }
-    
-    .menu > li:hover {
-        background-color: #7d99a4;
-        transition-duration: 0.5s;
-    }
-    
-    .menu > li:hover .submenu {
-        height: 150px; /*서브메뉴 li한개의 높이 50*5*/
-        transition-duration: 1s;
+     body{
+         width: 1020px; height: auto; margin: 0 auto;
+         background-color: white;
      }
-     
-     .menu > li:hover a {
-        color: #ffffff;
-    }
     
     /* 바디 CSS */
 
@@ -379,36 +268,13 @@
     #category_code_btn{
     }
 
-    /* footer Css */
 
-    .foot {
-        text-align: center;
-        border-top: 2px solid #a4a4a4;
-    }
-    
-    .foot_logo {
-        width: 20%;
-        vertical-align: top;
-        margin-top: 7%;
-        display: inline-block;
-    }
-    
-    .foot_content {
-        width: 70%;
-        margin-top: 3%;
-        display: inline-block;
-    }
-    
-    .foot_content a {
-        font-size: 13px;
-    }
-    
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script>
+<script>
     
     
-function doAction(){
+/* function doAction(){
 	   let min = document.getElementById("product_price_min");
 	   let max = document.getElementById("product_price_max");
 	   if(min.value.length==0){
@@ -435,116 +301,166 @@ $(document).ready(function(){
 		window.location.href = "product_list_enter_searchword.do?category_code="+asd+"&prdocut_price="+price;
 		}
 	}); 	
-});
+}); */
 
-/* 
-function me(category_code}){
-	
-	ca.method="get"
-	ca.action="product_list_enter_searchword.do?"+category_code
-	ca.submit();
-	
-	
-	
-	
+ </script>
+
+<script>
+function getParameterValue(parameterName) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    if (urlParams.has(parameterName)) {
+        return urlParams.get(parameterName);
+    }
+
+    return null; // 파라미터가 없으면 null 반환
 }
- */
 
-/* let = category_code */
-
-/* let 
-$().each(function(){
-	if(this.checked){
-		category_code = this.val();
+function ProductDetail(searchWord, category_code, category_code_small, 
+		product_price_min, product_price_max, sort_salecount, sort_view, 
+		pageNum, pageBlock) {       
+    
+	var insertsearchWord = "";
+	const paramsearchWord = getParameterValue("searchWord");	
+	if(searchWord === ""){
+		if(paramsearchWord === null){
+		insertsearchWord = '';}
+		else{
+		insertsearchWord = paramsearchWord;}
+	}else{
+		insertsearchWord = searchWord;
 	}
-})
- */    </script>
+	
+	
+	var insertcategory_code ="";
+	const paramcategory_code = getParameterValue("category_code");
+	if(category_code === ""){
+        if(paramcategory_code === null){
+        insertcategory_code = '';}
+        else{
+        insertcategory_code = paramcategory_code;}
+    }else{
+    	insertcategory_code = category_code;
+    }
+
+	
+	var insertcategory_code_small ="";
+    const paramcategory_code_small = getParameterValue("category_code_small");
+    if(category_code_small === ""){
+        if(paramcategory_code_small === null){
+        insertcategory_code_small = '';}
+        else{
+        insertcategory_code_small = paramcategory_code_small;}
+    }else{
+        insertcategory_code_small = category_code_small;
+    }
+    
+    
+    var insertproduct_price_min ="";
+    const paramproduct_price_min = getParameterValue("product_price_min");
+    if(product_price_min === ""){
+        if(paramproduct_price_min === null){
+        insertproduct_price_min = 0;}
+        else{
+        insertproduct_price_min = paramproduct_price_min;}
+    }else{
+        insertproduct_price_min = product_price_min;
+    }
+	
+	
+    var insertproduct_price_max ="";
+    const paramproduct_price_max = getParameterValue("product_price_max");
+    if(product_price_max === ""){
+        if(paramproduct_price_max === null){
+        insertproduct_price_max = 0;}
+        else{
+        insertproduct_price_max = paramproduct_price_max;}
+    }else{
+        insertproduct_price_max = product_price_max;
+    }
+    
+    
+    var insertsort_salecount ="";
+    const paramsort_salecount = getParameterValue("sort_salecount");
+    if(sort_salecount === ""){
+        if(paramsort_salecount === null){
+        insertsort_salecount = '';}
+        else{
+        insertsort_salecount = paramsort_salecount;}
+    }else{
+        insertsort_salecount = sort_salecount;
+    }
+    
+    
+    var insertsort_view ="";
+    const paramsort_view = getParameterValue("sort_view");
+    if(sort_view === ""){
+        if(paramsort_view === null){
+        insertsort_view = 15;}
+        else{
+        insertsort_view = paramsort_view;}
+    }else{
+        insertsort_view = sort_view;
+    }
+    
+    
+	// 새 URL 구성    
+    var newURL = "product_list_enter_searchword.do" +  
+    "?searchWord=" + insertsearchWord +
+    "&category_code=" + insertcategory_code +
+    "&category_code_small=" + insertcategory_code_small +
+    "&product_price_min=" + insertproduct_price_min +
+    "&product_price_max=" + insertproduct_price_max +
+    "&sort_salecount=" + insertsort_salecount +
+    "&sort_view=" + insertsort_view +
+    "&pageNum=" + pageNum +
+    "&pageBlock=" + pageBlock;
+    // URL로 이동
+    window.location.href = newURL;
+
+    
+}
+
+
+	
+	
+	
+	/* ?" + a + b + c + d + e + f + */	
+/* 	var a = "searchWord=" + searchWord;
+    alert(a);
+    if(searchWord === ""){ a=""; alert(a);}
+    else{alert("하이");}
+    
+    var b = "&category_code=" + category_code;
+    alert(b);
+    if(category_code === ""){ b=""; alert("b성공");}
+    else{alert("하이");}
+    
+    var c = "&category_code_small=" + category_code_small;
+    if(category_code_small === ""){ c=""; alert("c성공");}
+    
+    var d = "&product_price_min=" + product_price_min +
+    "&product_price_max=" + product_price_max;
+    if(product_price_min === "" && product_price_max=== ""){ d=""; alert("d성공");}      
+    
+    var e = "&sort_salecount=" + sort_salecount;
+    if(sort_salecount === ""){ e=""; alert("e성공");}
+    
+    var f = "&sort_view=" + sort_view;
+    if(sort_view === ""){ f=""; alert("f성공");} */
+    
+	
+   
+
+</script> 
 </head>
 
 <body>
 <div class="head">
-
-    <!-- 상단 작은 메뉴 (조건에 따라 회원용/비회원용 구분) -->
-    <c:choose>
-        <c:when test="${!empty member}">
-            <!-- 회원용 -->
-            <article class="small_menu">
-                <a>${member.member_name}님</a>&nbsp;&nbsp;<a href="#">로그아웃</a>&nbsp;&nbsp;<a href="#">마이페이지</a>&nbsp;&nbsp;<a href="#">장바구니</a>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="#">고객센터</a>
-            </article>
-        </c:when>
-        <c:otherwise>
-            <!-- 일반용 -->
-            <article class="small_menu">
-                <a href="#">회원가입</a>&nbsp;&nbsp;<a href="#">로그인</a>&nbsp;&nbsp;<a href="#">장바구니</a>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="#">고객센터</a>
-            </article>
-        </c:otherwise>
-    </c:choose>
-    
-    <!-- 로고 -->
-    <a href="../index/index.jsp">
-        <img src="../resources/CrueltyFree_logo.png" class="head_logo" />
-    </a>
-    
-    <!-- 검색창 -->
-    <div class="head_search">
-        <input type="text" name="searchWord" id="head_searchWord" value="검색어를 입력해 주세요">
-        <button type="submit" name="searchBtn" id="head_searchBtn"><img src="../resources/search_img.png" style="width: 21px; height: 21px; margin-left: -4px; margin-top: -1px;"></button>
-    </div>
-    
-    <!-- 최근 본 상품 -->
-    <div class="recent_pro">
-        <a href="#">최근 본 상품 ▼</a>
-    </div>
-
-</div>
-
-<div class="menu_box">
-    <ul class="menu">
-        <li>
-            <a href="#">베스트</a>
-        </li>
-        <li>
-            <a href="#">스킨케어</a>
-            <ul class="submenu">
-                <li class="sub3"><a href="#">토너/로션/올인원</a></li>
-                <li class="sub3"><a href="#">에센스/크림</a></li>
-                <li class="sub3"><a href="#">미스트/오일</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">클렌징</a>
-            <ul class="submenu">
-                <li class="sub2"><a href="#">클렌징폼/젤</a></li>
-                <li class="sub2"><a href="#">오일/워터/리무버</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">메이크업</a>
-            <ul class="submenu">
-                <li class="sub3"><a href="#">립메이크업</a></li>
-                <li class="sub3"><a href="#">베이스메이크업</a></li>
-                <li class="sub3"><a href="#">아이메이크업</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">바디케어</a>
-            <ul class="submenu">
-                <li class="sub2"><a href="#">샤워/입욕</a></li>
-                <li class="sub2"><a href="#">로션/오일</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">헤어케어</a>
-            <ul class="submenu">
-                <li class="sub2"><a href="#">샴푸/린스/트리트먼트</a></li>
-                <li class="sub2"><a href="#">염색약/펌</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">미용소품</a>
-        </li>
-    </ul>
-</div>
+    <header>    
+        <jsp:include page="../main/header.jsp"/>    
+    </header>
 
 <!-- body시작 -->
 
@@ -563,49 +479,18 @@ $().each(function(){
                     </h4>
                 </div>
                 
-                <ul class="list_classification">
-                                      
-<!--                     <li><a href="javascript:function1();">스킨케어</a></li> -->
-                    <!-- <li>
-                    <form name="ca" action="product_list_enter_searchword.do" method="get">
-                        <input type="hidden" name="category_code" value="1">
-                    <input type="hidden" name="category_code" value="" location.href=".do?="+category_code;> 
-                    </form>
-                    <a href="#" class="category_code" onclick="document.forms['ca'].submit();">스킨케어</a></li> -->
-                    
-                    <li><span id=category_code_1>
-                        스킨케어
-                        <input type="hidden" id="qwe" name="category_code" value="1">
-                        </span>
-                    </li>
+                <ul class="list_classification">                                                          
+                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', 'Skin', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">스킨케어</a></li>
                                         
-                    <li>                                         
-                    <form name="ca2" action="product_list_enter_searchword.do" method="get">
-                        <input type="hidden" name="category_code" value="2">
-                    </form>
-                    <a href="#" onclick="document.forms['ca2'].submit();">클렌징</a></li>
+                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', 'clensing', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">클렌징</a></li>
                     
-                    <li><form name="ca3" action="product_list_enter_searchword.do" method="get">
-                        <input type="hidden" name="category_code" value="3">
-                    </form>
-                    <a href="#" onclick="document.forms['ca3'].submit();">메이크업</a></li>
+                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', 'makeup', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">메이크업</a></li>
+                                        
+                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', 'body', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">바디케어</a></li>
                     
+                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', 'hair', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">헤어케어</a></li>
                     
-                    <li><form name="ca4" action="product_list_enter_searchword.do" method="get">
-                        <input type="hidden" name="category_code" value="4">
-                    </form>
-                    <a href="#" onclick="document.forms['ca4'].submit();">바디케어</a></li>
-                    
-                    <li><form name="ca5" action="product_list_enter_searchword.do" method="get">
-                        <input type="hidden" name="category_code" value="5">
-                    </form>
-                    <a href="#" onclick="document.forms['ca5'].submit();">헤어케어</a></li>
-                    
-                    <li><form name="ca6" action="product_list_enter_searchword.do" method="get">
-                        <input type="hidden" name="category_code" value="6">
-                    </form>
-                    <a href="#" onclick="document.forms['ca6'].submit();">미용소품</a></li>                    
-                    
+                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '1', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">미용소품</a></li>                    
                    
                 </ul>                
             </div>
@@ -623,34 +508,34 @@ $().each(function(){
 	                </c:if>
    	                
 	                <ul class="list_classification">
-	                    <c:if test="${pageNav.totalRows ne 0}">                    
-	                    <c:if test="${exploreVo.category_code eq 1}">
-		                    <li><a href="#">토너/로션/올인원</a></li>
-		                    <li><a href="#" name="2">에센스/크림</a></li>
-		                    <li><a href="#" name="3">미스트/오일</a></li>
-	                    </c:if>
-	                    
-	                    <c:if test="${exploreVo.category_code eq 2}">
-		                    <li><a href="#">폼</a></li>
-		                    <li><a href="#">오일</a></li>
-		                </c:if>
-		                
-		                <c:if test="${exploreVo.category_code eq 3}">
-		                    <li><a href="#">립</a></li>
-		                    <li><a href="#">베이스</a></li>
-		                    <li><a href="#">아이</a></li>
-		                </c:if>    
-	
-		                <c:if test="${exploreVo.category_code eq 4}">    
-		                    <li><a href="#">샤워</a></li>
-		                    <li><a href="#">로션</a></li>
-		                </c:if>
-		                
-		                <c:if test="${exploreVo.category_code eq 5}">    
-		                    <li><a href="#">샴푸</a></li>
-		                    <li><a href="#">염색</a></li>
-		                </c:if>
-		                </c:if>	                  
+	                    <%-- <c:if test="${pageNav.totalRows ne 0}"> --%>                    
+		                    <c:if test="${exploreVo.category_code eq 1}">
+			                    <li><a href="#">토너/로션/올인원</a></li>
+			                    <li><a href="#" name="2">에센스/크림</a></li>
+			                    <li><a href="#" name="3">미스트/오일</a></li>
+		                    </c:if>
+		                    
+		                    <c:if test="${exploreVo.category_code eq 2}">
+			                    <li><a href="#">폼</a></li>
+			                    <li><a href="#">오일</a></li>
+			                </c:if>
+			                
+			                <c:if test="${exploreVo.category_code eq 3}">
+			                    <li><a href="#">립</a></li>
+			                    <li><a href="#">베이스</a></li>
+			                    <li><a href="#">아이</a></li>
+			                </c:if>    
+		
+			                <c:if test="${exploreVo.category_code eq 4}">    
+			                    <li><a href="#">샤워</a></li>
+			                    <li><a href="#">로션</a></li>
+			                </c:if>
+			                
+			                <c:if test="${exploreVo.category_code eq 'clensing'}">    
+			                    <li><a href="#">샴푸</a></li>
+			                    <li><a href="#">염색</a></li>
+			                </c:if>
+		                <%-- </c:if>	    --%>               
 	                </ul>
 	            </c:if>  
 	        </div>	        
@@ -704,35 +589,23 @@ $().each(function(){
                     <form name="sort_salecount" action="product_list_enter_searchword.do" method="get">
                         <input type="hidden" name="sort_salecount" value="1">
                     </form>
-                    <a href="#" onclick="document.forms['sort_salecount'].submit();">판매수량순</a>                
+                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '1', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">판매수량순</a>                
                     </li>
                                         
-                    <li>                    
-                    <form name="sort_salecount2" action="product_list_enter_searchword.do" method="get">
-                        <input type="hidden" name="sort_salecount" value="2">
-                    </form>
-                    <a href="#" onclick="document.forms['sort_salecount2'].submit();">최근등록순</a>                  
+                    <li>                                       
+                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '2', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">최근등록순</a>                  
                     </li>                    
                     
-                    <li>                    
-                    <form name="sort_salecount3" action="product_list_enter_searchword.do" method="get">
-                        <input type="hidden" name="sort_salecount" value="3">
-                    </form>
-                    <a href="#" onclick="document.forms['sort_salecount3'].submit();">평점순</a>                    
+                    <li>                                        
+                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '3', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">평점순</a>                    
                     </li>
                     
-                    <li>                    
-                    <form name="sort_salecount4" action="product_list_enter_searchword.do" method="get">
-                        <input type="hidden" name="sort_salecount" value="4">
-                    </form>
-                    <a href="#" onclick="document.forms['sort_salecount4'].submit();">높은가격순</a>                   
+                    <li>                                        
+                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '4', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">높은가격순</a>                    
                     </li>
                     
-                    <li>                    
-                    <form name="sort_salecount5" action="product_list_enter_searchword.do" method="get">
-                        <input type="hidden" name="sort_salecount" value="5">
-                    </form>
-                    <a href="#" onclick="document.forms['sort_salecount5'].submit();">낮은가격순</a>                   
+                    <li>                                        
+                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '5', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">낮은가격순</a>                   
                     </li>
                     
                 </ul>
@@ -742,23 +615,14 @@ $().each(function(){
                 
                 <ul>
 	                <li>
-	                    <form name="sort_view_15" action="product_list_enter_searchword.do" method="get">
-	                        <input type="hidden" name="sort_view" value="15">
-	                    </form>
-	                    <a href="#" onclick="document.forms['sort_view_15'].submit();">15</a>&nbsp;
+	                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '15', '${pageNav.pageNum}', '${pageNav.pageBlock}')">15</a>&nbsp;
 	                </li>    
 	                <li>
-	                <form name="sort_view_30" action="product_list_enter_searchword.do" method="get">
-	                        <input type="hidden" name="sort_view" value="30">
-	                    </form>
-	                    <a href="#" onclick="document.forms['sort_view_30'].submit();">30</a>&nbsp;
+	                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '30', '${pageNav.pageNum}', '${pageNav.pageBlock}')">30</a>&nbsp;
 	                </li>    
-	                <li>
-	                <form name="sort_view_45" action="product_list_enter_searchword.do" method="get">
-	                        <input type="hidden" name="sort_view" value="45">
-	                    </form>
-	                    <a href="#" onclick="document.forms['sort_view_45'].submit();">45</a>
-	                </li>
+	                <li>	                    
+	                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '45', '${pageNav.pageNum}', '${pageNav.pageBlock}')">45</a>	                    
+	                </li>           
                 </ul>
                 
                 
@@ -817,22 +681,9 @@ $().each(function(){
 
 
 <!-- footer -->
-<div class="foot">
-    <div class="foot_logo">
-        <img src="../resources/CrueltyFree_logo.png" style="width: 70%;" />
-    </div>
-    
-    <div class="foot_content">
-        <a style="font-weight: bold; color:#000000;">크루얼티프리 주식회사</a><br><br>
-        <a style="text-align: left; color:#4a4a4a;"> 대표이사: 정종진<br>
-            주소: (31144) 충남 천안시 동남구 대흥로 215 7층, 8층<br><br>
-            크루얼티프리에서 판매되는 상품 중에는 크루얼티프리에 입점한 개별 판매자가 판매하는 상품이 포함되어
-            있습니다. 개별 판매자 판매 상품의 경우, 크루얼티프리는 통신판매중개자로서 통신판매의 당사자가 아니며
-            판매자가 등록한 상품정보 및 거래 정보 등에 대하여 책임을 부담하지 않습니다.
-        </a>
-    </div>
-</div>
-
+    <footer>
+        <jsp:include page="../main/footer.jsp"/>        
+    </footer>
 
 </body>
 </body>

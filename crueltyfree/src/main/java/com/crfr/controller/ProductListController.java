@@ -49,12 +49,20 @@ public class ProductListController {
 
 		//@RequestParam(value="category_code", required=false) String category_code,
 		//vo.setCategory_code(category_code);
-		System.out.println("받은 카테고리코드"+ vo.getCategory_code());
+		System.out.println("받은 카테고리코드:"+ vo.getCategory_code());
+		System.out.println("받은 sort_salecount: " + vo.getSort_salecount());
+		System.out.println("받은 최저가:"+vo.getProduct_price_min());
+		System.out.println("받은 최고가:"+vo.getProduct_price_max());
 		//if 카테고리(대)
+
+		
+
 		/*
 		 * vo.setCategory_code(category_code); //else 카테고리(소)
 		 * vo.setCategory_code_small(category_code);
 		 */
+		
+		
 		
 		//게시판 목록을 가져오는 요청에 대한 처리를 위한 ProductListService 클래스 이용
 		List<ProductVo> productList = pdList.selectList(vo);

@@ -169,19 +169,34 @@ function categoryLarge(cate_large) {
 	var categorySmall_f = ["-"];
 	var target = document.getElementById("categorySmall");
 
-	if(cate_large.value == "a") var cate_small = categorySmall_a;
-	else if(cate_large.value == "b") var cate_small = categorySmall_b;
-	else if(cate_large.value == "c") var cate_small = categorySmall_c;
-	else if(cate_large.value == "d") var cate_small = categorySmall_d;
-	else if(cate_large.value == "e") var cate_small = categorySmall_e;
+	if(cate_large.value == "skin") var cate_small = categorySmall_a;
+	else if(cate_large.value == "clensing") var cate_small = categorySmall_b;
+	else if(cate_large.value == "makeup") var cate_small = categorySmall_c;
+	else if(cate_large.value == "body") var cate_small = categorySmall_d;
+	else if(cate_large.value == "hair") var cate_small = categorySmall_e;
 	else var cate_small = categorySmall_f;
+	
+	var categorySmall_a_val = ["skin_1", "skin_2", "skin_3"];
+    var categorySmall_b_val = ["clensing_1", "clensing_2"];
+    var categorySmall_c_val = ["makeup_1", "makeup_2", "makeup_3"];
+    var categorySmall_d_val = ["body_1", "body_2"];
+    var categorySmall_e_val = ["hair_1", "hair_2"];
+    var categorySmall_f_val = ["prop_1"];
+    var target = document.getElementById("categorySmall");
+	
+    if(cate_large.value == "skin") var cate_small_val = categorySmall_a_val;
+    else if(cate_large.value == "clensing") var cate_small_val = categorySmall_b_val;
+    else if(cate_large.value == "makeup") var cate_small_val = categorySmall_c_val;
+    else if(cate_large.value == "body") var cate_small_val = categorySmall_d_val;
+    else if(cate_large.value == "hair") var cate_small_val = categorySmall_e_val;
+    else var cate_small_val = categorySmall_f_val;
 
 	target.options.length = 0;
 
 	for (x in cate_small) {
 		var opt = document.createElement("option");
-		opt.value = cate_small[x];
 		opt.innerHTML = cate_small[x];
+		opt.value = cate_small_val[x];
 		target.appendChild(opt);
 	}
 }
@@ -243,15 +258,15 @@ function validateForm(){
 			&nbsp;&nbsp;<a>카테고리</a>
 		</article>
 		<article class="regi_right">
-			<select class="regi_box" onchange="categoryLarge(this)">
-				<option value="a">스킨케어</option>
-				<option value="b">클렌징</option>
-				<option value="c">메이크업</option>
-				<option value="d">바디케어</option>
-				<option value="e">헤어케어</option>
-				<option value="f">미용소품</option>
+			<select name="category_code" class="regi_box" onchange="categoryLarge(this)">
+				<option value="skin">스킨케어</option>
+				<option value="clensing">클렌징</option>
+				<option value="makeup">메이크업</option>
+				<option value="body">바디케어</option>
+				<option value="hair">헤어케어</option>
+				<option value="prop">미용소품</option>
 			</select>
-			<select id="categorySmall" name="category_code" class="regi_box">
+			<select id="categorySmall" name="category_code_small" class="regi_box">
 				<option>소분류</option>
 			</select>
 		</article>

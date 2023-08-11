@@ -11,7 +11,7 @@ public interface ProductSellerService {
 	default int findProductIdx (String product_name, String member_nickname) {return 0;}
 	default int insertFile (MultipartFile attachedFile, String product_idx, 
 							HttpServletRequest request) {return 0;}
-	default int insertProduct (String category_code,
+	default int insertProduct (String category_code, String category_code_small,
 							String product_name, String product_price, String product_capa,
 							String delivery_company, String member_nickname, String member_idx) {return 0;}
 	default int insertProductInfo (String product_idx, String product_info_amount,

@@ -5,21 +5,21 @@
 <mapper namespace="com.crfr.MypageMapper">       
      <!-- 작성하지 않은 리뷰 목록 -->
      
-     <!-- 작성하지 않은 리뷰 목록 사진 -->
+     <!-- 작성하지 않은 리뷰 목록의 상품 사진 -->
      <select id="selectmynonreviewListimg" parameterType="_int" resultType="FileVo">
         select * from `order_product`
 		    inner join `order`
-		    on `order_product`.client_num = `order`.client_num
+		    on `order_product`.order_idx = `order`.order_idx
 		    inner join product
 		    on `order_product`.product_idx = product.product_idx
-		    inner join review
+		    left outer join review
 		    on `order_product`.product_idx = review.product_idx
 		    inner join file
-		    on review.product_idx = file.product_idx
+		    on `order_product`.product_idx = file.product_idx
 		    <where>
 		        `order`.client_num=#{member_idx}
 		        and
-		        review.member_idx!=#{member_idx}
+		        review.member_idx is null
 		        and
 		        file.product_idx IS NOT NULL
 		        AND (file.product_idx, file.file_idx) 
@@ -32,36 +32,36 @@
 		        order by order_date desc
      </select>
      
-     <!-- 작성하지 않은 리뷰 목록 -->
+     <!-- 작성하지 않은 리뷰의 상품 목록 -->
      <select id="selectmynonreviewList" parameterType="_int" resultType="ReviewExploreVo">
         select * from `order_product`
             inner join `order`
-            on `order_product`.client_num = `order`.client_num
+            on `order_product`.order_idx = `order`.order_idx
             inner join product
             on `order_product`.product_idx = product.product_idx
-            inner join review
+            left outer join review
             on `order_product`.product_idx = review.product_idx
             <where>
                 `order`.client_num=#{member_idx}
                 and
-                review.member_idx!=#{member_idx}
+                review.member_idx is null
             </where>                
                 order by order_date desc
      </select>
           
-     <!-- 작성하지 않은 리뷰 목록 개수 세기 -->
+     <!-- 작성하지 않은 리뷰의 상품 목록 개수 세기 -->
      <select id="selectmynonreviewCount" parameterType="_int" resultType="_int">
         select count(*) from `order_product`
             inner join `order`
-            on `order_product`.client_num = `order`.client_num
+            on `order_product`.order_idx = `order`.order_idx
             inner join product
             on `order_product`.product_idx = product.product_idx
-            inner join review
+            left outer join review
             on `order_product`.product_idx = review.product_idx
             <where>
                 `order`.client_num=#{member_idx}
                 and
-                review.member_idx!=#{member_idx}
+                review.member_idx is null
             </where>                
                 order by order_date desc;
      </select>
@@ -70,11 +70,11 @@
           
      <!-- 작성한 리뷰 목록 -->
      
-     <!-- 작성한 리뷰 목록 사진 -->
+     <!-- 작성한 리뷰 목록의 상품 사진 -->
      <select id="selectmyreviewListimg" parameterType="_int" resultType="FileVo">
         select * from `order_product`
             inner join `order`
-            on `order_product`.client_num = `order`.client_num
+            on `order_product`.order_idx = `order`.order_idx
             inner join product
             on `order_product`.product_idx = product.product_idx
             inner join review
@@ -97,11 +97,11 @@
                 order by order_date desc;
      </select>
      
-     <!-- 작성한 리뷰 목록 -->
+     <!-- 작성한 리뷰의 상품 목록 -->
      <select id="selectmyreviewList" parameterType="_int" resultType="ReviewExploreVo">
         select * from `order_product`
             inner join `order`
-            on `order_product`.client_num = `order`.client_num
+            on `order_product`.order_idx = `order`.order_idx
             inner join product
             on `order_product`.product_idx = product.product_idx
             inner join review
@@ -114,11 +114,11 @@
                 order by order_date desc;
      </select>
      
-     <!-- 작성한 리뷰 목록 개수 세기 -->
+     <!-- 작성한 리뷰의 상품 목록 개수 세기 -->
      <select id="selectmyreviewCount" parameterType="_int" resultType="_int">
         select count(*) from `order_product`
             inner join `order`
-            on `order_product`.client_num = `order`.client_num
+            on `order_product`.order_idx = `order`.order_idx
             inner join product
             on `order_product`.product_idx = product.product_idx
             inner join review
@@ -162,7 +162,7 @@
             </where>
     </select>
     
-    <!--  리뷰 사진 작성 -->
+    <!--  리뷰에 등록할 사진 작성 -->
     <insert id="insertreviewimg" parameterType="map">
         insert into file  (review_idx, 
                            originFile, 
@@ -175,7 +175,90 @@
                            ) 
     </insert>
     
- 
+    <!-- 작성한 리뷰에 등록한 사진 목록 -->
+     <select id="reviewRegList" parameterType="FileVo" resultType="FileVo">
+        select * from file
+            inner join review
+            on file.review_idx = review.review_idx
+                    where review.member_idx=#{member_idx}
+                    and review.review_idx=#{review_idx}
+                    order by file_idx
+     </select>
+     
+     <select id="reviewRegList2" parameterType="ReviewVo" resultType="ReviewVo">
+        select * from file
+            inner join review
+            on file.review_idx = review.review_idx
+                    where review.member_idx=#{member_idx}
+                    and review.review_idx=#{review_idx}
+                    order by file_idx
+     </select>
+    
+    <!-- 리뷰 내용 수정 -->
+    <update id="updatereview" parameterType="ReviewVo">
+        update review
+                <set>
+                    <if test="review_score != null">
+                        review_score=#{review_score},    
+                    </if>
+                    <if test="review_content != null">
+                        review_content=#{review_content}
+                    </if>                                     
+                </set>                     
+                where review_idx=#{review_idx}
+                  and member_idx=#{member_idx}   
+    </update>
+    
+    
+    
+    
+    <!-- 리뷰 수정에서 사진파일이 변경될 경우 삭제 -->
+      
+    <!--  리뷰 수정에서 사진파일이 변경될 경우 사진 업데이트 0번방~4번방까지 -->
+    
+    <update id="updatereviewimg0" parameterType="FileVo">
+        update File
+                set originfile = #{originFile},
+                savefile = #{saveFile}
+                where file_idx = #{file_idx}
+    </update>
+    
+    <update id="updatereviewimg1" parameterType="FileVo">
+        update File
+                set originfile = #{originFile},
+                savefile = #{saveFile}
+                where file_idx = #{file_idx}
+    </update>
+    
+    <update id="updatereviewimg2" parameterType="FileVo">
+        update File
+                set originfile = #{originFile},
+                savefile = #{saveFile}
+                where file_idx = #{file_idx}
+    </update>
+    
+    <update id="updatereviewimg3" parameterType="FileVo">
+        update File
+                set originfile = #{originFile},
+                savefile = #{saveFile}
+                where file_idx = #{file_idx}
+    </update>
+    
+    <update id="updatereviewimg4" parameterType="FileVo">
+        update File
+                set originfile = #{originFile},
+                savefile = #{saveFile}
+                where file_idx = #{file_idx}
+    </update>
+    
+    
+    
+    
+    
+    
+    
+    
+    
  
     <!-- 배송지 -->
     <!-- 배송지 목록 -->
@@ -226,7 +309,12 @@
                         where delivery_idx!=#{delivery_idx}
     </update>
          <!-- and member_idx=#{member_idx} -->
-
+    
+    <!-- 수정할 배송지번호 페이지 보여주기 -->
+    <select id="selectVieweditdelivery" parameterType="_int" resultType="DeliveryVo">
+        select * from delivery where delivery_idx = #{delivery_idx}    
+    </select>
+    
     <!-- 배송지 수정 -->
     <update id="updatedeliveryPost" parameterType="DeliveryVo">
         update delivery
@@ -234,26 +322,26 @@
                     <if test="delivery_address_name != null">
                         delivery_address_name=#{delivery_address_name},    
                     </if>
-                    <if test="delivery_get_name != delivery_get_name">
+                    <if test="delivery_get_name != null">
                         delivery_get_name=#{delivery_get_name},
                     </if>
                     <if test="delivery_handphone != null">
                         delivery_handphone=#{delivery_handphone},        
                     </if>
                     <if test="delivery_message != null">
-                        delivery_message=#{delivery_message}        
+                        delivery_message=#{delivery_message},      
                     </if>                                                           
                     <if test="delivery_pass != null">
-                        delivery_pass=#{delivery_pass}        
+                        delivery_pass=#{delivery_pass},       
                     </if>
                     <if test="delivery_pass_content != null">
-                        delivery_pass_content=#{delivery_pass_content}        
+                        delivery_pass_content=#{delivery_pass_content},    
                     </if>
                     <if test="delivery_postNum != null">
-                        delivery_postNum=#{delivery_postNum}        
+                        delivery_postNum=#{delivery_postNum},       
                     </if>
                     <if test="delivery_address != null">
-                        delivery_address=#{delivery_address}        
+                        delivery_address=#{delivery_address},        
                     </if>
                     <if test="delivery_address2 != null">
                         delivery_address2=#{delivery_address2}        
@@ -270,6 +358,119 @@
     </delete>
 
     <!-- and member_idx=#{member_idx} -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- 회원정보 비밀번호 수정 -->
+    
+    <update id="changepassword" parameterType="memberVo">
+        update member set member_pw=#{member_pw} where member_idx=#{member_idx}
+    </update>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- 상품QnA 기간조회 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- 좋아요 목록 -->
+    
+    <!-- 좋아요 사진 목록 -->
+     <select id="selectlikeListimg" parameterType="_int" resultType="FileVo">
+        select * from `like`
+            inner join `product`
+            on `like`.product_idx = `product`.product_idx
+            inner join file
+            on `like`.product_idx = file.product_idx
+            <where>
+                 `like`.member_idx=#{member_idx}
+                and
+                file.product_idx IS NOT NULL
+                AND (file.product_idx, file.file_idx) 
+                    IN (
+                    SELECT file.product_idx, MIN(file.file_idx)                   
+                    FROM file
+                    GROUP BY file.product_idx
+                    )
+            </where>                    
+                    order by like_idx desc      
+     </select>
+     
+     <!-- 좋아요 목록 -->
+     <select id="selectlikeList" parameterType="_int" resultType="LikeExploreVo">
+        select * from `like`
+            inner join `product`
+            on `like`.product_idx = `product`.product_idx
+            where
+                `like`.member_idx=#{member_idx}                
+                order by like_idx desc
+     </select>
+    
+    <!-- 좋아요 목록 개수 -->
+    <select id="selectlikeListCount" parameterType="_int" resultType="_int">
+        select count(*) from `like`
+            inner join `product`
+            on `like`.product_idx = `product`.product_idx
+            where
+                `like`.member_idx=#{member_idx}                
+                order by like_idx desc
+     </select>
+    
+    <!-- 좋아요 삭제 -->
+    <delete id="deletelike" parameterType="LikeExploreVo">
+        delete from `like`
+            where like_idx=#{like_idx}
+    </delete>
+    
+    
+    
+    
+    
     
     
          

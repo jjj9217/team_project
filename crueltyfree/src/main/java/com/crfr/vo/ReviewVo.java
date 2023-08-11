@@ -14,4 +14,7 @@ public class ReviewVo {
 	private Date review_regDate;
 	private String member_nickname;
 	private int review_recom_count;	
+	private int file_idx;
+	private String originFile;
+	private String saveFile;
 }

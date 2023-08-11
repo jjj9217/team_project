@@ -13,6 +13,14 @@ public class ProductVo {
 	private int delivery_company;
 	private String member_nickname;
 	private String category_code;
+	private String category_code_small;
+	
+	public String getCategory_code_small() {
+		return category_code_small;
+	}
+	public void setCategory_code_small(String category_code_small) {
+		this.category_code_small = category_code_small;
+	}
 	private int product_del_or_not;
 
 	public int getProduct_idx() {
