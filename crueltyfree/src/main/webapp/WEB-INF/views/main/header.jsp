@@ -119,6 +119,7 @@
 		list-style: none;
 		width: 141px;
 		position: absolute;
+		z-index: 10;
 	}
 	
 	.submenu a {
@@ -126,6 +127,7 @@
 		overflow: hidden;
 		list-style: none;
 		font-size: 12px;
+		z-index: 10;
 	}
 	
 	.submenu > li {
