@@ -89,7 +89,7 @@ public class SellerController {
 			String product_info_useMethod, String product_info_maker,
 			String product_info_handphone, HttpServletRequest request) {
 		
-		String viewPage = "seller/regi_pro"; //글등록 실패시 보여지는 페이
+		String viewPage = "seller/regi_pro"; //글등록 실패시 보여지는 페이지
 		
 		//작성 내용을 ProductInsertService 클래스를 이용하여 저장
 		int result1 = pInsertProduct.insertProduct (category_code, category_code_small, product_name, 
