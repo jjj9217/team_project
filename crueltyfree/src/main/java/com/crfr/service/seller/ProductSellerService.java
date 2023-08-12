@@ -30,7 +30,8 @@ public interface ProductSellerService {
 	// 수정 서비스
 	default List<ProductVo> checkProductList(String searchField, String searchWord){return null;}
 	default int checkProductCount(String searchField, String searchWord) {return 0;}
-	default int productUpdate (String category_code, String product_name, String product_price, 
+	default int productUpdate (String category_code, String category_code_small,
+							String product_name, String product_price, 
 							String product_capa, String delivery_company, String member_nickname, 
 							String member_idx, String product_idx) {return 0;}
 	default int updateProductInfo (String product_info_amount,

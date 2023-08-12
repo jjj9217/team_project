@@ -33,21 +33,22 @@
     /* 바디 CSS */
 
     #Container{
-        overflow:hidden;
-        width: 1020px; margin: 0 auto;
+    	display: block;
+        width: 1020px; height: auto; margin: 0 auto;
     }
     
     #mypage{
-        
+    	margin-top: 30px;
+    	display: block;        
         width: 199px;
         height:500px;
         float:left;     
     }
 
-    #mypage-conts{
-        
+    #mypage-conts{ 
+    	display: block;       
         width:810px;
-        height: 950px;      
+        height: auto;      
         float:left;
     }
 
@@ -246,7 +247,7 @@
     .month_btn{width: 60px; height: 30px; border-radius:5px; border: 1px solid #7d99a4; background-color: #fff; color: #7d99a4; font-weight: bold;}
     .month_btn_click{width: 60px; height: 30px; border-radius:5px; border: 1px solid #7d99a4; background-color: #7d99a4; color: #fff; font-weight: bold;}
     .tit_area{margin-bottom: 20px;}
-    .buy_list_container{width: 790px; height: auto; margin: 0 auto; padding: 10px; margin-top: 50px;}
+    .buy_list_container{display: block; width: 790px; height: auto; margin: 0 auto; padding: 10px; margin-top: 50px;}
     .buy_list{border-collapse: collapse;}
     .th_date{width: 135px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
     .th_name{width: 380px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
@@ -260,6 +261,31 @@
     .td_state{width: 105px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
     .top{border-top: 2px solid #4a4a4a}
     .bottom{border-bottom: 1px solid #a4a4a4}
+    .basket_item{
+            display: flex;
+            flex-wrap: wrap; 
+            width: 390px; height: 152px;
+            justify-content: center;
+            align-items: center;
+    }
+	.prd_seller{
+            display: inline-block;
+            width: 235px; height: 20px;
+            color:#4a4a4a;
+            font-size: 15px; font-weight: bold;
+            margin-bottom: 10px;
+            text-align: left;
+            margin-left: 15px;
+     }
+     .prd_title{
+         width: 235px; height: 36px;
+         color:black;
+         font-size: 14px;
+         margin-bottom: 5px;
+         text-align: left;
+         margin-left: 15px;
+     }    
+    .clear{clear:both;}
 </style>
 </head>
 
@@ -394,29 +420,38 @@
                     <th class="th_price top bottom">주문금액</th>
                     <th class="th_state top bottom">상태</th>
                 </tr>
-                <!-- 여기에 forEach문 -->
+                <c:forEach var="rowNum" begin="1" end="20">
                 <tr>
                     <td class="td_date bottom">
-                    2023.08.11<br>
-                    CF23081112345678                    
+                    <fmt:formatDate value="${orderList[rowNum-1].order_date}" pattern="yyyy.MM.dd" /><br>
+                    ${orderList[rowNum-1].order_num}                    
                     </td>
-                    <td class="td_name bottom">코카콜라</td>
-                    <td class="td_amount bottom">2</td>
-                    <td class="td_price bottom">20000</td>
+                    <td class="td_name bottom">
+             		<div class="basket_item">
+                    	<a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${orderList[rowNum-1].product_idx}">
+                        	<img src="../resources/uploads/${orderList[rowNum-1].saveFile}" width="85px" height="85px" alt="썸네일이미지">
+                        </a>
+                        <a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${orderList[rowNum-1].product_idx}">
+                            <span class="prd_seller">${orderList[rowNum-1].member_nickname}</span>
+                            <p class="prd_title">${orderList[rowNum-1].product_name}</p>
+                        </a>
+                    </div>
+					</td>
+                    <td class="td_amount bottom">${orderList[rowNum-1].order_product_count}</td>
+                    <td class="td_price bottom">
+                    <fmt:formatNumber value="${orderList[rowNum-1].order_product_count * orderList[rowNum-1].product_price}" pattern="###,###" /></td>
                     <td class="td_state bottom">
                     <button>리뷰작성</button>
                     <button>환불신청</button>
                     </td>
-                </tr>      
+                </tr>
+                </c:forEach>      
         </table>
 		</div>
-
-
-        
-        
     </div>
+    <div class="clear"></div>
 </div>
-
+	<div class="clear"></div>
     <footer>
 		<jsp:include page="../main/footer.jsp"/>		
 	</footer>
