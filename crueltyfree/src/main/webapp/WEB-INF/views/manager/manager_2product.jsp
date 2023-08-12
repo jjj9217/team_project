@@ -236,6 +236,80 @@
 		height:25px;
 		font: bold 13px Arial, Sans-serif;
 	}
+	.regi_line{
+		margin-top:30px;
+	}
+	.regi_left{
+		font-size:12px;
+		margin-top:7px;
+	}
+	.div_write{
+		margin-top:30px;
+		text-align:center;
+	}
+	.regi_box{
+		padding-left:10px;
+		border-color:#7d99a4; 
+		border-style:solid; 
+		width:375px; 
+		height:35px; 
+		border-radius:5px;
+	}
+	.regi_box2{
+		padding-left:5px;
+		border-color:#7d99a4; 
+		border-width:2px; 
+		border-style:solid; 
+		width:387px; 
+		height:38px; 
+		border-radius:5px;
+	}
+	#num{
+		color:gray; 
+		font-size:17px;
+	}
+	#hr{
+		margin-top:10px; 
+		height:5px; 
+		background-color:#7d99a4;
+		border:0;
+	}
+	#edit_btn{
+		background-color:#7d99a4; 
+		color:white; 
+		border:0; 
+		border-radius:3px; 
+		width:170px; 
+		height:38px; 
+		font: bold 13px Arial, Sans-serif;
+	}
+	#cancel_btn{
+		background-color:rgb(221, 219, 214); 
+		border:0; 
+		border-radius:3px; 
+		width:170px; 
+		height:38px;	
+		font: bold 13px Arial, Sans-serif; 
+		cursor:pointer;
+	}
+	.ellipsis {
+		width:100px;
+	  	height: auto;
+  		overflow: hidden;
+  		text-overflow: ellipsis;
+  		white-space:nowrap;
+	}
+	.ellipsis2 {
+		width:70px;
+	  	height: auto;
+  		overflow: hidden;
+  		text-overflow: ellipsis;
+  		white-space:nowrap;
+	}
+    input[type="checkbox"]{
+		accent-color:#7d99a4;
+		cursor: pointer;
+    }
 </style>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -251,16 +325,56 @@ $(function(){
 		}
     });
     
- $(".test33").click(function(){
-	let index = $(".test33").index(this);
+ $(".edit").click(function(){
+	let index = $(".edit").index(this);
 	$(".modalContainer").eq(index).removeClass("hidden");
 });
     $(".modalCloseButton").click(function(){
     	let index = $(".modalCloseButton").index(this);
     	$(".modalContainer").eq(index).addClass("hidden");
     });
+    $("#delete_btn").click(function(){
+    	let confirmAns = confirm("정말 선택삭제 하시겠습니까?");
+    	if(confirmAns){
+    		document.adminfrm.submit();
+    		return true;
+    	} 
+    });
 })
-
+</script>
+<script>
+window.onload = function () {
+	const checkAll = document.getElementById('chkAll');
+	const chks = document.querySelectorAll('.chk');  
+	const chkBoxLength = chks.length;
+	 
+	checkAll.addEventListener('click', function(event) {
+	    if(event.target.checked)  {
+	        chks.forEach(function(value){
+	        value.checked = true;
+	    })
+	    }else {
+	       chks.forEach(function(value){
+	       value.checked = false;
+	    })
+	 }
+	  });
+	for (chk of chks){
+	    chk.addEventListener('click', function() {
+	        let count = 0;
+	        chks.forEach(function(value){
+	            if(value.checked == true){
+	                count++;
+	            }
+	        })
+	        if(count !== chkBoxLength){
+	            checkAll.checked = false;
+	        }else{
+	            checkAll.checked = true;
+	        }
+	      })
+	}
+	 }
 
 </script>
 
@@ -289,8 +403,8 @@ $(function(){
 	</div>
 	<div id="content">
 		<h5>판매자 제품 정보 관리</h5>
-	<hr id="hr">
-	
+	<hr style="margin-top:30px; ">
+		   
 		<div id="main">
     	<div id="total">
                 	<span>총 제품수 :</span> <span id="total2">${pageNav.totalRows}</span></div>
@@ -306,11 +420,11 @@ $(function(){
                     </form>
               </div>
          </div>
-	 
     <!-- 글목록 테이블 -->
+	            <form name="managerfrm" method="post" action="manager_product_drop_process.do">
     <table id="tbl_list" style="margin-top:80px;">
         <tr>
-        	<th></th>
+        	<th><input type="checkbox" id="chkAll"></th>
             <th width="">상품번호</th>
             <th width="">상품이름</th>
             <th width="">상품가격</th>
@@ -333,30 +447,31 @@ $(function(){
 				</tr>
 			</c:when>
 			<c:otherwise>
-				<form id="" name="" method="post">
+
 				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
 					<tr>
-						<td><input type="checkbox" name="checkedValue" value="${proSelectList[rowNum-1].product_idx}"></td>
+						<td><input type="checkbox" name="checkedValue" class="chk" value="${proSelectList[rowNum-1].product_idx}"></td>
 						<td>${proSelectList[rowNum-1].product_idx}</td>					
-						<td>${proSelectList[rowNum-1].product_name}</td>
-						<td>${proSelectList[rowNum-1].product_price}</td>
+						<td><div class="ellipsis">${proSelectList[rowNum-1].product_name}</div></td>
+                        <fmt:formatNumber value="${proSelectList[rowNum-1].product_price}" type="number" var="formatNumber"/>						
+						<td>${formatNumber}</td>
 						<td>${proSelectList[rowNum-1].product_capa}</td>
 						<td>${proSelectList[rowNum-1].delivery_company}</td>
-						<td>${proSelectList[rowNum-1].member_nickname}</td>
+						<td><div class="ellipsis2">${proSelectList[rowNum-1].member_nickname}</div></td>
 						<td>
-						<input type="button" id="edit" class="edit" value="상세" onclick="location.href='manager_2product_edit.do?no=${proSelectList[rowNum-1].product_idx}'">
-						<input type="button" id="delete" class="delete" value="삭제">
-						<input type="button" id="test33" class="test33" value="테스트">			
+						<input type="button" id="edit" class="edit" value="상세">
+						<input type="button" id="delete" class="delete" value="삭제">	
 						</td>
 					</tr>
 				</c:forEach>
-				</form>
+			
 			</c:otherwise>
 		</c:choose>
     </table>
-    
+    	</form>
        <input type="submit" name="delete_btn" id="delete_btn" value="선택삭제" >
-   
+
+    
  
 		<div id="paging" class="pull-left">
 				<div id="td_paging">
@@ -376,8 +491,10 @@ $(function(){
 	
     <div class="modalContainer hidden">
 	<div class="modalContent">
-		상품정보변경 상품번호:${proSelectList[rowNum-1].product_idx} <button class="modalCloseButton">X</button>
 		
+		<div class="modalCloseButton"><img src="../resources/img/cancel.png" style="width: 25px; height: 25px; cursor:pointer; float:right;"></div>
+		<span>상품정보</span> <span id="num">(상품번호:${proSelectList[rowNum-1].product_idx})</span>
+		<hr id="hr">				
 
 	<form name="form_update" method="post" action="edit_pro_process.do" enctype="multipart/form-data" 
           onsubmit="return validateForm()">
@@ -392,7 +509,7 @@ $(function(){
 		</article>
 	</div>
 	
-	<div class="regi_line">
+	<div class="regi_line2">
 		<article class="regi_left" style="vertical-align: top;">
 			&nbsp;&nbsp;<a>가격</a>
 		</article>
@@ -401,7 +518,7 @@ $(function(){
 		</article>
 	</div>
 	
-	<div class="regi_line">
+	<div class="regi_line3">
 		<article class="regi_left" style="vertical-align: top;">
 			&nbsp;&nbsp;<a>상품 재고</a>
 		</article>
@@ -410,12 +527,12 @@ $(function(){
 		</article>
 	</div>
 	
-	<div class="regi_line">
+	<div class="regi_line4">
 		<article class="regi_left" style="vertical-align: top;">
 			&nbsp;&nbsp;<a>택배사</a>
 		</article>
 		<article class="regi_right">
-			<select class="regi_box" name="delivery_company1">
+			<select class="regi_box2" name="delivery_company1">
 				<option value="0">무료</option>
 			</select>
 		</article>
@@ -426,8 +543,8 @@ $(function(){
 	
 	<!-- 등록 버튼 -->
 	<div class="div_write">
-		<input type="submit" id="edit_pro_btn" value="수정하기">
-		<input type="reset" id="edit_pro_cancel" value="취소하기" onclick="location.href='manager_2product.do';">
+		<input type="submit" id="edit_btn" value="수정하기">
+		<input type="reset" id="cancel_btn" value="취소하기" onclick="location.href='manager_2product.do';">
 	</div>
 </form>
 		
