@@ -158,6 +158,9 @@
 				<if test="category_code != null">
 					category_code = #{category_code},
 				</if>
+				<if test="category_code_small != null">
+					category_code_small = #{category_code_small},
+				</if>
 				<if test="product_name != null">
 					product_name = #{product_name},
 				</if>
