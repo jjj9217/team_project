@@ -1,6 +1,7 @@
 package com.crfr.controller;
 
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -382,6 +383,13 @@ public class ManagerController {
 		model.addAttribute("searchWord", searchWord);
 		
 		List<OneInqVo> oneSelectList = oneSList.oneSelectList(searchField,searchWord);//게시물 목록
+		for(OneInqVo vo : oneSelectList) {
+			if(vo.getOne_inq_regDate() != null) {
+				Date orderDate = vo.getOne_inq_regDate();
+				Date adjustedDate = new Date(orderDate.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초로 변환하여 뺌
+				vo.setOne_inq_regDate(adjustedDate);				
+			}
+		}
 		model.addAttribute("oneSelectList",oneSelectList);			
 		
 		List<OneInqVo> oneinqList = oneList.getList();
@@ -393,6 +401,8 @@ public class ManagerController {
 		pageNav.setTotalRows(totRows);
 		pageNav=mPage.setPageNav(pageNav, pageNum, pageBlock);
 		model.addAttribute("pageNav",pageNav);
+	
+		
 		return "manager/manager_41d1";
 	}
 	@GetMapping("/manager_5sign.do")
@@ -570,7 +580,5 @@ public class ManagerController {
 		
 		return viewPage;
 	}
-
-
 	
 }

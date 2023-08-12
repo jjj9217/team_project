@@ -242,6 +242,7 @@
 		border-radius:5px;
 	}
 	.regi_box2{
+		padding-left:5px;
 		border-color:#7d99a4; 
 		border-width:2px; 
 		border-style:solid; 
@@ -276,6 +277,14 @@
 		height:38px;	
 		font: bold 13px Arial, Sans-serif; 
 		cursor:pointer;
+	}
+	.ellipsis {
+		width:100px;
+	  	height: auto;
+  		overflow: hidden;
+  		text-overflow: ellipsis;
+  		white-space:nowrap;
+  		background-color:pink;
 	}
 </style>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -376,11 +385,28 @@ $(function(){
 				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
 					<tr>
 						<td>${memSelectList[rowNum-1].member_idx}</td>
-						<td>${memSelectList[rowNum-1].member_id}</td>
+						<td><div class="ellipsis">${memSelectList[rowNum-1].member_id}</div></td>
 						<td>${memSelectList[rowNum-1].member_name}</td>
 						<td>${memSelectList[rowNum-1].member_handphone}</td>
-						<td>${memSelectList[rowNum-1].member_gender}</td>
-						<td>${memSelectList[rowNum-1].member_grade}</td>
+						<td>
+								<c:if test="${memSelectList[rowNum-1].member_gender eq 'M'}">
+										<img src="../resources/img/male.png" width="15px" height="15px">
+								</c:if>
+								<c:if test="${memSelectList[rowNum-1].member_gender eq 'F'}">
+										<img src="../resources/img/female.png" width="15px" height="15px">	
+								</c:if>
+						</td>
+						<td>
+								<c:if test="${memSelectList[rowNum-1].member_grade eq '0'}">
+										회원
+								</c:if>
+								<c:if test="${memSelectList[rowNum-1].member_grade eq '1'}">
+										판매자
+								</c:if>
+								<c:if test="${memSelectList[rowNum-1].member_grade eq '2'}">
+										관리자
+								</c:if>
+						</td>
 						<td>	
 						<input type="button" id="edit" class="edit" value="상세">
 						<input type="button" id="delete" class="delete" value="탈퇴">
@@ -443,8 +469,10 @@ $(function(){
 			<a>성별</a>
 		</article>
 		<article class="regi_right">
-			<input type="text" name="member_gender" class="regi_box" value="${memSelectList[rowNum-1].member_gender}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
-			
+			<select class="regi_box2" name="member_gender" >
+				<option value="M">남자</option>
+				<option value="F">여자</option>
+			</select>
 		</article>
 	</div>
 	
