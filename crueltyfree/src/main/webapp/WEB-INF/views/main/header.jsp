@@ -175,110 +175,6 @@ function getParameterValue(parameterName) {
     return null; // 파라미터가 없으면 null 반환
 }
 
-function ProductDetail(searchWord, category_code, category_code_small, 
-		product_price_min, product_price_max, sort_salecount, sort_view, 
-		pageNum, pageBlock) {       
-    
-	var insertsearchWord = "";
-	const paramsearchWord = getParameterValue("searchWord");	
-	if(searchWord === ""){
-		if(paramsearchWord === null){
-		insertsearchWord = '';}
-		else{
-		insertsearchWord = paramsearchWord;}
-	}else{
-		insertsearchWord = searchWord;
-	}
-	
-	
-	var insertcategory_code ="";
-	const paramcategory_code = getParameterValue("category_code");
-	if(category_code === ""){
-        if(paramcategory_code === null){
-        insertcategory_code = '';}
-        else{
-        insertcategory_code = paramcategory_code;}
-    }else{
-    	insertcategory_code = category_code;
-    }
-
-	
-	var insertcategory_code_small ="";
-    const paramcategory_code_small = getParameterValue("category_code_small");
-    if(category_code_small === ""){
-        if(paramcategory_code_small === null){
-        insertcategory_code_small = '';}
-        else{
-        insertcategory_code_small = paramcategory_code_small;}
-    }else{
-        insertcategory_code_small = category_code_small;
-    }
-    
-    
-    var insertproduct_price_min ="";
-    const paramproduct_price_min = getParameterValue("product_price_min");
-    if(product_price_min === ""){
-        if(paramproduct_price_min === null){
-        insertproduct_price_min = 0;}
-        else{
-        insertproduct_price_min = paramproduct_price_min;}
-    }else{
-        insertproduct_price_min = product_price_min;
-    }
-	
-	
-    var insertproduct_price_max ="";
-    const paramproduct_price_max = getParameterValue("product_price_max");
-    if(product_price_max === ""){
-        if(paramproduct_price_max === null){
-        insertproduct_price_max = 0;}
-        else{
-        insertproduct_price_max = paramproduct_price_max;}
-    }else{
-        insertproduct_price_max = product_price_max;
-    }
-    
-    
-    var insertsort_salecount ="";
-    const paramsort_salecount = getParameterValue("sort_salecount");
-    if(sort_salecount === ""){
-        if(paramsort_salecount === null){
-        insertsort_salecount = '';}
-        else{
-        insertsort_salecount = paramsort_salecount;}
-    }else{
-        insertsort_salecount = sort_salecount;
-    }
-    
-    
-    var insertsort_view ="";
-    const paramsort_view = getParameterValue("sort_view");
-    if(sort_view === ""){
-        if(paramsort_view === null){
-        insertsort_view = 15;}
-        else{
-        insertsort_view = paramsort_view;}
-    }else{
-        insertsort_view = sort_view;
-    }
-    
-    
-	// 새 URL 구성    
-    var newURL = "product_list_enter_searchword.do" +  
-    "?searchWord=" + insertsearchWord +
-    "&category_code=" + insertcategory_code +
-    "&category_code_small=" + insertcategory_code_small +
-    "&product_price_min=" + insertproduct_price_min +
-    "&product_price_max=" + insertproduct_price_max +
-    "&sort_salecount=" + insertsort_salecount +
-    "&sort_view=" + insertsort_view +
-    "&pageNum=" + pageNum +
-    "&pageBlock=" + pageBlock;
-    // URL로 이동
-    window.location.href = newURL;
-
-    
-}
 
 </script>
 
@@ -311,7 +207,7 @@ function ProductDetail(searchWord, category_code, category_code_small,
 	<!-- 검색창 -->
 	<div class="head_search">
 <form id="searchF" action="${pageContext.request.contextPath}/product/product_list_enter_searchword.do">	
-		<input type="text" name="searchWord" id="head_searchWord" placeholder="검색어를 입력해 주세요">
+		<input type="text" name="searchWord" id="head_searchWord" placeholder="검색어를 입력해 주세요" >
 		<button type="button" id="head_searchBtn" onclick="searchplz()"><img src="${pageContext.request.contextPath}/resources/img/search_img.png" style="width: 21px; height: 21px; margin-left: -4px; margin-top: -1px;"></button>
 </form>	
 	</div>
