@@ -9,6 +9,50 @@
 <head>
 <meta charset="UTF-8">
 <title>주문/배송 조회 | CrueltyFree</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script> 
+<script>
+$(function(){
+  $(".refund_btn").click(function(){
+	  var index = $(".refund_btn").index(this);
+	  var order_idx = $(".refund_order_idx").eq(index).val();
+	  var order_num = $(".refund_order_num").eq(index).val();
+	  
+	  var confirmation = confirm("환불을 진행하시겠습니까?");
+	  
+	  if(confirmation){
+		  $.ajax({
+			  type: "post",
+			  url: "${pageContext.request.contextPath}/purchase/refund_process.do",
+			  data: JSON.stringify({
+				  "merchant_uid":order_num,//결제 UID
+				  "order_idx":order_idx//order_idx
+				  }), 
+				  //JSON.stringify(JSON타입 객체): JSON타입 객체를 String객체로 변환시킴
+			  contentType: "application/json;charset=utf-8;",
+			  //contentType: 사용자가 서버로 보내는 내용의 MIME타입
+			  success: function(data) {
+				  if(data == "success"){
+					  alert("환불에 성공하였습니다.");
+					  window.location.href = "${pageContext.request.contextPath}/mypage/mypage_orderinq.do";
+				  }else{
+					  alert("환불에 실패하였습니다.");
+				  }
+			  },
+			  error: function(error) {
+				  alert("ajax 에러 발생");
+			  }
+		  });//end of ajax		  
+	  }else{
+		  // 사용자가 취소를 선택한 경우
+	      alert("환불이 취소되었습니다.");		  
+	  }
+	  
+
+  })//end of btn click
+	
+});
+</script>       
 <style>
 *{margin: 0; padding: 0;}
     a{text-decoration: none;}
@@ -248,7 +292,7 @@
     .month_btn_click{width: 60px; height: 30px; border-radius:5px; border: 1px solid #7d99a4; background-color: #7d99a4; color: #fff; font-weight: bold;}
     .tit_area{margin-bottom: 20px;}
     .buy_list_container{display: block; width: 790px; height: auto; margin: 0 auto; padding: 10px; margin-top: 50px;}
-    .buy_list{border-collapse: collapse;}
+    .buy_list, .order_list{border-collapse: collapse;}
     .th_date{width: 135px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
     .th_name{width: 380px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
     .th_amount{width: 65px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
@@ -258,7 +302,7 @@
     .td_name{width: 370px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
     .td_amount{width: 45px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
     .td_price{width: 105px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px; color:#7d99a4; font-weight: bold;}
-    .td_state{width: 105px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .td_state{width: 105px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px; color:#4a4a4a; font-weight: bold;}
     .top{border-top: 2px solid #4a4a4a}
     .bottom{border-bottom: 1px solid #a4a4a4}
     .basket_item{
@@ -284,6 +328,9 @@
          margin-bottom: 5px;
          text-align: left;
          margin-left: 15px;
+     }
+     .refund_btn{
+     	width: 60px; height: 30px; border-radius:5px; border: 1px solid #7d99a4; background-color: #fff; color: #7d99a4; font-weight: bold;
      }    
     .clear{clear:both;}
 </style>
@@ -407,46 +454,94 @@
         </fieldset>
         <br>
         <p class="buy_list_txt">
-            <span class="span_txt">2017년 4월 1일 이후 내역만 조회가 가능하며, 이전의 주문내역은 CJMall 주문내역에서 확인하실 수 있습니다.</span>
-            <span class="span_txt">매장 구매는 CJ ONE 포인트 적립을 한 경우, 최근 1년 내역만 조회가 가능합니다. (2019년 9월 27일 이후 내역만 조회 가능)</span>
         </p>
         </div>
         <div class="buy_list_container">
-        <table class="buy_list">
-                <tr>
-                    <th class="th_date top bottom">주문일자</th>
-                    <th class="th_name top bottom">상품</th>
-                    <th class="th_amount top bottom">수량</th>
-                    <th class="th_price top bottom">주문금액</th>
-                    <th class="th_state top bottom">상태</th>
-                </tr>
-                <c:forEach var="rowNum" begin="1" end="20">
+		<table class="order_list">
+        <tr>
+            <th class="th_date top bottom">주문일자</th>
+            <th class="th_name top bottom">상품</th>
+            <th class="th_amount top bottom">수량</th>
+            <th class="th_price top bottom">주문금액</th>
+            <th class="th_state top bottom">상태</th>
+        </tr>
+        <c:forEach var="orderRow" begin="1" end="10">
+        <tr>
+        <td>
+		<table class="buy_list">
+                <c:forEach var="orderProduct" items="${orderList[orderRow-1]}" varStatus="loop">
                 <tr>
                     <td class="td_date bottom">
-                    <fmt:formatDate value="${orderList[rowNum-1].order_date}" pattern="yyyy.MM.dd" /><br>
-                    ${orderList[rowNum-1].order_num}                    
+                    <fmt:formatDate value="${orderProduct.order_date}" pattern="yyyy.MM.dd" /><br>
+                    ${orderProduct.order_num}                    
                     </td>
                     <td class="td_name bottom">
              		<div class="basket_item">
-                    	<a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${orderList[rowNum-1].product_idx}">
-                        	<img src="../resources/uploads/${orderList[rowNum-1].saveFile}" width="85px" height="85px" alt="썸네일이미지">
+                    	<a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${orderProduct.product_idx}">
+                        	<img src="../resources/uploads/${orderProduct.saveFile}" width="85px" height="85px" alt="썸네일이미지">
                         </a>
-                        <a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${orderList[rowNum-1].product_idx}">
+                        <a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${orderProduct.product_idx}">
                             <span class="prd_seller">${orderList[rowNum-1].member_nickname}</span>
-                            <p class="prd_title">${orderList[rowNum-1].product_name}</p>
+                            <p class="prd_title">${orderProduct.product_name}</p>
                         </a>
                     </div>
 					</td>
-                    <td class="td_amount bottom">${orderList[rowNum-1].order_product_count}</td>
+                    <td class="td_amount bottom">${orderProduct.order_product_count}</td>
                     <td class="td_price bottom">
-                    <fmt:formatNumber value="${orderList[rowNum-1].order_product_count * orderList[rowNum-1].product_price}" pattern="###,###" /></td>
+                    <fmt:formatNumber value="${orderProduct.order_product_count * orderProduct.product_price}" pattern="###,###" />원</td>
                     <td class="td_state bottom">
-                    <button>리뷰작성</button>
-                    <button>환불신청</button>
+                    <c:choose>
+                    <c:when test="${orderProduct.order_ing == 0}">
+                    <!-- 출고대기 상태일때 -->
+                    주문완료<br><br>
+                    <button class="refund_btn">환불신청</button>
+                    </c:when>
+                    <c:when test="${orderProduct.order_ing == 1}">
+                    <!-- 출고준비중 상태일때 -->
+                    상품준비중
+                    <button class="refund_btn">환불신청</button>
+                    </c:when>
+                    <c:when test="${orderProduct.order_ing == 2}">
+                    <!-- 배송중 상태일때 -->
+                    상품배송중
+                    <input type="hidden" class="refund_btn">
+                    </c:when>
+                    <c:when test="${orderProduct.order_ing == 3}">
+                    <!-- 출고완료 상태일때 -->
+                    배송완료
+                    <input type="hidden" class="refund_btn">
+                    </c:when>
+                    <c:otherwise>
+                    <!-- 출고취소 상태일때 -->
+                    <c:choose>
+	                    <c:when test="${orderProduct.order_status == 1}">
+	                    <!-- 교환상태 -->
+	                    상품교환
+	                    <input type="hidden" class="refund_btn">
+	                    </c:when>
+	                    <c:when test="${orderProduct.order_status == 2}">
+	                    <!-- 환불상태 -->
+	                    환불완료
+	                    <input type="hidden" class="refund_btn">
+	                    </c:when>
+	                    <c:otherwise>
+	                    <!-- 취소상태 -->
+	                    취소완료
+	                    <input type="hidden" class="refund_btn">
+	                    </c:otherwise>
+                    </c:choose>
+                    </c:otherwise>
+                    </c:choose>
+                    <input type="hidden" class="refund_order_idx" value="${orderProduct.order_idx}">
+                    <input type="hidden" class="refund_order_num" value="${orderProduct.order_num}">
                     </td>
                 </tr>
                 </c:forEach>      
         </table>
+        </td>        
+        </tr>
+        </c:forEach>
+        </table>         
 		</div>
     </div>
     <div class="clear"></div>

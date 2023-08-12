@@ -45,14 +45,18 @@ public class OrderDeliveryController {
 			member_idx = memberVo.getMember_idx();
 		}
 		
-		List<OrderListVo> orderList = new ArrayList<>(); // 빈 리스트로 초기화
 		List<OrderVo> orderVoList = mSelectOrderVo.selectOrderVo(member_idx);//주문리스트 받아오기
+		
+		List<List<OrderListVo>> orderList = new ArrayList<>(); //order기준 리스트세팅
+		
+		int listTr = 0; //생성될 tr의 수
 		
 		for(OrderVo orderVo : orderVoList) {
 			int order_idx = orderVo.getOrder_idx();
 					
-			List<OrderProductVo> orderProductList = mSelectOrderProduct.selectOrderProduct(order_idx);
-			for(OrderProductVo orderProductVo : orderProductList) {
+			List<OrderProductVo> orderProduct = mSelectOrderProduct.selectOrderProduct(order_idx);
+			List<OrderListVo> orderProductList = new ArrayList<>();//리스트1개에 담길 리스트생성
+			for(OrderProductVo orderProductVo : orderProduct) {				
 				int product_idx = orderProductVo.getProduct_idx();
 				ProductVo productVo = pSelectView.selectView(product_idx); //상품번호의 상품Vo
 			    FileVo fileVo = pSelectThumbnail.selectThumbnail(product_idx); //상품번호의 파일Vo중 1번째
@@ -70,9 +74,10 @@ public class OrderDeliveryController {
 			    orderListVo.setOrder_product_count(orderProductVo.getOrder_product_count());
 			    orderListVo.setOrder_status(orderVo.getOrder_status());
 			    orderListVo.setProduct_idx(product_idx);
-			    
-			    orderList.add(orderListVo); // basketList에 추가
+			    orderListVo.setOrder_ing(orderVo.getOrder_ing());
+			    orderProductList.add(orderListVo); // 주문상품리스트에 추가
 			}//주문상품 for문 종료
+			orderList.add(orderProductList);//주문상품 리스트를 주문리스트에 추가
 		}//주문테이블vo for문 종료
 		
 		model.addAttribute("orderList", orderList); // basketList를 모델에 추가	

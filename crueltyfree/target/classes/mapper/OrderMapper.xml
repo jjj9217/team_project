@@ -91,7 +91,8 @@
 	<!-- 환불후 주문테이블 업데이트 -->
 	<update id="updateOrder" parameterType="map">
 		update `order` 
-			set order_status = "2"
+			set order_status = "2",
+    		order_ing = "4"
 			where order_idx = #{order_idx}
 	</update>	
 
