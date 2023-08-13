@@ -276,7 +276,7 @@
             <tr><td><hr width=100%></td></tr>
             <tr><td>장바구니</td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
-            <tr><td>쿠폰</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이활동</td></tr>
             <tr><td>1:1문의내역</td></tr>

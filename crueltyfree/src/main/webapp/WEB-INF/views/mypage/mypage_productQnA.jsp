@@ -155,36 +155,7 @@
     }   
 
 
-    .serach-period{
-        width: 100%;
-        border: 0px;
-        padding: 20px;
-        margin:0;
-    }
-
-    .buy_period_txt{
-        float: left;
-    }
-
-    .select-month{
-        float: left;
-        padding-left: 10px;
-    }
-
-    .select-range{
-        float: left;
-        padding-left: 79px;
-    }
-
-    #do-search-period{
-        height: 78px;
-        
-        color: white;       
-        margin-left: 74px;
-        padding-left: 20px;
-        padding-right: 20px;
-        
-    }
+    
 
     .buy_list{
         width: 100%;
@@ -249,65 +220,7 @@ submit();
         </div>
         
 
-        <fieldset class="serach-period">
-            <legend></legend>
-            <div class="select_con" id="selectOrderTypeZone.select_con">
-                <p class="buy_period_txt">구매 기간</p>
-                <ul class="select-month">
-                    <li class="buy_month"><button type="button" onclick="reviewReg();">1개월</button></li>
-                    <li class="buy_month"><button type="button">3개월</button></li>
-                    <li class="buy_month"><button type="button">6개월</button></li>
-                    <li class="buy_month"><button type="button">12개월</button></li>
-                </ul>
-            </div>
-            <div class="select-range">
-                
-
-
-                <select name="min_year" id="cal-start-year" title="년도를 선택하세요" style="width:76px;"><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023" selected="selected">2023</option></select>
-                <label for="cal-start-year">년</label>
-                <select name="min_month" id="cal-start-month" title="달월을 선택하세요" style="width:60px;">
-                    <option value="01">1</option>
-                    <option value="02">2</option>
-                    <option value="03">3</option>
-                    <option value="04">4</option>
-                    <option value="05">5</option>
-                    <option value="06" selected="selected">6</option>
-                    <option value="07">7</option>
-                    <option value="08">8</option>
-                    <option value="09">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                </select>
-                <label for="cal-start-month">월</label>
-                <select name="min_day" id="cal-start-day" title="날일을 선택하세요" style="width:60px;">
-                <option value="01">1</option><option value="02">2</option><option value="03">3</option><option value="04">4</option><option value="05">5</option><option value="06">6</option><option value="07">7</option><option value="08">8</option><option value="09">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27" selected="selected">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option></select>
-                <label for="cal-start-day">일</label>
-                <span class="des">~</span>
-                <select id="cal-end-year" title="년도를 선택하세요" style="width:76px;"><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023" selected="selected">2023</option></select>
-                <label for="cal-end-year">년</label>
-                <select id="cal-end-month" title="달월을 선택하세요" style="width:60px;">
-                    <option value="01">1</option>
-                    <option value="02">2</option>
-                    <option value="03">3</option>
-                    <option value="04">4</option>
-                    <option value="05">5</option>
-                    <option value="06">6</option>
-                    <option value="07" selected="selected">7</option>
-                    <option value="08">8</option>
-                    <option value="09">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                </select>
-                <label for="cal-end-month">월</label>
-                <select id="cal-end-day" title="날일을 선택하세요" style="width:60px;">
-                <option value="01">1</option><option value="02">2</option><option value="03">3</option><option value="04">4</option><option value="05">5</option><option value="06">6</option><option value="07">7</option><option value="08">8</option><option value="09">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27" selected="selected">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option></select>
-                <label for="cal-end-day">일</label>                          
-            </div>
-            <button type="button" class="btnLookup" id="do-search-period">조회</button>
-        </fieldset>
+        
         
         <table class="buy_list">
             <colgroup>
@@ -318,17 +231,151 @@ submit();
             <thead>
                 <hr width=100%>
                 <tr>
-                    <th scope="col">상품</th>
+                    <th scope="col">상품${inqfileList[0].saveFile}</th>
                     <th scope="col">문의내용</th>
                     <th scope="col">답변상태</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>${untitled}상품</td>
-                    <td>${untitled}문의내용</td>
-                    <td>${untitled}답변상태</td>
-                </tr>       
+            
+            
+            
+            
+            <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
+                    <!-- c:if nonreviewfileList[rowNum-1]. = null이면 리뷰안쓴목록만 출력하는방식도 있을 듯? -->
+                            <c:if test="${!empty inqproductList[rowNum-1].product_inq_content}">
+                <tr>                
+                    <td><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${inqfileList[rowNum-1].saveFile}">
+                        상품이름: ${inqproductList[rowNum-1].product_name}
+                        문의날짜: ${inqproductList[rowNum-1].product_inq_regDate}
+                    </td>                                        
+                    <td>문의내용: ${inqproductList[rowNum-1].product_inq_content}</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${empty inqproductList[rowNum-1].product_inq_answer}">
+                                답변대기
+                            </c:when>
+                            <c:when test="${!empty inqproductList[rowNum-1].product_inq_answer}">
+                                답변완료
+                            </c:when>
+                            <c:otherwise>
+                            </c:otherwise>
+                        </c:choose>                                                                            
+                    </td>                    
+                </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="modal" class="modal">    
+    <div class="modal-window">
+        <div class="title">
+            <h2>리뷰보기</h2>
+            <span class="close_modal">&times;</span>
+        <p>${rowNum}번째 Modal</p>
+        </div>
+        <div class="item_info">            
+                <c:if test="${!empty reviewproductList[rowNum-1].product_name}">
+                    <span class="thum"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${reviewfileList[rowNum-1].saveFile}"></span>
+                    <dl class="txt_info">
+                        <dt>상품이름: ${reviewproductList[rowNum-1].product_name}
+                            <input type="hidden" name="product_idx" value="${reviewproductList[rowNum-1].product_idx}">
+                        </dt>                                         
+                    </dl>
+                </c:if>
+        </div>
+        <ul class="write_step">
+            <li class="review_rating"><span class="review_tit">상품은 어떠셨나요? :별점은 숫자로나와야함 ${reviewproductList[rowNum-1].review_score}</span>
+                <ul class="star_inner">
+                    <input type="hidden" name="review_score" value="3">
+                    <li>★</li>
+                    <li>★</li>
+                    <li>★</li>
+                    <li>★</li>
+                    <li>★</li>
+                </ul>
+            </li>                     
+            <li id="review_content_back">
+                <span class="tit">솔직한 상품 리뷰</span>
+                <div class="review_content">
+                    <textarea id="review_content_textarea" name="review_content" disabled>${reviewproductList[rowNum-1].review_content}</textarea>
+                    <div class="review_content_bottom">
+                        <div class="count fix_txtNum" style="color:red"><!-- 25자 이하 입력 시 error class 추가 -->
+                            <b class="txt_en" style="color:red">0</b>
+                            <span>/</span> 1,000
+                        </div>
+                    </div>
+                </div>          
+            </li>                        
+            <li class="photo-update"><!-- 리뷰 고도화 : class 추가 -->
+                <div class="step_cont">
+                    <!-- 리뷰 고도화 : 추가 -->
+                    <div class="photo-list-info">
+                        <strong>포토</strong>
+                        번호: ${reviewRegList}, ${reviewproductList[0].review_idx}
+                    </div>
+                    <div class="rw-photo-list">
+                        <c:forEach var="fileVoList" items="${reviewRegList}">
+                            <c:forEach var="fileVo" items="${fileVoList}">
+                                <c:if test="${reviewproductList[rowNum-1].review_idx eq fileVo.review_idx}">
+                                       <span class="thum"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}"></span>
+                                </c:if>                                
+                            </c:forEach>
+                        </c:forEach>
+                        
+                        <%-- <c:forEach var="rowNumE" begin="1" end="5">
+                            <c:if test="${!empty reviewRegList[rowNumE-1].saveFile}">
+                                <span class="thum"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${reviewReg[rowNumE-1].saveFile}"></span>
+                            </c:if>
+                        </c:forEach>   --%>                      
+                    </div>
+                </div>
+            </li>       
+        </ul>
+        <!-- <div class="review_reg_background">                                                                     
+            <button type="button" class="btnLookup" id="review_ok">닫기</button>
+            <button type="button" class="reviewLookup" id="review_cancel" >리뷰 등록하기</button>                                  
+        </div> -->
+    </div>    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+                            </c:if>
+            </c:forEach>
+                        <tr><td>
+                        <c:if test="${empty inqproductList[0].product_inq_content}">
+                                문의한 상품내역이 없습니다.
+                            </c:if>
+                        </td></tr>                            
             </tbody>
 
 

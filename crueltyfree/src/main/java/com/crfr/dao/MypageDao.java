@@ -4,10 +4,12 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.crfr.vo.CouponVo;
 import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.LikeExploreVo;
 import com.crfr.vo.MemberVo;
+import com.crfr.vo.ProductInqVo;
 import com.crfr.vo.ReviewExploreVo;
 import com.crfr.vo.ReviewVo;
 
@@ -172,6 +174,28 @@ public class MypageDao {
 	return sqlSession.update(MAPPER+".updatereviewimg4", vo);
 	}
 	
+	
+	//상품문의 목록에 관한 Dao
+	public List<FileVo> selectproductinqListimg(int member_idx) {
+		return sqlSession.selectList(MAPPER+".selectproductinqListimg", member_idx);
+	}
+	
+	public List<ProductInqVo> selectproductinqList(int member_idx) {
+	return sqlSession.selectList(MAPPER+".selectproductinqList", member_idx);
+	}
+	
+	public int selectproductinqCount(int member_idx) {
+	return sqlSession.selectOne(MAPPER+".selectproductinqCount", member_idx);
+	}
+	
+	//쿠폰 목록에 관한 Dao
+	public List<CouponVo> selectcouponList(int member_idx) {
+		return sqlSession.selectList(MAPPER+".selectcouponList", member_idx);
+	}
+	
+	public int selectcouponListCount(int member_idx) {
+	return sqlSession.selectOne(MAPPER+".selectcouponListCount", member_idx);
+	}
 	
 	
 	public List<ReviewVo> reviewRegList2(ReviewVo vo) {

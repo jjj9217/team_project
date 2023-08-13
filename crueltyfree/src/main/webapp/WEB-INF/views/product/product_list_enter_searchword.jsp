@@ -406,100 +406,38 @@ function ProductDetail(searchWord, category_code, category_code_small,
     
     
     
-    alert('텍스트박스의 최저가값: '+minvalue);
     
     var insertproduct_price_min ="";
     const paramproduct_price_min = getParameterValue("product_price_min");
     
-    if(minvalue !== '0'){
-    	alert('Minvalue값확인:'+minvalue);
-    	alert('URL에 지정되어있는 최저가값:'+paramproduct_price_min);
-        
-    	if(paramproduct_price_min !== null){
-	        insertproduct_price_min = minvalue;
-	        alert('URL에 지정되어있는 최저가값이 Null이 아닐 때');
-	        pageNum=1;
-	        pageBlock=1;
-	        
-        }else{
-        	alert('뭐야왜이래');
-        	insertproduct_price_min = minvalue;
-        }
+    if(minvalue !== '0'){//최저가 입력했을때 
+    	insertproduct_price_min = minvalue; //사용자가 입력한값   	    	
+    }else{//최저가 입력안했을때   
+    	//안했는데 주소에 파라미터값이 없네? => 0
+    	if(paramproduct_price_min == null){//파라미터값이없을때
+            insertproduct_price_min = minvalue;         
+    	//안했는데 주소에 파라미터값이 있네? => 파람값
+        }else{//파라미터값이 있을때
+	    	insertproduct_price_min = paramproduct_price_min;            
+        }		
+    }    	        
     	
-    }else{
-    	var p = pageNum;
-    	if(p !== 1 && minvalue !== '0'){
-    		alert('min페이지넘'+pageNum);
-    	insertproduct_price_min=minvalue;
-    	pageNum=1;
-    	pageBlock=1;
-    	}else{
-    		insertproduct_price_min=minvalue;
-    	}
-		    	        
-    }
-	
-    if(minvalue !== 0){
-    	alert('대체 뭐가 문제야');
-    	alert('민밸류뭔데'+minvalue);
-    	alert(paramproduct_price_min);
-    	if(paramproduct_price_min !== 0 && paramproduct_price_min !== null ){
-    		if(minvalue ==='0'){
-    	insertproduct_price_min=paramproduct_price_min;
-    	alert('여기임?');}else{
-    		insertproduct_price_min=minvalue;    		
-    		}
-    	}else{
-    		insertproduct_price_min=minvalue;
-    		alert('여기로오나?');
-    	}
-    }
-    
-    
-    
-	
     var insertproduct_price_max ="";
     const paramproduct_price_max = getParameterValue("product_price_max");
 
-    if(maxvalue !== '10000000' ){
-    	alert('Maxvalue값확인:'+maxvalue);
-    	alert('URL에 지정되어있는 최저가값:'+paramproduct_price_max);
-        
-    	if(paramproduct_price_max !== null){
-	        insertproduct_price_max = maxvalue;
-	        alert('URL에 지정되어있는 최저가값이 Null이 아닐 때');
-	        pageNum=1;
-	        pageBlock=1;
-	        
-        }else{
-        	insertproduct_price_max = maxvalue;
-        }
-    	
+    if(maxvalue !== '10000000' ){        
+    	insertproduct_price_max= maxvalue;
     }else{
-    	var p = pageNum;
-    	if(p !== 1 && maxvalue !== '10000000'){
-    		alert('max페이지넘'+pageNum);
-    	insertproduct_price_max=maxvalue;
-    	pageNum=1;
-    	pageBlock=1;
-    	}else{
-    		insertproduct_price_max=maxvalue;
-    	}
+    	if(paramproduct_price_max == null){
+            insertproduct_price_max = maxvalue;                 
+        }else{
+            insertproduct_price_max = paramproduct_price_max;
+        } 
+    }
 		    	        
-    }
     
-    if(maxvalue !== 0){
-    	alert('여기를 고쳐보자 그러면 할만해');
-    	alert(paramproduct_price_max);
-    	insertproduct_price_max=paramproduct_price_max;
-    	
-    	if(paramproduct_price_max !== null ){
-        	insertproduct_price_max=paramproduct_price_max;
-        	}else{
-        		alert('떴냐?');
-        		insertproduct_price_max=maxvalue;
-        	}
-    }
+    
+ 
     
 //     if(maxvalue === 10000000){
 //         if(paramproduct_price_max === null){
@@ -812,7 +750,7 @@ function ProductDel(searchWord, category_code, category_code_small,
                 <ul class="list_classification">
 
                     &nbsp;&nbsp;&nbsp;<input type="text" name="product_price_min" id="product_price_min" class="price_input" placeholder="최저가">~<input type="text" name="product_price_max" id="product_price_max" class="price_input" placeholder="최고가">
-                    <button id="price_" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}');">가격대 적용</button>
+                    <button id="price_" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', 1, 1);">가격대 적용</button>
 
                 </ul>           
             </div>

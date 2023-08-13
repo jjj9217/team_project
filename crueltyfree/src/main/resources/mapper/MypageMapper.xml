@@ -413,7 +413,89 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <!-- 상품QnA 기간조회 -->
+         
+    <!-- 작성한 상품문의 목록의 상품 사진 -->
+    <select id="selectproductinqListimg" parameterType="_int" resultType="FileVo">
+       select * from product_inq
+           inner join product
+           on product.product_idx = product_inq.product_idx
+           inner join file
+           on product_inq.product_idx = file.product_idx
+           <where> 
+           product_inq.member_idx=#{member_idx}
+           and file.product_idx IS NOT NULL
+               AND (file.product_idx, file.file_idx) 
+                   IN (
+                   SELECT file.product_idx, MIN(file.file_idx)                   
+                   FROM file
+                   GROUP BY file.product_idx
+                   )
+           </where>        
+               order by product_inq_regDate desc;
+    </select>
+    
+    <!-- 작성한 상품문의의 상품 목록 -->
+    <select id="selectproductinqList" parameterType="_int" resultType="ProductInqVo">
+       select * from product_inq
+           inner join product
+           on product.product_idx = product_inq.product_idx
+           where product_inq.member_idx=#{member_idx}  
+               order by product_inq_regDate desc;
+    </select>
+    
+    <!-- 작성한 상품문의의 목록 개수 세기 -->
+    <select id="selectproductinqCount" parameterType="_int" resultType="_int">
+       select count(*) from product_inq
+           inner join product
+           on product.product_idx = product_inq.product_idx
+           where product_inq.member_idx=#{member_idx}  
+               order by product_inq_regDate desc;
+    </select>
+     
+   
+     
+     
+     <!-- 쿠폰 목록 -->
+    <select id="selectcouponList" parameterType="_int" resultType="CouponVo">
+       select * from coupon where member_idx=#{member_idx}
+                order by coupon_regDate;
+    </select>
+    
+    <!-- 쿠폰 목록 개수 세기 -->
+    <select id="selectcouponListCount" parameterType="_int" resultType="_int">
+       select count(*) from coupon where member_idx=#{member_idx}
+                order by coupon_regDate;
+    </select>
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+    
     
     
     
