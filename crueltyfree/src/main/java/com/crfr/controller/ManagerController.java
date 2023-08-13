@@ -163,6 +163,7 @@ public class ManagerController {
 		this.rvUpdate = rvUpdate;
 	}
 
+
 	
 	@GetMapping("/manager_1main.do")
 	public String manager_1main(Model model) {		
@@ -422,6 +423,13 @@ public class ManagerController {
 		model.addAttribute("searchWord", searchWord);
 		
 		List<OneInqVo> selSelectList = selSList.selSelectList(searchField,searchWord);//게시물 목록
+		for(OneInqVo vo : selSelectList) {
+			if(vo.getOne_inq_regDate() != null) {
+				Date orderDate = vo.getOne_inq_regDate();
+				Date adjustedDate = new Date(orderDate.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초로 변환하여 뺌
+				vo.setOne_inq_regDate(adjustedDate);				
+			}
+		}
 		model.addAttribute("selSelectList",selSelectList);
 		
 		List<OneInqVo> sellerList = selList.sellersignList();
@@ -462,6 +470,13 @@ public class ManagerController {
 		model.addAttribute("searchWord", searchWord);
 		
 		List<ProductInqVo> proinqSelectList = proinqSList.proinqSelectList(searchField,searchWord);//게시물 목록
+		for(ProductInqVo vo : proinqSelectList) {
+			if(vo.getProduct_inq_regDate() != null) {
+				Date orderDate = vo.getProduct_inq_regDate();
+				Date adjustedDate = new Date(orderDate.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초로 변환하여 뺌
+				vo.setProduct_inq_regDate(adjustedDate);			
+			}
+		}		
 		model.addAttribute("proinqSelectList",proinqSelectList);			
 		
 		
@@ -494,6 +509,13 @@ public class ManagerController {
 		model.addAttribute("searchWord", searchWord);
 		
 		List<ReviewVo> rvSelectList = rvSList.rvSelectList(searchField,searchWord);//게시물 목록
+		for(ReviewVo vo : rvSelectList) {
+			if(vo.getReview_regDate() != null) {
+				Date orderDate = vo.getReview_regDate();
+				Date adjustedDate = new Date(orderDate.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초로 변환하여 뺌
+				vo.setReview_regDate(adjustedDate);				
+			}
+		}
 		model.addAttribute("rvSelectList",rvSelectList);
 		
 		List<ReviewVo> reviewList = rvList.reviewList();

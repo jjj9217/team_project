@@ -297,7 +297,6 @@
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
-  		background-color:pink;
 	}
 	.ellipsis2 {
 		width:200px;
@@ -305,7 +304,6 @@
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
-  		background-color:pink;
 	}
 </style>
 
