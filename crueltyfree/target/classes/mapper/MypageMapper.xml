@@ -264,7 +264,8 @@
     <!-- 배송지 목록 -->
     <select id="selectdeliveryList" parameterType="_int" resultType="DeliveryVo">
         select * from delivery
-            where member_idx=#{member_idx}            
+            where member_idx=#{member_idx}
+            order by defaultpost desc;            
      </select>
      
      <!-- 배송지 목록 개수 세기 -->
@@ -273,7 +274,7 @@
             where member_idx=#{member_idx}
      </select>
 
-    <!-- 배송지 등록 -->
+    <!-- 기본 배송지 등록 -->
     <insert id="insertdeliveryPost" parameterType="DeliveryVo">
         insert into delivery(member_idx, 
 		                     delivery_address_name, 
@@ -295,6 +296,32 @@
 		                     #{delivery_postNum},
 		                     #{delivery_address},
 		                     #{delivery_address2}) 
+    </insert>
+    
+    <!-- 일반 배송지 등록 -->
+	<insert id="insertdeliveryPost_normal" parameterType="DeliveryVo">
+        insert into delivery(member_idx, 
+		                     delivery_address_name, 
+		                     delivery_get_name, 
+		                     delivery_handphone, 
+		                     delivery_message, 
+		                     delivery_pass, 
+		                     delivery_pass_content, 
+		                     delivery_postNum, 
+		                     delivery_address, 
+		                     delivery_address2,
+		                     defaultpost)
+		              values(#{member_idx},
+		                     #{delivery_address_name},
+		                     #{delivery_get_name},
+		                     #{delivery_handphone},
+		                     #{delivery_message},
+		                     #{delivery_pass},
+		                     #{delivery_pass_content},
+		                     #{delivery_postNum},
+		                     #{delivery_address},
+		                     #{delivery_address2},
+		                     #{defaultpost}) 
     </insert>
 
     <!-- 기본배송지 설정 -->
@@ -467,7 +494,11 @@
             where like_idx=#{like_idx}
     </delete>
     
-    
+	<!-- 좋아요 전체 삭제 -->
+	<delete id="deletelikeall" parameterType="LikeExploreVo">
+        delete from `like`
+            where member_idx=#{member_idx}
+    </delete>
     
     
     

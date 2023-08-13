@@ -1,6 +1,7 @@
 package com.crfr.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,8 +82,14 @@ public class ProductViewController {
 		//상품문의리스트
 		int productInqRows = pSelectProductInqCount.selectProductInqCount(product_idx);//상품문의 게시글 수
 		List<ProductInqVo> productInqList  = pSelectProductInq.selectProductInq(product_idx); //상품번호의 상품문의 리스트
-				
-		model.addAttribute("productInqRows", productInqRows); //productInqRows를 모델에 추가
+	    for(ProductInqVo productInqVo : productInqList) {
+	    	Date date = productInqVo.getProduct_inq_regDate(); // SQL 검색 결과에서 가져온 date 값
+	    	// 주문 날짜에 9시간을 뺀 후, Date로 변환하여 저장
+	    	Date adjustedDate = new Date(date.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초로 변환하여 뺌		
+	    	productInqVo.setProduct_inq_regDate(adjustedDate);
+	    }
+		
+	    model.addAttribute("productInqRows", productInqRows); //productInqRows를 모델에 추가
 		model.addAttribute("productInqList", productInqList); //productInqList를 모델에 추가
 		
 		//상품문의 페이지 네비게이션
@@ -164,6 +171,10 @@ public class ProductViewController {
 			reviewListVo.setProduct_idx(reviewVo.getProduct_idx());
 			reviewListVo.setReview_score(reviewVo.getReview_score());
 			reviewListVo.setReview_content(reviewVo.getReview_content());
+	    	Date date = reviewVo.getReview_regDate(); // SQL 검색 결과에서 가져온 date 값
+	    	// 주문 날짜에 9시간을 뺀 후, Date로 변환하여 저장
+	    	Date adjustedDate = new Date(date.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초로 변환하여 뺌		
+	    	reviewListVo.setReview_regDate(adjustedDate);
 			reviewListVo.setReview_regDate(reviewVo.getReview_regDate());
 			reviewListVo.setMember_nickname(reviewVo.getMember_nickname());
 			reviewListVo.setReview_recom_count(reviewVo.getReview_recom_count());
