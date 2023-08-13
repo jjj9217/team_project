@@ -3,6 +3,8 @@ package com.crfr.dao;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -81,8 +83,8 @@ public class ManagerDao{
 	public List<ReviewVo> rvSelectList(Map<String, Object> map) {		
 		return sqlSession.selectList(MAPPER+".rvSelectList",map);
 	}
-	public int delete(String product_name) {
-		return sqlSession.update(MAPPER+".delete", product_name);
+	public int delete(String product_idx) {
+		return sqlSession.update(MAPPER+".delete", product_idx);
 	}
 	public int memdelete(String member_idx) {
 		return sqlSession.delete(MAPPER+".memdelete", member_idx);

@@ -233,6 +233,27 @@ function deletelikelist(like_idx) {
     
 }
 
+
+
+function deletelikelistall() {
+    
+    var confirmAns = confirm("정말로 삭제하겠습니까!?");
+    
+    if (confirmAns) {
+        alert('성공');
+        
+        frm_view2.method = "get"; // 전송 방식 
+        frm_view2.action = "delete_process_likeall.do?" // 전송 경로
+        frm_view2.submit(); // 폼값 전송
+          
+        
+    }else{
+        alert('불가');
+    }
+    
+}
+
+
 </script>
 
 <body>
@@ -277,8 +298,12 @@ function deletelikelist(like_idx) {
         
         <p class="buy_list_txt">
             <span class="span_txt">전체${pageNav.totalRows}개<%--  | 좋아요 상품은 최대 ${untitled}일간 보관됩니다. --%>             
-            </span>         
-            <button type="button" id="all_del">전체삭제</button>
+            </span>
+            <form name="frm_view2"> 
+            <c:if test="${!empty likeproductList[0].product_name}">      
+            <button type="button" onclick="deletelikelistall();" id="all_del">전체삭제</button>
+            </c:if>
+            </from>            
         </p>
 <form name="frm_view">        
         <table class="buy_list">

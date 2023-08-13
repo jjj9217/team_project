@@ -4,10 +4,12 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.crfr.vo.CouponVo;
 import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.LikeExploreVo;
 import com.crfr.vo.MemberVo;
+import com.crfr.vo.ProductInqVo;
 import com.crfr.vo.ReviewExploreVo;
 import com.crfr.vo.ReviewVo;
 
@@ -77,9 +79,14 @@ public class MypageDao {
 		return sqlSession.selectOne(MAPPER+".selectdeliveryCount", member_idx);
 	}
 	
-	//배송지 등록하기
+	//기본배송지 등록하기
 	public int insertdeliveryPost(DeliveryVo vo) {
 		return sqlSession.insert(MAPPER+".insertdeliveryPost", vo);
+	}
+	
+	//노말배송지 등록하기
+	public int insertdeliveryPost_normal(DeliveryVo vo) {
+		return sqlSession.insert(MAPPER+".insertdeliveryPost_normal", vo);
 	}
 
 	//기본배송지 설정하기
@@ -131,6 +138,11 @@ public class MypageDao {
 		return sqlSession.delete(MAPPER+".deletelike", vo);
 	}
 	
+	//좋아요 전체 삭제하기
+	public int deletelikeall(LikeExploreVo vo) {
+		return sqlSession.delete(MAPPER+".deletelikeall", vo);
+	}
+	
 	//작성한 리뷰 사진목록에 관한 Dao
 	public List<FileVo> reviewRegList(FileVo vo) {
 	return sqlSession.selectList(MAPPER+".reviewRegList", vo);
@@ -162,6 +174,38 @@ public class MypageDao {
 	return sqlSession.update(MAPPER+".updatereviewimg4", vo);
 	}
 	
+	
+	//상품문의 목록에 관한 Dao
+	public List<FileVo> selectproductinqListimg(int member_idx) {
+		return sqlSession.selectList(MAPPER+".selectproductinqListimg", member_idx);
+	}
+	
+	public List<ProductInqVo> selectproductinqList(int member_idx) {
+	return sqlSession.selectList(MAPPER+".selectproductinqList", member_idx);
+	}
+	
+	public int selectproductinqCount(int member_idx) {
+	return sqlSession.selectOne(MAPPER+".selectproductinqCount", member_idx);
+	}
+	
+	//상품문의 삭제하기
+	public int deleteinq(ProductInqVo vo) {
+		return sqlSession.delete(MAPPER+".deleteinq", vo);
+	}
+	
+	//상품문의 수정하기
+	public int updateproductinq (ProductInqVo vo) {
+		return sqlSession.update(MAPPER+".updateproductinq", vo);
+	}
+	
+	//쿠폰 목록에 관한 Dao
+	public List<CouponVo> selectcouponList(int member_idx) {
+		return sqlSession.selectList(MAPPER+".selectcouponList", member_idx);
+	}
+	
+	public int selectcouponListCount(int member_idx) {
+	return sqlSession.selectOne(MAPPER+".selectcouponListCount", member_idx);
+	}
 	
 	
 	public List<ReviewVo> reviewRegList2(ReviewVo vo) {

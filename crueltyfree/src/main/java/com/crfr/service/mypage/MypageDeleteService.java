@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.crfr.dao.MypageDao;
 import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.LikeExploreVo;
+import com.crfr.vo.ProductInqVo;
 
 
 @Service("mpDelete")
@@ -24,4 +25,13 @@ public class MypageDeleteService implements MypageService {
 	public int deletelike(LikeExploreVo vo) {
 		return dao.deletelike(vo);
 	}
+	
+	public int deletelikeall(LikeExploreVo vo) {
+		return dao.deletelikeall(vo);
+	}
+	
+	public int deleteinq(ProductInqVo vo) {
+		return dao.deleteinq(vo);
+	}
+	
 }

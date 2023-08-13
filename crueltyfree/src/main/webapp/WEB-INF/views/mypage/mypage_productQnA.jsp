@@ -155,36 +155,7 @@
     }   
 
 
-    .serach-period{
-        width: 100%;
-        border: 0px;
-        padding: 20px;
-        margin:0;
-    }
-
-    .buy_period_txt{
-        float: left;
-    }
-
-    .select-month{
-        float: left;
-        padding-left: 10px;
-    }
-
-    .select-range{
-        float: left;
-        padding-left: 79px;
-    }
-
-    #do-search-period{
-        height: 78px;
-        
-        color: white;       
-        margin-left: 74px;
-        padding-left: 20px;
-        padding-right: 20px;
-        
-    }
+    
 
     .buy_list{
         width: 100%;
@@ -192,7 +163,82 @@
         
         text-align: center;
     }
+    
+    .goodlist_thumb{
+    	width:75px;
+    	height:75px;
+    }
+    
+    
+    
+    /* 모달 css*/
+    
+    #modal{
+        display: none;
+        justify-content: center;
+        width:100%;
+        height:100%;
+    }  
+    #modal .modal-window {
+        background: rgba( 69, 139, 197, 0.70 );
+        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+        backdrop-filter: blur( 13.5px );
+        -webkit-backdrop-filter: blur( 13.5px );
+        border-radius: 10px;
+        border: 1px solid rgba( 255, 255, 255, 0.18 );
+        width: 560px;
+        height: 700px;
+        position: relative;
+        top: -100px;
+        padding: 10px;
+        position: fixed;
+        top: 5%;
+        justify-content: center;
+         
+    }
+    #modal .title {
+        padding-left: 10px;
+        display: inline;
+        text-shadow: 1px 1px 2px gray;
+        color: white;
+        font-size: 20px;
+        
+    }
+    #modal .title h2 {
+        display: inline;
+    }
+    #modal .close-area {
+        display: inline;
+        float: right;
+        padding-right: 10px;
+        cursor: pointer;
+        text-shadow: 1px 1px 2px gray;
+        color: white;
+    }
+    
+    #modal .content {
+        margin-top: 20px;
+        padding: 0px 10px;
+        text-shadow: 1px 1px 2px gray;
+        color: white;
+    }
+	
+	
+	#review_content_back{
+        height: 210px;
+        
+    }
 
+    .review_content{
+        height: auto;
+    
+    }
+    
+    #review_content_textarea{
+        width: 475px;
+        height: 155px;
+        font-size: 15px;
+    }
 </style>
 </head>
 <script>
@@ -209,6 +255,10 @@ after.d = new Date(after.d); // 사용자의 타임존 기준으로 표시
 after.d instanceof Data // true
 submit();
 }
+
+
+
+
 </script>
 
 <body>
@@ -249,65 +299,7 @@ submit();
         </div>
         
 
-        <fieldset class="serach-period">
-            <legend></legend>
-            <div class="select_con" id="selectOrderTypeZone.select_con">
-                <p class="buy_period_txt">구매 기간</p>
-                <ul class="select-month">
-                    <li class="buy_month"><button type="button" onclick="reviewReg();">1개월</button></li>
-                    <li class="buy_month"><button type="button">3개월</button></li>
-                    <li class="buy_month"><button type="button">6개월</button></li>
-                    <li class="buy_month"><button type="button">12개월</button></li>
-                </ul>
-            </div>
-            <div class="select-range">
-                
-
-
-                <select name="min_year" id="cal-start-year" title="년도를 선택하세요" style="width:76px;"><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023" selected="selected">2023</option></select>
-                <label for="cal-start-year">년</label>
-                <select name="min_month" id="cal-start-month" title="달월을 선택하세요" style="width:60px;">
-                    <option value="01">1</option>
-                    <option value="02">2</option>
-                    <option value="03">3</option>
-                    <option value="04">4</option>
-                    <option value="05">5</option>
-                    <option value="06" selected="selected">6</option>
-                    <option value="07">7</option>
-                    <option value="08">8</option>
-                    <option value="09">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                </select>
-                <label for="cal-start-month">월</label>
-                <select name="min_day" id="cal-start-day" title="날일을 선택하세요" style="width:60px;">
-                <option value="01">1</option><option value="02">2</option><option value="03">3</option><option value="04">4</option><option value="05">5</option><option value="06">6</option><option value="07">7</option><option value="08">8</option><option value="09">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27" selected="selected">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option></select>
-                <label for="cal-start-day">일</label>
-                <span class="des">~</span>
-                <select id="cal-end-year" title="년도를 선택하세요" style="width:76px;"><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023" selected="selected">2023</option></select>
-                <label for="cal-end-year">년</label>
-                <select id="cal-end-month" title="달월을 선택하세요" style="width:60px;">
-                    <option value="01">1</option>
-                    <option value="02">2</option>
-                    <option value="03">3</option>
-                    <option value="04">4</option>
-                    <option value="05">5</option>
-                    <option value="06">6</option>
-                    <option value="07" selected="selected">7</option>
-                    <option value="08">8</option>
-                    <option value="09">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                </select>
-                <label for="cal-end-month">월</label>
-                <select id="cal-end-day" title="날일을 선택하세요" style="width:60px;">
-                <option value="01">1</option><option value="02">2</option><option value="03">3</option><option value="04">4</option><option value="05">5</option><option value="06">6</option><option value="07">7</option><option value="08">8</option><option value="09">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27" selected="selected">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option></select>
-                <label for="cal-end-day">일</label>                          
-            </div>
-            <button type="button" class="btnLookup" id="do-search-period">조회</button>
-        </fieldset>
+        
         
         <table class="buy_list">
             <colgroup>
@@ -324,11 +316,136 @@ submit();
                 </tr>
             </thead>
             <tbody>
+            
+            
+            
+                   
+            <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
+                    <!-- c:if nonreviewfileList[rowNum-1]. = null이면 리뷰안쓴목록만 출력하는방식도 있을 듯? -->
+                            <c:if test="${!empty inqproductList[rowNum-1].product_inq_content}">
+				
+				
+                <tr style="cursor:pointer;" class="viewinq">     	                
+                    <td><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${inqfileList[rowNum-1].saveFile}">
+                        상품이름: ${inqproductList[rowNum-1].product_name}
+                        문의날짜: ${inqproductList[rowNum-1].product_inq_regDate}
+                    </td>                                        
+                    <td>문의내용: ${inqproductList[rowNum-1].product_inq_content}</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${empty inqproductList[rowNum-1].product_inq_answer}">
+                                답변대기
+                            </c:when>
+                            <c:when test="${!empty inqproductList[rowNum-1].product_inq_answer}">
+                                답변완료
+                            </c:when>
+                            <c:otherwise>
+                            </c:otherwise>
+                        </c:choose>                                                                            
+                    </td>
+                </tr>
+                <tbody class="inqView" style="display:none;">
                 <tr>
-                    <td>${untitled}상품</td>
-                    <td>${untitled}문의내용</td>
-                    <td>${untitled}답변상태</td>
-                </tr>       
+                <td colspan='2'>
+                
+                
+                	                	
+                	문의내용 : ${inqproductList[rowNum-1].product_inq_content}<br>
+                	
+                	<c:if test="${!empty inqproductList[rowNum-1].product_inq_answer}">
+                	답변내용 : ${inqproductList[rowNum-1].product_inq_answer} 
+                	</c:if>
+                
+                    
+                </td>
+                <td>
+				<form class="inqdelform" action="${pageContext.request.contextPath}/mypage/mypage_inqdel_process.do" method="post">
+                <input type="hidden" name="product_inq_idx" value="${inqproductList[rowNum-1].product_inq_idx}">
+                <c:if test="${empty inqproductList[rowNum-1].product_inq_answer}">
+                <button type="button" class="oneinqModifyup">수정하기</button>
+                </c:if>
+                <button type="button" class="oneinqdel">삭제하기</button>                
+                </form>
+                
+                </td>
+                
+                </tr>
+                </tbody>
+			                   
+
+
+
+
+
+
+
+<!-- 상품문의 수정하기 Modal -->
+<form name="caq" class="oneModifyModal" action="${pageContext.request.contextPath}/mypage/mypage_oneinqModify_process.do" method="post">
+<div id="modal" class="modal_modify">    
+    <div class="modal-window">
+        <div class="title">
+            <h2>상품문의수정</h2>
+            <span class="close_modalmodify">&times;</span>        
+        </div>
+        <div class="item_info">            
+                <c:if test="${!empty inqproductList[rowNum-1].product_inq_idx}">
+                    <span class="thum"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${inqfileList[rowNum-1].saveFile}"></span>
+                    <dl class="txt_info">
+                        <dt>상품이름: ${inqproductList[rowNum-1].product_name}                            
+                        </dt>                                         
+                    </dl>
+                </c:if>
+        </div>
+        <ul class="write_step">                           
+            <li id="review_content_back">
+                <span class="tit">문의내용<br></span>
+                <div class="review_content">
+                    <br><textarea id="review_content_textarea" name="product_inq_content" placeholder="문의내용을 입력해주세요.">${inqproductList[rowNum-1].product_inq_content}</textarea>                          
+              			<input type="hidden" name="product_inq_idx" value="${inqproductList[rowNum-1].product_inq_idx}">
+                </div>          
+            </li>
+        </ul>
+        <div class="review_reg_background">                                                                     
+<!--             <button type="button" class="btnLookup" id="review_ok">닫기</button> -->
+            <button type="button" class="reviewModifyup" id="review_cancel" >문의 수정하기</button>                                  
+        </div>
+    </div>    
+</div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+                            </c:if>
+            </c:forEach>
+            
+                        <tr><td>
+                        <c:if test="${empty inqproductList[0].product_inq_content}">
+                                문의한 상품내역이 없습니다.
+                            </c:if>
+                        </td></tr>                            
             </tbody>
 
 
@@ -340,6 +457,57 @@ submit();
         
     </div>
 </div>
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(function(){
+    //jQuery
+   	$(".viewinq").click(function(){ 
+        var index = $(".viewinq").index(this);
+        
+        $(".inqView").eq(index).css("display", "block");      
+    });
+
+        
+//     $(".viewinq").click(function(){
+//         var index2 = $(".viewinq").index(this);
+        
+//         $(".inqView").eq(index2).css("display", "none");
+//     });
+    
+    
+    //수정하기 버튼 클릭시 모달 띄우기
+    $(".oneinqModifyup").click(function(){
+        var index = $(".oneinqModifyup").index(this);
+        
+        $(".modal_modify").eq(index).css("display", "block");      
+    });
+
+    //띄운 모달의 x버튼 클릭시 모달 닫기    
+    $(".close_modalmodify").click(function(){
+        var index2 = $(".close_modalmodify").index(this);
+        
+        $(".modal_modify").eq(index2).css("display", "none");
+    });
+        
+    //수정하기 폼 전달
+    $(".reviewModifyup").click(function(){
+        var index2 = $(".reviewModifyup").index(this);
+        alert("수정이 완료되었습니다.");
+        $(".oneModifyModal").eq(index2).submit();	//폼클래스명 적기                   
+    });
+    
+    
+    //삭제하기버튼
+    $(".oneinqdel").click(function(){
+        var index2 = $(".oneinqdel").index(this);
+        alert("작성이 완료되었습니다.");
+        $(".inqdelform").eq(index2).submit();        
+    });
+});
+</script>
+
+
 
     <footer>
 		<jsp:include page="../main/footer.jsp"/>		

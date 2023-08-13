@@ -32,4 +32,12 @@ public class MypageCountService implements MypageService {
 		return dao.selectlikeListCount(member_idx);
 	}
 	
+	public int selectproductinqCount(int member_idx) {
+	return dao.selectproductinqCount(member_idx);
+	}
+	
+	public int selectcouponListCount(int member_idx) {
+	return dao.selectcouponListCount(member_idx);
+	}
+	
 }
