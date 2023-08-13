@@ -502,11 +502,12 @@ public class MypageController {
 		String viewpage = "mypage_review_err";
 		// 배송지 등록
 		int insertreview=0;
+		System.out.println("배송지등록디폴트 기본설정시1인가?"+vo.getDefaultpost());
 		if(vo.getDefaultpost()==1) {		
-		insertreview = mpInsert.insertdeliveryPost(vo);
-		}else{
 			mpUpdate.updatedeliveryPostchangedefault(vo);
-			insertreview = mpInsert.insertdeliveryPost(vo);			
+			insertreview = mpInsert.insertdeliveryPost(vo);
+		}else{
+			insertreview = mpInsert.insertdeliveryPost_normal(vo);		
 		}
 		
 		// 배송지가 제대로 sql에 삽입되었다면 맨 처음 나의배송지페이지 주소값을 반환
@@ -682,13 +683,21 @@ public class MypageController {
 	@PostMapping("/delete_process_like.do")
 	public String deletedelike(@RequestParam("no")int like_idx, LikeExploreVo vo, HttpServletRequest request) {
 		//request객체는 세션에 저장된 회원번호를 알아내기 위해 필요함
-		
+		HttpSession session = request.getSession();
+		MemberVo mVo = (MemberVo)session.getAttribute("member");		
+		int member_idx = mVo.getMember_idx();	
+		vo.setMember_idx(member_idx);
+		System.out.println("Member번호뭐냐"+vo.getMember_idx());
 		System.out.println(like_idx);
 		vo.setLike_idx(like_idx);		
 		System.out.println("like받았나?"+vo.getLike_idx());
 		//System.out.println("DeliveryVo.member_idx"+vo.getMember_idx());
 		//글삭제 요청 처리를 위해 BoardFileDeleteService 클래스 이용
-		int result = mpDelete.deletelike(vo);
+		
+		int result=0; 
+		if(vo.getLike_idx() != 0) {
+			mpDelete.deletelike(vo);}
+		else {mpDelete.deletelikeall(vo);}
 		System.out.println("삭제됨?"+result);
 		String viewPage = "boast/view";
 		if(result==1) {//글삭제 성공시
@@ -697,7 +706,27 @@ public class MypageController {
 		return viewPage;			
 	}
 	
-		
+	//좋아요전체삭제 요청 처리
+	@GetMapping("/delete_process_likeall.do")
+	public String deletedelikeall(LikeExploreVo vo, HttpServletRequest request) {
+		//request객체는 세션에 저장된 회원번호를 알아내기 위해 필요함
+		HttpSession session = request.getSession();
+		MemberVo mVo = (MemberVo)session.getAttribute("member");		
+		int member_idx = mVo.getMember_idx();	
+		vo.setMember_idx(member_idx);
+		System.out.println("Member번호뭐냐"+vo.getMember_idx());		
+		System.out.println("like받았나?"+vo.getLike_idx());
+			//System.out.println("DeliveryVo.member_idx"+vo.getMember_idx());
+			//글삭제 요청 처리를 위해 BoardFileDeleteService 클래스 이용
+			
+			int result=mpDelete.deletelikeall(vo);
+			System.out.println("삭제됨?"+result);
+			String viewPage = "boast/view";
+			if(result!=0) {//글삭제 성공시
+				viewPage = "redirect:/mypage/mypage_like.do?";
+			}
+			return viewPage;			
+		}	
 	
 	
 	

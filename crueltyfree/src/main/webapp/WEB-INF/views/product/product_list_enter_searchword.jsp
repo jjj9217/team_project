@@ -321,6 +321,7 @@ function getParameterValue(parameterName) {
     return null; // 파라미터가 없으면 null 반환
 }
 
+
 function ProductDetail(searchWord, category_code, category_code_small, 
 		product_price_min, product_price_max, sort_salecount, sort_view, 
 		pageNum, pageBlock) {
@@ -340,8 +341,10 @@ function ProductDetail(searchWord, category_code, category_code_small,
     	return false;    	
     }
     
+    
+    
     if(min.value.length==0){
-       min.value = 0;   
+       min.value = 0;       
     }
     if(max.value.length==0){
         max.value = 10000000; 
@@ -375,6 +378,7 @@ function ProductDetail(searchWord, category_code, category_code_small,
     }else{
         insertcategory_code_small = category_code_small;
         pageNum=1;
+        pageBlock=1;
         
     }
 
@@ -395,32 +399,116 @@ function ProductDetail(searchWord, category_code, category_code_small,
         insertcategory_code = category_code;
         insertcategory_code_small="";
         pageNum=1;
+        pageBlock=1;
         
         
     }
     
+    
+    
+    alert('텍스트박스의 최저가값: '+minvalue);
+    
     var insertproduct_price_min ="";
     const paramproduct_price_min = getParameterValue("product_price_min");
-    if(minvalue === 0){
-        if(paramproduct_price_min === null){
-        insertproduct_price_min = 0;}
-        else{
-        insertproduct_price_min = paramproduct_price_min;}
+    
+    if(minvalue !== '0'){
+    	alert('Minvalue값확인:'+minvalue);
+    	alert('URL에 지정되어있는 최저가값:'+paramproduct_price_min);
+        
+    	if(paramproduct_price_min !== null){
+	        insertproduct_price_min = minvalue;
+	        alert('URL에 지정되어있는 최저가값이 Null이 아닐 때');
+	        pageNum=1;
+	        pageBlock=1;
+	        
+        }else{
+        	alert('뭐야왜이래');
+        	insertproduct_price_min = minvalue;
+        }
+    	
     }else{
-        insertproduct_price_min = minvalue;
+    	var p = pageNum;
+    	if(p !== 1 && minvalue !== '0'){
+    		alert('min페이지넘'+pageNum);
+    	insertproduct_price_min=minvalue;
+    	pageNum=1;
+    	pageBlock=1;
+    	}else{
+    		insertproduct_price_min=minvalue;
+    	}
+		    	        
     }
 	
+    if(minvalue !== 0){
+    	alert('대체 뭐가 문제야');
+    	alert('민밸류뭔데'+minvalue);
+    	alert(paramproduct_price_min);
+    	if(paramproduct_price_min !== 0 && paramproduct_price_min !== null ){
+    		if(minvalue ==='0'){
+    	insertproduct_price_min=paramproduct_price_min;
+    	alert('여기임?');}else{
+    		insertproduct_price_min=minvalue;    		
+    		}
+    	}else{
+    		insertproduct_price_min=minvalue;
+    		alert('여기로오나?');
+    	}
+    }
+    
+    
+    
 	
     var insertproduct_price_max ="";
     const paramproduct_price_max = getParameterValue("product_price_max");
-    if(maxvalue === 10000000){
-        if(paramproduct_price_max === null){
-        insertproduct_price_max = 0;}
-        else{
-        insertproduct_price_max = paramproduct_price_max;}
+
+    if(maxvalue !== '10000000' ){
+    	alert('Maxvalue값확인:'+maxvalue);
+    	alert('URL에 지정되어있는 최저가값:'+paramproduct_price_max);
+        
+    	if(paramproduct_price_max !== null){
+	        insertproduct_price_max = maxvalue;
+	        alert('URL에 지정되어있는 최저가값이 Null이 아닐 때');
+	        pageNum=1;
+	        pageBlock=1;
+	        
+        }else{
+        	insertproduct_price_max = maxvalue;
+        }
+    	
     }else{
-        insertproduct_price_max = maxvalue;
+    	var p = pageNum;
+    	if(p !== 1 && maxvalue !== '10000000'){
+    		alert('max페이지넘'+pageNum);
+    	insertproduct_price_max=maxvalue;
+    	pageNum=1;
+    	pageBlock=1;
+    	}else{
+    		insertproduct_price_max=maxvalue;
+    	}
+		    	        
     }
+    
+    if(maxvalue !== 0){
+    	alert('여기를 고쳐보자 그러면 할만해');
+    	alert(paramproduct_price_max);
+    	insertproduct_price_max=paramproduct_price_max;
+    	
+    	if(paramproduct_price_max !== null ){
+        	insertproduct_price_max=paramproduct_price_max;
+        	}else{
+        		alert('떴냐?');
+        		insertproduct_price_max=maxvalue;
+        	}
+    }
+    
+//     if(maxvalue === 10000000){
+//         if(paramproduct_price_max === null){
+//         insertproduct_price_max = 0;}
+//         else{
+//         insertproduct_price_max = paramproduct_price_max;}
+//     }else{
+//         insertproduct_price_max = maxvalue;
+//     }
     
     
     var insertsort_salecount ="";
@@ -433,6 +521,7 @@ function ProductDetail(searchWord, category_code, category_code_small,
     }else{
         insertsort_salecount = sort_salecount;
         pageNum=1;
+        pageBlock=1;
     }
     
     
@@ -446,6 +535,8 @@ function ProductDetail(searchWord, category_code, category_code_small,
     }else{
         insertsort_view = sort_view;
         pageNum=1;
+        pageBlock=1;
+        
     }
     
       
@@ -507,6 +598,8 @@ function ProductDel(searchWord, category_code, category_code_small,
         insertcategory_code_small = paramcategory_code_small;}
     }else{
         insertcategory_code_small = "";
+        pageNum=1;
+        pageBlock=1;
     }
 
     
@@ -527,6 +620,8 @@ function ProductDel(searchWord, category_code, category_code_small,
     }else{
         insertcategory_code = "";
         insertcategory_code_small="";
+        pageNum=1;
+        pageBlock=1;
         
     }
     
@@ -575,6 +670,7 @@ function ProductDel(searchWord, category_code, category_code_small,
         insertsort_view = paramsort_view;}
     }else{
         insertsort_view = sort_view;
+        
     }
     
     
@@ -611,146 +707,6 @@ function ProductDel(searchWord, category_code, category_code_small,
 
 
 
-
-
-
-function getParameterValue(parameterName) {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-
-    if (urlParams.has(parameterName)) {
-        return urlParams.get(parameterName);
-    }
-
-    return null; // 파라미터가 없으면 null 반환
-}
-
-function ProductDel2(searchWord, category_code, category_code_small, 
-         sort_salecount, sort_view, 
-        pageNum, pageBlock) {
-    
-	
-    
-	let min = document.getElementById("product_price_min");
-    let max = document.getElementById("product_price_max");
-    if(min.value.length==0){
-       min.value = 0;   
-    }
-    if(max.value.length==0){
-        max.value = 10000000; 
-    }
-	
-
-            
-    var insertsearchWord = "";
-    const paramsearchWord = getParameterValue("searchWord");    
-    if(searchWord === ""){
-        if(paramsearchWord === null){
-        insertsearchWord = '';}
-        else{
-        insertsearchWord = paramsearchWord;}
-    }else{
-        insertsearchWord = searchWord;
-    }
-
-    
-    var insertcategory_code_small ="";
-    const paramcategory_code_small = getParameterValue("category_code_small");
-    if(category_code_small === ""){
-        if(paramcategory_code_small === null){
-        insertcategory_code_small = '';}
-        else{
-        insertcategory_code_small = paramcategory_code_small;}
-    }else{
-        insertcategory_code_small = category_code_small;
-    }
-
-    
-    var insertcategory_code ="";
-    const paramcategory_code = getParameterValue("category_code");
-    if(category_code === ""){
-
-        
-        if(paramcategory_code === null){
-        insertcategory_code = '';
-        }
-        else{
-        insertcategory_code = paramcategory_code;
-        }
-        
-    }else{
-        insertcategory_code = category_code;
-        insertcategory_code_small="";
-        
-        
-    }
-    
-    
-    
-    var insertproduct_price_min ="";
-    const paramproduct_price_min = getParameterValue("product_price_min");
-    if(min === ""){
-        if(paramproduct_price_min === null){
-        insertproduct_price_min = 0;}
-        else{
-        insertproduct_price_min = paramproduct_price_min;}
-    }else{
-        insertproduct_price_min = min;
-    }
-    
-    
-    var insertproduct_price_max ="";
-    const paramproduct_price_max = getParameterValue("product_price_max");
-    if(max === ""){
-        if(paramproduct_price_max === null){
-        insertproduct_price_max = 0;}
-        else{
-        insertproduct_price_max = paramproduct_price_max;}
-    }else{
-        insertproduct_price_max = max;
-    }
-    
-    
-    var insertsort_salecount ="";
-    const paramsort_salecount = getParameterValue("sort_salecount");
-    if(sort_salecount === ""){
-        if(paramsort_salecount === null){
-        insertsort_salecount = '';}
-        else{
-        insertsort_salecount = paramsort_salecount;}
-    }else{
-        insertsort_salecount = sort_salecount;
-    }
-    
-    
-    var insertsort_view ="";
-    const paramsort_view = getParameterValue("sort_view");
-    if(sort_view === ""){
-        if(paramsort_view === null){
-        insertsort_view = 15;}
-        else{
-        insertsort_view = paramsort_view;}
-    }else{
-        insertsort_view = sort_view;
-    }
-    
-   
-    // 새 URL 구성    
-    var newURL = "product_list_enter_searchword.do" +  
-    "?searchWord=" + insertsearchWord +
-    "&category_code=" + insertcategory_code +
-    "&category_code_small=" + insertcategory_code_small +
-    "&product_price_min=" + insertproduct_price_min +
-    "&product_price_max=" + insertproduct_price_max +
-    "&sort_salecount=" + insertsort_salecount +
-    "&sort_view=" + insertsort_view +
-    "&pageNum=" + pageNum +
-    "&pageBlock=" + pageBlock;
-    // URL로 이동
-    window.location.href = newURL;
-
-    
-}
 
 
 
@@ -856,7 +812,7 @@ function ProductDel2(searchWord, category_code, category_code_small,
                 <ul class="list_classification">
 
                     &nbsp;&nbsp;&nbsp;<input type="text" name="product_price_min" id="product_price_min" class="price_input" placeholder="최저가">~<input type="text" name="product_price_max" id="product_price_max" class="price_input" placeholder="최고가">
-                    <button onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}');">가격대 적용</button>
+                    <button id="price_" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}');">가격대 적용</button>
 
                 </ul>           
             </div>
@@ -866,8 +822,11 @@ function ProductDel2(searchWord, category_code, category_code_small,
                     <c:when test="${exploreVo.product_price_min ne 0 and exploreVo.product_price_max eq 10000000}">
                         ${exploreVo.product_price_min}원 ~<button onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">x</button>
                     </c:when>
-                    <c:when test="${exploreVo.product_price_max ne 0 and exploreVo.product_price_min ne 0}">
+
+                    <c:when test="${exploreVo.product_price_max ne 0 and exploreVo.product_price_min eq 0}">
+                    	<c:if test="${exploreVo.product_price_max ne 10000000 and exploreVo.product_price_min eq 0}">
                         ~${exploreVo.product_price_max}원 <button onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">x</button>
+                        </c:if>
                     </c:when>
                     <c:when test="${exploreVo.product_price_min ne 0 and exploreVo.product_price_max ne 0}">
                         ${exploreVo.product_price_min}원 ~ ${exploreVo.product_price_max}원<button onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">x</button>
@@ -981,7 +940,13 @@ function ProductDel2(searchWord, category_code, category_code_small,
 			            
 			            
 			            
-			            
+			            <c:if test="${pageNav.pageNum > pageNav.pages_per_block}">
+			<a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">			            
+    		&lt;&lt;</a>&nbsp;
+    		<a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${(pageNav.pageBlock - 2)*pageNav.pages_per_block + 1}', '${pageNav.pageBlock-1}')">
+    			&lt;이전페이지
+    		</a>   	
+    	</c:if>
 			            
 			            <c:forEach var="i" begin="${(pageNav.pageBlock-1)*pageNav.pages_per_block + 1}" end="${pageNav.pageBlock*pageNav.pages_per_block}">
             <c:if test="${i le pageNav.totalPageNum}">
@@ -999,8 +964,8 @@ function ProductDel2(searchWord, category_code, category_code_small,
         </c:forEach>
     
         <c:if test="${((pageNav.rows_per_page*pageNav.pages_per_block) lt pageNav.totalRows) and (pageNav.pageBlock ne pageNav.lastPageBlock) }">
-            <a href="product_list_enter_searchword.do?pageNum=${pageNav.pageBlock*pageNav.pages_per_block+1}&pageBlock=${pageNav.pageBlock+1}">다음페이지&gt;</a>&nbsp;
-            <a href="product_list_enter_searchword.do?pageNum=${pageNav.totalPageNum}&pageBlock=${pageNav.lastPageBlock}">&gt;&gt;</a>
+            <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageBlock*pageNav.pages_per_block+1}', '${pageNav.pageBlock+1}')">다음페이지&gt;</a>&nbsp;
+            <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.totalPageNum}', '${pageNav.lastPageBlock}')">&gt;&gt;</a>
         </c:if>
 			            
 			            

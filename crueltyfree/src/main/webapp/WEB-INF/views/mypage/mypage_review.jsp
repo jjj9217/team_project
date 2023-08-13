@@ -476,6 +476,7 @@
                     <!-- 리뷰 고도화 : 추가 -->
                     <div class="photo-list-info">
                         <strong>포토</strong>
+                        번호: ${reviewRegList}, ${reviewproductList[0].review_idx}
                     </div>
                     <div class="rw-photo-list">
                         <c:forEach var="fileVoList" items="${reviewRegList}">
