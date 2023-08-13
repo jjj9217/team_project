@@ -145,6 +145,21 @@
   	background-color:rgb(221, 219, 214);
   	width:170px;
 	} 	
+	.ellipsis {
+		width:500px;
+	  	height: auto;
+  		overflow: hidden;
+  		text-overflow: ellipsis;
+  		white-space:nowrap;
+	}
+	.ellipsis2 {
+		width:120px;
+	  	height: auto;
+  		overflow: hidden;
+  		text-overflow: ellipsis;
+  		white-space:nowrap;
+
+	}
 </style>
 
 
@@ -192,8 +207,8 @@
 			
 				<c:forEach var="rowNum" begin="1" end="5">
 					<tr>
-						<td>${oneinqList[rowNum-1].one_inq_content}</td>
-						<td>${oneinqList[rowNum-1].member_nickname}</td>
+						<td><div class="ellipsis">${oneinqList[rowNum-1].one_inq_content}</div></td>
+						<td><div class="ellipsis2">${oneinqList[rowNum-1].member_nickname}</div></td>
 					</tr>
 				</c:forEach>		
 			</c:otherwise>
@@ -221,8 +236,8 @@
 			
 				<c:forEach var="rowNum" begin="1" end="5">
 					<tr>
-						<td>${sellerList[rowNum-1].one_inq_content}</td>
-						<td>${sellerList[rowNum-1].member_nickname}</td>
+						<td><div class="ellipsis">${sellerList[rowNum-1].one_inq_content}</div></td>
+						<td><div class="ellipsis2">${sellerList[rowNum-1].member_nickname}</div></td>
 					</tr>
 				</c:forEach>		
 			</c:otherwise>
@@ -251,8 +266,8 @@
 			
 				<c:forEach var="rowNum" begin="1" end="5">
 					<tr>
-						<td>${productinqList[rowNum-1].product_inq_content}</td>
-						<td>${productinqList[rowNum-1].member_nickname}</td>
+						<td><div class="ellipsis">${productinqList[rowNum-1].product_inq_content}</div></td>
+						<td><div class="ellipsis2">${productinqList[rowNum-1].member_nickname}</div></td>
 					</tr>
 				</c:forEach>		
 			</c:otherwise>
