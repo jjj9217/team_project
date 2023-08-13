@@ -58,17 +58,16 @@
 	<!-- 검색조건에 맞는 게시물 목록 반환 구문 -->
 	<select id="checkProductList" parameterType="map" resultType="ProductVo">
 		select * from Product
+		where member_idx = #{member_idx}
 			<if test="searchWord != null">
-				<where>
 					<choose>
 						<when test="searchField == 'product_name'">
-							product_name like CONCAT('%',#{searchWord},'%')
+							AND product_name like CONCAT('%',#{searchWord},'%')
 						</when>
 						<otherwise>
-							product_capa like CONCAT('%',#{searchWord},'%')
+							AND product_capa like CONCAT('%',#{searchWord},'%')
 						</otherwise>
 					</choose>
-				</where>
 			</if>
 			order by product_idx desc
 	</select>
@@ -76,17 +75,16 @@
 	<!-- 검색조건에 맞는 게시물 수 반환 구문 -->
 	<select id="checkProductCount" parameterType="map" resultType="_int">
 		select count(*) from Product
+		where member_idx = #{member_idx}
 			<if test="searchWord != null">
-				<where>
 					<choose>
 						<when test="searchField == 'product_name'">
-							product_name like CONCAT('%',#{searchWord},'%')
+							AND product_name like CONCAT('%',#{searchWord},'%')
 						</when>
 						<otherwise>
-							product_capa like CONCAT('%',#{searchWord},'%')
+							AND product_capa like CONCAT('%',#{searchWord},'%')
 						</otherwise>
 					</choose>
-				</where>
 			</if>
 			order by product_idx desc
 	</select>
@@ -211,4 +209,34 @@
 			where product_idx = #{product_idx}
 	</update>
 	
+	<!-- 멤버 번호를 통해 상품 리스트를 불러오는 구문 -->
+	<select id="checkMemberList" parameterType="string" resultType="ProductVo">
+		select * from product where member_idx = #{member_idx}
+	</select>
+	<!-- 상품 번호를 통해 주문 상품 리스트를 불러오는 구문 -->
+	<select id="checkOrderProductList" parameterType="_int" resultType="OrderProductVo">
+		select * from order_product where product_idx = #{product_idx}
+	</select>
+	<!-- 주문 번호를 통해 주문 리스트를 불러오는 구문 -->
+	<select id="checkOrderList" parameterType="map" resultType="OrderVo">
+		select * from `order`
+		where order_idx = #{order_idx}
+		<if test="searchWord != null">
+				<choose>
+					<when test="searchField == 'order_name'">
+						AND order_name like CONCAT('%',#{searchWord},'%')
+					</when>
+					<otherwise>
+						AND order_num like CONCAT('%',#{searchWord},'%')
+					</otherwise>
+				</choose>
+		</if>
+	</select>
+	
+	<!-- order_ing 업데이트 구문 -->
+	<update id="updateDeliveryState" parameterType="string">
+		update `order` set order_ing = "1"
+			where order_num = #{order_num}
+	</update>
+
 </mapper>

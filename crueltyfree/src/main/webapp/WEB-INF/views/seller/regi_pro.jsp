@@ -202,6 +202,10 @@ function categoryLarge(cate_large) {
 }
 
 function validateForm(){
+//	if (form_insert.category_code.value == NULL) {
+//		alert("카테고리를 선택하세요."); }
+//	if ($('#thumFile').val() == "") {
+//		alert("썸네일을 등록해 주세요.")
 	if (form_insert.product_name.value.length==0) {
 		alert("상품명을 입력하세요.");
 		form_insert.product_name.focus();
@@ -259,6 +263,7 @@ function validateForm(){
 		</article>
 		<article class="regi_right">
 			<select name="category_code" class="regi_box" onchange="categoryLarge(this)">
+				<option>대분류</option>
 				<option value="skin">스킨케어</option>
 				<option value="clensing">클렌징</option>
 				<option value="makeup">메이크업</option>
@@ -277,7 +282,7 @@ function validateForm(){
 			&nbsp;&nbsp;<a>썸네일</a>
 		</article>
 		<article class="regi_right">
-			<input type="file" name="attachedFile" class="regi_box">
+			<input type="file" name="attachedFile" id="thumFile" class="regi_box">
 		</article>
 	</div>
 	

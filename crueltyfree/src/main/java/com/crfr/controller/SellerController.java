@@ -1,6 +1,9 @@
 package com.crfr.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,9 +20,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.crfr.service.seller.ProductSellerService;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.MemberVo;
+import com.crfr.vo.OrderProductVo;
+import com.crfr.vo.OrderVo;
 import com.crfr.vo.PageNav;
 import com.crfr.vo.ProductInfoVo;
 import com.crfr.vo.ProductVo;
+import com.crfr.vo.PurchaseListVo;
 
 import lombok.Setter;
 
@@ -29,12 +35,14 @@ public class SellerController {
 	//서비스 클래스로 사용할 클래스들을 멤버변수로 정의하고 의존 자동 주입받도록 함
 	@Setter(onMethod_={ @Autowired })
 	ProductSellerService pInsertFile, pInsertProduct, pInsertProductInfo, pfindProductIdx,
-	cProductList, cProductCount, sPageNavSet, 
+	cProductList, cMemberIdxList, cProductCount, sPageNavSet, 
+	cOrderProductList, cOrderList, cProHistoryList,
 	pfineProductPost, pfineProductInfoPost, // findProductFilePost,
 	pUpdateProduct, pUpdateProductInfo, pfineProductFilePost,
 	pUpdateProductFile0, pUpdateProductFile1, pUpdateProductFile2, pUpdateProductFile3,
 	pfindProductFileIdx,
-	pDeleteProduct;
+	pDeleteProduct,
+	pUpdateDeliveryState;
 	
 	@Setter(onMethod_={ @Autowired })
 	PageNav pageNav;
@@ -44,10 +52,106 @@ public class SellerController {
 		return "seller/sale_stats";
 	}
 	
+	// 구매 내역 목록 확인
 	@GetMapping("/purchase_history.do")
-	public String purchase_history() {
+	public String purchase_history(String pageNum, String pageBlock, HttpServletRequest request, Model model) {
+		//세션에서 "member"를 얻어옴
+		HttpSession session = request.getSession();
+		MemberVo mVo = (MemberVo)session.getAttribute("member");
+		String member_idx = String.valueOf(mVo.getMember_idx());
+		
+		String searchField = request.getParameter("searchField");
+		String searchWord = request.getParameter("searchWord");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(searchWord != null) {
+			map.put("searchField", searchField);
+			map.put("searchWord", searchWord);
+		}
+		
+		List<ProductVo> memProList = cMemberIdxList.checkMemberList(member_idx);
+		
+		List<PurchaseListVo> purchaseList = new ArrayList<>(); // 빈 리스트로 초기화
+		int count = 0;
+		for (ProductVo purchaseVo : memProList) {
+		    int product_idx = purchaseVo.getProduct_idx(); // 상품번호를 얻음
+		    System.out.println("상품번호:"+product_idx);
+		    List<OrderProductVo> orderProductVo = cOrderProductList.checkOrderProductList(product_idx); //상품번호의 orderproductvo
+		    int orderCount = 0;
+		    for(OrderProductVo vo : orderProductVo) {
+		    	int order_idx = vo.getOrder_idx(); // 주문번호를 얻음
+		    	System.out.println("주문번호:"+order_idx);
+		    	map.put("order_idx", order_idx);
+		    	OrderVo orderVo = cOrderList.checkOrderList(map); // 주문번호의 ordervo
+		    	
+		    	if(orderVo != null) {
+		    		PurchaseListVo purHistoryListVo = new PurchaseListVo(); // PurHistoryListVo 객체 생성
+		    		
+		    		purHistoryListVo.setOrder_num(orderVo.getOrder_num()); // 주문번호
+		    		purHistoryListVo.setOrder_name(orderVo.getOrder_name()); // 주문자명
+		    		purHistoryListVo.setProduct_name(purchaseVo.getProduct_name()); // 상품명
+		    		purHistoryListVo.setOrder_product_count(vo.getOrder_product_count()); // 주문수량
+		    		purHistoryListVo.setOrder_ing(orderVo.getOrder_ing()); // 처리 상태
+		    		
+		    		purchaseList.add(purHistoryListVo); // basketList에 추가
+		    		orderCount++;		    		
+		    	}
+		    }
+		    count += orderCount;
+		}
+		model.addAttribute("purchasecount", count);
+		model.addAttribute("purchaseList", purchaseList);
+		
+		//페이지네비게이션을 위해 SellerPageNavService클래스를 이용
+		
+		pageNav.setTotalRows(count);
+		pageNav = sPageNavSet.setSellerPageNav(pageNav, pageNum, pageBlock);
+		model.addAttribute("pageNav", pageNav);
+		
 		return "seller/purchase_history";
 	}
+	
+	// 상품 상태 요청 처리
+	@PostMapping("/update_state_process.do")
+	public String update_process(@RequestParam("order_ing") String order_num) {
+		//request객체는 세션에 저장된 회원번호를 알아내기 위해 필요함
+
+		//상태 업데이트를 위해 서비스 사용
+		int result = pUpdateDeliveryState.updateDeliveryState(order_num);
+
+		String viewPage = "seller/purchase_history";
+		
+		if(result == 1) {//글삭제 성공 시
+			viewPage = "redirect:/seller/purchase_history.do";
+		}
+
+		return viewPage;
+	}
+
+	// 배송하기눌렀을때
+//	@PostMapping("/update_state_process2.do")
+//	public String update_process2(@RequestParam("order_ing") String order_num) {
+		//request객체는 세션에 저장된 회원번호를 알아내기 위해 필요함
+
+		//상태 업데이트를 위해 서비스 사용
+//		int result = pUpdateDeliveryState.updateDeliveryState(order_num);
+		
+//		List<OrderProductVo> orderProductList = 서비스.메소드(order_num);
+//		
+//		for(OrderProductVo vo : orderProductList) {
+//			int product_idx = vo.getProduct_idx();
+//			int count = vo.getOrder_product_count();
+//			int 업데이트결고ㅏ = 서비스.ㅁㅔ소드(product_idx, count);
+//		}
+//		
+//		String viewPage = "seller/purchase_history";
+//		
+//		if(result == 1) {//글삭제 성공 시
+//			viewPage = "redirect:/seller/purchase_history.do";
+//		}
+//
+//		return viewPage;
+//	}
 	
 	@GetMapping("/confirm_inq.do")
 	public String confirm_inq() {		
@@ -57,15 +161,21 @@ public class SellerController {
 	// 등록 상품 목록 확인
 	@GetMapping("/check_pro.do")
 	public String check_pro(String searchField, String searchWord, 
-					   String pageNum, String pageBlock, Model model) {
+					   String pageNum, String pageBlock, HttpServletRequest request, 
+					   Model model) {
+		
+		//세션에서 "member"를 얻어옴
+		HttpSession session = request.getSession();
+		MemberVo mVo = (MemberVo)session.getAttribute("member");
+		String member_idx = String.valueOf(mVo.getMember_idx());
 		
 		//게시판 목록을 가져오는 요청에 대한 처리를 위한 CheckProductListService 클래스 이용
-		List<ProductVo> checkProList = cProductList.checkProductList(searchField, searchWord);
+		List<ProductVo> checkProList = cProductList.checkProductList(searchField, searchWord, member_idx);
 		model.addAttribute("checkProList", checkProList);
 		
 		//페이지네비게이션을 위해 SellerPageNavService클래스를 이용
 		//총 레코드 수를 가져오기 위해 CheckProductCountService클래스 이용
-		int totRows = cProductCount.checkProductCount(searchField, searchWord);
+		int totRows = cProductCount.checkProductCount(searchField, searchWord, member_idx);
 		pageNav.setTotalRows(totRows);
 		pageNav = sPageNavSet.setSellerPageNav(pageNav, pageNum, pageBlock);
 		model.addAttribute("pageNav", pageNav);
@@ -119,8 +229,6 @@ public class SellerController {
 		model.addAttribute("ProductVo", vo1);
 		ProductInfoVo vo2 = pfineProductInfoPost.findProductInfoPost(product_idx);
 		model.addAttribute("ProductInfoVo", vo2);
-//		List<FileVo> vo3 = pfineProductFilePost.findProductFilePost(product_idx);
-//		model.addAttribute("FileVo", vo3);
 		
 		return "seller/edit_pro";
 	}
@@ -202,23 +310,6 @@ public class SellerController {
 			}
 			i++;
 		}
-/*	
-		for (int i = 0; i < fileidx.size(); i++) {
-			if(i == 0) {
-				pUpdateProductFile0.productUpdateFile0(attachedFile0, fileidx[i], request);
-			}else if(i == 1) {
-				pUpdateProductFile1.productUpdateFile1(attachedFile1, fileidx[i], request);
-			}else if(i == 2) {
-				pUpdateProductFile2.productUpdateFile2(attachedFile2, fileidx[i], request);
-			}else {
-				pUpdateProductFile3.productUpdateFile3(attachedFile3, fileidx[i], request);
-			}
-		}
-*/		
-
-//		if(!attachedFile0.isEmpty()) {
-//			서비스0 = 상품이름검색해서 나온 파일 중 0번 교체
-//		}
 
 		if(result1 == 1 && result2 == 1) { //글 수정 성공시 보여지는 페이지
 			System.out.println("테스트");
