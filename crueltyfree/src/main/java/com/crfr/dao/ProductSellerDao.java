@@ -7,8 +7,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.crfr.vo.FileVo;
+import com.crfr.vo.OrderProductVo;
+import com.crfr.vo.OrderVo;
 import com.crfr.vo.ProductInfoVo;
 import com.crfr.vo.ProductVo;
+import com.crfr.vo.PurchaseListVo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -66,6 +69,7 @@ public class ProductSellerDao{
 		return sqlSession.selectOne(MAPPER+".findProductInfoPost", product_idx);
 	}
 	
+	//지정한 상품을 찾아 파일 정보를 반환하는 메소드
 	public List<FileVo> findProductFilePost(String product_idx) {
 		return sqlSession.selectList(MAPPER+".findProductFilePost", product_idx);
 	}
@@ -79,4 +83,28 @@ public class ProductSellerDao{
 	public int deleteProduct(String product_idx) {
 		return sqlSession.update(MAPPER+".deleteProduct", product_idx);
 	}
+	
+	//특정 member_idx에 해당되는 상품 리스트
+	public List<ProductVo> checkMemberList(String member_idx) {		
+		return sqlSession.selectList(MAPPER+".checkMemberList", member_idx);
+	}
+	//특정 product_idx에 해당되는 주문 상품 리스트
+	public List<OrderProductVo> checkOrderProductList(int product_idx) {		
+		return sqlSession.selectList(MAPPER+".checkOrderProductList", product_idx);
+	}
+	//특정 order_idx에 해당되는 주문 리스트
+	public OrderVo checkOrderList(Map<String, Object> map) {		
+		return sqlSession.selectOne(MAPPER+".checkOrderList", map);
+	}
+	
+	// 구매 내역 리스트
+	public List<PurchaseListVo> checkProductHistoryList(Map<String, Object> map) {
+		return sqlSession.selectList(MAPPER+".checkProductHistoryList", map);
+	}
+	
+	// order_ing 상태 업데이트
+	public int updateDeliveryState(String order_num) {		
+		return sqlSession.update(MAPPER+".updateDeliveryState", order_num);
+	}
+	
 }

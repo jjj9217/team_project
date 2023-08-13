@@ -101,26 +101,52 @@
 	.sub_title {
 		width: 700px;
 		height: 50px;
-		border-bottom: 1px solid #a4a4a4;
+	}
+	
+	tr {
+		height: 20px;
 	}
 	
 	th {
-		font-size: 12px;
+		font-size: 13px;
 		font-weight: none;
 	}
 	
 	td {
-		font-size: 14px;
+		font-size: 12px;
 		font-weight: none;
 		text-align: center;
 	}
 	
 	#history_tb {
 		width: 700px;
+		border-top: 2px solid #a4a4a4;
+		border-bottom: 2px solid #a4a4a4;
+	}
+	
+	#history_tb td {
+		border-top: 1px solid #a4a4a4;
 	}
 	
 	#clear{clear: both;}
 </style>
+
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+<script>
+$(function(){
+    $(".state_update").click(function(){
+    	let index = $(".state_update").index(this);    	
+    	let confirmAns = confirm("출고하시겠습니까?");
+		if(confirmAns){
+			$(".form_update").eq(index).submit();
+	    	return true;
+		}
+    });
+})
+
+</script>
+
 </head>
 <body>
 <header>
@@ -144,29 +170,108 @@
 		<article class="sub_title">
 			<h5>구매 내역</h5>
 		</article>
+		
+		<!-- 검색 폼 -->
+			    <form>
+			        <table id="checkPro_search">
+			            <tr>
+			                <td id="checkPro_total" style="width:415px; text-align:left; color:#4a4a4a;">
+			                	총 주문 건수: ${pageNav.totalRows}
+			                </td>
+			                <td id="checkPro_searchbar">
+			                    <select name="searchField">
+			                        <option value="order_name">주문자명</option>
+			                        <option value="order_num">주문번호</option>
+			                    </select>
+			                    <input type="text" name="searchWord" id="searchWord">
+			                    <input type="submit" id="search_btn" value="검색">
+			                </td>
+			            </tr>
+			        </table>
+			    </form>
+		
 		<article class="history_list">
 			<table id="history_tb">
 		        <tr height="30px;">
 		            <th width="100px;">주문번호</th>
 		            <th width="50px;">주문자명</th>
 		            <th width="250px;">상품명</th>
-		            <th width="50px;">결제수단</th>
-		            <th width="100px;">결제금액</th>
-		            <th width="50px;">처리상태</th>
+		            <th width="50px;">주문수량</th>
+		            <th width="100px;">처리상태</th>
+		            <th width="50px;">비고</th>
 		        </tr>
 		        
-		        <!-- 추후 c:choose, c:when 및 데이터베이스를 연동해 페이지 구현 -->
-				
-				<tr>
-					<td colspan="6" style="height: 300px; color: #a4a4a4;">구매 내역이 없습니다.</td>
-				</tr>
-		
-				<tr>
+		        <!-- 글목록 내용-->
+				<c:choose>
+					<c:when test="${empty purchaseList}">
+						<tr>
+							<td colspan="6" style="height: 300px; color: #a4a4a4;">등록한 상품이 없습니다.</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
+							<c:if test="${purchaseList[rowNum-1].product_name ne null}"> <!-- 리스트에 저장된 값이 있을 경우에만 출력 -->
+								<tr>
+									<td id="td_title">${purchaseList[rowNum-1].order_num}</td> <!-- 주문번호 -->
+									<td>${purchaseList[rowNum-1].order_name}</td> <!-- 주문자명 -->
+									<td>${purchaseList[rowNum-1].product_name}</td> <!-- 상품명 -->
+									<td>${purchaseList[rowNum-1].order_product_count}</td> <!-- 주문수량 -->
+									<c:choose>
+										<c:when test="${purchaseList[rowNum-1].order_ing eq 0}">
+											<td>출고대기</td>
+										</c:when>
+										<c:when test="${purchaseList[rowNum-1].order_ing eq 1}">
+											<td>출고준비</td>
+										</c:when>
+										<c:when test="${purchaseList[rowNum-1].order_ing eq 2}">
+											<td>배송중</td>
+										</c:when>
+										<c:when test="${purchaseList[rowNum-1].order_ing eq 3}">
+											<td>배송완료</td>
+										</c:when>
+										<c:otherwise>
+											<td style="color: #a4a4a4;">출고취소</td>
+										</c:otherwise>
+									</c:choose>
+									<c:choose> 
+										<c:when test="${purchaseList[rowNum-1].order_ing eq 0}">
+											<td>
+												<span id="state_update" class="state_update">상품준비</span>
+											</td>
+										</c:when>
+										<c:when test="${purchaseList[rowNum-1].order_ing eq 1}">
+											<td>
+												<span id="" class="">배송하기</span>
+											</td>
+										</c:when>
+										<c:when test="${purchaseList[rowNum-1].order_ing eq 2}">
+											<td>배송중</td>
+										</c:when>
+										<c:when test="${purchaseList[rowNum-1].order_ing eq 3}">
+											<td>배송완료</td>
+										</c:when>
+										<c:otherwise>
+											<td style="color: #a4a4a4;">취소완료</td>
+										</c:otherwise>
+									</c:choose>
+								</tr>
+							</c:if>
+							
+							<form action="update_state_process.do" class="form_update" method="post">
+								<input type="hidden" name="order_ing" value="${purchaseList[rowNum-1].order_num}">
+							</form>
+							
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+
+				<tr height="30px;">
 					<td id="history_paging" colspan="6">
-						<!-- 추후 페이징 구현 -->
+						<!-- 페이지 네비게이션 구현 -->
+						<%@ include file="paging_purchaseHis.jsp" %>
 					</td>
 				</tr>
-    </table>
+    		</table>
 		</article>
 	</div>
 </section>
