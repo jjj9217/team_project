@@ -10,12 +10,12 @@ import com.crfr.vo.OrderVo;
 
 import lombok.RequiredArgsConstructor;
 
-@Service("mSelectOrderVo")
+@Service("mSelectOrderView")
 @RequiredArgsConstructor
-public class OrderDeliverySelectOrderVoService implements OrderDeliveryService{
+public class OrderDeliverySelectOrderViewService implements OrderDeliveryService{
 	private final OrderDeliveryDao dao;
 	
-	public List<OrderVo> selectOrderVo(int member_idx, Timestamp timestamp_begin, Timestamp timestamp_end){
-		return dao.selectOrderVo(member_idx, timestamp_begin, timestamp_end);
+	public OrderVo selectOrderView(String order_num){
+		return dao.selectOrderView(order_num);
 	}
 }
