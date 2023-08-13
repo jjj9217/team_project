@@ -630,36 +630,7 @@ public class MypageController {
 	
 	
 	
-	//상품QnA페이지로 이동
-	@GetMapping("/mypage_productQnA.do")
-	public String mypage_QnA(FileVo vo, HttpServletRequest request, String pageNum, String pageBlock, Model model) {
-		HttpSession session = request.getSession();		
-		//로그인된 회원의 member_idx 얻기
-		MemberVo mVo = (MemberVo)session.getAttribute("member");		
-		int member_idx = mVo.getMember_idx();		
-		vo.setMember_idx(member_idx);
-		
-		// 내가 구매한 목록 중 리뷰를 작성한 사진목록을 가져오는 요청에 대한 처리를 위한 MypageListService 클래스 이용
-		List<FileVo> inqfileList = mpList.selectproductinqListimg(member_idx);
-		model.addAttribute("inqfileList", inqfileList);
-		
-		// 내가 구매한 목록 중 리뷰를 작성한 목록을 가져오는 요청에 대한 처리를 위한 MypageListService 클래스 이용
-		List<ProductInqVo> inqproductList = mpList.selectproductinqList(member_idx);
-		model.addAttribute("inqproductList", inqproductList);
-							
-		// 총 레코드 수를 가져오기 위해 MypageCountService클래스 이용
-		int searchTotal = mpCount.selectproductinqCount(member_idx);
-
-		// 총 레코드 수 대입
-		pageNav.setTotalRows(searchTotal);
-		// 페이지네비게이션을 위해 MypagePageService클래스를 이용
-		pageNav = mpPage.setPageNav(pageNav, pageNum, pageBlock, member_idx);
-		
-		// html에서 사용하기 위해 세팅
-		model.addAttribute("pageNav", pageNav);
-				
-		return "mypage/mypage_productQnA";
-	}
+	
 	
 	
 	
@@ -758,7 +729,7 @@ public class MypageController {
 	
 	
 	
-	//상품QnA페이지로 이동
+	//쿠폰페이지로 이동
 	@GetMapping("/mypage_coupon.do")
 	public String mypage_coupon(CouponVo vo, HttpServletRequest request, String pageNum, String pageBlock, Model model) {
 		HttpSession session = request.getSession();		
@@ -785,7 +756,90 @@ public class MypageController {
 		return "mypage/mypage_coupon";
 	}
 	
+	
+	
+	
+	
+	//상품QnA페이지로 이동
+	@GetMapping("/mypage_productQnA.do")
+	public String mypage_QnA(FileVo vo, HttpServletRequest request, String pageNum, String pageBlock, Model model) {
+		HttpSession session = request.getSession();		
+		//로그인된 회원의 member_idx 얻기
+		MemberVo mVo = (MemberVo)session.getAttribute("member");		
+		int member_idx = mVo.getMember_idx();		
+		vo.setMember_idx(member_idx);
+		
+		// 내가 구매한 목록 중 리뷰를 작성한 사진목록을 가져오는 요청에 대한 처리를 위한 MypageListService 클래스 이용
+		List<FileVo> inqfileList = mpList.selectproductinqListimg(member_idx);
+		model.addAttribute("inqfileList", inqfileList);
+		
+		// 내가 구매한 목록 중 리뷰를 작성한 목록을 가져오는 요청에 대한 처리를 위한 MypageListService 클래스 이용
+		List<ProductInqVo> inqproductList = mpList.selectproductinqList(member_idx);
+		model.addAttribute("inqproductList", inqproductList);
+							
+		// 총 레코드 수를 가져오기 위해 MypageCountService클래스 이용
+		int searchTotal = mpCount.selectproductinqCount(member_idx);
 
+		// 총 레코드 수 대입
+		pageNav.setTotalRows(searchTotal);
+		// 페이지네비게이션을 위해 MypagePageService클래스를 이용
+		pageNav = mpPage.setPageNav(pageNav, pageNum, pageBlock, member_idx);
+		
+		// html에서 사용하기 위해 세팅
+		model.addAttribute("pageNav", pageNav);
+				
+		return "mypage/mypage_productQnA";
+	}
+	
+	//상품QnA 삭제 요청 처리
+	@PostMapping("/mypage_inqdel_process.do")
+	public String deleteinq(ProductInqVo vo, HttpServletRequest request) {
+		//request객체는 세션에 저장된 회원번호를 알아내기 위해 필요함
+		HttpSession session = request.getSession();
+		MemberVo mVo = (MemberVo)session.getAttribute("member");		
+		int member_idx = mVo.getMember_idx();	
+		vo.setMember_idx(member_idx);
+		System.out.println("Member번호뭐냐"+vo.getMember_idx());
+		System.out.println("문의번호:"+vo.getProduct_inq_idx());
+		
+		int result=mpDelete.deleteinq(vo);		
+		String viewPage = "boast/view";
+		if(result==1) {//글삭제 성공시
+			viewPage = "redirect:/mypage/mypage_productQnA.do?";
+		}
+		return viewPage;			
+	}
+	
+	//상품QnA 수정 요청 처리
+	@PostMapping("/mypage_oneinqModify_process.do")
+	public String oneinqModify(ProductInqVo vo, HttpServletRequest request) {
+		HttpSession session = request.getSession();		
+		//로그인된 회원의 member_idx 얻기
+		MemberVo mVo = (MemberVo)session.getAttribute("member");		
+		int member_idx = mVo.getMember_idx();		
+		vo.setMember_idx(member_idx);
+		System.out.println("멤버번호:"+vo.getMember_idx());
+		System.out.println("문의번호:"+vo.getProduct_inq_idx());
+		System.out.println("콘텐츠내용:"+vo.getProduct_inq_content());
+		
+		int result = mpUpdate.updateproductinq(vo);			
+				
+		String viewPage = "boast/view";
+		if(result==1) {//글삭제 성공시
+			viewPage = "redirect:/mypage/mypage_productQnA.do";
+		}
+		return viewPage;			
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

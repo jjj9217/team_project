@@ -188,6 +188,16 @@ public class MypageDao {
 	return sqlSession.selectOne(MAPPER+".selectproductinqCount", member_idx);
 	}
 	
+	//상품문의 삭제하기
+	public int deleteinq(ProductInqVo vo) {
+		return sqlSession.delete(MAPPER+".deleteinq", vo);
+	}
+	
+	//상품문의 수정하기
+	public int updateproductinq (ProductInqVo vo) {
+		return sqlSession.update(MAPPER+".updateproductinq", vo);
+	}
+	
 	//쿠폰 목록에 관한 Dao
 	public List<CouponVo> selectcouponList(int member_idx) {
 		return sqlSession.selectList(MAPPER+".selectcouponList", member_idx);
