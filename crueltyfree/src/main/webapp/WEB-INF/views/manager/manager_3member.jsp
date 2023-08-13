@@ -284,7 +284,6 @@
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
-  		background-color:pink;
 	}
 </style>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>

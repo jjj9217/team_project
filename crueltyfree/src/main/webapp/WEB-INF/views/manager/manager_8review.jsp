@@ -298,7 +298,6 @@
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
-  		background-color:pink;
 	}
 	.ellipsis2 {
 		width:150px;
@@ -306,7 +305,6 @@
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
-  		background-color:pink;
 	}
 </style>
 
@@ -405,7 +403,7 @@ $(function(){
 					<tr>
 						<td>${rvSelectList[rowNum-1].review_idx}</td>
 						<td>${rvSelectList[rowNum-1].product_idx}</td>
-						<td><div class="ellipsis">"${rvSelectList[rowNum-1].member_nickname}</div></td>
+						<td><div class="ellipsis">${rvSelectList[rowNum-1].member_nickname}</div></td>
 						<td><div class="ellipsis2">${rvSelectList[rowNum-1].review_content}</div></td>
                         <fmt:formatDate value="${rvSelectList[rowNum-1].review_regDate}" type="date" pattern="yyyy-MM-dd HH:mm" var="formatDate"/>						
 						<td>${formatDate}</td>

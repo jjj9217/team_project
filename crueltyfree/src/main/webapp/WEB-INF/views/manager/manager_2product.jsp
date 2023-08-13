@@ -336,7 +336,7 @@ $(function(){
     $("#delete_btn").click(function(){
     	let confirmAns = confirm("정말 선택삭제 하시겠습니까?");
     	if(confirmAns){
-    		document.adminfrm.submit();
+    		document.managerfrm.submit();
     		return true;
     	} 
     });
@@ -468,9 +468,9 @@ window.onload = function () {
 			</c:otherwise>
 		</c:choose>
     </table>
-    	</form>
+  
        <input type="submit" name="delete_btn" id="delete_btn" value="선택삭제" >
-
+  	</form>
     
  
 		<div id="paging" class="pull-left">
