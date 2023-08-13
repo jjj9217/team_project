@@ -77,9 +77,14 @@ public class MypageDao {
 		return sqlSession.selectOne(MAPPER+".selectdeliveryCount", member_idx);
 	}
 	
-	//배송지 등록하기
+	//기본배송지 등록하기
 	public int insertdeliveryPost(DeliveryVo vo) {
 		return sqlSession.insert(MAPPER+".insertdeliveryPost", vo);
+	}
+	
+	//노말배송지 등록하기
+	public int insertdeliveryPost_normal(DeliveryVo vo) {
+		return sqlSession.insert(MAPPER+".insertdeliveryPost_normal", vo);
 	}
 
 	//기본배송지 설정하기
@@ -129,6 +134,11 @@ public class MypageDao {
 	//좋아요 삭제하기
 	public int deletelike(LikeExploreVo vo) {
 		return sqlSession.delete(MAPPER+".deletelike", vo);
+	}
+	
+	//좋아요 전체 삭제하기
+	public int deletelikeall(LikeExploreVo vo) {
+		return sqlSession.delete(MAPPER+".deletelikeall", vo);
 	}
 	
 	//작성한 리뷰 사진목록에 관한 Dao

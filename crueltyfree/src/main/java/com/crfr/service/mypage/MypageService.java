@@ -42,6 +42,8 @@ public interface MypageService {
 	
 	default int insertdeliveryPost(DeliveryVo vo) {return 0;}
 	
+	default int insertdeliveryPost_normal(DeliveryVo vo) {return 0;}
+	
 	default int deletedeliveryPost(DeliveryVo vo) {return 0;}
 	
 	default int updatedeliveryPostdefault (DeliveryVo vo) {return 0;}
@@ -61,6 +63,8 @@ public interface MypageService {
 	default int selectlikeListCount(int member_idx) {return 0;}
 	
 	default int deletelike(LikeExploreVo vo) {return 0;}
+	
+	default int deletelikeall(LikeExploreVo vo) {return 0;}
 
 	default List<FileVo> reviewRegList(FileVo vo) {return null;}
 	

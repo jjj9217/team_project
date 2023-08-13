@@ -24,4 +24,8 @@ public class MypageDeleteService implements MypageService {
 	public int deletelike(LikeExploreVo vo) {
 		return dao.deletelike(vo);
 	}
+	
+	public int deletelikeall(LikeExploreVo vo) {
+		return dao.deletelikeall(vo);
+	}
 }
