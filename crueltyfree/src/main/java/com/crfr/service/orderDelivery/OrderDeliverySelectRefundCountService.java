@@ -10,12 +10,12 @@ import com.crfr.vo.OrderVo;
 
 import lombok.RequiredArgsConstructor;
 
-@Service("mSelectOrderVo")
+@Service("mSelectRefundCount")
 @RequiredArgsConstructor
-public class OrderDeliverySelectOrderVoService implements OrderDeliveryService{
+public class OrderDeliverySelectRefundCountService implements OrderDeliveryService{
 	private final OrderDeliveryDao dao;
 	
-	public List<OrderVo> selectOrderVo(int member_idx, Timestamp timestamp_begin, Timestamp timestamp_end){
-		return dao.selectOrderVo(member_idx, timestamp_begin, timestamp_end);
+	public int selectRefundCount(int member_idx, Timestamp timestamp_begin, Timestamp timestamp_end){
+		return dao.selectRefundCount(member_idx, timestamp_begin, timestamp_end);
 	}
 }

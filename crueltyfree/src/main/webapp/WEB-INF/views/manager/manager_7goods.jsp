@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -291,7 +292,20 @@
 		font: bold 13px Arial, Sans-serif; 
 		cursor:pointer;
 	}
-
+	.ellipsis {
+		width:100px;
+	  	height: auto;
+  		overflow: hidden;
+  		text-overflow: ellipsis;
+  		white-space:nowrap;
+	}
+	.ellipsis2 {
+		width:150px;
+	  	height: auto;
+  		overflow: hidden;
+  		text-overflow: ellipsis;
+  		white-space:nowrap;
+	}
 </style>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -366,11 +380,11 @@ $(function(){
     <!-- 글목록 테이블 -->
     <table id="tbl_list" style="margin-top:80px;">
         <tr>
-            <th width="">상품문의번호</th>
+            <th width="">문의번호</th>
             <th width="">회원닉네임</th>
             <th width="">상품번호</th>
             <th width="">상품문의내용</th>
-            <th width="">문의등록일</th>
+            <th width="">등록일</th>
             <th width="">기능</th>
         </tr>
 
@@ -390,10 +404,11 @@ $(function(){
 				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
 					<tr>
 						<td>${proinqSelectList[rowNum-1].product_inq_idx}</td>
-						<td>${proinqSelectList[rowNum-1].member_nickname}</td>
+						<td><div class="ellipsis">${proinqSelectList[rowNum-1].member_nickname}</div></td>
 						<td>${proinqSelectList[rowNum-1].product_idx}</td>
-						<td>${proinqSelectList[rowNum-1].product_inq_content}</td>
-						<td>${proinqSelectList[rowNum-1].product_inq_regDate}</td>
+						<td><div class="ellipsis2">${proinqSelectList[rowNum-1].product_inq_content}</div></td>
+                        <fmt:formatDate value="${proinqSelectList[rowNum-1].product_inq_regDate}" type="date" pattern="yyyy-MM-dd HH:mm" var="formatDate"/>						
+						<td>${formatDate}</td>
 						<td>
 						<input type="button" id="edit" class="edit" value="상세">
 						<input type="button" id="delete" class="delete" value="삭제">
