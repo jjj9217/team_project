@@ -98,8 +98,51 @@
 		border-style:solid;
 		border-width:1px;
 	}
+	#guest{font-size:14px; float:right; padding-right: 20px; color:#7d99a4; cursor: pointer; font-weight:bold; text-decoration: underline;}
 
-
+	 .modalContainer {
+	 	width: 100%;
+	 	height: 100%;
+	 	position: fixed;
+	 	top: 0;
+	 	left: 0;
+	 	display: flex;
+	 	justify-content: center;
+	 	align-items: center;
+	 	background: rgba(0, 0, 0, 0.5);
+	 }
+	.hidden {
+	 	display: none;
+	 }	 
+	.modal_title{width:450px; font-size: 24px; font-weight: bold; margin-bottom: 10px;}
+	.modal_content{width:450px; height:auto; line-height:130px; color:#a4a4a4; font-weight: bold; text-align: center;}
+	.modal_hr{width:450px; height: 5px; background-color: #7d99a4; margin-bottom: 10px;}
+	.modal_btn{width:450px; display: flex; justify-content: center;}
+	.modal_title_text{display:inline-block;}
+	.modal_title_right{float:right;}
+	.close{border:0;color:#4a4a4a; font-weight: bold; font-size: 24px; background-color: #fff;}	     
+	
+	.modalInqContent {
+		position: absolute;
+	 	background-color: #ffffff;
+	 	border-radius: 5px;
+	 	width: 550px;
+	 	height: auto;
+	 	padding: 15px;
+	 }
+	 .modal_inq_title{width:550px; font-size: 24px; font-weight: bold; margin-bottom: 10px;}
+	 .modal_inq_content{width:550px; height:auto;}
+	 .modal_inq_hr{width:550px; height: 5px; background-color: #7d99a4; margin-bottom: 20px;}
+	 .inq_text_box{width:530px; height: auto; margin-top: 10px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #a4a4a4; padding: 10px;}	
+	 .inq_text{width:510px; height: 180px; padding: 10px; border: none; resize: none;}
+	 .inq_text:focus{outline: none;}
+	 .inq_text_count{width:510px; height:50px; line-height:50px; border-top: 1px solid #a4a4a4; padding: 10px;}     
+	 .modal_inq_btn{width:550px; display: flex; justify-content: center; border-top: 1px solid #a4a4a4; padding-top: 20px; padding-bottom: 20px;}
+	 .cancelButton, .edit_cancelButton{width:130px; height:40px; margin-right: 10px; border-radius: 2px; background-color: #fff; color:#7d99a4; font-weight: bold; border: 1px solid #7d99a4}
+	 .writeButton, .edit_updateButton{width:130px; height:40px; margin-left: 10px; border-radius: 2px; background-color: #7d99a4; color:#fff; font-weight: bold; border: 1px solid #7d99a4}
+	 .search_notice{color: #4a4a4a; font-weight: bold;}
+	 #order_num{margin-left: 30px; width: 300px; height: 20px; padding: 10px; border: 1px solid #7d99a4; border-radius: 5px; outline: #7d99a4;}
+	
 </style>
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -124,6 +167,24 @@ $(document).ready(function() {
         } else {
         	$("#message2").text("");
         }
+    });
+    
+    //비회원 주문/배송 조회
+    $("#guest").click(function() {
+    	$(".modalContainer").eq(0).removeClass("hidden");
+    });  
+    
+    $(".modalCloseButton").click(function() {
+    	$(".modalContainer").eq(0).addClass("hidden");
+    });
+    
+    $("#orderInq_search_btn").click(function() {
+    	if($("#order_num").val().length == 0){
+    		alert("주문번호를 입력해주세요");
+    		$("#order_num").focus();
+    	}else{
+    		$("#inq_form").submit();
+    	}
     });
 });
 </script>
@@ -162,7 +223,7 @@ function checkInput(){
 
 <section>
     <div id="container">LOGIN<br><br>
-   	
+   	<span id="guest">비회원 주문조회</span><br>
     <form name="frm" action="login_process.do" method="post" >
             <input type="text" name="member_id" id="member_id" placeholder="아이디">
             <div id="message"></div>
@@ -194,6 +255,31 @@ function checkInput(){
 </div>    
 </section>
 
+<!-- 주문조회 모달창 -->
+<div class="modalContainer hidden">
+<div class="modalInqContent">
+	<div class="modal_inq_title">
+		<div class="modal_title_text">주문/배송 조회</div>
+		<div class="modal_title_right"><button class="modalCloseButton close">X</button></div>							
+	</div>
+	<div class="modal_inq_hr">
+	</div>
+	<form name="inq_form" id="inq_form" action="${pageContext.request.contextPath}/mypage/mypage_orderinq_view.do" method="get">
+	<div class="modal_inq_content">
+		<div class="inq_text_box">
+			<span class="search_notice">주문시 이메일로 받은 주문번호를 입력해주세요.</span><br><br>			
+			<span class="search_notice">주문번호 : 			
+			</span><input type="text" id="order_num" name="ordNum" placeholder="주문번호를 입력해주세요">
+		</div>
+	</div>
+	</form>
+	<div class="modal_inq_btn">
+	    <button class="modalCloseButton cancelButton">취소</button>
+	    <button class="writeButton" id="orderInq_search_btn">
+	    조회</button>
+	</div>
+   </div>				    
+</div>
 
 <footer>
 	<jsp:include page="../main/footer.jsp" />

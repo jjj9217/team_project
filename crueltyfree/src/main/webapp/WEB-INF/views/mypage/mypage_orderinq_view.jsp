@@ -8,122 +8,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>취소/반품 내역 | CrueltyFree</title>
+<title>주문/배송 조회 | CrueltyFree</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script> 
 <script>
-function getParameterValue(parameterName) {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
 
-    if (urlParams.has(parameterName)) {
-        return urlParams.get(parameterName);
-    }
-
-    return null; // 파라미터가 없으면 null 반환
-}
-
-function pageNav(pageNum, pageBlock, month) { 	
-	// 클래스 정보 추출
-	var month01Class = $("#month01").attr("class");
-    var month03Class = $("#month03").attr("class");
-    var month06Class = $("#month06").attr("class");
-    var month12Class = $("#month12").attr("class"); 
-    
-	var insertSortOrder = "";
-	const paramMonth = getParameterValue("month"); //url에서 파라미터값 가져오기
-	
-	if (month === 'empty') {
-		if(paramMonth === null){//조건 아에 안넣은 초기상황
-			insertMonth = '1';			
-		}else{//기존에 있던 조건상황(url파라미터)
-			insertMonth = paramMonth;
-		}
-	}else{
-		insertMonth = month;
-	}   
-	
-    // 현재 스크롤 위치
-	var scrollY = window.scrollY || window.pageYOffset;
-    
-	// 새 URL 구성
-    var newURL = "mypage_orderinq.do?" + 
-            "pageNum=" + pageNum +
-            "&pageBlock=" + pageBlock +
-            "&scrollY=" + scrollY +
-            "&month01Class=" + month01Class +
-            "&month03Class=" + month03Class + 
-            "&month06Class=" + month06Class + 
-            "&month12Class=" + month12Class + 
-            "&month=" + insertMonth;
-    
-    // URL로 이동        
-    window.location.href = newURL;
-}
-
-$(function(){
-	// GET 파라미터 추출
-    var urlParams = new URLSearchParams(window.location.search);
-    var scrollY = getParameterValue("scrollY");
-    
-    // 스크롤 위치로 이동
-    if (scrollY !== null) {
-        $(window).scrollTop(parseInt(scrollY));
-    }
-    
-    // GET 파라미터 추출
-    var month01Class = getParameterValue("month01Class");
-    var month03Class = getParameterValue("month03Class");
-    var month06Class = getParameterValue("month06Class");
-    var month12Class = getParameterValue("month12Class");   
-    
-    // 클래스정보 세팅
-	if (month01Class !== null) {
-		$("#month01").removeClass().addClass(month01Class);
-    }	
-	if (month03Class !== null) {
-		$("#month03").removeClass().addClass(month03Class);
-    }
-	if (month06Class !== null) {
-		$("#month06").removeClass().addClass(month06Class);
-    }
-	if (month12Class !== null) {
-		$("#month12").removeClass().addClass(month12Class);
-    }
-	
-	//기간 1개월 클릭
-	$("#month01").click(function(){
-		$(this).addClass("month_btn_click");
-		$("#month03").removeClass("month_btn_click");
-		$("#month06").removeClass("month_btn_click");
-		$("#month12").removeClass("month_btn_click");		
-		pageNav(1, 1, 1);
-	});	
-	//기간 3개월 클릭
-	$("#month03").click(function(){
-		$(this).addClass("month_btn_click");
-		$("#month01").removeClass("month_btn_click");
-		$("#month06").removeClass("month_btn_click");
-		$("#month12").removeClass("month_btn_click");
-		pageNav(1, 1, 3);
-	});	
-	//기간 6개월 클릭
-	$("#month06").click(function(){
-		$(this).addClass("month_btn_click");
-		$("#month03").removeClass("month_btn_click");
-		$("#month01").removeClass("month_btn_click");
-		$("#month12").removeClass("month_btn_click");
-		pageNav(1, 1, 6);
-	});	
-	//기간 12개월 클릭
-	$("#month12").click(function(){
-		$(this).addClass("month_btn_click");
-		$("#month03").removeClass("month_btn_click");
-		$("#month06").removeClass("month_btn_click");
-		$("#month01").removeClass("month_btn_click");
-		pageNav(1, 1, 12);
-	});	
-	
+$(function(){	
 	$(".refund_btn").click(function(){
 	  var index = $(".refund_btn").index(this);
 	  var order_idx = $(".refund_order_idx").eq(index).val();
@@ -202,9 +92,11 @@ $(function(){
 
     #mypage-conts{ 
     	display: block;       
-        width:810px;
+        width:915px;
+        padding-left: 105px;
         height: auto;      
         float:left;
+        margin: 0 auto;
     }
 
     #mylink{
@@ -354,6 +246,7 @@ $(function(){
 
 
     .serach-period{
+    	display: inline-block;
         width: 98%;
         border: 0px;
         padding: 15px 0 15px 15px;
@@ -405,15 +298,15 @@ $(function(){
     .month_btn{width: 60px; height: 30px; border-radius:5px; border: 1px solid #7d99a4; background-color: #fff; color: #7d99a4; font-weight: bold;}
     .month_btn_click{width: 60px; height: 30px; border-radius:5px; border: 1px solid #7d99a4; background-color: #7d99a4; color: #fff; font-weight: bold;}
     .tit_area{margin-bottom: 20px;}
-    .buy_list_container{display: block; width: 790px; height: auto; margin: 0 auto; padding: 10px; margin-top: 50px;}
+    .buy_list_container{display: block; width: 790px; height: auto; padding: 10px 0; margin-top: 50px; }
     .buy_list, .order_list{border-collapse: collapse;}
     .th_date{width: 135px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
     .th_name{width: 380px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
     .th_amount{width: 65px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
     .th_price{width: 115px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
     .th_state{width: 115px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
-	.td_date{width: 125px; height: auto; padding: 30px 5px; text-align: center; font-size:14px; font-weight: bold;}
-    .td_name{width: 370px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+	.td_date{width: 125px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4;  font-size:14px; font-weight: bold;}
+    .td_name{width: 370px; height: auto; padding: 30px 5px; text-align: center;font-size:14px;}
     .td_amount{width: 45px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
     .td_price{width: 105px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px; color:#7d99a4; font-weight: bold;}
     .td_state{width: 105px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px; color:#4a4a4a; font-weight: bold;}
@@ -451,6 +344,50 @@ $(function(){
      .gray_text{color:#a4a4a4; font-weight:bold; text-decoration: underline;}
     .clear{clear:both;}
     #strong{color:#7d99a4; font-weight:bold;}
+    .search_box{
+    	display: inline-block;
+    	width: 750px; height: 30px; padding: 20px;
+    	border-radius: 5px;
+    	border: 1px solid #a4a4a4;
+    }
+    .order_date_class{display: inline-block; border-right: 1px solid #a4a4a4;}
+    .order_num_class{display: inline-block; margin-left: 20px;}
+    .sub_title{color:#4a4a4a; margin-bottom: 10px;}
+    .black_text{margin: 0 30px; color:black; font-weight:bold;}
+    .num_text{margin: 0 30px; color:#7d99a4; font-weight:bold; text-decoration: underline;}
+    
+    #tex_box{width: 790px; height: auto; margin-top: 30px;}
+    #tb_payment_info{border-collapse: collapse;}
+    #payment_info{margin-bottom: 20px;}
+    #payment_info, #tb_payment_info{width: 780px; height: auto;}
+    .td_payment_title{width: 150px; height: 28px; padding: 15px 0 15px 18px; font-size: 15px;}
+    .td_payment_content{width: 500px; height: 20px; padding: 15px 20px; font-size: 15px; text-align: right;}
+    .top{border-top: 2px solid #4a4a4a;}
+    .bottom{border-bottom: 1px solid #4a4a4a;}
+    .title{background-color: #eef3f5; font-weight: bold; font-size: 15px;}
+    .txt_color{color: #7d99a4;}
+    .big{font-size: 24px;}
+
+    #tb_delivery_info{border-collapse: collapse;}
+    #delivery_info{margin-bottom: 40px;}
+    #delivery_info, #tb_delivery_info{width: 780px; height: auto;}
+    .td_delivery_title{width: 152px; height: 28px; padding: 15px 0 15px 18px; font-size: 15px;}
+    .td_delivery_content{width: 500px; height: 28x; padding: 15px 20px 15px 36px; font-size: 15px;}
+    .top{border-top: 2px solid #4a4a4a;}
+    .bottom{border-bottom: 1px solid #4a4a4a;}
+    .title{background-color: #eef3f5; font-weight: bold; font-size: 15px;}
+    .order_btn_area{
+        width: 740px; height: auto; padding: 35px 20px; border-top: 1px solid #4a4a4a; text-align: center; margin-bottom: 20px;
+    }
+    #do_shoppig_btn{
+        width: 128px; height: 48px; border: 1px solid #7d99a4; background-color: #fff; border-radius: 5px; color: #7d99a4; font-size: 16px; font-weight: bold; margin: 0 5px;
+    }
+    #order_list_btn{
+        width: 128px; height: 48px; border: 1px solid #7d99a4; background-color: #7d99a4; border-radius: 5px; color: #fff; font-size: 16px; font-weight: bold; margin: 0 5px;
+    }
+    #errmsg_box{
+    	width: 1020px; height: auto; padding: 179px 0; margin: 0 auto; font-size: 20px; text-align: center; color: #4a4a4a; font-weight: bold;
+    }
 </style>
 </head>
 
@@ -462,105 +399,84 @@ $(function(){
 <!-- body시작 -->
 
 <div id="Container">
-    <div id="mypage">       
-        <table>
-            <tr><th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
-            <tr><td class="mypagetable">마이 쇼핑</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
-            <tr><td><hr width=100%></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
-            <tr><td>쿠폰</td></tr>
-            <tr><td><hr width=100%></td></tr>
-            <tr><td class="mypagetable">마이활동</td></tr>
-            <tr><td>1:1문의내역</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
-            <tr><td><hr width=100%></td></tr>
-            <tr><td class="mypagetable">마이 정보</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지/환불계좌</a></td></tr>
-        </table>        
-    </div>
-    
+<c:choose>
+<c:when test="${!empty errmsg}">
+<div id="errmsg_box">
+${errmsg}<br><br>
+<input type="button" name="do_shoppig_btn" id="do_shoppig_btn" value="돌아가기" onclick="location.href='${pageContext.request.contextPath}/member/login.do';">
+</div>
+</c:when>
+<c:otherwise>
     <div id="mypage-conts">
         <div id="blank">            
         </div>
         <div class="tit_area">
             <h2 class="tit">주문/배송조회</h2>
         </div>
-        <div class="search_box">        
-        <fieldset class="serach-period">
-            <div class="select_con" id="selectOrderTypeZone.select_con">
-                <p class="buy_period_txt">구매 기간</p>
-                <div class="select_month_box">
-                <ul class="select-month">
-                    <li class="buy_month"><button id="month01" class="month_btn month_btn_click" type="button">1개월</button></li>
-                    <li class="buy_month"><button id="month03" class="month_btn" type="button">3개월</button></li>
-                    <li class="buy_month"><button id="month06" class="month_btn" type="button">6개월</button></li>
-                    <li class="buy_month"><button id="month12" class="month_btn" type="button">12개월</button></li>
-                </ul>
-                </div>
+        <h3 class="sub_title">상세정보</h3>
+        <div class="search_box">
+            <div class="order_date_class">
+            주문일자:
+            <span class="black_text">
+            <fmt:formatDate value="${orderList[0].order_date}" pattern="yyyy.MM.dd" /></span>
             </div>
-        </fieldset>
-        <br>
+            <div class="order_num_class">
+            주문번호:
+            <span class="num_text">${orderList[0].order_num}</span>
+            </div>
+		</div>
         <p class="buy_list_txt">
-        </p>
-        </div>
+        </p>        
+        
         <div class="buy_list_container">
+        <h3 class="sub_title">배송상품</h3>
 		<table class="order_list">
-        <tr>
-            <th class="th_date top bottom">주문일자</th>
+        <tr>            
             <th class="th_name top bottom">상품</th>
+            <th class="th_date top bottom">판매가</th>
             <th class="th_amount top bottom">수량</th>
             <th class="th_price top bottom">주문금액</th>
             <th class="th_state top bottom">상태</th>
-        </tr>
-        <c:forEach var="orderRow" begin="${mPageNav.startNum}" end="${mPageNav.endNum}">
+        </tr>        
         <tr>
         <td>
-        <c:forEach var="orderProduct" items="${orderList[orderRow-1]}" varStatus="loop">
+        <c:forEach var="orderRows" begin="1" end="${orderListCount}">
         <tr>
-		<c:if test="${loop.first}">
-		<td class="td_date bottom" rowspan="${orderProductCounts[orderRow-1]}">
-		<fmt:formatDate value="${orderProduct.order_date}" pattern="yyyy.MM.dd" /><br>
-		<span class="blue_text">${orderProduct.order_num}</span>
-		<a class="gray_text" href="${pageContext.request.contextPath}/mypage/mypage_orderinq_view.do?ordNum=${orderProduct.order_num}">상세보기</a><br>               
-        </td>
- 	    </c:if>
         <td class="td_name bottom">
    		<div class="basket_item">
-        	<a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${orderProduct.product_idx}">
-            	<img src="../resources/uploads/${orderProduct.saveFile}" width="85px" height="85px" alt="썸네일이미지">
+        	<a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${orderList[orderRows-1].product_idx}">
+            	<img src="../resources/uploads/${orderList[orderRows-1].saveFile}" width="85px" height="85px" alt="썸네일이미지">
             </a>
-            <a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${orderProduct.product_idx}">
-                <span class="prd_seller">${orderProduct.member_nickname}</span>
-                <p class="prd_title">${orderProduct.product_name}</p>
+            <a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${orderList[orderRows-1].product_idx}">
+                <span class="prd_seller">${orderList[orderRows-1].member_nickname}</span>
+                <p class="prd_title">${orderList[orderRows-1].product_name}</p>
             </a>
         </div>
 		</td>
-        <td class="td_amount bottom">${orderProduct.order_product_count}</td>
+		<td class="td_date bottom">
+		<fmt:formatNumber value="${orderList[orderRows-1].product_price}" pattern="###,###" />원
+		</td>
+        <td class="td_amount bottom">${orderList[orderRows-1].order_product_count}</td>
         <td class="td_price bottom">
-        <fmt:formatNumber value="${orderProduct.order_product_count * orderProduct.product_price}" pattern="###,###" />원</td>
+        <fmt:formatNumber value="${orderList[orderRows-1].order_product_count * orderList[orderRows-1].product_price}" pattern="###,###" />원</td>
         <td class="td_state bottom">
         <c:choose>
-        <c:when test="${orderProduct.order_ing == 0}">
+        <c:when test="${orderList[orderRows-1].order_ing == 0}">
         <!-- 출고대기 상태일때 -->
         주문완료<br><br>
         <button class="refund_btn">환불신청</button>
         </c:when>
-        <c:when test="${orderProduct.order_ing == 1}">
+        <c:when test="${orderList[orderRows-1].order_ing == 1}">
         <!-- 출고준비중 상태일때 -->
         상품준비중
         <button class="refund_btn">환불신청</button>
         </c:when>
-        <c:when test="${orderProduct.order_ing == 2}">
+        <c:when test="${orderList[orderRows-1].order_ing == 2}">
         <!-- 배송중 상태일때 -->
         상품배송중
         <input type="hidden" class="refund_btn">
         </c:when>
-        <c:when test="${orderProduct.order_ing == 3}">
+        <c:when test="${orderList[orderRows-1].order_ing == 3}">
         <!-- 출고완료 상태일때 -->
         배송완료
         <input type="hidden" class="refund_btn">
@@ -568,12 +484,12 @@ $(function(){
         <c:otherwise>
         <!-- 출고취소 상태일때 -->
         <c:choose>
-         <c:when test="${orderProduct.order_status == 1}">
+         <c:when test="${orderList[orderRows-1].order_status == 1}">
          <!-- 교환상태 -->
          상품교환
          <input type="hidden" class="refund_btn">
          </c:when>
-         <c:when test="${orderProduct.order_status == 2}">
+         <c:when test="${orderList[orderRows-1].order_status == 2}">
          <!-- 환불상태 -->
          환불완료
          <input type="hidden" class="refund_btn">
@@ -586,47 +502,137 @@ $(function(){
         </c:choose>
         </c:otherwise>
         </c:choose>
-        <input type="hidden" class="refund_order_idx" value="${orderProduct.order_idx}">
-        <input type="hidden" class="refund_order_num" value="${orderProduct.order_num}">
+        <input type="hidden" class="refund_order_idx" value="${orderList[orderRows-1].order_idx}">
+        <input type="hidden" class="refund_order_num" value="${orderList[orderRows-1].order_num}">
         </td>
         </tr>
         </c:forEach> 
         </td>        
-        </tr>
-        </c:forEach>
+        </tr>        
         </table>         
 		</div>
-	<!-- 페이지 네비게이션 -->
-	<div class="pageing">
-	<c:if test="${mPageNav.pageNum > mPageNav.pages_per_block}">
-	<a href="#" onclick="pageNav(1,1, 'empty')">&lt;&lt;</a>&nbsp;
-	<a href="#" onclick="pageNav(${(mPageNav.pageBlock - 2)*mPageNav.pages_per_block + 1},${mPageNav.pageBlock-1}, 'empty')">
-		&lt;이전페이지
-	</a>   	
-	</c:if>
+
+	<!-- 콘텐츠 700px -->
+    <div id="tex_box">
+        <h3 class="sub_title">결제정보</h3>
+        <div id="payment_info">
+            <table id="tb_payment_info">
+                <tr>
+                    <td class="td_payment_title top bottom title">총상품금액</td>
+                    <td class="td_payment_content top bottom">
+                        <fmt:formatNumber value="${orderList[0].order_prdPrice}" pattern="###,###" />원
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_payment_title bottom title">총할인금액</td>
+                    <td class="td_payment_content bottom txt_color">
+                        <fmt:formatNumber value="${orderList[0].order_salePrice}" pattern="###,###" />원
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_payment_title bottom title">총배송비</td>
+                    <td class="td_payment_content bottom">
+                        <fmt:formatNumber value="${orderList[0].order_dlvPrice}" pattern="###,###" />원
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_payment_title bottom title big">최종 결제금액</td>
+                    <td class="td_payment_content bottom txt_color">
+                        <span class="big"><fmt:formatNumber value="${orderList[0].order_totalPrice}" pattern="###,###" /></span>원
+                    </td>
+                </tr> 
+            </table>
+        </div>	
+
+        <h3 class="sub_title">배송 정보</h3>
+        <div id="delivery_info">
+            <table id="tb_delivery_info">  
+                <tr>
+                    <td class="td_delivery_title top bottom title">받는분</td>
+                    <td class="td_delivery_content top bottom">
+                        ${deliveryVo.delivery_get_name}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_delivery_title bottom title">연락처</td>
+                    <td class="td_delivery_content bottom">
+                        ${deliveryVo.delivery_handphone}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_delivery_title bottom title">주소</td>
+                    <td class="td_delivery_content bottom">
+                        ${deliveryVo.delivery_address} ${deliveryVo.delivery_address2}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_delivery_title bottom title">공동현관 출입방법</td>
+                    <td class="td_delivery_content bottom">                        
+                        <c:choose>
+                        <c:when test="${deliveryVo.delivery_pass == 0}">
+                        	비밀번호
+                        </c:when>
+                        <c:when test="${deliveryVo.delivery_pass == 1}">
+                        	경비실 호출
+                        </c:when>
+                        <c:when test="${deliveryVo.delivery_pass == 2}">
+                        	자유출입가능
+                        </c:when>
+                        <c:otherwise>
+                        	기타사항
+                        </c:otherwise>
+                        </c:choose>
+                    </td>
+                </tr>
+                <c:choose>
+                <c:when test="${deliveryVo.delivery_pass == 0}">
+                <tr>
+                    <td class="td_delivery_title bottom title">공동현관 비밀번호</td>
+                    <td class="td_delivery_content bottom">${deliveryVo.delivery_pass_content}</td> 
+                </tr>       
+                </c:when>
+                <c:when test="${deliveryVo.delivery_pass == 1}">
+                <tr>
+                    <td class="td_delivery_title bottom title">경비실 호출 방법</td>
+                    <td class="td_delivery_content bottom">${deliveryVo.delivery_pass_content}</td> 
+                </tr>  
+                </c:when>
+                <c:when test="${deliveryVo.delivery_pass == 2}">                	
+                </c:when>
+                <c:otherwise>
+                <tr>
+                    <td class="td_delivery_title bottom title">기타 상세 내용</td>
+                    <td class="td_delivery_content bottom">${deliveryVo.delivery_pass_content}</td> 
+                </tr>  
+                </c:otherwise>
+                </c:choose>
+                <tr>
+                    <td class="td_delivery_title bottom title">배송완료 메시지 전송</td>
+                    <td class="td_delivery_content bottom">
+                        배송직후
+                    </td>
+                </tr>
+            </table>
+        </div>
+            <div class="order_btn_area">
+         <!-- 회원은 목록으로, 비회원은 쇼핑계속 보여주기 -->   
+        <c:choose>
+        <c:when test="${!empty member}">
+        <input type="button" name="do_shoppig_btn" id="do_shoppig_btn" value="목록으로" onclick="location.href='${pageContext.request.contextPath}/mypage/mypage_orderinq.do';">
+        </c:when>
+        <c:otherwise>
+        <input type="button" name="do_shoppig_btn" id="do_shoppig_btn" value="쇼핑계속" onclick="location.href='${pageContext.request.contextPath}/main/home.do';">
+        </c:otherwise>
+        </c:choose>
+    </div>
+    </div>	
 	
-	<c:forEach var="i" begin="${(mPageNav.pageBlock-1)*mPageNav.pages_per_block + 1}" end="${mPageNav.pageBlock*mPageNav.pages_per_block}">
-	<c:if test="${i le mPageNav.totalPageNum}">
-	<c:choose>
-	<c:when test = "${mPageNav.pageNum eq i}">
-	<a href="#" onclick="pageNav(${i},${mPageNav.pageBlock}, 'empty')">
-	<span style="color:red">${i}&nbsp;</span>
-	</a>
-	</c:when>
-	<c:otherwise>
-	<a href="#" onclick="pageNav(${i},${mPageNav.pageBlock}, 'empty')">${i}&nbsp;</a>
-	</c:otherwise>
-	</c:choose>
-	</c:if>
-	</c:forEach>
-	
-	<c:if test="${((mPageNav.rows_per_page*mPageNav.pages_per_block) lt mPageNav.totalRows) and (mPageNav.pageBlock ne mPageNav.lastPageBlock) }">
-	<a href="#" onclick="pageNav(${mPageNav.pageBlock*mPageNav.pages_per_block+1},${mPageNav.pageBlock+1}, 'empty')">다음페이지&gt;</a>&nbsp;
-	<a href="#" onclick="pageNav(${mPageNav.totalPageNum},${mPageNav.lastPageBlock}, 'empty')">&gt;&gt;</a>
-	</c:if>
-	</div>  
     <div class="clear"></div>
     </div>
+
+
+</c:otherwise>
+</c:choose>        
 </div>
 	<div class="clear"></div>
     <footer>

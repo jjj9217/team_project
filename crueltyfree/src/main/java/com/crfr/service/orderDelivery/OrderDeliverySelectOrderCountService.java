@@ -10,12 +10,12 @@ import com.crfr.vo.OrderVo;
 
 import lombok.RequiredArgsConstructor;
 
-@Service("mSelectOrderVo")
+@Service("mSelectOrderCount")
 @RequiredArgsConstructor
-public class OrderDeliverySelectOrderVoService implements OrderDeliveryService{
+public class OrderDeliverySelectOrderCountService implements OrderDeliveryService{
 	private final OrderDeliveryDao dao;
 	
-	public List<OrderVo> selectOrderVo(int member_idx, Timestamp timestamp_begin, Timestamp timestamp_end){
-		return dao.selectOrderVo(member_idx, timestamp_begin, timestamp_end);
+	public int selectOrderCount(int member_idx, Timestamp timestamp_begin, Timestamp timestamp_end){
+		return dao.selectOrderCount(member_idx, timestamp_begin, timestamp_end);
 	}
 }

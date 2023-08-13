@@ -5,13 +5,70 @@
 <mapper namespace="com.crfr.OrderDeliveryMapper">
 	
 	<!-- 주문 리스트 -->
-	<select id="selectOrderVo" parameterType="_int" resultType="OrderVo">
-		select * from `order` where client_num=#{member_idx};
+	<select id="selectOrderVo" parameterType="map" resultType="OrderVo">
+		select * from `order` where client_num=#{member_idx} 
+	    and order_date &gt;= #{timestamp_begin}
+	    and order_date &lt;= #{timestamp_end}
+		order by `order_date` desc;
 	</select>
 	
 	<!-- 주문상품 리스트 -->
 	<select id="selectOrderProduct" parameterType="_int" resultType="OrderProductVo">
 		select * from `order_product` where `order_idx`=#{order_idx};
 	</select>
-		
+	
+	<!-- 주문 리스트 수 -->
+	<select id="selectOrderCount" parameterType="map" resultType="_int">
+		select count(*) from `order` where client_num=#{member_idx}
+	    and order_date &gt;= #{timestamp_begin}
+	    and order_date &lt;= #{timestamp_end}		
+	</select>
+	
+	<!-- 결제완료 수 -->
+	<select id="selectCountPayEd" parameterType="map" resultType="_int">
+		select count(*) from `order` where client_num=#{member_idx} and order_ing='0'
+	    and order_date &gt;= #{timestamp_begin}
+	    and order_date &lt;= #{timestamp_end}
+	</select>
+	
+	<!-- 배송준비중 수 -->
+	<select id="selectCountDlvIng" parameterType="map" resultType="_int">
+		select count(*) from `order` where client_num=#{member_idx} and order_ing='1'
+	    and order_date &gt;= #{timestamp_begin}
+	    and order_date &lt;= #{timestamp_end}
+	</select>
+	
+	<!-- 배송중 수 -->
+	<select id="selectCountDlvEd" parameterType="map" resultType="_int">
+		select count(*) from `order` where client_num=#{member_idx} and order_ing='2'
+	    and order_date &gt;= #{timestamp_begin}
+	    and order_date &lt;= #{timestamp_end}
+	</select>	
+	
+	<!-- 취소 리스트 -->
+	<select id="selectRefund" parameterType="map" resultType="OrderVo">
+		select * from `order` where client_num=#{member_idx} 
+	    and order_date &gt;= #{timestamp_begin}
+	    and order_date &lt;= #{timestamp_end}
+	    and order_ing != 0
+		order by `order_date` desc;
+	</select>
+	
+	<!-- 취소 리스트 수 -->
+	<select id="selectRefundCount" parameterType="map" resultType="_int">
+		select count(*) from `order` where client_num=#{member_idx}
+	    and order_date &gt;= #{timestamp_begin}
+	    and order_date &lt;= #{timestamp_end}
+	    and order_ing != 0		
+	</select>	
+
+	<!-- 주문번호 단건에 대한 Vo -->
+	<select id="selectOrderView" parameterType="string" resultType="OrderVo">
+		select * from `order` where order_num=#{order_num} 
+	</select>	
+
+	<!-- 배송지정보 -->
+	<select id="selectDelivery" parameterType="_int" resultType="DeliveryVo">
+		select * from `delivery` where delivery_idx=#{delivery_idx}
+	</select>				
 </mapper>
