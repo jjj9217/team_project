@@ -148,6 +148,8 @@
     /* Modal */
 
     #modal{
+    	width:100%;
+        height:100%;
         display: none;
         justify-content: center;
     }  

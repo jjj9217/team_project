@@ -837,18 +837,7 @@ function ProductDel(searchWord, category_code, category_code_small,
             </div>
         </div>
         <div class="product_list_background">               
-            <ul>            
-                <%-- <c:choose>
-                    <c:when test="${exploreVo.view eq 15}">
-                                
-                    </c:when>                                            
-                    <c:when test="${exploreVo.view eq 30}">
-                                          
-                    </c:when>                        
-                    <c:otherwise>
-                        
-                    </c:otherwise>
-                </c:choose> --%>
+            <ul>                
                 <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
 	               <c:if test="${!empty productList[rowNum-1].product_name}">
 		                <li class="product_list">

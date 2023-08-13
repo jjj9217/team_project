@@ -163,7 +163,82 @@
         
         text-align: center;
     }
+    
+    .goodlist_thumb{
+    	width:75px;
+    	height:75px;
+    }
+    
+    
+    
+    /* 모달 css*/
+    
+    #modal{
+        display: none;
+        justify-content: center;
+        width:100%;
+        height:100%;
+    }  
+    #modal .modal-window {
+        background: rgba( 69, 139, 197, 0.70 );
+        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+        backdrop-filter: blur( 13.5px );
+        -webkit-backdrop-filter: blur( 13.5px );
+        border-radius: 10px;
+        border: 1px solid rgba( 255, 255, 255, 0.18 );
+        width: 560px;
+        height: 700px;
+        position: relative;
+        top: -100px;
+        padding: 10px;
+        position: fixed;
+        top: 5%;
+        justify-content: center;
+         
+    }
+    #modal .title {
+        padding-left: 10px;
+        display: inline;
+        text-shadow: 1px 1px 2px gray;
+        color: white;
+        font-size: 20px;
+        
+    }
+    #modal .title h2 {
+        display: inline;
+    }
+    #modal .close-area {
+        display: inline;
+        float: right;
+        padding-right: 10px;
+        cursor: pointer;
+        text-shadow: 1px 1px 2px gray;
+        color: white;
+    }
+    
+    #modal .content {
+        margin-top: 20px;
+        padding: 0px 10px;
+        text-shadow: 1px 1px 2px gray;
+        color: white;
+    }
+	
+	
+	#review_content_back{
+        height: 210px;
+        
+    }
 
+    .review_content{
+        height: auto;
+    
+    }
+    
+    #review_content_textarea{
+        width: 475px;
+        height: 155px;
+        font-size: 15px;
+    }
 </style>
 </head>
 <script>
@@ -180,6 +255,10 @@ after.d = new Date(after.d); // 사용자의 타임존 기준으로 표시
 after.d instanceof Data // true
 submit();
 }
+
+
+
+
 </script>
 
 <body>
@@ -231,7 +310,7 @@ submit();
             <thead>
                 <hr width=100%>
                 <tr>
-                    <th scope="col">상품${inqfileList[0].saveFile}</th>
+                    <th scope="col">상품</th>
                     <th scope="col">문의내용</th>
                     <th scope="col">답변상태</th>
                 </tr>
@@ -240,11 +319,13 @@ submit();
             
             
             
-            
+                   
             <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
                     <!-- c:if nonreviewfileList[rowNum-1]. = null이면 리뷰안쓴목록만 출력하는방식도 있을 듯? -->
                             <c:if test="${!empty inqproductList[rowNum-1].product_inq_content}">
-                <tr>                
+				
+				
+                <tr style="cursor:pointer;" class="viewinq">     	                
                     <td><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${inqfileList[rowNum-1].saveFile}">
                         상품이름: ${inqproductList[rowNum-1].product_name}
                         문의날짜: ${inqproductList[rowNum-1].product_inq_regDate}
@@ -261,8 +342,36 @@ submit();
                             <c:otherwise>
                             </c:otherwise>
                         </c:choose>                                                                            
-                    </td>                    
+                    </td>
                 </tr>
+                <tbody class="inqView" style="display:none;">
+                <tr>
+                <td colspan='2'>
+                
+                
+                	                	
+                	문의내용 : ${inqproductList[rowNum-1].product_inq_content}<br>
+                	
+                	<c:if test="${!empty inqproductList[rowNum-1].product_inq_answer}">
+                	답변내용 : ${inqproductList[rowNum-1].product_inq_answer} 
+                	</c:if>
+                
+                    
+                </td>
+                <td>
+				<form class="inqdelform" action="${pageContext.request.contextPath}/mypage/mypage_inqdel_process.do" method="post">
+                <input type="hidden" name="product_inq_idx" value="${inqproductList[rowNum-1].product_inq_idx}">
+                <c:if test="${empty inqproductList[rowNum-1].product_inq_answer}">
+                <button type="button" class="oneinqModifyup">수정하기</button>
+                </c:if>
+                <button type="button" class="oneinqdel">삭제하기</button>                
+                </form>
+                
+                </td>
+                
+                </tr>
+                </tbody>
+			                   
 
 
 
@@ -270,88 +379,48 @@ submit();
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-<div id="modal" class="modal">    
+<!-- 상품문의 수정하기 Modal -->
+<form name="caq" class="oneModifyModal" action="${pageContext.request.contextPath}/mypage/mypage_oneinqModify_process.do" method="post">
+<div id="modal" class="modal_modify">    
     <div class="modal-window">
         <div class="title">
-            <h2>리뷰보기</h2>
-            <span class="close_modal">&times;</span>
-        <p>${rowNum}번째 Modal</p>
+            <h2>상품문의수정</h2>
+            <span class="close_modalmodify">&times;</span>        
         </div>
         <div class="item_info">            
-                <c:if test="${!empty reviewproductList[rowNum-1].product_name}">
-                    <span class="thum"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${reviewfileList[rowNum-1].saveFile}"></span>
+                <c:if test="${!empty inqproductList[rowNum-1].product_inq_idx}">
+                    <span class="thum"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${inqfileList[rowNum-1].saveFile}"></span>
                     <dl class="txt_info">
-                        <dt>상품이름: ${reviewproductList[rowNum-1].product_name}
-                            <input type="hidden" name="product_idx" value="${reviewproductList[rowNum-1].product_idx}">
+                        <dt>상품이름: ${inqproductList[rowNum-1].product_name}                            
                         </dt>                                         
                     </dl>
                 </c:if>
         </div>
-        <ul class="write_step">
-            <li class="review_rating"><span class="review_tit">상품은 어떠셨나요? :별점은 숫자로나와야함 ${reviewproductList[rowNum-1].review_score}</span>
-                <ul class="star_inner">
-                    <input type="hidden" name="review_score" value="3">
-                    <li>★</li>
-                    <li>★</li>
-                    <li>★</li>
-                    <li>★</li>
-                    <li>★</li>
-                </ul>
-            </li>                     
+        <ul class="write_step">                           
             <li id="review_content_back">
-                <span class="tit">솔직한 상품 리뷰</span>
+                <span class="tit">문의내용<br></span>
                 <div class="review_content">
-                    <textarea id="review_content_textarea" name="review_content" disabled>${reviewproductList[rowNum-1].review_content}</textarea>
-                    <div class="review_content_bottom">
-                        <div class="count fix_txtNum" style="color:red"><!-- 25자 이하 입력 시 error class 추가 -->
-                            <b class="txt_en" style="color:red">0</b>
-                            <span>/</span> 1,000
-                        </div>
-                    </div>
+                    <br><textarea id="review_content_textarea" name="product_inq_content" placeholder="문의내용을 입력해주세요.">${inqproductList[rowNum-1].product_inq_content}</textarea>                          
+              			<input type="hidden" name="product_inq_idx" value="${inqproductList[rowNum-1].product_inq_idx}">
                 </div>          
-            </li>                        
-            <li class="photo-update"><!-- 리뷰 고도화 : class 추가 -->
-                <div class="step_cont">
-                    <!-- 리뷰 고도화 : 추가 -->
-                    <div class="photo-list-info">
-                        <strong>포토</strong>
-                        번호: ${reviewRegList}, ${reviewproductList[0].review_idx}
-                    </div>
-                    <div class="rw-photo-list">
-                        <c:forEach var="fileVoList" items="${reviewRegList}">
-                            <c:forEach var="fileVo" items="${fileVoList}">
-                                <c:if test="${reviewproductList[rowNum-1].review_idx eq fileVo.review_idx}">
-                                       <span class="thum"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}"></span>
-                                </c:if>                                
-                            </c:forEach>
-                        </c:forEach>
-                        
-                        <%-- <c:forEach var="rowNumE" begin="1" end="5">
-                            <c:if test="${!empty reviewRegList[rowNumE-1].saveFile}">
-                                <span class="thum"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${reviewReg[rowNumE-1].saveFile}"></span>
-                            </c:if>
-                        </c:forEach>   --%>                      
-                    </div>
-                </div>
-            </li>       
+            </li>
         </ul>
-        <!-- <div class="review_reg_background">                                                                     
-            <button type="button" class="btnLookup" id="review_ok">닫기</button>
-            <button type="button" class="reviewLookup" id="review_cancel" >리뷰 등록하기</button>                                  
-        </div> -->
+        <div class="review_reg_background">                                                                     
+<!--             <button type="button" class="btnLookup" id="review_ok">닫기</button> -->
+            <button type="button" class="reviewModifyup" id="review_cancel" >문의 수정하기</button>                                  
+        </div>
     </div>    
 </div>
+</form>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -371,6 +440,7 @@ submit();
                 
                             </c:if>
             </c:forEach>
+            
                         <tr><td>
                         <c:if test="${empty inqproductList[0].product_inq_content}">
                                 문의한 상품내역이 없습니다.
@@ -387,6 +457,57 @@ submit();
         
     </div>
 </div>
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(function(){
+    //jQuery
+   	$(".viewinq").click(function(){ 
+        var index = $(".viewinq").index(this);
+        
+        $(".inqView").eq(index).css("display", "block");      
+    });
+
+        
+//     $(".viewinq").click(function(){
+//         var index2 = $(".viewinq").index(this);
+        
+//         $(".inqView").eq(index2).css("display", "none");
+//     });
+    
+    
+    //수정하기 버튼 클릭시 모달 띄우기
+    $(".oneinqModifyup").click(function(){
+        var index = $(".oneinqModifyup").index(this);
+        
+        $(".modal_modify").eq(index).css("display", "block");      
+    });
+
+    //띄운 모달의 x버튼 클릭시 모달 닫기    
+    $(".close_modalmodify").click(function(){
+        var index2 = $(".close_modalmodify").index(this);
+        
+        $(".modal_modify").eq(index2).css("display", "none");
+    });
+        
+    //수정하기 폼 전달
+    $(".reviewModifyup").click(function(){
+        var index2 = $(".reviewModifyup").index(this);
+        alert("수정이 완료되었습니다.");
+        $(".oneModifyModal").eq(index2).submit();	//폼클래스명 적기                   
+    });
+    
+    
+    //삭제하기버튼
+    $(".oneinqdel").click(function(){
+        var index2 = $(".oneinqdel").index(this);
+        alert("작성이 완료되었습니다.");
+        $(".inqdelform").eq(index2).submit();        
+    });
+});
+</script>
+
+
 
     <footer>
 		<jsp:include page="../main/footer.jsp"/>		

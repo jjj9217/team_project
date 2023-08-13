@@ -470,6 +470,19 @@
                order by product_inq_regDate desc;
     </select>
      
+    <!-- 작성한 상품문의번호 삭제 --> 
+   	<delete id="deleteinq" parameterType="ProductInqVo">
+        delete from product_inq
+			where product_inq_idx=#{product_inq_idx}
+		    and member_idx=#{member_idx}        
+    </delete>
+   
+   	<!-- 작성한 상품문의 수정 --> 
+   	<update id="updateproductinq" parameterType="ProductInqVo">
+        update product_inq set product_inq_content=#{product_inq_content}
+					where product_inq_idx=#{product_inq_idx}
+                    and member_idx=#{member_idx}  
+    </update>
    
      
      

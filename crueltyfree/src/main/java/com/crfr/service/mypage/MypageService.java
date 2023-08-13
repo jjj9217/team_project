@@ -97,6 +97,9 @@ public interface MypageService {
 	
 	default int selectcouponListCount(int member_idx) {return 0;}
 	
+	default int deleteinq(ProductInqVo vo) {return 0;}
+	
+	default int updateproductinq (ProductInqVo vo) {return 0;}
 	
 	default List<ReviewVo> reviewRegList2(ReviewVo vo) {
 		return null;}
