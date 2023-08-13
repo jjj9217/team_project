@@ -71,7 +71,7 @@
                 </if>
             </where>
         <if test="sort_salecount == null ">
-        order by product_idx desc
+        order by product_idx asc
         </if>               
         <if test="sort_salecount ==1">                       
         order by product_saleCount desc
@@ -136,7 +136,7 @@
                 
             </where>
             <if test="sort_salecount == null">
-            order by product_idx desc
+            order by product_idx asc
             </if>               
             <if test="sort_salecount ==1">                       
             order by product_saleCount desc
