@@ -40,24 +40,40 @@
 	<context:component-scan base-package="com.crfr.service.email" />
 	<context:component-scan base-package="com.crfr.service.seller" />
 	<context:component-scan base-package="com.crfr.service.orderDelivery" />
-	<!--  Interceptor 관련 설정: 사용자의 요청에 대해서 로그인 여부를 체크하는 LoginInterCeptor 설정 -->
-<!-- 	<interceptors> -->
-<!-- 		<interceptor> -->
-<!-- 			<mapping path="/**/*.do"/> -->
+
+
+
+    <!-- com.crfr.common 패키지에 추가함 -->
+	<!-- Interceptor 관련 설정: 사용자의 요청에 대해서 로그인 여부를 체크하는 LoginInterCeptor 설정 -->
+	<interceptors>
+		<interceptor>
+		    <!-- 로그인 체크를 해야만 들어갈 수 있는 주소 -->
+			<!-- <mapping path="/**/*.do"/> -->
 			<!-- 경로 패턴을 가리키는 특수문자(*: 0개 또는 그 이상의 글자, ?: 1개 글자, **: 0개 또는 그 이상의 폴더 -->
-<!-- 			<exclude-mapping path="/index.do"/> -->
-<!-- 			<exclude-mapping path="/member/join.do"/> -->
-<!-- 			<exclude-mapping path="/member/emailCheck.do"/> -->
-<!-- 			<exclude-mapping path="/member/join_process.do"/> -->
-<!-- 			<exclude-mapping path="/member/checkId.do"/> -->
-<!-- 			<exclude-mapping path="/member/checkId_process.do"/> -->
-<!-- 			<exclude-mapping path="/member/login.do"/> -->
-<!-- 			<exclude-mapping path="/member/login_process.do"/> -->
-<!-- 			<exclude-mapping path="/boardFile/list.do"/> -->
-<!-- 			<exclude-mapping path="/boardFile/view.do"/> -->
+		    <mapping path="/**/mypage_cancelinq.do"/>
+		    <mapping path="/**/mypage_coupon.do"/>
+		    <mapping path="/**/mypage_deliverymain.do"/>
+		    <mapping path="/**/mypage_deliveryreg_edit.do"/>
+		    <mapping path="/**/mypage_deliveryreg.do"/>
+		    <mapping path="/**/mypage_like.do"/>
+		    <mapping path="/**/mypage_main.do"/>
+		    <mapping path="/**/mypage_modify_changeinfo.do"/>
+		    <mapping path="/**/mypage_modify_info.do"/>
+		    <mapping path="/**/mypage_modify_password.do"/>
+		    <mapping path="/**/mypage_modifymain.do"/>
+		    <mapping path="/**/mypage_nonreview.do"/>
+		    <mapping path="/**/mypage_orderinq.do"/>
+       <!-- <mapping path="mypage_orderinq_view.do"/> -->		    
+		    <mapping path="/**/mypage_productQnA.do"/>
+		    <mapping path="/**/mypage_review.do"/>
 			
-<!-- 			<beans:bean id="LoginInterceptor" class="com.human.interceptor.LoginInterceptor"/> -->
-<!-- 		</interceptor> -->
-<!-- 	</interceptors>	 -->	
+			<!-- 로그인 체크를 하지 않아도 들어갈 수 있는 주소 / 
+			예제와 거꾸로 할 거기 때문에 로그인 체크만 막아주면 예외는 필요없음-->
+			<!-- <exclude-mapping path="/index.do"/> -->
+			
+			
+			<beans:bean id="LoginInterceptor" class="com.crfr.common.LoginInterceptor"/>
+		</interceptor>
+	</interceptors>		
 	
 </beans:beans>

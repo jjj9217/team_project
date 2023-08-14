@@ -265,8 +265,6 @@
         
     }
     
-    #category_code_btn{
-    }
 
 	#isearchWord{
 		color:rgb(110, 206, 14);
@@ -418,7 +416,11 @@ function ProductDetail(searchWord, category_code, category_code_small,
             insertproduct_price_min = minvalue;         
     	//안했는데 주소에 파라미터값이 있네? => 파람값
         }else{//파라미터값이 있을때
-	    	insertproduct_price_min = paramproduct_price_min;            
+        	if(maxvalue != "10000000"){//max.value가 입력이됐을경우
+        		insertproduct_price_min = minvalue;
+        	}else{//아닌경우
+		    	insertproduct_price_min = paramproduct_price_min;            
+        	}
         }		
     }    	        
     	
@@ -431,7 +433,11 @@ function ProductDetail(searchWord, category_code, category_code_small,
     	if(paramproduct_price_max == null){
             insertproduct_price_max = maxvalue;                 
         }else{
-            insertproduct_price_max = paramproduct_price_max;
+        	if(minvalue != '0'){
+        		insertproduct_price_max = maxvalue;
+        	}else{
+	            insertproduct_price_max = paramproduct_price_max;
+        	}
         } 
     }
 		    	        
@@ -674,8 +680,7 @@ function ProductDel(searchWord, category_code, category_code_small,
         <div class="serach_category_big">
             <div class="inner">
                 <div class="tit_classification">
-                    <h4 class="tit_classification2">카테고리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button class="classification" id="category_code_btn">+</button>
+                    <h4 class="tit_classification2">카테고리(대)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </h4>
                 </div>
                 
@@ -701,8 +706,7 @@ function ProductDel(searchWord, category_code, category_code_small,
  	            <c:if test="${!empty exploreVo.category_code}">	                 
  	                <c:if test="${not fn:contains(exploreVo.category_code, 'prop')}">
 		                <div class="tit_classification">
-		                    <h4 class="tit_classification2">카테고리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                        <button class="classification">+</button>
+		                    <h4 class="tit_classification2">카테고리(소)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                    </h4>                   
 		                </div>
 	                </c:if>
@@ -758,16 +762,16 @@ function ProductDel(searchWord, category_code, category_code_small,
             <div class="inner">                
                 <c:choose>
                     <c:when test="${exploreVo.product_price_min ne 0 and exploreVo.product_price_max eq 10000000}">
-                        ${exploreVo.product_price_min}원 ~<button onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">x</button>
+                        ${exploreVo.product_price_min}원 ~<button onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">x</button>
                     </c:when>
 
                     <c:when test="${exploreVo.product_price_max ne 0 and exploreVo.product_price_min eq 0}">
                     	<c:if test="${exploreVo.product_price_max ne 10000000 and exploreVo.product_price_min eq 0}">
-                        ~${exploreVo.product_price_max}원 <button onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">x</button>
+                        ~${exploreVo.product_price_max}원 <button onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">x</button>
                         </c:if>
                     </c:when>
                     <c:when test="${exploreVo.product_price_min ne 0 and exploreVo.product_price_max ne 0}">
-                        ${exploreVo.product_price_min}원 ~ ${exploreVo.product_price_max}원<button onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">x</button>
+                        ${exploreVo.product_price_min}원 ~ ${exploreVo.product_price_max}원<button onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">x</button>
                     </c:when>
                     <c:otherwise>
                         
@@ -775,9 +779,69 @@ function ProductDel(searchWord, category_code, category_code_small,
                 </c:choose>
 
                 <c:if test="${!empty exploreVo.category_code}">
-                    ${exploreVo.category_code}<button onclick="ProductDel('${ExploreVo.searchWord}', 'x', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">x</button>
+                    <c:choose>
+	                     <c:when test="${exploreVo.category_code eq 'skin'}">
+	                     스킨케어
+	                     </c:when>
+	                     <c:when test="${exploreVo.category_code eq 'clensing'}">
+	                     클렌징
+	                     </c:when>
+	                     <c:when test="${exploreVo.category_code eq 'makeup'}">
+	                     메이크업
+	                     </c:when>
+	                     <c:when test="${exploreVo.category_code eq 'body'}">
+	                     바디케어
+	                     </c:when>
+	                     <c:when test="${exploreVo.category_code eq 'hair'}">
+	                     헤어케어
+	                     </c:when>
+	                     <c:when test="${exploreVo.category_code eq 'prop'}">
+	                     미용소품
+	                     </c:when>
+	                     <c:otherwise></c:otherwise>
+	                 </c:choose>
+                     <button onclick="ProductDel('${ExploreVo.searchWord}', 'x', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">x</button>
 	                    <c:if test="${!empty exploreVo.category_code_small}">
-	                       ${exploreVo.category_code_small}<button onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'x', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">x</button>
+	                       <c:choose>
+		                      <c:when test="${exploreVo.category_code_small eq 'skin_1'}">
+		                      토너/로션/올인원
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'skin_2'}">
+		                      에센스/크림
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'skin_3'}">
+		                      미스트/오일
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'clensing_1'}">
+		                      클렌징폼/젤
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'clensing_2'}">
+		                      오일/워터/리무버
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'makeup_1'}">
+		                      립메이크업
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'makeup_2'}">
+		                      베이스메이크업
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'makeup_3'}">
+		                      아이메이크업
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'body_1'}">
+		                      샤워/입욕
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'body_2'}">
+		                      로션/오일
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'hair_1'}">
+		                      샴푸/린스/트리트먼트
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'hair_2'}">
+		                      염색약/펌
+		                      </c:when>
+		                      <c:otherwise></c:otherwise>
+		                  </c:choose>
+	                      <button onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'x', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">x</button>
 	                    </c:if>
                 </c:if>
             </div>                        

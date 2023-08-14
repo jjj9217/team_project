@@ -17,4 +17,5 @@ public class ReviewVo {
 	private int file_idx;
 	private String originFile;
 	private String saveFile;
+	private int order_product_idx;
 }

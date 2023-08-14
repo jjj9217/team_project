@@ -244,53 +244,113 @@
         background-color: orange;
         
     }
-
+    
+    .smallimg{
+        width:75px;
+        height:75px;
+    }
 
 </style>
 
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+function getParameterValue(parameterName) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    if (urlParams.has(parameterName)) {
+        return urlParams.get(parameterName);
+    }
+
+    return null; // 파라미터가 없으면 null 반환
+}
 
 
+function ProductDetail(category_code, category_code_small, 
+        sort_salecount, sort_view, 
+        pageNum, pageBlock) {
+    
+  
+    var insertcategory_code_small ="";
+    const paramcategory_code_small = getParameterValue("category_code_small");
+    if(category_code_small === ""){
+        if(paramcategory_code_small === null){
+        insertcategory_code_small = '';}
+        else{
+        insertcategory_code_small = paramcategory_code_small;}
+    }else{
+        insertcategory_code_small = category_code_small;
+        pageNum=1;
+        pageBlock=1;
+        
+    }
 
+    
+    var insertcategory_code ="";
+    const paramcategory_code = getParameterValue("category_code");
+    if(category_code === ""){
 
+        
+        if(paramcategory_code === null){
+        insertcategory_code = '';
+        }
+        else{
+        insertcategory_code = paramcategory_code;
+        }
+        
+    }else{
+        insertcategory_code = category_code;
+        insertcategory_code_small="";
+        pageNum=1;
+        pageBlock=1;
+        
+        
+    }
+        
+    var insertsort_salecount ="";
+    const paramsort_salecount = getParameterValue("sort_salecount");
+    if(sort_salecount === ""){
+        if(paramsort_salecount === null){
+        insertsort_salecount = '';}
+        else{
+        insertsort_salecount = paramsort_salecount;}
+    }else{
+        insertsort_salecount = sort_salecount;
+        pageNum=1;
+        pageBlock=1;
+    }
+    
+    
+    var insertsort_view ="";
+    const paramsort_view = getParameterValue("sort_view");
+    if(sort_view === ""){
+        if(paramsort_view === null){        
+        insertsort_view = 15;}
+        else{
+        insertsort_view = paramsort_view;}
+    }else{
+        insertsort_view = sort_view;
+        pageNum=1;
+        pageBlock=1;
+        
+    }
+    
+  
+    // 새 URL 구성    
+    var newURL = "product_list_enter_category.do" +  
+    "?category_code=" + insertcategory_code +
+    "&category_code_small=" + insertcategory_code_small +
+    "&sort_salecount=" + insertsort_salecount +
+    "&sort_view=" + insertsort_view +
+    "&pageNum=" + pageNum +
+    "&pageBlock=" + pageBlock;
+    // URL로 이동
+    window.location.href = newURL;
 
+    
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</script>
 
 
 </head>
@@ -304,17 +364,78 @@
 <!-- body시작 -->
 
 <div id="Container">
+       
 	<c:choose>
-		<c:when test="">
+		<c:when test="${!empty exploreVo.category_code and empty exploreVo.category_code_small}">
 			<!--     큰 카테고리로 진입시 -->
 		    <div id="list_tit">
-		        ${untitled}큰카테고리명
+		        큰카테고리명 : 
+		          <c:choose>
+		              <c:when test="${exploreVo.category_code eq 'skin'}">
+		              스킨케어
+		              </c:when>
+		              <c:when test="${exploreVo.category_code eq 'clensing'}">
+                      클렌징
+                      </c:when>
+                      <c:when test="${exploreVo.category_code eq 'makeup'}">
+                      메이크업
+                      </c:when>
+                      <c:when test="${exploreVo.category_code eq 'body'}">
+                      바디케어
+                      </c:when>
+                      <c:when test="${exploreVo.category_code eq 'hair'}">
+                      헤어케어
+                      </c:when>
+                      <c:when test="${exploreVo.category_code eq 'prop'}">
+                      미용소품
+                      </c:when>
+                      <c:otherwise></c:otherwise>
+		          </c:choose>
 		    </div>		
 		</c:when>
-		<c:when test="">
+		<c:when test="${!empty exploreVo.category_code_small}">
 			<!--     작은 카테고리로 진입시 -->
 		    <div id="list_tit">
-		        ${untitled}작은카테고리명
+		        작은카테고리명 : 
+		          <c:choose>
+                      <c:when test="${exploreVo.category_code_small eq 'skin_1'}">
+                      토너/로션/올인원
+                      </c:when>
+                      <c:when test="${exploreVo.category_code_small eq 'skin_2'}">
+                      에센스/크림
+                      </c:when>
+                      <c:when test="${exploreVo.category_code_small eq 'skin_3'}">
+                      미스트/오일
+                      </c:when>
+                      <c:when test="${exploreVo.category_code_small eq 'clensing_1'}">
+                      클렌징폼/젤
+                      </c:when>
+                      <c:when test="${exploreVo.category_code_small eq 'clensing_2'}">
+                      오일/워터/리무버
+                      </c:when>
+                      <c:when test="${exploreVo.category_code_small eq 'makeup_1'}">
+                      립메이크업
+                      </c:when>
+                      <c:when test="${exploreVo.category_code_small eq 'makeup_2'}">
+                      베이스메이크업
+                      </c:when>
+                      <c:when test="${exploreVo.category_code_small eq 'makeup_3'}">
+                      아이메이크업
+                      </c:when>
+                      <c:when test="${exploreVo.category_code_small eq 'body_1'}">
+                      샤워/입욕
+                      </c:when>
+                      <c:when test="${exploreVo.category_code_small eq 'body_2'}">
+                      로션/오일
+                      </c:when>
+                      <c:when test="${exploreVo.category_code_small eq 'hair_1'}">
+                      샴푸/린스/트리트먼트
+                      </c:when>
+                      <c:when test="${exploreVo.category_code_small eq 'hair_2'}">
+                      염색약/펌
+                      </c:when>
+                      <c:otherwise></c:otherwise>
+                  </c:choose>
 		    </div>		
 		</c:when>
 		<c:otherwise>
@@ -322,123 +443,109 @@
 	</c:choose>
 
 
-
-
    
     <c:choose>
-    	<c:when test="">    	
+    	<c:when test="${exploreVo.category_code eq 'skin'}">    	
 		<!--     스킨 3개 -->
 		    <div class="detailSearch">
 		        <ul id="imgArea">
 		            <li class="imgArea1">
-		                <button class="btn_img_add btn-add" data-attr="리뷰작성^사진첨부^이미지클릭^1"><img class="category_small_img" src="category_small_1.png"></button>
-		                <form class="frmImg" enctype="multipart/form-data" method="POST">
-		                    <input type="file" id="tmpFile1" class="tempFile" name="upload" style="display: none;">
-		                </form>
+		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_1">
+		                     <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+		                </a>		                
 		            </li>
 		            <li class="imgArea2">
-		                <button class="btn_img_add btn-add" data-attr="리뷰작성^사진첨부^이미지클릭^2"><img class="category_small_img" src="category_small_2.png"></button>
-		                <form class="frmImg" enctype="multipart/form-data" method="POST">
-		                    <input type="file" id="tmpFile2" class="tempFile" name="upload" style="display: none;">
-		                </form>
+		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_2">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                        </a>
 		            </li>
 		            <li class="imgArea3">
-		                <button class="btn_img_add btn-add" data-attr="리뷰작성^사진첨부^이미지클릭^3"><img class="category_small_img" src="category_small_3.png"></button>
-		                <form class="frmImg" enctype="multipart/form-data" method="POST">
-		                    <input type="file" id="tmpFile3" class="tempFile" name="upload" style="display: none;">
-		                </form>
+		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_3">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                        </a>
 		            </li>
 		        </ul>
 		    </div>
 		</c:when>
     	
-    	<c:when test="">    		    		   
+    	<c:when test="${exploreVo.category_code eq 'clensing'}">    		    		   
 		<!--     클렌징 2개 -->
 		    <div class="detailSearch">
 		        <ul id="imgArea">
 		            <li class="imgArea1">
-		                <button class="btn_img_add btn-add" data-attr="리뷰작성^사진첨부^이미지클릭^1"><img class="category_small_img" src="category_small_1.png"></button>
-		                <form class="frmImg" enctype="multipart/form-data" method="POST">
-		                    <input type="file" id="tmpFile1" class="tempFile" name="upload" style="display: none;">
-		                </form>
+		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=clensing_1">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                        </a>
 		            </li>
 		            <li class="imgArea2">
-		                <button class="btn_img_add btn-add" data-attr="리뷰작성^사진첨부^이미지클릭^2"><img class="category_small_img" src="category_small_2.png"></button>
-		                <form class="frmImg" enctype="multipart/form-data" method="POST">
-		                    <input type="file" id="tmpFile2" class="tempFile" name="upload" style="display: none;">
-		                </form>
+		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=clensing_2">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                        </a>
 		            </li>
 		        </ul>
 		    </div>
 		</c:when>
     	    
-		<c:when test="">    
+		<c:when test="${exploreVo.category_code eq 'makeup'}">    
 		<!--     메이크업3개 -->
 		    <div class="detailSearch">
 		        <ul id="imgArea">
 		            <li class="imgArea1">
-		                <button class="btn_img_add btn-add" data-attr="리뷰작성^사진첨부^이미지클릭^1"><img class="category_small_img" src="category_small_1.png"></button>
-		                <form class="frmImg" enctype="multipart/form-data" method="POST">
-		                    <input type="file" id="tmpFile1" class="tempFile" name="upload" style="display: none;">
-		                </form>
+		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_1">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                        </a>
 		            </li>
 		            <li class="imgArea2">
-		                <button class="btn_img_add btn-add" data-attr="리뷰작성^사진첨부^이미지클릭^2"><img class="category_small_img" src="category_small_2.png"></button>
-		                <form class="frmImg" enctype="multipart/form-data" method="POST">
-		                    <input type="file" id="tmpFile2" class="tempFile" name="upload" style="display: none;">
-		                </form>
+		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_2">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                        </a>
 		            </li>
 		            <li class="imgArea3">
-		                <button class="btn_img_add btn-add" data-attr="리뷰작성^사진첨부^이미지클릭^3"><img class="category_small_img" src="category_small_3.png"></button>
-		                <form class="frmImg" enctype="multipart/form-data" method="POST">
-		                    <input type="file" id="tmpFile3" class="tempFile" name="upload" style="display: none;">
-		                </form>
+		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_3">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                        </a>
 		            </li>
 		        </ul>
 		    </div>
 		</c:when>
     	    
-		<c:when test="">    
+		<c:when test="${exploreVo.category_code eq 'body'}">    
 		<!--     바디케어2개 -->
 		    <div class="detailSearch">
 		        <ul id="imgArea">
 		            <li class="imgArea1">
-		                <button class="btn_img_add btn-add" data-attr="리뷰작성^사진첨부^이미지클릭^1"><img class="category_small_img" src="category_small_1.png"></button>
-		                <form class="frmImg" enctype="multipart/form-data" method="POST">
-		                    <input type="file" id="tmpFile1" class="tempFile" name="upload" style="display: none;">
-		                </form>
+		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=body_1">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                        </a>
 		            </li>
 		            <li class="imgArea2">
-		                <button class="btn_img_add btn-add" data-attr="리뷰작성^사진첨부^이미지클릭^2"><img class="category_small_img" src="category_small_2.png"></button>
-		                <form class="frmImg" enctype="multipart/form-data" method="POST">
-		                    <input type="file" id="tmpFile2" class="tempFile" name="upload" style="display: none;">
-		                </form>
+		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=body_2">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                        </a>
 		            </li>
 		        </ul>
 		    </div>
 		</c:when>
     	    
-		<c:when test="">    
+		<c:when test="${exploreVo.category_code eq 'hair'}">    
 		<!--     헤어케어2개 -->
 		    <div class="detailSearch">
 		        <ul id="imgArea">
 		            <li class="imgArea1">
-		                <button class="btn_img_add btn-add" data-attr="리뷰작성^사진첨부^이미지클릭^1"><img class="category_small_img" src="category_small_1.png"></button>
-		                <form class="frmImg" enctype="multipart/form-data" method="POST">
-		                    <input type="file" id="tmpFile1" class="tempFile" name="upload" style="display: none;">
-		                </form>
+		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=hair_1">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                        </a>
 		            </li>
 		            <li class="imgArea2">
-		                <button class="btn_img_add btn-add" data-attr="리뷰작성^사진첨부^이미지클릭^2"><img class="category_small_img" src="category_small_2.png"></button>
-		                <form class="frmImg" enctype="multipart/form-data" method="POST">
-		                    <input type="file" id="tmpFile2" class="tempFile" name="upload" style="display: none;">
-		                </form>
+		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=hair_2">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                        </a>
 		            </li>
 		        </ul>
 		    </div>
 		</c:when>
     	    
-		<c:when test="">    
+		<c:when test="${exploreVo.category_code eq 'prop'}">    
 		<!-- 	미용소품0개 -->
 		    <div class="detailSearch">
 		        <ul id="imgArea">
@@ -469,23 +576,23 @@
                     <form name="sort_salecount" action="product_list_enter_searchword.do" method="get">
                         <input type="hidden" name="sort_salecount" value="1">
                     </form>
-                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '1', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">판매수량순</a>                
+                    <a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '1', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">판매수량순</a>                
                     </li>
                                         
                     <li>                                       
-                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '2', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">최근등록순</a>                  
+                    <a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '2', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">최근등록순</a>                  
                     </li>                    
                     
                     <li>                                        
-                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '3', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">평점순</a>                    
+                    <a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '3', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">평점순</a>                    
                     </li>
                     
                     <li>                                        
-                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '4', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">높은가격순</a>                    
+                    <a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '4', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">높은가격순</a>                    
                     </li>
                     
                     <li>                                        
-                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '5', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">낮은가격순</a>                   
+                    <a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '5', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">낮은가격순</a>                   
                     </li>
                     
                 </ul>
@@ -495,22 +602,18 @@
                 
                 <ul>
 	                <li>
-	                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '15', '${pageNav.pageNum}', '${pageNav.pageBlock}')">15</a>&nbsp;
+	                   <a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.sort_salecount}', '15', '${pageNav.pageNum}', '${pageNav.pageBlock}')">15</a>&nbsp;
 	                </li>    
 	                <li>
-	                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '30', '${pageNav.pageNum}', '${pageNav.pageBlock}')">30</a>&nbsp;
+	                    <a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.sort_salecount}', '30', '${pageNav.pageNum}', '${pageNav.pageBlock}')">30</a>&nbsp;
 	                </li>    
 	                <li>	                    
-	                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '45', '${pageNav.pageNum}', '${pageNav.pageBlock}')">45</a>	                    
+	                    <a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.sort_salecount}', '45', '${pageNav.pageNum}', '${pageNav.pageBlock}')">45</a>	                    
 	                </li>           
                 </ul>
+                                                        
                 
-                
-                
-                
-                
-                
-                
+                               
             </div>
         </div>
         <div class="product_list_background">               
