@@ -1,8 +1,10 @@
 package com.crfr.service.purchase;
 
 import java.util.List;
+import java.util.Map;
 
 import com.crfr.vo.BasketVo;
+import com.crfr.vo.CertificationsVo;
 import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.OrderVo;
 import com.crfr.vo.PayVo;
@@ -31,4 +33,5 @@ public interface PurchaseService {
 			String client_num, String order_product_count) {return 0;}
 	default void updateOrder(String order_idx) {}
 	default void updatePay(String order_idx) {}
+	default Map<String, String> getInfo(String token, String mId) {return null;}
 }

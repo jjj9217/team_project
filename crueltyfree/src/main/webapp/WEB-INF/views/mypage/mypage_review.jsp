@@ -51,7 +51,7 @@
     #mypage-conts{
         
         width:810px;
-        height: 950px;      
+        height: auto;      
         float:left;
     }
 

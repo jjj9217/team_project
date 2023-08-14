@@ -102,7 +102,65 @@
 
 <script type="text/javascript" src="../resources/js/checkLogin.js"></script>
 <script type="text/javascript" src="../resources/js/terms.js"></script>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script> 
 <script>
+var IMP = window.IMP;
+IMP.init("imp36534356");
+
+//yymmdd형태로 날짜 얻기
+function formatDateToYYMMDD(date) {
+    const year = date.getFullYear().toString().slice(-2);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return year+month+day;
+}
+
+//난수생성
+function generateRandomNumber(length) {
+    const randomNumber = Math.random().toString().slice(2, 2 + length);
+    return randomNumber.padStart(length, '0');
+}
+
+const currentDate = new Date();
+const formattedDate = formatDateToYYMMDD(currentDate);
+const randomDigits = generateRandomNumber(8);  //8자리의 난수생성
+
+function doPayment(){	
+	IMP.certification({
+			pg:'inicis_unified.MIIiasTest',//본인인증 설정이 2개이상 되어 있는 경우 필수 
+		    merchant_uid: "CFJOIN"+formattedDate+randomDigits, // 주문 번호
+	    }, function (rsp) { // callback
+	      	  //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+	          if (rsp.success) {
+	        	  $.ajax({
+	        	    	type: "post",
+	        	    	url: "${pageContext.request.contextPath}/purchase/certifications_process.do",
+	        	    	data: JSON.stringify({
+	        	    		"imp_uid": rsp.imp_uid //인증 UID
+	        	    	}), 
+	        	    		//JSON.stringify(JSON타입 객체): JSON타입 객체를 String객체로 변환시킴
+	        	    	contentType: "application/json;charset=utf-8;",
+	        	    	//contentType: 사용자가 서버로 보내는 내용의 MIME타입
+	        	    	dataType: "json",
+	        	    	success: function(data) {
+	        	    		$("#name").val(data.name);
+        	    		    $("#birthday").val(data.birthday);
+        	    		    $("#phone").val(data.phone);
+        	    		    
+        	    		    $("#join_form").submit();
+	        	        },
+	        	        error: function(error) {
+	        	        	alert("ajax 에러 발생");
+	        	        }
+	        	    });//end of ajax
+			    } else {
+			      var msg = '인증에 실패하였습니다.';
+			      msg += '에러내용 : ' + rsp.error_msg;
+			      alert(msg);
+			    }
+	    });	
+}
+
 function checkAgreements(){
 //필수동의 체크 여부를 확인한 뒤 버튼을 활성화 , 비활성화 동작 함수
 	// 모든 체크박스 상태를 확인
@@ -111,9 +169,7 @@ function checkAgreements(){
     const agreeTerms3 = document.getElementById("chk").checked;
     // 모든 이용약관에 동의했는지 확인
     if (agreeTerms1 && agreeTerms2 && agreeTerms3) {
-        // 여기에 회원가입 페이지로 이동하는 코드를 추
-        window.location.href="join.do"
-        // window.location.href = "회원가입 페이지 URL";
+    	 doPayment();
     } else {
         alert("모든 이용약관에 동의해야 회원가입이 가능합니다.");
     }
@@ -452,6 +508,11 @@ eXpert 서비스 및 eXpert 센터 가입 등록정보 : 신청일로부터 6개
     </div>
     <input type="button" id="reset_btn" value="취 소" onclick="location.href='login.jsp';">
     <input type="button" id="join_btn" value="다 음" onclick="checkAgreements()" >
+	<form id="join_form" action="${pageContext.request.contextPath}/member/join.do" method="post">
+	<input type="hidden" name="name" id="name" value="">
+	<input type="hidden" name="birthday" id="birthday" value="">
+	<input type="hidden" name="phone" id="phone" value="">
+	</form>
 </div>    
 
 
