@@ -148,9 +148,54 @@
 	 .menu > li:hover a {
 	 	color: #ffffff;
 	}
-		
+	.basket_move{
+		cursor: pointer;
+		font-size: 12px;
+	}	
 </style>
 </head>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(function(){
+//장바구니 스크립트
+// 비회원 식별값을 가져오는 함수
+function getGuestId() {
+	let guestId = getCookie("guestId");
+	if (!guestId) {
+		// 쿠키에 비회원 식별값이 없으면 새로 생성하여 쿠키에 저장
+		guestId = generateGuestId(10);
+		document.cookie = "guestId=" + guestId + "; max-age=" + (60 * 60 * 24 * 7) + "; path=/";
+	}
+	return guestId;
+}
+
+// 쿠키 값을 가져오는 함수
+function getCookie(name) {
+	const value = "; " + document.cookie;
+	const parts = value.split("; " + name + "=");
+	if (parts.length === 2) return parts.pop().split(";").shift();
+}
+
+// 비회원 식별값 생성 함수 (랜덤 문자열 생성)
+function generateGuestId(length) {
+	const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+	let result = '';
+	for (let i = 0; i < length; i++) {
+		result += characters.charAt(Math.floor(Math.random() * characters.length));
+	}
+	return result;
+}
+
+// 장바구니 버튼 클릭 이벤트 처리
+$(".basket_move").click(function() {
+	// 비회원 식별값 가져오기
+	const guestId = getGuestId();		
+	
+	window.location.href = "${pageContext.request.contextPath}/purchase/basket.do"; 	    
+});
+
+});
+</script>
 <script>
 
 function searchplz(){
@@ -164,6 +209,7 @@ function searchplz(){
 		
 }
 
+
 function getParameterValue(parameterName) {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -175,70 +221,64 @@ function getParameterValue(parameterName) {
     return null; // 파라미터가 없으면 null 반환
 }
 
-function ProductDetail(searchWord, category_code, category_code_small, 
-		product_price_min, product_price_max, sort_salecount, sort_view, 
-		pageNum, pageBlock) {       
+
+function ProductHeader(category_code, category_code_small
+        ) {
+	 
+    var insertcategory_code ="";
+    const paramcategory_code = getParameterValue("category_code");
+    if(category_code === ""){//받은 카테고리대 코드가 없을 때       
+        if(paramcategory_code === null){//URL에 있는 카테고리대 코드가 없을 때
+        insertcategory_code = '';
+        }
+        else{//URL에 있는 카테고리대 코드가 있을 때
+        insertcategory_code = paramcategory_code;
+        }        
+    }else{//받은 카테고리대 코드가 있을 때
+        insertcategory_code = category_code;
+        insertcategory_code_small = "";
+//         alert('초기화');
+    }
     
-	var insertsearchWord = "";
-	const paramsearchWord = getParameterValue("searchWord");	
-	if(searchWord === ""){
-		if(paramsearchWord === null){
-		insertsearchWord = '';}
-		else{
-		insertsearchWord = paramsearchWord;}
-	}else{
-		insertsearchWord = searchWord;
-	}
-	
-	
-	var insertcategory_code ="";
-	const paramcategory_code = getParameterValue("category_code");
-	if(category_code === ""){
-        if(paramcategory_code === null){
-        insertcategory_code = '';}
-        else{
-        insertcategory_code = paramcategory_code;}
-    }else{
-    	insertcategory_code = category_code;
+    var insertcategory_code_small ="";
+    const paramcategory_code_small = getParameterValue("category_code_small");
+    if(category_code_small === ""){//받은 카테고리소 코드가 없을 때
+        if(paramcategory_code_small === null){//URL에 있는 카테고리소 코드가 없을 때
+        insertcategory_code_small = '';}
+        else{//URL에 있는 카테고리소 코드가 있을 때
+//         	alert('마지막');
+        if(category_code === ""){
+//         	alert('여기로오면안됨');
+        insertcategory_code_small = paramcategory_code_small;}
+        else{insertcategory_code_small="";
+//         alert('여기로와야함');
+        	
+        }
+        }
+    }else{//받은 카테고리대 코드가 있을 때
+    	if(paramcategory_code !== null){
+    		insertcategory_code="";
+    		insertcategory_code_small = category_code_small;
+    	}
+    	else{
+        insertcategory_code_small = category_code_small;}
     }
 
-	
-	var insertcategory_code_small ="";
-    const paramcategory_code_small = getParameterValue("category_code_small");
-    if(category_code_small === ""){
-        if(paramcategory_code_small === null){
-        insertcategory_code_small = '';}
-        else{
-        insertcategory_code_small = paramcategory_code_small;}
-    }else{
-        insertcategory_code_small = category_code_small;
-    }
+   
+         
+    // 새 URL 구성    
+    var newURL = "${pageContext.request.contextPath}/product/product_list_enter_category.do" +  
+    "?category_code=" + insertcategory_code +
+    "&category_code_small=" + insertcategory_code_small
+    ;
+    // URL로 이동
+    window.location.href = newURL;
+
     
-    
-    var insertproduct_price_min ="";
-    const paramproduct_price_min = getParameterValue("product_price_min");
-    if(product_price_min === ""){
-        if(paramproduct_price_min === null){
-        insertproduct_price_min = 0;}
-        else{
-        insertproduct_price_min = paramproduct_price_min;}
-    }else{
-        insertproduct_price_min = product_price_min;
-    }
-	
-	
-    var insertproduct_price_max ="";
-    const paramproduct_price_max = getParameterValue("product_price_max");
-    if(product_price_max === ""){
-        if(paramproduct_price_max === null){
-        insertproduct_price_max = 0;}
-        else{
-        insertproduct_price_max = paramproduct_price_max;}
-    }else{
-        insertproduct_price_max = product_price_max;
-    }
-    
-    
+}
+
+
+function HeaderBest(sort_salecount) {    
     var insertsort_salecount ="";
     const paramsort_salecount = getParameterValue("sort_salecount");
     if(sort_salecount === ""){
@@ -248,40 +288,18 @@ function ProductDetail(searchWord, category_code, category_code_small,
         insertsort_salecount = paramsort_salecount;}
     }else{
         insertsort_salecount = sort_salecount;
+       
     }
-    
-    
-    var insertsort_view ="";
-    const paramsort_view = getParameterValue("sort_view");
-    if(sort_view === ""){
-        if(paramsort_view === null){
-        insertsort_view = 15;}
-        else{
-        insertsort_view = paramsort_view;}
-    }else{
-        insertsort_view = sort_view;
-    }
-    
-    
-	// 새 URL 구성    
-    var newURL = "product_list_enter_searchword.do" +  
-    "?searchWord=" + insertsearchWord +
-    "&category_code=" + insertcategory_code +
-    "&category_code_small=" + insertcategory_code_small +
-    "&product_price_min=" + insertproduct_price_min +
-    "&product_price_max=" + insertproduct_price_max +
-    "&sort_salecount=" + insertsort_salecount +
-    "&sort_view=" + insertsort_view +
-    "&pageNum=" + pageNum +
-    "&pageBlock=" + pageBlock;
-    // URL로 이동
-    window.location.href = newURL;
 
-    
+    // 새 URL 구성    
+    var newURL = "${pageContext.request.contextPath}/product/product_list_enter_category.do" +  
+    "?sort_salecount=" + insertsort_salecount
+    ;
+    // URL로 이동
+    window.location.href = newURL;    
 }
 
 </script>
-
 
 <body>
 <div class="head">
@@ -293,13 +311,13 @@ function ProductDetail(searchWord, category_code, category_code_small,
 			<!-- 판매자용:회원등급1 -->
 			<!-- 회원용:회원등급0 -->
 			<article class="small_menu">
-				<a>${member.member_name}님</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/mypage/mypage_main.do">마이페이지</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
+				<a>${member.member_name}님</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/mypage/mypage_main.do">마이페이지</a>&nbsp;&nbsp;<span class="basket_move">장바구니</span>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
 			</article>
 		</c:when>
 		<c:otherwise>
 			<!-- 일반용 -->
 			<article class="small_menu">
-				<a href="${pageContext.request.contextPath}/member/terms.do">회원가입</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/login.do">로그인</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
+				<a href="${pageContext.request.contextPath}/member/terms.do">회원가입</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/login.do">로그인</a>&nbsp;&nbsp;<span class="basket_move">장바구니</span>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/login.do">로그인</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
 			</article>
 		</c:otherwise>
 	</c:choose>
@@ -311,7 +329,7 @@ function ProductDetail(searchWord, category_code, category_code_small,
 	<!-- 검색창 -->
 	<div class="head_search">
 <form id="searchF" action="${pageContext.request.contextPath}/product/product_list_enter_searchword.do">	
-		<input type="text" name="searchWord" id="head_searchWord" placeholder="검색어를 입력해 주세요">
+		<input type="text" name="searchWord" id="head_searchWord" placeholder="검색어를 입력해 주세요" >
 		<button type="button" id="head_searchBtn" onclick="searchplz()"><img src="${pageContext.request.contextPath}/resources/img/search_img.png" style="width: 21px; height: 21px; margin-left: -4px; margin-top: -1px;"></button>
 </form>	
 	</div>
@@ -326,47 +344,47 @@ function ProductDetail(searchWord, category_code, category_code_small,
 <div class="menu_box">
 	<ul class="menu">
 		<li>
-			<a href="#">베스트</a>
+			<a href="#" onclick="HeaderBest('1')">베스트</a>
 		</li>
 		<li>
-			<a href="#">스킨케어</a>
+			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=skin" >스킨케어</a>
 			<ul class="submenu">
-				<li class="sub3"><a href="#">토너/로션/올인원</a></li>
-				<li class="sub3"><a href="#">에센스/크림</a></li>
-				<li class="sub3"><a href="#">미스트/오일</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_1">토너/로션/올인원</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_2">>에센스/크림</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_3">>미스트/오일</a></li>
 			</ul>
 		</li>
 		<li>
-			<a href="#">클렌징</a>
+			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=clensing" >클렌징</a>
 			<ul class="submenu">
-				<li class="sub2"><a href="#">클렌징폼/젤</a></li>
-				<li class="sub2"><a href="#">오일/워터/리무버</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=clensing_1">>클렌징폼/젤</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=clensing_2">>오일/워터/리무버</a></li>
 			</ul>
 		</li>
 		<li>
-			<a href="#">메이크업</a>
+			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=makeup" >메이크업</a>
 			<ul class="submenu">
-				<li class="sub3"><a href="#">립메이크업</a></li>
-				<li class="sub3"><a href="#">베이스메이크업</a></li>
-				<li class="sub3"><a href="#">아이메이크업</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_1">>립메이크업</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_2">>베이스메이크업</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_3">>아이메이크업</a></li>
 			</ul>
 		</li>
 		<li>
-			<a href="#">바디케어</a>
+			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=body" >바디케어</a>
 			<ul class="submenu">
-				<li class="sub2"><a href="#">샤워/입욕</a></li>
-				<li class="sub2"><a href="#">로션/오일</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=body_1">>샤워/입욕</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=body_2">>로션/오일</a></li>
 			</ul>
 		</li>
 		<li>
-			<a href="#">헤어케어</a>
+			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=hair" >헤어케어</a>
 			<ul class="submenu">
-				<li class="sub2"><a href="#">샴푸/린스/트리트먼트</a></li>
-				<li class="sub2"><a href="#">염색약/펌</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=hair_1">>샴푸/린스/트리트먼트</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=hair_2">>염색약/펌</a></li>
 			</ul>
 		</li>
 		<li>
-			<a href="#">미용소품</a>
+			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=prop" >미용소품</a>
 		</li>
 	</ul>
 </div>

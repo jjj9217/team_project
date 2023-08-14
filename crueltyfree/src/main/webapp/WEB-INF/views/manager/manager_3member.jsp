@@ -222,6 +222,15 @@
 	#search{
 		float:right;
 	}
+	#delete_btn{
+		border:0;
+		background-color:gray;
+		color:white;
+		border-radius:3px;
+		width:65px;
+		height:25px;
+		font: bold 13px Arial, Sans-serif;
+	}
 	.regi_line{
 		margin-top:30px;
 	}
@@ -242,6 +251,7 @@
 		border-radius:5px;
 	}
 	.regi_box2{
+		padding-left:5px;
 		border-color:#7d99a4; 
 		border-width:2px; 
 		border-style:solid; 
@@ -277,6 +287,18 @@
 		font: bold 13px Arial, Sans-serif; 
 		cursor:pointer;
 	}
+	.ellipsis {
+		width:80px;
+	  	height: auto;
+  		overflow: hidden;
+  		text-overflow: ellipsis;
+  		white-space:nowrap;
+   		background-color:pink;
+	}
+    input[type="checkbox"]{
+		accent-color:#7d99a4;
+		cursor: pointer;
+    }
 </style>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
@@ -298,8 +320,58 @@ $(function(){
         	$(".modalContainer").eq(index).addClass("hidden");
     });
 })
-
-
+</script>
+<script>
+$(function(){
+	var chkObj = document.getElementsByName("RowCheck");
+	var rowCnt = chkObj.length;
+	
+	$("input[name='allCheck']").click(function(){
+		var chk_listArr = $("input[name='RowCheck']");
+		for(var i=0; i<chk_listArr.length;i++){
+			chk_listArr[i].checked = this.checked;
+		}
+	});
+	$("input[name='RowCheck']").click(function(){
+		if($("input[name='RowCheck']:checked").length==rowCnt){
+			$("input[name='allCheck']")[0].checked=true;
+		}
+		else{
+			$("input[name='allCheck']")[0].checked=false;
+		}
+	});
+	
+	$("#delete_btn").click(function(){
+		var selectedValues = [];
+		
+		$(".RowCheck:checked").each(function(){
+			selectedValues.push($(this).val());
+		});
+		
+		if(selectedValues.length==0){
+			alert("체크된 회원이 없습니다.");
+			return;
+		}
+		
+		$.ajax({
+			type:"post",
+			url:"member_delete_multiple.do",
+			data:{"member_idxs":selectedValues},
+			success: function(data){
+				if (data=="success"){
+					alert("선택한 회원의 탈퇴를 성공하였습니다.");
+					window.location.href ="manager_3member.do";
+				}else{
+					alert("삭제를 실패하였습니다.");
+				}
+			},
+			error: function(error){
+				alert("ajax 에러 발생");
+			}
+		});
+	});
+	
+});
 </script>
 
 </head>
@@ -351,6 +423,7 @@ $(function(){
     <!-- 글목록 테이블 -->
     <table id="tbl_list" style="margin-top:80px;">
         <tr>
+        	<th><input type="checkbox" id="allCheck" class="allCheck" name="allCheck"/></th>
             <th width="50">번호</th>
             <th width="">아이디</th>
             <th width="40">이름</th>
@@ -375,12 +448,30 @@ $(function(){
 				<form id="" name="" method="post">			
 				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
 					<tr>
+					<td><input type="checkbox" name="RowCheck" class="RowCheck" value="${memSelectList[rowNum-1].member_idx}" ></td>
 						<td>${memSelectList[rowNum-1].member_idx}</td>
-						<td>${memSelectList[rowNum-1].member_id}</td>
+						<td><div class="ellipsis">${memSelectList[rowNum-1].member_id}</div></td>
 						<td>${memSelectList[rowNum-1].member_name}</td>
 						<td>${memSelectList[rowNum-1].member_handphone}</td>
-						<td>${memSelectList[rowNum-1].member_gender}</td>
-						<td>${memSelectList[rowNum-1].member_grade}</td>
+						<td>
+								<c:if test="${memSelectList[rowNum-1].member_gender eq 'M'}">
+										<img src="../resources/img/male.png" width="15px" height="15px">
+								</c:if>
+								<c:if test="${memSelectList[rowNum-1].member_gender eq 'F'}">
+										<img src="../resources/img/female.png" width="15px" height="15px">	
+								</c:if>
+						</td>
+						<td>
+								<c:if test="${memSelectList[rowNum-1].member_grade eq '0'}">
+										회원
+								</c:if>
+								<c:if test="${memSelectList[rowNum-1].member_grade eq '1'}">
+										판매자
+								</c:if>
+								<c:if test="${memSelectList[rowNum-1].member_grade eq '2'}">
+										관리자
+								</c:if>
+						</td>
 						<td>	
 						<input type="button" id="edit" class="edit" value="상세">
 						<input type="button" id="delete" class="delete" value="탈퇴">
@@ -391,6 +482,8 @@ $(function(){
 			</c:otherwise>
 		</c:choose>
     </table>
+    
+    <input type="button" name="delete_btn" id="delete_btn" class="delete_btn" value="선택삭제" >
     
 		<div id="paging" class="pull-left">
 				<div id="td_paging">
@@ -443,8 +536,10 @@ $(function(){
 			<a>성별</a>
 		</article>
 		<article class="regi_right">
-			<input type="text" name="member_gender" class="regi_box" value="${memSelectList[rowNum-1].member_gender}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
-			
+			<select class="regi_box2" name="member_gender" >
+				<option value="M">남자</option>
+				<option value="F">여자</option>
+			</select>
 		</article>
 	</div>
 	

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -225,6 +226,15 @@
 	#search{
 		float:right;
 	}	
+	#delete_btn{
+		border:0;
+		background-color:gray;
+		color:white;
+		border-radius:3px;
+		width:65px;
+		height:25px;
+		font: bold 13px Arial, Sans-serif;
+	}
 	.regi_line{
 		margin-top:30px;
 	}
@@ -291,7 +301,26 @@
 		font: bold 13px Arial, Sans-serif; 
 		cursor:pointer;
 	}
-
+	.ellipsis {
+		width:80px;
+	  	height: auto;
+  		overflow: hidden;
+  		text-overflow: ellipsis;
+  		white-space:nowrap;
+   		background-color:pink;
+	}
+	.ellipsis2 {
+		width:200px;
+	  	height: auto;
+  		overflow: hidden;
+  		text-overflow: ellipsis;
+  		white-space:nowrap;
+  		  		background-color:pink;
+	}
+    input[type="checkbox"]{
+		accent-color:#7d99a4;
+		cursor: pointer;
+    }
 </style>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -315,7 +344,58 @@ $(function(){
     });
 })
 
-
+</script>
+<script>
+$(function(){
+	var chkObj = document.getElementsByName("RowCheck");
+	var rowCnt = chkObj.length;
+	
+	$("input[name='allCheck']").click(function(){
+		var chk_listArr = $("input[name='RowCheck']");
+		for(var i=0; i<chk_listArr.length;i++){
+			chk_listArr[i].checked = this.checked;
+		}
+	});
+	$("input[name='RowCheck']").click(function(){
+		if($("input[name='RowCheck']:checked").length==rowCnt){
+			$("input[name='allCheck']")[0].checked=true;
+		}
+		else{
+			$("input[name='allCheck']")[0].checked=false;
+		}
+	});
+	
+	$("#delete_btn").click(function(){
+		var selectedValues = [];
+		
+		$(".RowCheck:checked").each(function(){
+			selectedValues.push($(this).val());
+		});
+		
+		if(selectedValues.length==0){
+			alert("선택한 문의가 없습니다.");
+			return;
+		}
+		
+		$.ajax({
+			type:"post",
+			url:"one_inq_delete_multiple.do",
+			data:{"one_inq_idxs":selectedValues},
+			success: function(data){
+				if (data=="success"){
+					alert("선택한 1:1문의를 삭제하였습니다.");
+					window.location.href ="manager_41d1.do";
+				}else{
+					alert("삭제를 실패하였습니다.");
+				}
+			},
+			error: function(error){
+				alert("ajax 에러 발생");
+			}
+		});
+	});
+	
+});
 </script>
 </head>
 <body>
@@ -366,10 +446,11 @@ $(function(){
     <!-- 글목록 테이블 -->
     <table id="tbl_list" style="margin-top:80px;">
         <tr>
-            <th width="60px">문의번호</th>
-            <th width="60px">문의작성자</th>
-            <th width="200px">문의내용</th>
-            <th width="">문의등록일</th>
+        	<th><input type="checkbox" id="allCheck" class="allCheck" name="allCheck"/></th>
+            <th width="">문의번호</th>
+            <th width="">문의작성자</th>
+            <th width="">문의내용</th>
+            <th width="">등록일</th>
             <th width="">기능</th>
         </tr>
 
@@ -389,10 +470,12 @@ $(function(){
 			
 				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
 					<tr>
+					<td><input type="checkbox" name="RowCheck" class="RowCheck" value="${oneSelectList[rowNum-1].one_inq_idx}" ></td>
 						<td>${oneSelectList[rowNum-1].one_inq_idx}</td>
-						<td>${oneSelectList[rowNum-1].member_nickname}</td>
-						<td>${oneSelectList[rowNum-1].one_inq_content}</td>
-						<td>${oneSelectList[rowNum-1].one_inq_regDate}</td>
+						<td><div class="ellipsis">${oneSelectList[rowNum-1].member_nickname}</div></td>
+						<td><div class="ellipsis2">${oneSelectList[rowNum-1].one_inq_content}</div></td>
+                        <fmt:formatDate value="${oneSelectList[rowNum-1].one_inq_regDate}" type="date" pattern="yyyy-MM-dd HH:mm" var="formatDate"/>						
+						<td>${formatDate}</td>
 						<td>
 						<input type="button" id="edit" class="edit" value="답변">
 						<input type="button" id="delete" class="delete" value="삭제">
@@ -402,6 +485,8 @@ $(function(){
 			</c:otherwise>
 		</c:choose>
     </table>
+   
+     <input type="button" name="delete_btn" id="delete_btn" class="delete_btn" value="선택삭제" >
 		<div id="paging" class="pull-left">
 				<div id="td_paging">
 					<%@ include file="../manager/paging_1d1.jsp" %>					

@@ -1,6 +1,7 @@
 package com.crfr.controller;
 
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.crfr.common.PageNav1;
 import com.crfr.service.manager.ManagerService;
@@ -33,7 +35,7 @@ public class ManagerController {
 	
 	ManagerService oneList, proList, memList, selList, proinqList, rvList, mPage, rvCount, proCount, memCount, oneCount, selCount, proinqCount,
 	proSList, memSList, oneSList, selSList, proinqSList, rvSList, proDelete, memDelete, proinqDelete, oneDelete, selDelete, rvDelete, aUpdateProduct, pfineProductPost1
-	,memUpdate, oneUpdate, proinqUpdate, rvUpdate;
+	,memUpdate, oneUpdate, proinqUpdate, rvUpdate, procheckDelete, memcheckDelete, onecheckDelete, selcheckDelete, proinqcheckDelete, rvcheckDelete;
 	PageNav1 pageNav;
 	
 	@Autowired
@@ -160,6 +162,30 @@ public class ManagerController {
 	@Autowired
 	public void setRvUpdate(@Qualifier("rvUpdate") ManagerService rvUpdate) {
 		this.rvUpdate = rvUpdate;
+	}
+	@Autowired
+	public void setProcheckDelete(@Qualifier("procheckDelete") ManagerService procheckDelete) {
+		this.procheckDelete = procheckDelete;
+	}
+	@Autowired
+	public void setMemcheckDelete(@Qualifier("memcheckDelete") ManagerService memcheckDelete) {
+		this.memcheckDelete = memcheckDelete;
+	}
+	@Autowired
+	public void setOnecheckDelete(@Qualifier("onecheckDelete") ManagerService onecheckDelete) {
+		this.onecheckDelete = onecheckDelete;
+	}
+	@Autowired
+	public void setSelcheckDelete(@Qualifier("selcheckDelete") ManagerService selcheckDelete) {
+		this.selcheckDelete = selcheckDelete;
+	}
+	@Autowired
+	public void setProinqcheckDelete(@Qualifier("proinqcheckDelete") ManagerService proinqcheckDelete) {
+		this.proinqcheckDelete = proinqcheckDelete;
+	}
+	@Autowired
+	public void setRvcheckDelete(@Qualifier("rvcheckDelete") ManagerService rvcheckDelete) {
+		this.rvcheckDelete = rvcheckDelete;
 	}
 
 	
@@ -382,6 +408,13 @@ public class ManagerController {
 		model.addAttribute("searchWord", searchWord);
 		
 		List<OneInqVo> oneSelectList = oneSList.oneSelectList(searchField,searchWord);//게시물 목록
+		for(OneInqVo vo : oneSelectList) {
+			if(vo.getOne_inq_regDate() != null) {
+				Date orderDate = vo.getOne_inq_regDate();
+				Date adjustedDate = new Date(orderDate.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초로 변환하여 뺌
+				vo.setOne_inq_regDate(adjustedDate);				
+			}
+		}
 		model.addAttribute("oneSelectList",oneSelectList);			
 		
 		List<OneInqVo> oneinqList = oneList.getList();
@@ -393,6 +426,8 @@ public class ManagerController {
 		pageNav.setTotalRows(totRows);
 		pageNav=mPage.setPageNav(pageNav, pageNum, pageBlock);
 		model.addAttribute("pageNav",pageNav);
+	
+		
 		return "manager/manager_41d1";
 	}
 	@GetMapping("/manager_5sign.do")
@@ -412,6 +447,13 @@ public class ManagerController {
 		model.addAttribute("searchWord", searchWord);
 		
 		List<OneInqVo> selSelectList = selSList.selSelectList(searchField,searchWord);//게시물 목록
+		for(OneInqVo vo : selSelectList) {
+			if(vo.getOne_inq_regDate() != null) {
+				Date orderDate = vo.getOne_inq_regDate();
+				Date adjustedDate = new Date(orderDate.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초로 변환하여 뺌
+				vo.setOne_inq_regDate(adjustedDate);				
+			}
+		}
 		model.addAttribute("selSelectList",selSelectList);
 		
 		List<OneInqVo> sellerList = selList.sellersignList();
@@ -452,6 +494,13 @@ public class ManagerController {
 		model.addAttribute("searchWord", searchWord);
 		
 		List<ProductInqVo> proinqSelectList = proinqSList.proinqSelectList(searchField,searchWord);//게시물 목록
+		for(ProductInqVo vo : proinqSelectList) {
+			if(vo.getProduct_inq_regDate() != null) {
+				Date orderDate = vo.getProduct_inq_regDate();
+				Date adjustedDate = new Date(orderDate.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초로 변환하여 뺌
+				vo.setProduct_inq_regDate(adjustedDate);			
+			}
+		}		
 		model.addAttribute("proinqSelectList",proinqSelectList);			
 		
 		
@@ -484,6 +533,13 @@ public class ManagerController {
 		model.addAttribute("searchWord", searchWord);
 		
 		List<ReviewVo> rvSelectList = rvSList.rvSelectList(searchField,searchWord);//게시물 목록
+		for(ReviewVo vo : rvSelectList) {
+			if(vo.getReview_regDate() != null) {
+				Date orderDate = vo.getReview_regDate();
+				Date adjustedDate = new Date(orderDate.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초로 변환하여 뺌
+				vo.setReview_regDate(adjustedDate);				
+			}
+		}
 		model.addAttribute("rvSelectList",rvSelectList);
 		
 		List<ReviewVo> reviewList = rvList.reviewList();
@@ -570,7 +626,114 @@ public class ManagerController {
 		
 		return viewPage;
 	}
-
-
 	
+	@PostMapping("/delete.do")
+	@ResponseBody
+	public String ajaxTest(@RequestParam("valueArr[]") String[] valueArr, 
+			HttpServletRequest request) {
+		
+		for(String check : valueArr) {
+			System.out.println(check);
+		}
+		
+		String result = "1";
+		
+		return result;
+	}
+	@PostMapping("/product_delete_multiple.do")
+	@ResponseBody
+	public String product_delete_multiple(@RequestParam("product_idxs[]") String[] product_idxs) {
+		String result = null;			
+	    int delete_result = 0;
+	    
+	    for (String product_idx : product_idxs) {
+	        delete_result = procheckDelete.productDeleteOne(product_idx);
+	    }
+		if(delete_result != 0) {
+			result="success";
+		}else {
+			result="fail";
+		}
+		return result;
+	}
+	@PostMapping("/member_delete_multiple.do")
+	@ResponseBody
+	public String member_delete_multiple(@RequestParam("member_idxs[]") String[] member_idxs) {
+		String result = null;			
+	    int delete_result = 0;
+	    
+	    for (String member_idx : member_idxs) {
+	        delete_result = memcheckDelete.memberDeleteOne(member_idx);
+	    }
+		if(delete_result != 0) {
+			result="success";
+		}else {
+			result="fail";
+		}
+		return result;
+	}
+	@PostMapping("/one_inq_delete_multiple.do")
+	@ResponseBody
+	public String one_inq_delete_multiple(@RequestParam("one_inq_idxs[]") String[] one_inq_idxs) {
+		String result = null;			
+	    int delete_result = 0;
+	    
+	    for (String one_inq_idx : one_inq_idxs) {
+	        delete_result = onecheckDelete.oneinqDeleteOne(one_inq_idx);
+	    }
+		if(delete_result != 0) {
+			result="success";
+		}else {
+			result="fail";
+		}
+		return result;
+	}
+	@PostMapping("/sel_one_inq_delete_multiple.do")
+	@ResponseBody
+	public String sel_one_inq_delete_multiple(@RequestParam("one_inq_idxs[]") String[] one_inq_idxs) {
+		String result = null;			
+	    int delete_result = 0;
+	    
+	    for (String one_inq_idx : one_inq_idxs) {
+	        delete_result = selcheckDelete.seloneinqDeleteOne(one_inq_idx);
+	    }
+		if(delete_result != 0) {
+			result="success";
+		}else {
+			result="fail";
+		}
+		return result;
+	}
+	@PostMapping("/product_inq_delete_multiple.do")
+	@ResponseBody
+	public String product_inq_delete_multiple(@RequestParam("product_inq_idxs[]") String[] product_inq_idxs) {
+		String result = null;			
+	    int delete_result = 0;
+	    
+	    for (String product_inq_idx : product_inq_idxs) {
+	        delete_result = proinqcheckDelete.productinqDeleteOne(product_inq_idx);
+	    }
+		if(delete_result != 0) {
+			result="success";
+		}else {
+			result="fail";
+		}
+		return result;
+	}
+	@PostMapping("/review_delete_multiple.do")
+	@ResponseBody
+	public String review_delete_multiple(@RequestParam("review_idxs[]") String[] review_idxs) {
+		String result = null;			
+	    int delete_result = 0;
+	    
+	    for (String review_idx : review_idxs) {
+	        delete_result = rvcheckDelete.reviewDeleteOne(review_idx);
+	    }
+		if(delete_result != 0) {
+			result="success";
+		}else {
+			result="fail";
+		}
+		return result;
+	}
 }

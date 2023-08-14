@@ -197,7 +197,7 @@
 
 
     .product_list{
-            width: 250px;
+            width: 300px;
             height: 301px;
             
             display: flex;
@@ -265,8 +265,6 @@
         
     }
     
-    #category_code_btn{
-    }
 
 	#isearchWord{
 		color:rgb(110, 206, 14);
@@ -321,13 +319,44 @@ function getParameterValue(parameterName) {
     return null; // 파라미터가 없으면 null 반환
 }
 
+
 function ProductDetail(searchWord, category_code, category_code_small, 
 		product_price_min, product_price_max, sort_salecount, sort_view, 
-		pageNum, pageBlock) {       
+		pageNum, pageBlock) {
     
+	
+	
+	let min = document.getElementById("product_price_min");
+    let max = document.getElementById("product_price_max");
+    
+    if(min.value > max.value && max.value.length!=0 || min.value == max.value && min.value.length!=0 && max.value.length!=0){
+        alert('최고가를 더 높게 입력해주세요');
+        return false;
+    }
+    
+    if(min.value ==0 && max.value==0 && max.value.length!=0){
+    	alert('0보다 큰 가격을 입력해주세요');
+    	return false;    	
+    }
+    
+    
+    
+    if(min.value.length==0){
+       min.value = 0;       
+    }
+    if(max.value.length==0){
+        max.value = 10000000; 
+    }
+    
+    
+    
+    var minvalue = min.value;
+    var maxvalue = max.value;
+    		
 	var insertsearchWord = "";
 	const paramsearchWord = getParameterValue("searchWord");	
 	if(searchWord === ""){
+		
 		if(paramsearchWord === null){
 		insertsearchWord = '';}
 		else{
@@ -335,18 +364,6 @@ function ProductDetail(searchWord, category_code, category_code_small,
 	}else{
 		insertsearchWord = searchWord;
 	}
-	
-	
-	var insertcategory_code ="";
-	const paramcategory_code = getParameterValue("category_code");
-	if(category_code === ""){
-        if(paramcategory_code === null){
-        insertcategory_code = '';}
-        else{
-        insertcategory_code = paramcategory_code;}
-    }else{
-    	insertcategory_code = category_code;
-    }
 
 	
 	var insertcategory_code_small ="";
@@ -358,8 +375,199 @@ function ProductDetail(searchWord, category_code, category_code_small,
         insertcategory_code_small = paramcategory_code_small;}
     }else{
         insertcategory_code_small = category_code_small;
+        pageNum=1;
+        pageBlock=1;
+        
+    }
+
+    
+    var insertcategory_code ="";
+    const paramcategory_code = getParameterValue("category_code");
+    if(category_code === ""){
+
+    	
+        if(paramcategory_code === null){
+        insertcategory_code = '';
+        }
+        else{
+        insertcategory_code = paramcategory_code;
+        }
+        
+    }else{
+        insertcategory_code = category_code;
+        insertcategory_code_small="";
+        pageNum=1;
+        pageBlock=1;
+        
+        
     }
     
+    
+    
+    
+    var insertproduct_price_min ="";
+    const paramproduct_price_min = getParameterValue("product_price_min");
+    
+    if(minvalue !== '0'){//최저가 입력했을때 
+    	insertproduct_price_min = minvalue; //사용자가 입력한값   	    	
+    }else{//최저가 입력안했을때   
+    	//안했는데 주소에 파라미터값이 없네? => 0
+    	if(paramproduct_price_min == null){//파라미터값이없을때
+            insertproduct_price_min = minvalue;         
+    	//안했는데 주소에 파라미터값이 있네? => 파람값
+        }else{//파라미터값이 있을때
+        	if(maxvalue != "10000000"){//max.value가 입력이됐을경우
+        		insertproduct_price_min = minvalue;
+        	}else{//아닌경우
+		    	insertproduct_price_min = paramproduct_price_min;            
+        	}
+        }		
+    }    	        
+    	
+    var insertproduct_price_max ="";
+    const paramproduct_price_max = getParameterValue("product_price_max");
+
+    if(maxvalue !== '10000000' ){        
+    	insertproduct_price_max= maxvalue;
+    }else{
+    	if(paramproduct_price_max == null){
+            insertproduct_price_max = maxvalue;                 
+        }else{
+        	if(minvalue != '0'){
+        		insertproduct_price_max = maxvalue;
+        	}else{
+	            insertproduct_price_max = paramproduct_price_max;
+        	}
+        } 
+    }
+		    	        
+    
+    
+ 
+    
+//     if(maxvalue === 10000000){
+//         if(paramproduct_price_max === null){
+//         insertproduct_price_max = 0;}
+//         else{
+//         insertproduct_price_max = paramproduct_price_max;}
+//     }else{
+//         insertproduct_price_max = maxvalue;
+//     }
+    
+    
+    var insertsort_salecount ="";
+    const paramsort_salecount = getParameterValue("sort_salecount");
+    if(sort_salecount === ""){
+        if(paramsort_salecount === null){
+        insertsort_salecount = '';}
+        else{
+        insertsort_salecount = paramsort_salecount;}
+    }else{
+        insertsort_salecount = sort_salecount;
+        pageNum=1;
+        pageBlock=1;
+    }
+    
+    
+    var insertsort_view ="";
+    const paramsort_view = getParameterValue("sort_view");
+    if(sort_view === ""){
+        if(paramsort_view === null){        
+        insertsort_view = 15;}
+        else{
+        insertsort_view = paramsort_view;}
+    }else{
+        insertsort_view = sort_view;
+        pageNum=1;
+        pageBlock=1;
+        
+    }
+    
+      
+    
+	// 새 URL 구성    
+    var newURL = "product_list_enter_searchword.do" +  
+    "?searchWord=" + insertsearchWord +
+    "&category_code=" + insertcategory_code +
+    "&category_code_small=" + insertcategory_code_small +
+    "&product_price_min=" + insertproduct_price_min +
+    "&product_price_max=" + insertproduct_price_max +
+    "&sort_salecount=" + insertsort_salecount +
+    "&sort_view=" + insertsort_view +
+    "&pageNum=" + pageNum +
+    "&pageBlock=" + pageBlock;
+    // URL로 이동
+    window.location.href = newURL;
+
+    
+}
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+function ProductDel(searchWord, category_code, category_code_small, 
+        product_price_min, product_price_max, sort_salecount, sort_view, 
+        pageNum, pageBlock) {
+    
+
+            
+    var insertsearchWord = "";
+    const paramsearchWord = getParameterValue("searchWord");    
+    if(searchWord === ""){
+        if(paramsearchWord === null){
+        insertsearchWord = '';}
+        else{
+        insertsearchWord = paramsearchWord;}
+    }else{
+        insertsearchWord = searchWord;
+    }
+
+    
+    var insertcategory_code_small ="";
+    const paramcategory_code_small = getParameterValue("category_code_small");
+    if(category_code_small === ""){
+        if(paramcategory_code_small === null){
+        insertcategory_code_small = '';}
+        else{
+        insertcategory_code_small = paramcategory_code_small;}
+    }else{
+        insertcategory_code_small = "";
+        pageNum=1;
+        pageBlock=1;
+    }
+
+    
+    var insertcategory_code ="";
+    const paramcategory_code = getParameterValue("category_code");
+    if(category_code === ""){
+
+        
+        if(paramcategory_code === null){
+        insertcategory_code = '';
+
+        }
+        else{
+        insertcategory_code = paramcategory_code;
+
+        }
+        
+    }else{
+        insertcategory_code = "";
+        insertcategory_code_small="";
+        pageNum=1;
+        pageBlock=1;
+        
+    }
     
     var insertproduct_price_min ="";
     const paramproduct_price_min = getParameterValue("product_price_min");
@@ -369,10 +577,10 @@ function ProductDetail(searchWord, category_code, category_code_small,
         else{
         insertproduct_price_min = paramproduct_price_min;}
     }else{
-        insertproduct_price_min = product_price_min;
+        insertproduct_price_min = 0;
     }
-	
-	
+    
+    
     var insertproduct_price_max ="";
     const paramproduct_price_max = getParameterValue("product_price_max");
     if(product_price_max === ""){
@@ -381,7 +589,7 @@ function ProductDetail(searchWord, category_code, category_code_small,
         else{
         insertproduct_price_max = paramproduct_price_max;}
     }else{
-        insertproduct_price_max = product_price_max;
+        insertproduct_price_max = 0;
     }
     
     
@@ -406,10 +614,11 @@ function ProductDetail(searchWord, category_code, category_code_small,
         insertsort_view = paramsort_view;}
     }else{
         insertsort_view = sort_view;
+        
     }
     
     
-	// 새 URL 구성    
+    // 새 URL 구성    
     var newURL = "product_list_enter_searchword.do" +  
     "?searchWord=" + insertsearchWord +
     "&category_code=" + insertcategory_code +
@@ -427,33 +636,26 @@ function ProductDetail(searchWord, category_code, category_code_small,
 }
 
 
-	
-	
-	
-	/* ?" + a + b + c + d + e + f + */	
-/* 	var a = "searchWord=" + searchWord;
-    alert(a);
-    if(searchWord === ""){ a=""; alert(a);}
-    else{alert("하이");}
-    
-    var b = "&category_code=" + category_code;
-    alert(b);
-    if(category_code === ""){ b=""; alert("b성공");}
-    else{alert("하이");}
-    
-    var c = "&category_code_small=" + category_code_small;
-    if(category_code_small === ""){ c=""; alert("c성공");}
-    
-    var d = "&product_price_min=" + product_price_min +
-    "&product_price_max=" + product_price_max;
-    if(product_price_min === "" && product_price_max=== ""){ d=""; alert("d성공");}      
-    
-    var e = "&sort_salecount=" + sort_salecount;
-    if(sort_salecount === ""){ e=""; alert("e성공");}
-    
-    var f = "&sort_view=" + sort_view;
-    if(sort_view === ""){ f=""; alert("f성공");} */
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
    
 
@@ -478,13 +680,12 @@ function ProductDetail(searchWord, category_code, category_code_small,
         <div class="serach_category_big">
             <div class="inner">
                 <div class="tit_classification">
-                    <h4 class="tit_classification2">카테고리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button class="classification" id="category_code_btn">+</button>
+                    <h4 class="tit_classification2">카테고리(대)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </h4>
                 </div>
                 
                 <ul class="list_classification">                                                          
-                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', 'Skin', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">스킨케어</a></li>
+                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', 'skin', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">스킨케어</a></li>
                                         
                     <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', 'clensing', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">클렌징</a></li>
                     
@@ -505,15 +706,14 @@ function ProductDetail(searchWord, category_code, category_code_small,
  	            <c:if test="${!empty exploreVo.category_code}">	                 
  	                <c:if test="${not fn:contains(exploreVo.category_code, 'prop')}">
 		                <div class="tit_classification">
-		                    <h4 class="tit_classification2">카테고리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                        <button class="classification">+</button>
+		                    <h4 class="tit_classification2">카테고리(소)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                    </h4>                   
 		                </div>
 	                </c:if>
    	                
 	                <ul class="list_classification">
 	                    <c:if test="${pageNav.totalRows ne 0}">                 
-		                    <c:if test="${fn:contains(exploreVo.category_code, 'Skin')}">
+		                    <c:if test="${fn:contains(exploreVo.category_code, 'skin')}">
 			                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'skin_1', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">토너/로션/올인원</a></li>
 			                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'skin_2', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">에센스/크림</a></li>
 			                    <li><a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'skin_3', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">미스트/오일</a></li>
@@ -552,23 +752,26 @@ function ProductDetail(searchWord, category_code, category_code_small,
                     </h4>                   
                 </div>
                 <ul class="list_classification">
-                    <form action="product_list_enter_searchword.do" method="get" onsubmit="return doAction();">   
+
                     &nbsp;&nbsp;&nbsp;<input type="text" name="product_price_min" id="product_price_min" class="price_input" placeholder="최저가">~<input type="text" name="product_price_max" id="product_price_max" class="price_input" placeholder="최고가">
-                    <button>가격대 적용</button>
-                    </form>
+                    <button id="price_" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', 1, 1);">가격대 적용</button>
+
                 </ul>           
             </div>
             
             <div class="inner">                
                 <c:choose>
                     <c:when test="${exploreVo.product_price_min ne 0 and exploreVo.product_price_max eq 10000000}">
-                        ${exploreVo.product_price_min}원 ~<button>x</button>
+                        ${exploreVo.product_price_min}원 ~<button onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">x</button>
                     </c:when>
+
                     <c:when test="${exploreVo.product_price_max ne 0 and exploreVo.product_price_min eq 0}">
-                        ~ ${exploreVo.product_price_max}원<button>x</button>
+                    	<c:if test="${exploreVo.product_price_max ne 10000000 and exploreVo.product_price_min eq 0}">
+                        ~${exploreVo.product_price_max}원 <button onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">x</button>
+                        </c:if>
                     </c:when>
                     <c:when test="${exploreVo.product_price_min ne 0 and exploreVo.product_price_max ne 0}">
-                        ${exploreVo.product_price_min}원 ~ ${exploreVo.product_price_max}원<button>x</button>
+                        ${exploreVo.product_price_min}원 ~ ${exploreVo.product_price_max}원<button onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">x</button>
                     </c:when>
                     <c:otherwise>
                         
@@ -576,9 +779,69 @@ function ProductDetail(searchWord, category_code, category_code_small,
                 </c:choose>
 
                 <c:if test="${!empty exploreVo.category_code}">
-                    ${exploreVo.category_code}<button>x</button>
+                    <c:choose>
+	                     <c:when test="${exploreVo.category_code eq 'skin'}">
+	                     스킨케어
+	                     </c:when>
+	                     <c:when test="${exploreVo.category_code eq 'clensing'}">
+	                     클렌징
+	                     </c:when>
+	                     <c:when test="${exploreVo.category_code eq 'makeup'}">
+	                     메이크업
+	                     </c:when>
+	                     <c:when test="${exploreVo.category_code eq 'body'}">
+	                     바디케어
+	                     </c:when>
+	                     <c:when test="${exploreVo.category_code eq 'hair'}">
+	                     헤어케어
+	                     </c:when>
+	                     <c:when test="${exploreVo.category_code eq 'prop'}">
+	                     미용소품
+	                     </c:when>
+	                     <c:otherwise></c:otherwise>
+	                 </c:choose>
+                     <button onclick="ProductDel('${ExploreVo.searchWord}', 'x', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">x</button>
 	                    <c:if test="${!empty exploreVo.category_code_small}">
-	                       ${exploreVo.category_code_small}<button>x</button>
+	                       <c:choose>
+		                      <c:when test="${exploreVo.category_code_small eq 'skin_1'}">
+		                      토너/로션/올인원
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'skin_2'}">
+		                      에센스/크림
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'skin_3'}">
+		                      미스트/오일
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'clensing_1'}">
+		                      클렌징폼/젤
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'clensing_2'}">
+		                      오일/워터/리무버
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'makeup_1'}">
+		                      립메이크업
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'makeup_2'}">
+		                      베이스메이크업
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'makeup_3'}">
+		                      아이메이크업
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'body_1'}">
+		                      샤워/입욕
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'body_2'}">
+		                      로션/오일
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'hair_1'}">
+		                      샴푸/린스/트리트먼트
+		                      </c:when>
+		                      <c:when test="${exploreVo.category_code_small eq 'hair_2'}">
+		                      염색약/펌
+		                      </c:when>
+		                      <c:otherwise></c:otherwise>
+		                  </c:choose>
+	                      <button onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'x', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">x</button>
 	                    </c:if>
                 </c:if>
             </div>                        
@@ -638,18 +901,7 @@ function ProductDetail(searchWord, category_code, category_code_small,
             </div>
         </div>
         <div class="product_list_background">               
-            <ul>            
-                <%-- <c:choose>
-                    <c:when test="${exploreVo.view eq 15}">
-                                
-                    </c:when>                                            
-                    <c:when test="${exploreVo.view eq 30}">
-                                          
-                    </c:when>                        
-                    <c:otherwise>
-                        
-                    </c:otherwise>
-                </c:choose> --%>
+            <ul>                
                 <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
 	               <c:if test="${!empty productList[rowNum-1].product_name}">
 		                <li class="product_list">
@@ -672,8 +924,66 @@ function ProductDetail(searchWord, category_code, category_code_small,
 	            <table>
 		            <tr>
 			            <td id="td_paging" colspan="6">
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			            <c:if test="${pageNav.pageNum > pageNav.pages_per_block}">
+			<a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">			            
+    		&lt;&lt;</a>&nbsp;
+    		<a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${(pageNav.pageBlock - 2)*pageNav.pages_per_block + 1}', '${pageNav.pageBlock-1}')">
+    			&lt;이전페이지
+    		</a>   	
+    	</c:if>
+			            
+			            <c:forEach var="i" begin="${(pageNav.pageBlock-1)*pageNav.pages_per_block + 1}" end="${pageNav.pageBlock*pageNav.pages_per_block}">
+            <c:if test="${i le pageNav.totalPageNum}">
+                <c:choose>
+                    <c:when test = "${pageNav.pageNum eq i}">
+                        <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">
+                            <span style="color:red">${i}&nbsp;</span>
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${i}', '${pageNav.pageBlock}')">${i}&nbsp;</a>
+                    </c:otherwise>
+            </c:choose>
+            </c:if>
+        </c:forEach>
+    
+        <c:if test="${((pageNav.rows_per_page*pageNav.pages_per_block) lt pageNav.totalRows) and (pageNav.pageBlock ne pageNav.lastPageBlock) }">
+            <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageBlock*pageNav.pages_per_block+1}', '${pageNav.pageBlock+1}')">다음페이지&gt;</a>&nbsp;
+            <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.totalPageNum}', '${pageNav.lastPageBlock}')">&gt;&gt;</a>
+        </c:if>
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			                
+			                
+			                
+			                
 			                <!-- 페이지 네비게이션 구현 -->
-			                <%@ include file="paging.jsp" %>
+			                <%-- <%@ include file="paging.jsp" %> --%>
 			            </td>
 		           </tr>
 		        </table>   
@@ -692,3 +1002,7 @@ function ProductDetail(searchWord, category_code, category_code_small,
 </body>
 </body>
 </html>
+
+
+
+

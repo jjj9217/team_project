@@ -70,4 +70,8 @@ public class MypageInsertService implements MypageService {
 		return dao.insertdeliveryPost(vo);
 	}
 	
+	public int insertdeliveryPost_normal(DeliveryVo vo) {
+		return dao.insertdeliveryPost_normal(vo);
+	}
+	
 }

@@ -12,8 +12,119 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script> 
 <script>
+function getParameterValue(parameterName) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    if (urlParams.has(parameterName)) {
+        return urlParams.get(parameterName);
+    }
+
+    return null; // 파라미터가 없으면 null 반환
+}
+
+function pageNav(pageNum, pageBlock, month) { 	
+	// 클래스 정보 추출
+	var month01Class = $("#month01").attr("class");
+    var month03Class = $("#month03").attr("class");
+    var month06Class = $("#month06").attr("class");
+    var month12Class = $("#month12").attr("class"); 
+    
+	var insertSortOrder = "";
+	const paramMonth = getParameterValue("month"); //url에서 파라미터값 가져오기
+	
+	if (month === 'empty') {
+		if(paramMonth === null){//조건 아에 안넣은 초기상황
+			insertMonth = '1';			
+		}else{//기존에 있던 조건상황(url파라미터)
+			insertMonth = paramMonth;
+		}
+	}else{
+		insertMonth = month;
+	}   
+	
+    // 현재 스크롤 위치
+	var scrollY = window.scrollY || window.pageYOffset;
+    
+	// 새 URL 구성
+    var newURL = "mypage_orderinq.do?" + 
+            "pageNum=" + pageNum +
+            "&pageBlock=" + pageBlock +
+            "&scrollY=" + scrollY +
+            "&month01Class=" + month01Class +
+            "&month03Class=" + month03Class + 
+            "&month06Class=" + month06Class + 
+            "&month12Class=" + month12Class + 
+            "&month=" + insertMonth;
+    
+    // URL로 이동        
+    window.location.href = newURL;
+}
+
 $(function(){
-  $(".refund_btn").click(function(){
+	// GET 파라미터 추출
+    var urlParams = new URLSearchParams(window.location.search);
+    var scrollY = getParameterValue("scrollY");
+    
+    // 스크롤 위치로 이동
+    if (scrollY !== null) {
+        $(window).scrollTop(parseInt(scrollY));
+    }
+    
+    // GET 파라미터 추출
+    var month01Class = getParameterValue("month01Class");
+    var month03Class = getParameterValue("month03Class");
+    var month06Class = getParameterValue("month06Class");
+    var month12Class = getParameterValue("month12Class");   
+    
+    // 클래스정보 세팅
+	if (month01Class !== null) {
+		$("#month01").removeClass().addClass(month01Class);
+    }	
+	if (month03Class !== null) {
+		$("#month03").removeClass().addClass(month03Class);
+    }
+	if (month06Class !== null) {
+		$("#month06").removeClass().addClass(month06Class);
+    }
+	if (month12Class !== null) {
+		$("#month12").removeClass().addClass(month12Class);
+    }
+	
+	//기간 1개월 클릭
+	$("#month01").click(function(){
+		$(this).addClass("month_btn_click");
+		$("#month03").removeClass("month_btn_click");
+		$("#month06").removeClass("month_btn_click");
+		$("#month12").removeClass("month_btn_click");		
+		pageNav(1, 1, 1);
+	});	
+	//기간 3개월 클릭
+	$("#month03").click(function(){
+		$(this).addClass("month_btn_click");
+		$("#month01").removeClass("month_btn_click");
+		$("#month06").removeClass("month_btn_click");
+		$("#month12").removeClass("month_btn_click");
+		pageNav(1, 1, 3);
+	});	
+	//기간 6개월 클릭
+	$("#month06").click(function(){
+		$(this).addClass("month_btn_click");
+		$("#month03").removeClass("month_btn_click");
+		$("#month01").removeClass("month_btn_click");
+		$("#month12").removeClass("month_btn_click");
+		pageNav(1, 1, 6);
+	});	
+	//기간 12개월 클릭
+	$("#month12").click(function(){
+		$(this).addClass("month_btn_click");
+		$("#month03").removeClass("month_btn_click");
+		$("#month06").removeClass("month_btn_click");
+		$("#month01").removeClass("month_btn_click");
+		pageNav(1, 1, 12);
+	});	
+	
+	$(".refund_btn").click(function(){
 	  var index = $(".refund_btn").index(this);
 	  var order_idx = $(".refund_order_idx").eq(index).val();
 	  var order_num = $(".refund_order_num").eq(index).val();
@@ -256,7 +367,10 @@ $(function(){
         color: #4a4a4a;
         font-weight: bold;
     }
-
+	.select_month_box{
+		width: auto;
+		margin-left: 100px;
+	}
     .select-month{
         float: left;
         padding-left: 10px;
@@ -270,7 +384,7 @@ $(function(){
     }
 
     #do-search-period{
-        height: 78px;
+        height: 32px;
         background-color: #7d99a4;
         color: white;       
         margin-left: 74px;
@@ -331,8 +445,12 @@ $(function(){
      }
      .refund_btn{
      	width: 60px; height: 30px; border-radius:5px; border: 1px solid #7d99a4; background-color: #fff; color: #7d99a4; font-weight: bold;
-     }    
+     }
+     .pageing{width: 810px; height: 30px; padding-top: 30px; margin-bottom: 20px; text-align: center;}    
+     .blue_text{color:#7d99a4; font-weight:bold;}
+     .gray_text{color:#a4a4a4; font-weight:bold; text-decoration: underline;}
     .clear{clear:both;}
+    #strong{color:#7d99a4; font-weight:bold;}
 </style>
 </head>
 
@@ -346,23 +464,23 @@ $(function(){
 <div id="Container">
     <div id="mypage">       
         <table>
-            <th><h3><a href="#" id="mylink">마이페이지</a></h3></th>         
+            <tr><th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
             <tr><td class="mypagetable">마이 쇼핑</td></tr>
-            <tr><td>주문/배송조회</td></tr>
-            <tr><td>취소/반품내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
-            <tr><td>장바구니</td></tr>
-            <tr><td>좋아요</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
             <tr><td>쿠폰</td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이활동</td></tr>
             <tr><td>1:1문의내역</td></tr>
-            <tr><td>리뷰</td></tr>
-            <tr><td>상품문의내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
-            <tr><td>회원정보 수정</td></tr>
-            <tr><td>배송지/환불계좌</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지/환불계좌</a></td></tr>
         </table>        
     </div>
     
@@ -370,94 +488,28 @@ $(function(){
         <div id="blank">            
         </div>
         <div class="tit_area">
-            <h2 class="tit">취소/반품내역</h2>
+            <h2 class="tit">주문/배송조회</h2>
         </div>
-        <div class="search_box">
-        <a class="order_view" href="#">
-            <ul class="mypage-step">
-                <li><em>0</em>
-                <span>주문접수</span>
-                </li>
-                <li><em>0</em>
-                <span>결제완료</span>
-                </li>
-                <li><em>0</em>
-                <span>배송준비중</span>
-                </li>
-                <li><em>0</em>
-                <span>배송중</span>
-                </li>
-                <li><em>0</em>
-                <span>배송완료</span>
-                </li>
-            </ul>
-        </a>
-		<br>
+        <div class="search_box">        
         <fieldset class="serach-period">
-            <legend></legend>
             <div class="select_con" id="selectOrderTypeZone.select_con">
                 <p class="buy_period_txt">구매 기간</p>
+                <div class="select_month_box">
                 <ul class="select-month">
-                    <li class="buy_month"><button class="month_btn month_btn_click" type="button">1개월</button></li>
-                    <li class="buy_month"><button class="month_btn" type="button">3개월</button></li>
-                    <li class="buy_month"><button class="month_btn" type="button">6개월</button></li>
-                    <li class="buy_month"><button class="month_btn" type="button">12개월</button></li>
+                    <li class="buy_month"><button id="month01" class="month_btn month_btn_click" type="button">1개월</button></li>
+                    <li class="buy_month"><button id="month03" class="month_btn" type="button">3개월</button></li>
+                    <li class="buy_month"><button id="month06" class="month_btn" type="button">6개월</button></li>
+                    <li class="buy_month"><button id="month12" class="month_btn" type="button">12개월</button></li>
                 </ul>
+                </div>
             </div>
-            <div class="select-range">
-                
-
-				<br>
-                <select class="select_date" id="cal-start-year" title="년도를 선택하세요" style="width:76px;"><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023" selected="selected">2023</option></select>
-                <label for="cal-start-year">년</label>
-                <select class="select_date" id="cal-start-month" title="달월을 선택하세요" style="width:60px;">
-                    <option value="01">1</option>
-                    <option value="02">2</option>
-                    <option value="03">3</option>
-                    <option value="04">4</option>
-                    <option value="05">5</option>
-                    <option value="06" selected="selected">6</option>
-                    <option value="07">7</option>
-                    <option value="08">8</option>
-                    <option value="09">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                </select>
-                <label for="cal-start-month">월</label>
-                <select class="select_date"  id="cal-start-day" title="날일을 선택하세요" style="width:60px;">
-                <option value="01">1</option><option value="02">2</option><option value="03">3</option><option value="04">4</option><option value="05">5</option><option value="06">6</option><option value="07">7</option><option value="08">8</option><option value="09">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27" selected="selected">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option></select>
-                <label for="cal-start-day">일</label>
-                <span class="des">~</span>
-                <select class="select_date"  id="cal-end-year" title="년도를 선택하세요" style="width:76px;"><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023" selected="selected">2023</option></select>
-                <label for="cal-end-year">년</label>
-                <select class="select_date"  id="cal-end-month" title="달월을 선택하세요" style="width:60px;">
-                    <option value="01">1</option>
-                    <option value="02">2</option>
-                    <option value="03">3</option>
-                    <option value="04">4</option>
-                    <option value="05">5</option>
-                    <option value="06">6</option>
-                    <option value="07" selected="selected">7</option>
-                    <option value="08">8</option>
-                    <option value="09">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                </select>
-                <label for="cal-end-month">월</label>
-                <select class="select_date"  id="cal-end-day" title="날일을 선택하세요" style="width:60px;">
-                <option value="01">1</option><option value="02">2</option><option value="03">3</option><option value="04">4</option><option value="05">5</option><option value="06">6</option><option value="07">7</option><option value="08">8</option><option value="09">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27" selected="selected">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option></select>
-                <label for="cal-end-day">일</label>                          
-            </div>
-            <button type="button" class="btnLookup" id="do-search-period">조회</button>
         </fieldset>
         <br>
         <p class="buy_list_txt">
         </p>
         </div>
         <div class="buy_list_container">
-        <table class="order_list">
+		<table class="order_list">
         <tr>
             <th class="th_date top bottom">주문일자</th>
             <th class="th_name top bottom">상품</th>
@@ -465,86 +517,116 @@ $(function(){
             <th class="th_price top bottom">주문금액</th>
             <th class="th_state top bottom">상태</th>
         </tr>
-        <c:forEach var="orderRow" begin="1" end="10">
+        <c:forEach var="orderRow" begin="${mPageNav.startNum}" end="${mPageNav.endNum}">
         <tr>
         <td>
-		<table class="buy_list">
-                <c:forEach var="productRow" begin="1" end="${orderList[0].orderProductList.size()}" varStatus="loop">
-                <tr>
-                    <td class="td_date bottom">
-                    <fmt:formatDate value="${orderList[orderRow-1].orderProductList[productRow-1].order_date}" pattern="yyyy.MM.dd" /><br>
-                    ${orderList[orderRow-1].orderProductList[productRow-1].order_num}                    
-                    </td>
-                    <td class="td_name bottom">
-             		<div class="basket_item">
-                    	<a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${orderList[orderRow-1].orderProductList[productRow-1].product_idx}">
-                        	<img src="../resources/uploads/${orderList[orderRow-1].orderProductList[productRow-1].saveFile}" width="85px" height="85px" alt="썸네일이미지">
-                        </a>
-                        <a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${orderList[orderRow-1].orderProductList[productRow-1].product_idx}">
-                            <span class="prd_seller">${orderList[rowNum-1].member_nickname}</span>
-                            <p class="prd_title">${orderList[orderRow-1].orderProductList[productRow-1].product_name}</p>
-                        </a>
-                    </div>
-					</td>
-                    <td class="td_amount bottom">${orderList[orderRow-1].orderProductList[productRow-1].order_product_count}</td>
-                    <td class="td_price bottom">
-                    <fmt:formatNumber value="${orderList[orderRow-1].orderProductList[productRow-1].order_product_count * orderList[orderRow-1].orderProductList[productRow-1].product_price}" pattern="###,###" />원</td>
-                    <td class="td_state bottom">
-                    <c:choose>
-                    <c:when test="${orderList[orderRow-1].orderProductList[productRow-1].order_ing == 0}">
-                    <!-- 출고대기 상태일때 -->
-                    주문완료<br><br>
-                    <button class="refund_btn">환불신청</button>
-                    </c:when>
-                    <c:when test="${orderList[orderRow-1].orderProductList[productRow-1].order_ing == 1}">
-                    <!-- 출고준비중 상태일때 -->
-                    상품준비중
-                    <button class="refund_btn">환불신청</button>
-                    </c:when>
-                    <c:when test="${orderList[orderRow-1].orderProductList[productRow-1].order_ing == 2}">
-                    <!-- 배송중 상태일때 -->
-                    상품배송중
-                    <input type="hidden" class="refund_btn">
-                    </c:when>
-                    <c:when test="${orderList[orderRow-1].orderProductList[productRow-1].order_ing == 3}">
-                    <!-- 출고완료 상태일때 -->
-                    배송완료
-                    <input type="hidden" class="refund_btn">
-                    </c:when>
-                    <c:otherwise>
-                    <!-- 출고취소 상태일때 -->
-                    <c:choose>
-	                    <c:when test="${orderList[orderRow-1].orderProductList[productRow-1].order_status == 1}">
-	                    <!-- 교환상태 -->
-	                    상품교환
-	                    <input type="hidden" class="refund_btn">
-	                    </c:when>
-	                    <c:when test="${orderList[orderRow-1].orderProductList[productRow-1].order_status == 2}">
-	                    <!-- 환불상태 -->
-	                    환불완료
-	                    <input type="hidden" class="refund_btn">
-	                    </c:when>
-	                    <c:otherwise>
-	                    <!-- 취소상태 -->
-	                    취소완료
-	                    <input type="hidden" class="refund_btn">
-	                    </c:otherwise>
-                    </c:choose>
-                    </c:otherwise>
-                    </c:choose>
-                    <input type="hidden" class="refund_order_idx" value="${orderList[orderRow-1].orderProductList[productRow-1].order_idx}">
-                    <input type="hidden" class="refund_order_num" value="${orderList[orderRow-1].orderProductList[productRow-1].order_num}">
-                    </td>
-                </tr>
-                </c:forEach>      
-        </table>
+        <c:forEach var="orderProduct" items="${orderList[orderRow-1]}" varStatus="loop">
+        <tr>
+		<c:if test="${loop.first}">
+		<td class="td_date bottom" rowspan="${orderProductCounts[orderRow-1]}">
+		<fmt:formatDate value="${orderProduct.order_date}" pattern="yyyy.MM.dd" /><br>
+		<span class="blue_text">${orderProduct.order_num}</span>
+		<a class="gray_text" href="${pageContext.request.contextPath}/mypage/mypage_orderinq_view.do?ordNum=${orderProduct.order_num}">상세보기</a><br>               
+        </td>
+ 	    </c:if>
+        <td class="td_name bottom">
+   		<div class="basket_item">
+        	<a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${orderProduct.product_idx}">
+            	<img src="../resources/uploads/${orderProduct.saveFile}" width="85px" height="85px" alt="썸네일이미지">
+            </a>
+            <a class="prd_name" href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${orderProduct.product_idx}">
+                <span class="prd_seller">${orderProduct.member_nickname}</span>
+                <p class="prd_title">${orderProduct.product_name}</p>
+            </a>
+        </div>
+		</td>
+        <td class="td_amount bottom">${orderProduct.order_product_count}</td>
+        <td class="td_price bottom">
+        <fmt:formatNumber value="${orderProduct.order_product_count * orderProduct.product_price}" pattern="###,###" />원</td>
+        <td class="td_state bottom">
+        <c:choose>
+        <c:when test="${orderProduct.order_ing == 0}">
+        <!-- 출고대기 상태일때 -->
+        주문완료<br><br>
+        <button class="refund_btn">환불신청</button>
+        </c:when>
+        <c:when test="${orderProduct.order_ing == 1}">
+        <!-- 출고준비중 상태일때 -->
+        상품준비중
+        <button class="refund_btn">환불신청</button>
+        </c:when>
+        <c:when test="${orderProduct.order_ing == 2}">
+        <!-- 배송중 상태일때 -->
+        상품배송중
+        <input type="hidden" class="refund_btn">
+        </c:when>
+        <c:when test="${orderProduct.order_ing == 3}">
+        <!-- 출고완료 상태일때 -->
+        배송완료
+        <input type="hidden" class="refund_btn">
+        </c:when>
+        <c:otherwise>
+        <!-- 출고취소 상태일때 -->
+        <c:choose>
+         <c:when test="${orderProduct.order_status == 1}">
+         <!-- 교환상태 -->
+         상품교환
+         <input type="hidden" class="refund_btn">
+         </c:when>
+         <c:when test="${orderProduct.order_status == 2}">
+         <!-- 환불상태 -->
+         환불완료
+         <input type="hidden" class="refund_btn">
+         </c:when>
+         <c:otherwise>
+         <!-- 취소상태 -->
+         취소완료
+         <input type="hidden" class="refund_btn">
+         </c:otherwise>
+        </c:choose>
+        </c:otherwise>
+        </c:choose>
+        <input type="hidden" class="refund_order_idx" value="${orderProduct.order_idx}">
+        <input type="hidden" class="refund_order_num" value="${orderProduct.order_num}">
+        </td>
+        </tr>
+        </c:forEach> 
         </td>        
         </tr>
         </c:forEach>
-        </table>        
+        </table>         
 		</div>
-    </div>
+	<!-- 페이지 네비게이션 -->
+	<div class="pageing">
+	<c:if test="${mPageNav.pageNum > mPageNav.pages_per_block}">
+	<a href="#" onclick="pageNav(1,1, 'empty')">&lt;&lt;</a>&nbsp;
+	<a href="#" onclick="pageNav(${(mPageNav.pageBlock - 2)*mPageNav.pages_per_block + 1},${mPageNav.pageBlock-1}, 'empty')">
+		&lt;이전페이지
+	</a>   	
+	</c:if>
+	
+	<c:forEach var="i" begin="${(mPageNav.pageBlock-1)*mPageNav.pages_per_block + 1}" end="${mPageNav.pageBlock*mPageNav.pages_per_block}">
+	<c:if test="${i le mPageNav.totalPageNum}">
+	<c:choose>
+	<c:when test = "${mPageNav.pageNum eq i}">
+	<a href="#" onclick="pageNav(${i},${mPageNav.pageBlock}, 'empty')">
+	<span style="color:red">${i}&nbsp;</span>
+	</a>
+	</c:when>
+	<c:otherwise>
+	<a href="#" onclick="pageNav(${i},${mPageNav.pageBlock}, 'empty')">${i}&nbsp;</a>
+	</c:otherwise>
+	</c:choose>
+	</c:if>
+	</c:forEach>
+	
+	<c:if test="${((mPageNav.rows_per_page*mPageNav.pages_per_block) lt mPageNav.totalRows) and (mPageNav.pageBlock ne mPageNav.lastPageBlock) }">
+	<a href="#" onclick="pageNav(${mPageNav.pageBlock*mPageNav.pages_per_block+1},${mPageNav.pageBlock+1}, 'empty')">다음페이지&gt;</a>&nbsp;
+	<a href="#" onclick="pageNav(${mPageNav.totalPageNum},${mPageNav.lastPageBlock}, 'empty')">&gt;&gt;</a>
+	</c:if>
+	</div>  
     <div class="clear"></div>
+    </div>
 </div>
 	<div class="clear"></div>
     <footer>

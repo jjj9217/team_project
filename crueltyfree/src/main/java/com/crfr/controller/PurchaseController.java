@@ -1,6 +1,7 @@
 package com.crfr.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ import com.crfr.service.productView.ProductViewService;
 import com.crfr.service.purchase.PurchaseService;
 import com.crfr.vo.BasketListVo;
 import com.crfr.vo.BasketVo;
+import com.crfr.vo.CertificationsVo;
 import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.MemberVo;
@@ -83,6 +85,20 @@ public class PurchaseController {
 		return result;
 	}
 	
+	//본인인증
+	@PostMapping("/certifications_process.do")
+	@ResponseBody
+	public Object certifications_process(@RequestBody Map<String, String> refundMap) {
+				
+		String imp_uid = refundMap.get("imp_uid");
+		String token = oImportService.getImportToken();
+		Map<String, String> result = oImportService.getInfo(token, imp_uid);
+
+		System.out.println("token: "+token);
+		System.out.println("imp_uid: "+imp_uid);
+		
+		return result;
+	}
 	//장바구니 페이지
 	@GetMapping("/basket.do")
 	public String basket(HttpServletRequest request, Model model) {
