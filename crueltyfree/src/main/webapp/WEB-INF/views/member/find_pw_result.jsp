@@ -195,7 +195,20 @@ function checkInput(){
     return true;
 }
 </script>
+<script>
+$(function(){
+	// 원래 문자열
+	var originalString = "${find_pw.member_id}";
 
+	// 문자열 길이 계산
+	var length = originalString.length;
+
+	// 마지막 3자리를 ***로 바꾸기
+	var maskedString = originalString.substring(0, length - 3) + '***';
+	
+	$("#id_target").text(maskedString);
+});
+</script>
 
 
 
@@ -223,7 +236,7 @@ function checkInput(){
     			<c:choose>
 						<c:when test="${msg_findPw eq 'ok'}">
 						<form action="find_pw_edit_process.do" method="post" name="frm">
-								<div id="notice"><span>CrueltyFree 아이디 :</span><span style="color:#7d99a4;"> ${find_pw.member_id}</span></div>
+								<div id="notice"><span>CrueltyFree 아이디 :</span><span id="id_target" style="color:#7d99a4;"> ${find_pw.member_id}</span></div>
 								<input type="hidden" name="member_id" value="${find_pw.member_id}">
 								<input type="hidden" id="member_current_pw" name="member_current_pw" value="${find_pw.member_pw}">
 			                  	<input class="newpw" type="password" id="member_pw" name="member_pw" placeholder="새 비밀번호">

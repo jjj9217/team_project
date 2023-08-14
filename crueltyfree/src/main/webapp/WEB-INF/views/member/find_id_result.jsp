@@ -108,7 +108,20 @@
   	}
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(function(){
+	// 원래 문자열
+	var originalString = "${find_id.member_id}";
 
+	// 문자열 길이 계산
+	var length = originalString.length;
+
+	// 마지막 3자리를 ***로 바꾸기
+	var maskedString = originalString.substring(0, length - 3) + '***';
+	
+	$("#id_target").text(maskedString);
+});
+</script>
 
 </head>
 <body>
@@ -132,9 +145,9 @@
     		<c:choose>
 				<c:when test="${msg_findId eq 'ok'}">
 					<fieldset>
-		             	<div id="notice"><span>입력하신 회원님의 아이디 :</span><span style="color:#7d99a4;"> ${find_id.member_id}</span></div>
+		             	<div id="notice"><span>입력하신 회원님의 아이디 :</span><span id="id_target" style="color:#7d99a4;"> ${find_id.member_id}</span></div>
 		            </fieldset>
-		            <input type="button" id="login_btn" name="login_btn" value="로 그 인" onclick="location.href='login.do';"+ style="width:200px;">														
+		            <input type="button" id="login_btn" name="login_btn" value="로 그 인" onclick="location.href='login.do';" style="width:200px;">														
 						</c:when>
 						<c:when test="${msg_findId eq 'fail'}">
 					<fieldset>

@@ -174,7 +174,7 @@
         align-items : center;
     }
 
-    #do-search-period{
+    #do-search-period, #do-search-period2{
         width: 200px;
         height: 50px;
         
@@ -190,25 +190,27 @@
 }
 
 </style>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-function test() {
-    var pwd = document.caq.pwd.value;
-    var pwd2=<c:out value='${MemberVo.member_pw}'/>;                    
+$(function(){
+	
+$("#do-search-period2").click(function(){
+	
+	var test1 = $("#pwd").val();
+	var test2 = $("#pwdCheck").val();
+	if($("#pwd").val().length == 0){
+		alert("비밀번호를 입력해주세요");	
+	}else{
+	    if(test1 != test2){
+	    	alert("비밀번호가 서로 같지 않습니다");
+	    }else{
+	    	$("#qw").submit();
+	    }
+	}
+	
+});
 
-    if(pwd!=pwd2) {
-        alert("비밀번호가 일치 하지 않습니다");
-        return false;
-      } else{
-		document.caq.submit();
-        return true;
-      }
-    
-    
-    
-    /* document.getElementById('qw').submit(); */
-   
-  }
-
+});
 </script>
 </head>
 
@@ -222,7 +224,7 @@ function test() {
 <div id="Container">
     <div id="mypage">       
         <table>
-            <th><h3><a href="#" id="mylink">마이페이지</a></h3></th>         
+            <tr><th><h3><a href="#" id="mylink">마이페이지</a></h3></th></tr>         
             <tr><td class="mypagetable">마이 쇼핑</td></tr>
             <tr><td>주문/배송조회</td></tr>
             <tr><td>취소/반품내역</td></tr>
@@ -261,9 +263,10 @@ function test() {
             </div>
             <div class="password_btn">                  
                 <button type="button" class="btnLookup" id="do-search-period">취소</button>                                       
-                <button type="button" class="btnLookup" id="do-search-period" onclick="test();">확인</button>
+                <button type="button" class="btnLookup" id="do-search-period2">확인</button>
             </div>
-</form>            
+</form>       
+     	<input type="hidden" id="pwdCheck" value="${member.member_pw}">
         </div>        
     </div>
 </div>

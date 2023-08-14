@@ -9,6 +9,47 @@
 <head>
 <meta charset="UTF-8">
 <title>Header</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script>
+function checkInput(){	   
+    if($("#member_handphone").val().length == 0){
+    	alert("핸드폰 번호를 입력해주세요.");
+    	$("#member_handphone").focus();
+    	return false;
+    }else if($("#member_email").val().length == 0){
+        alert("이메일을 입력해 주세요.");
+        $("#member_email").focus();
+        return false;
+    }else if($("#member_nickname").val().length == 0){
+        alert("닉네임을 입력해 주세요.");
+        $("#member_nickname").focus();
+        return false;        
+    }else if($("#member_postNum").val().length == 0){
+        alert("주소를 입력해 주세요.");
+        $("#member_postNum").focus();
+        return false;        
+    }else if($("#member_address").val().length == 0){
+        alert("주소를 입력해 주세요.");
+        $("#member_address").focus();
+        return false;        
+    }else if($("#member_address2").val().length == 0){
+        alert("주소를 입력해 주세요.");
+        $("#member_address2").focus();
+        return false;        
+    }else{
+        alert("체크용");
+	    return true;
+    }
+    
+}
+
+$(function(){
+	$("#join_btn").click(function(){
+		checkInput();
+	});
+});
+</script>
 <style>
 *{margin: 0; padding: 0;}
     a{text-decoration: none;}
@@ -37,7 +78,7 @@
         overflow:hidden;
         
         width: 1020px; margin: 0 auto;
-        height: 1500px;
+        height: 700px;
     }
     
     #mypage{
@@ -158,7 +199,6 @@
     #container{
         width: 330px;
         margin: 0 auto;
-        height:1100px;
     }
     #logo{
         width: 100%;
@@ -290,7 +330,7 @@
             background: rgb(221, 219, 214);
             color: #666;
         }
-    
+    	.tit_sub{color: #4a4a4a; margin-top:10px;}
     
     
     
@@ -304,26 +344,6 @@
 }
 
 </style>
-<script>
-function test() {
-    var pwd = document.caq.pwd.value;
-    var pwd2=<c:out value='${MemberVo.member_pw}'/>;                    
-
-    if(pwd!=pwd2) {
-        alert("비밀번호가 일치 하지 않습니다");
-        return false;
-      } else{
-		document.caq.submit();
-        return true;
-      }
-    
-    
-    
-    /* document.getElementById('qw').submit(); */
-   
-  }
-
-</script>
 </head>
 
 <body>
@@ -362,64 +382,17 @@ function test() {
         <div class="tit_area">          
             <h2 class="tit">회원정보 수정</h2>
             <hr width=100%;>            
-              
-
-
-
-
-            
-
-    <div id="title">
-    <div id="mark"><img src="../resources/img/CrueltyFree_logo.png" style="width: 200px; height: 55px; margin-top:20px;"></div>
-        <p id="logo">Cruelty Free에 오신것을 환영합니다.</p>
-        <p id="logo2">수정하고 싶은 기본 정보를 입력해 주세요.</p><hr style="margin-top:35px;"> 
-    </div>  
+			<h4 class="tit tit_sub">휴대폰과 메일을 변경하시려면 새로 인증해주세요</h4>
     <div id="container">
-        <form action="infoupdate_process.do" method="post" name="frm" style="margin-top:35px;">
-            <p>
-                <label>아이디<br>
-                    <input type="text" name="member_id" id="member_id" placeholder="8~16자 아이디를 입력해 주세요.(영어,숫자 입력가능)" maxlength="16" engnumonly=""/>
-                    <input type="hidden" name="check_id" id="check_id" value="">
-                    </label></p>
-                    <div id="idmsg"></div>
-            <p>
-                <label>비밀번호<br>
-                    <input type="password" name="member_pw" id="member_pw" placeholder="8자 이상의 비밀번호를 입력해 주세요." maxlength="30"></label></p>
-            <p style="height:63px;">
-                <label>비밀번호 재확인<br>
-                    <input type="password" name="member_pw2" id="member_pw2" placeholder="8자 이상의 비밀번호를 다시 입력해 주세요." maxlength="30"></label></p>
-                    <div id="errmsg"></div>
-            <p>
-                <label>이름<br>
-                    <input type="text" name="member_name" id="member_name" placeholder="본인 이름을 입력해 주세요." maxlength="20" nameonly="true"></label></p>
-            <p>
-                <label>생년월일<br>
-                    <input type="text" name="member_birthday" id="member_birthday" placeholder="생년월일을 입력해 주세요. ex)19980301" maxlength="8" numberonly="true"></label> </p>  
-                    <div id="birthmsg"></div>
-               <div class="mb-3">
-                  <label for="userSex" class="form-label">성별</label>
-                    <div class="between" style="white-space:normal;" >
-                        <div class="form_radio_btn" style="border-radius:20px 0px 0px 20px; width:163px; ">
-                            <input id="radio-1" type="radio" name="member_gender" value="M" checked >
-                            <label for="radio-1" style="border-radius:20px 0px 0px 20px; width:163px; ">남자</label>
-                        </div>
-                         <div class="form_radio_btn" style="border-radius:0px 20px 20px 0px; width:163px; ">
-                            <input id="radio-2" type="radio" name="member_gender" value="F">
-                            <label for="radio-2" style="border-radius:0px 20px 20px 0px; width:163px; ">여자</label>
-                        </div>
-                    </div>
-               </div>
-                <br>
-                <br>
-                <br>
+        <form action="infoupdate_process.do" method="post" name="frm" style="margin-top:35px;">         
             <p>
                 <label>전화번호<br>
-                    <input type="text" name="member_handphone" id="member_handphone" maxlength="11" placeholder="-없이 연락처를 입력해 주세요." numberonly="ture"></label>
+                    <input type="text" name="member_handphone" id="member_handphone" maxlength="11" value="${member.member_handphone}" placeholder="-없이 연락처를 입력해 주세요."  numberonly="ture"></label>
                     <input type="button" name="member_identity" id="member_identity" value="본인인증&nbsp;&nbsp;">
                     </p>  
             <p>
                 <label>이메일<br>
-                    <input type="text" name="member_email" id="member_email" placeholder="이메일을 입력해 주세요." ></label>
+                    <input type="text" name="member_email" id="member_email" placeholder="이메일을 입력해 주세요." value="${member.member_email}"></label>
                     <input type="button" name="member_mail" id="member_mail" value="메일인증&nbsp;&nbsp;">
                     <input type="text" name="member_email2" id="member_email2" maxlength="11" placeholder="인증번호" maxlength="6"></label>
                     <input type="button" name="member_mail2" id="member_mail2" value="확인&nbsp;&nbsp;">
@@ -427,20 +400,27 @@ function test() {
                     </p>
             <p>
                 <label>닉네임<br>
-                    <input type="text" name="member_nickname" id="member_nickname" maxlength="20" notspecial="true" placeholder="닉네임을 입력해 주세요.(특수 문자 불가능)" nick="">
+                    <input type="text" name="member_nickname" id="member_nickname" maxlength="20" notspecial="true" placeholder="닉네임을 입력해 주세요.(특수 문자 불가능)" nick=""  value="${member.member_nickname}">
                     <input type="hidden" name="check_nickname" id="check_nickname" value=""> 
                 </label></p>
                 <div id="nickmsg"></div>
            <p >
                 <label>주소<br>
-                    <input type="text" name="member_postNum" id="member_postNum" placeholder="우편번호" readonly>
+                    <input type="text" name="member_postNum" id="member_postNum" placeholder="우편번호" readonly  value="${member.member_postNum}">
                     <input type="button" name="select_postNum" id="select_postNum" value="우편번호 검색&nbsp;&nbsp;" onclick="kakaopost()" >
-                    <input type="text" name="member_address" id="member_address" placeholder="주소" readonly>
-                    <input type="text" name="member_address2" id="member_address2" placeholder="상세 주소">
+                    <input type="text" name="member_address" id="member_address" placeholder="주소" readonly value="${member.member_address}">
+                    <input type="text" name="member_address2" id="member_address2" placeholder="상세 주소" value="${member.member_address2}">
                 </label></p>
                 <input type="reset" id="reset_btn" value="취소하기" onclick="location.href='mypage_main.do';">
                 <input type="button" id="join_btn" name="join_btn" value="정보수정">
+        <input type="hidden" name="" id="originHandphone" value="${member.member_handphone}">
+        <input type="hidden" name="" id="originEmail" value="${member.member_email}"> 
+        <input type="hidden" name="" id="originNickname" value="${member.member_nickname}"> 
+        <input type="hidden" name="" id="originPostNum" value="${member.member_postNum}"> 
+        <input type="hidden" name="" id="originAddress" value="${member.member_address}">
+        <input type="hidden" name="" id="originAddress2" value="${member.member_address}">          
         </form>
+        
     </div>
             
             

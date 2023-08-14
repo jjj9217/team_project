@@ -118,8 +118,11 @@ public class MemberController {
 		return viewPage;
 	}
 	
-	@GetMapping("/join.do")
-	public String join() {		
+	@PostMapping("/join.do")
+	public String join(String name, String birthday, String phone, Model model) {	
+		model.addAttribute("name",name);
+		model.addAttribute("birthday",birthday);
+		model.addAttribute("phone",phone);
 		return "member/join";
 	}
 	

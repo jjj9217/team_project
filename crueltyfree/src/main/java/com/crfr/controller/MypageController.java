@@ -581,11 +581,7 @@ public class MypageController {
 	//회원정보수정의 회원정보수정페이지 이동 클릭	
 	@GetMapping("/mypage_modify_info.do")
 	public String mypage_test7(HttpServletRequest request, Model model) {
-		
-		HttpSession session = request.getSession();		
-		//로그인된 회원의 member_idx 얻기
-		MemberVo mVo = (MemberVo)session.getAttribute("member");
-		model.addAttribute("MemberVo", mVo);
+				
 		return "mypage/mypage_modify_info";
 	}
 	
@@ -593,10 +589,7 @@ public class MypageController {
 	//회원정보 수정페이지로 이동
 	@PostMapping("/mypage_modify_changeinfo.do")
 	public String mypage_modify_changeinfo(MemberVo vo, HttpServletRequest request, Model model) {
-		HttpSession session = request.getSession();
-		session.setAttribute("MemberVo", vo);
-		MemberVo mVo = (MemberVo)session.getAttribute("MemberVo");
-		model.addAttribute("MemberVo", mVo);
+		
 		return "mypage/mypage_modify_changeinfo";
 	}
 	

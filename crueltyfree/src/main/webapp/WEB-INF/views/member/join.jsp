@@ -120,7 +120,7 @@
     	cursor:pointer;
     	font: bold 13px Arial, sans-serif;
     }
-    #member_handphone,#member_email,#member_email2{
+    #member_email,#member_email2{
     	width:200px;
     }
     #member_postNum{
@@ -454,10 +454,14 @@ $(function(){
                     <div id="errmsg"></div>
             <p>
                 <label>이름<br>
-                    <input type="text" name="member_name" id="member_name" placeholder="본인 이름을 입력해 주세요." maxlength="20" nameonly="true"></label></p>
+                    <input type="text" name="member_name" id="member_name" placeholder="본인 이름을 입력해 주세요." maxlength="20" nameonly="true" value="${name}"></label></p>
+           	<p>
+           		<label>전화번호<br>
+           			<input type="text" name="member_handphone" id="member_handphone" maxlength="11" placeholder="-없이 연락처를 입력해 주세요." numberonly="ture" value="${phone}"></label>
+           			</p>  
             <p>
                 <label>생년월일<br>
-                    <input type="text" name="member_birthday" id="member_birthday" placeholder="생년월일을 입력해 주세요. ex)19980301" maxlength="8" numberonly="true"></label> </p>  
+                    <input type="text" name="member_birthday" id="member_birthday" placeholder="생년월일을 입력해 주세요. ex)19980301" maxlength="8" numberonly="true" value="${birthday}"></label> </p>  
           			<div id="birthmsg"></div>
                <div class="mb-3">
 				  <label for="userSex" class="form-label">성별</label>
@@ -475,11 +479,6 @@ $(function(){
             	<br>
             	<br>
             	<br>
-           	<p>
-           		<label>전화번호<br>
-           			<input type="text" name="member_handphone" id="member_handphone" maxlength="11" placeholder="-없이 연락처를 입력해 주세요." numberonly="ture"></label>
-           			<input type="button" name="member_identity" id="member_identity" value="본인인증&nbsp;&nbsp;">
-           			</p>  
            	<p>
            		<label>이메일<br>
            			<input type="text" name="member_email" id="member_email" placeholder="이메일을 입력해 주세요." ></label>
