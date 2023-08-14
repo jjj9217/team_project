@@ -43,7 +43,7 @@
     			<c:choose>
     				<c:when test = "${pageNav.pageNum eq i}">
     					<a href="manager_2product.do?pageNum=${i}&pageBlock=${pageNav.pageBlock}&searchField=${searchField}&searchWord=${searchWord}">
-    						<span style="color:red">${i}&nbsp;</span>
+    						<span style="color:#7d99a4;">${i}&nbsp;</span>
     					</a>
     				</c:when>
     				<c:otherwise>
@@ -72,7 +72,7 @@
     			<c:choose>
     				<c:when test = "${pageNav.pageNum eq i}">
     					<a href="manager_2product.do?pageNum=${i}&pageBlock=${pageNav.pageBlock}">
-    						<span style="color:red">${i}&nbsp;</span>
+    						<span style="color:#7d99a4;">${i}&nbsp;</span>
     					</a>
     				</c:when>
     				<c:otherwise>

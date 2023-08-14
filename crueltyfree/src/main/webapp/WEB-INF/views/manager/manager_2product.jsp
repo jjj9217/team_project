@@ -293,11 +293,12 @@
 		cursor:pointer;
 	}
 	.ellipsis {
-		width:100px;
+		width:80px;
 	  	height: auto;
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
+   		background-color:pink;
 	}
 	.ellipsis2 {
 		width:70px;
@@ -305,6 +306,7 @@
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
+  		background-color:pink;	
 	}
     input[type="checkbox"]{
 		accent-color:#7d99a4;
@@ -333,49 +335,59 @@ $(function(){
     	let index = $(".modalCloseButton").index(this);
     	$(".modalContainer").eq(index).addClass("hidden");
     });
-    $("#delete_btn").click(function(){
-    	let confirmAns = confirm("정말 선택삭제 하시겠습니까?");
-    	if(confirmAns){
-    		document.managerfrm.submit();
-    		return true;
-    	} 
-    });
 })
 </script>
 <script>
-window.onload = function () {
-	const checkAll = document.getElementById('chkAll');
-	const chks = document.querySelectorAll('.chk');  
-	const chkBoxLength = chks.length;
-	 
-	checkAll.addEventListener('click', function(event) {
-	    if(event.target.checked)  {
-	        chks.forEach(function(value){
-	        value.checked = true;
-	    })
-	    }else {
-	       chks.forEach(function(value){
-	       value.checked = false;
-	    })
-	 }
-	  });
-	for (chk of chks){
-	    chk.addEventListener('click', function() {
-	        let count = 0;
-	        chks.forEach(function(value){
-	            if(value.checked == true){
-	                count++;
-	            }
-	        })
-	        if(count !== chkBoxLength){
-	            checkAll.checked = false;
-	        }else{
-	            checkAll.checked = true;
-	        }
-	      })
-	}
-	 }
-
+$(function(){
+	var chkObj = document.getElementsByName("RowCheck");
+	var rowCnt = chkObj.length;
+	
+	$("input[name='allCheck']").click(function(){
+		var chk_listArr = $("input[name='RowCheck']");
+		for(var i=0; i<chk_listArr.length;i++){
+			chk_listArr[i].checked = this.checked;
+		}
+	});
+	$("input[name='RowCheck']").click(function(){
+		if($("input[name='RowCheck']:checked").length==rowCnt){
+			$("input[name='allCheck']")[0].checked=true;
+		}
+		else{
+			$("input[name='allCheck']")[0].checked=false;
+		}
+	});
+	
+	$("#delete_btn").click(function(){
+		var selectedValues = [];
+		
+		$(".RowCheck:checked").each(function(){
+			selectedValues.push($(this).val());
+		});
+		
+		if(selectedValues.length==0){
+			alert("체크된 정보가 없습니다.");
+			return;
+		}
+		
+		$.ajax({
+			type:"post",
+			url:"product_delete_multiple.do",
+			data:{"product_idxs":selectedValues},
+			success: function(data){
+				if (data=="success"){
+					alert("선택한 상품의 삭제를 성공하였습니다.");
+					window.location.href ="manager_2product.do";
+				}else{
+					alert("삭제를 실패하였습니다.");
+				}
+			},
+			error: function(error){
+				alert("ajax 에러 발생");
+			}
+		});
+	});
+	
+});
 </script>
 
 
@@ -421,10 +433,10 @@ window.onload = function () {
               </div>
          </div>
     <!-- 글목록 테이블 -->
-	            <form name="managerfrm" method="post" action="manager_product_drop_process.do">
+	<form name="userForm">
     <table id="tbl_list" style="margin-top:80px;">
         <tr>
-        	<th><input type="checkbox" id="chkAll"></th>
+        	<th><input type="checkbox" id="allCheck" class="allCheck" name="allCheck"/></th>
             <th width="">상품번호</th>
             <th width="">상품이름</th>
             <th width="">상품가격</th>
@@ -448,9 +460,9 @@ window.onload = function () {
 			</c:when>
 			<c:otherwise>
 
-				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
+				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}" >
 					<tr>
-						<td><input type="checkbox" name="checkedValue" class="chk" value="${proSelectList[rowNum-1].product_idx}"></td>
+						<td><input type="checkbox" name="RowCheck" class="RowCheck" value="${proSelectList[rowNum-1].product_idx}" ></td>
 						<td>${proSelectList[rowNum-1].product_idx}</td>					
 						<td><div class="ellipsis">${proSelectList[rowNum-1].product_name}</div></td>
                         <fmt:formatNumber value="${proSelectList[rowNum-1].product_price}" type="number" var="formatNumber"/>						
@@ -469,9 +481,8 @@ window.onload = function () {
 		</c:choose>
     </table>
   
-       <input type="submit" name="delete_btn" id="delete_btn" value="선택삭제" >
-  	</form>
-    
+       <input type="button" name="delete_btn" id="delete_btn" class="delete_btn" value="선택삭제" >
+  </form>
  
 		<div id="paging" class="pull-left">
 				<div id="td_paging">

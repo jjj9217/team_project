@@ -13,7 +13,7 @@
 		    inner join product
 		    on `order_product`.product_idx = product.product_idx
 		    left outer join review
-		    on `order_product`.product_idx = review.product_idx
+		    on `order_product`.order_product_idx = review.order_product_idx
 		    inner join file
 		    on `order_product`.product_idx = file.product_idx
 		    <where>
@@ -40,7 +40,7 @@
             inner join product
             on `order_product`.product_idx = product.product_idx
             left outer join review
-            on `order_product`.product_idx = review.product_idx
+            on `order_product`.order_product_idx = review.order_product_idx
             <where>
                 `order`.client_num=#{member_idx}
                 and
@@ -57,7 +57,7 @@
             inner join product
             on `order_product`.product_idx = product.product_idx
             left outer join review
-            on `order_product`.product_idx = review.product_idx
+            on `order_product`.order_product_idx = review.order_product_idx
             <where>
                 `order`.client_num=#{member_idx}
                 and
@@ -78,7 +78,7 @@
             inner join product
             on `order_product`.product_idx = product.product_idx
             inner join review
-            on `order_product`.product_idx = review.product_idx
+            on `order_product`.order_product_idx = review.order_product_idx
             inner join file
             on review.product_idx = file.product_idx
             <where>
@@ -94,7 +94,7 @@
                     GROUP BY file.product_idx
                     )
             </where>                    
-                order by order_date desc;
+                order by order_date desc
      </select>
      
      <!-- 작성한 리뷰의 상품 목록 -->
@@ -105,13 +105,13 @@
             inner join product
             on `order_product`.product_idx = product.product_idx
             inner join review
-            on `order_product`.product_idx = review.product_idx
+            on `order_product`.order_product_idx = review.order_product_idx
             <where>
                 `order`.client_num=#{member_idx}
                 and
                 review.member_idx=#{member_idx}
             </where>                
-                order by order_date desc;
+                order by order_date desc
      </select>
      
      <!-- 작성한 리뷰의 상품 목록 개수 세기 -->
@@ -122,11 +122,11 @@
             inner join product
             on `order_product`.product_idx = product.product_idx
             inner join review
-            on `order_product`.product_idx = review.product_idx
+            on `order_product`.order_product_idx = review.order_product_idx
             <where>
                 `order`.client_num=#{member_idx}
                 and
-                review.member_idx=#{member_idx}
+                review.member_idx=#{member_idx}                
             </where>                
                 order by order_date desc;
      </select>
@@ -137,20 +137,23 @@
     
     <!--  리뷰 내용 작성 -->
     <insert id="insertreview" parameterType="ReviewVo">
-        insert into review (member_idx, 
+        insert into review (member_idx,         		                    
 		                    product_idx,                                
 		                    review_score,
 		                    review_content,
 		                    review_regDate,
 		                    member_nickname,
-		                    review_recom_count)
+		                    review_recom_count,
+		                    order_product_idx)
                      values(#{member_idx}, 
 		                    #{product_idx},                                
 		                    #{review_score},
 		                    #{review_content},
                             now(),
                             #{member_nickname},
-                            1)
+                            1,
+                            #{order_product_idx})
+                            
     </insert>
     
     <!--  리뷰 번호 반환하기 -->
@@ -159,6 +162,7 @@
             <where> 
             member_idx= #{member_idx}
             and product_idx = #{product_idx}
+            and order_product_idx= #{order_product_idx}
             </where>
     </select>
     

@@ -639,9 +639,10 @@ function setThumbnail5(event) {
                 </c:if>
         </div>
         <ul class="write_step">
-            <li class="review_rating"><span class="review_tit">상품은 어떠셨나요?</span>
+            <li class="review_rating"><span class="review_tit">상품은 어떠셨나요? ${nonreviewproductList[rowNum-1].order_product_idx}</span>
                 <ul class="star_inner">
                     <input type="hidden" name="review_score" value="3">
+                    <input type="hidden" name="order_product_idx" value="${nonreviewproductList[rowNum-1].order_product_idx}">
                     <li>★</li>
                     <li>★</li>
                     <li>★</li>
