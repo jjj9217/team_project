@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.List, java.util.HashMap, java.util.Map" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -132,7 +135,9 @@
 			<a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1 문의</a>
 		</article>
 	</div>
-		
+	
+	<input type="hidden" name="member_nickname" value="${member.member_nickname}">
+	
 	<!-- 글목록 테이블 -->
     <table id="notice_list">
         <tr height="40px;">
@@ -141,23 +146,50 @@
             <th width="200px;">등록일</th>
         </tr>
         
-        <!-- 추후 c:choose, c:when 및 데이터베이스를 연동해 페이지 구현 -->
-		
-		<tr>
-			<td colspan="3" style="height: 300px; color: #a4a4a4;"> 등록된 게시물이 없습니다. </td>
-		</tr>
+        <!-- 글목록 내용-->
+		<c:choose>
+			<c:when test="${empty NoticeVo}">
+				<tr>
+					<td colspan="3" style="height: 300px; color: #a4a4a4;"> 등록된 게시물이 없습니다. </td>
+				</tr>
+			</c:when>
+			<c:otherwise>
+				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
+					<c:if test="${NoticeVo[rowNum-1].notice_idx ne null}"> <!-- notice에 저장된 값이 있을 경우에만 출력 -->
+						<tr>
+							<td>${NoticeVo[rowNum-1].notice_idx}</td> <!-- 번호 -->
+							<td id="td_title">
+								<a href="/notice_view.do?prdNum=${NoticeVo[rowNum-1].notice_idx}">${NoticeVo[rowNum-1].notice_title}</a> <!-- 제목 -->
+							</td>
+							<td>
+								<fmt:formatDate value="${NoticeVo[rowNum-1].notice_regDate}" type="date"
+									pattern="yyyy/MM/dd" /> <!-- 날짜 -->
+							</td>
+						</tr>
+					</c:if>
+					
+					<form action="delete_pro_process.do" class="form_delete" method="post">
+						<input type="hidden" name="notice_idx" value="${NoticeVo[rowNum-1].notice_idx}">
+					</form>
+					
+				</c:forEach>
+				
+			</c:otherwise>
+		</c:choose>
 
 		<tr>
-			<td id="td_paging" colspan="6">
-				<!-- 추후 페이징 구현 -->
+			<td id="td_paging" colspan="3">
+				<!-- 페이지 네비게이션 구현 -->
+				<%@ include file="paging_notice.jsp" %>
 			</td>
 		</tr>
     </table>
 	<!-- 목록 하단에 글등록 버튼 구현 -->
-	<!-- 추후 관리자에게만 보이게끔 수정 -->
-	<div class="div_write">
-		<a href="#"><button id="notice_write">공지사항 등록</button></a>
-	</div>
+	<c:if test="${member.member_grade eq 2}">
+		<div class="div_write">
+			<a href="${pageContext.request.contextPath}/one_inq/notice_write.do"><button id="notice_write">공지사항 등록</button></a>
+		</div>
+	</c:if>
 </section>
 
 <footer>

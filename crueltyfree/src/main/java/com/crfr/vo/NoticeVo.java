@@ -12,4 +12,5 @@ public class NoticeVo {
 	private Date notice_regDate;	
 	private String notice_originFile;
 	private String notice_saveFile;
+	private int member_idx;
 }

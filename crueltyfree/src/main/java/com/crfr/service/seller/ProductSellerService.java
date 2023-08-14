@@ -74,6 +74,13 @@ public interface ProductSellerService {
 	default List<PurchaseListVo> checkProductHistoryList(String searchField, String searchWord) {return null;}
 	
 	// order_ing update 서비스
-	default int updateDeliveryState(String order_num) {return 0;}
+	default int updateDeliveryState1(String order_num) {return 0;}
+	default int updateDeliveryState2(String order_num) {return 0;}
+	
+	// product_saleCount update 서비스
+	default int updateProductCount(String product_idx, int count) {return 0;}
+	
+	// order_idx를 통해 주문 상품 리스트를 불러오는 서비스
+	default List<OrderProductVo> checkOrderProductList2 (int order_idx) {return null;}
 	
 }

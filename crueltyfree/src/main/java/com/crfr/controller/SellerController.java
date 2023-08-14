@@ -42,7 +42,8 @@ public class SellerController {
 	pUpdateProductFile0, pUpdateProductFile1, pUpdateProductFile2, pUpdateProductFile3,
 	pfindProductFileIdx,
 	pDeleteProduct,
-	pUpdateDeliveryState;
+	pUpdateDeliveryState1, pUpdateDeliveryState2,
+	pUpdateProductCount, cOrderProductList2;
 	
 	@Setter(onMethod_={ @Autowired })
 	PageNav pageNav;
@@ -92,6 +93,7 @@ public class SellerController {
 		    		purHistoryListVo.setProduct_name(purchaseVo.getProduct_name()); // 상품명
 		    		purHistoryListVo.setOrder_product_count(vo.getOrder_product_count()); // 주문수량
 		    		purHistoryListVo.setOrder_ing(orderVo.getOrder_ing()); // 처리 상태
+		    		purHistoryListVo.setOrder_idx(order_idx);
 		    		
 		    		purchaseList.add(purHistoryListVo); // basketList에 추가
 		    		orderCount++;		    		
@@ -111,13 +113,12 @@ public class SellerController {
 		return "seller/purchase_history";
 	}
 	
-	// 상품 상태 요청 처리
-	@PostMapping("/update_state_process.do")
-	public String update_process(@RequestParam("order_ing") String order_num) {
-		//request객체는 세션에 저장된 회원번호를 알아내기 위해 필요함
+	// 상품 상태 요청 처리 1
+	@PostMapping("/update_state_process1.do")
+	public String update_process1(@RequestParam("order_ing1") String order_num) {
 
 		//상태 업데이트를 위해 서비스 사용
-		int result = pUpdateDeliveryState.updateDeliveryState(order_num);
+		int result = pUpdateDeliveryState1.updateDeliveryState1(order_num);
 
 		String viewPage = "seller/purchase_history";
 		
@@ -128,30 +129,30 @@ public class SellerController {
 		return viewPage;
 	}
 
-	// 배송하기눌렀을때
-//	@PostMapping("/update_state_process2.do")
-//	public String update_process2(@RequestParam("order_ing") String order_num) {
-		//request객체는 세션에 저장된 회원번호를 알아내기 위해 필요함
+	// 상품 상태 요청 처리 2
+	@PostMapping("/update_state_process2.do")
+	public String update_process2(@RequestParam("order_ing2") String order_num, 
+			@RequestParam("order_ing3") int order_idx) {
 
 		//상태 업데이트를 위해 서비스 사용
-//		int result = pUpdateDeliveryState.updateDeliveryState(order_num);
+		int result = pUpdateDeliveryState2.updateDeliveryState2(order_num);
 		
-//		List<OrderProductVo> orderProductList = 서비스.메소드(order_num);
-//		
-//		for(OrderProductVo vo : orderProductList) {
-//			int product_idx = vo.getProduct_idx();
-//			int count = vo.getOrder_product_count();
-//			int 업데이트결고ㅏ = 서비스.ㅁㅔ소드(product_idx, count);
-//		}
-//		
-//		String viewPage = "seller/purchase_history";
-//		
-//		if(result == 1) {//글삭제 성공 시
-//			viewPage = "redirect:/seller/purchase_history.do";
-//		}
-//
-//		return viewPage;
-//	}
+		List<OrderProductVo> orderProductList = cOrderProductList2.checkOrderProductList2(order_idx);
+		
+		for(OrderProductVo vo : orderProductList) {
+			int product_idx = vo.getProduct_idx();
+			int count = vo.getOrder_product_count();
+			int update_result = pUpdateProductCount.updateProductCount(Integer.toString(product_idx), count);
+		}
+		
+		String viewPage = "seller/purchase_history";
+		
+		if(result == 1) {//글삭제 성공 시
+			viewPage = "redirect:/seller/purchase_history.do";
+		}
+
+		return viewPage;
+	}
 	
 	@GetMapping("/confirm_inq.do")
 	public String confirm_inq() {		

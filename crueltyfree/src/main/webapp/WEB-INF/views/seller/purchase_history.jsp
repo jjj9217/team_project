@@ -11,7 +11,7 @@
 	a {
 		text-decoration: none;
 	} 
-	input[type="button"], input[type="submit"], input[type="checkbox"], select, label, button{cursor: pointer;}
+	input[type="button"], input[type="submit"], input[type="checkbox"], select, label, button, span{cursor: pointer;}
 	
 	body{
 		width:1020px;
@@ -135,14 +135,23 @@
 
 <script>
 $(function(){
-    $(".state_update").click(function(){
-    	let index = $(".state_update").index(this);    	
-    	let confirmAns = confirm("출고하시겠습니까?");
+    $(".state_update1").click(function(){
+    	let index = $(".classBtn").index(this);    	
+    	let confirmAns = confirm("출고 준비 상태로 변경하시겠습니까?");
 		if(confirmAns){
-			$(".form_update").eq(index).submit();
+			$(".form_update1").eq(index).submit();
 	    	return true;
 		}
     });
+    
+    $(".state_update2").click(function(){
+    	let index = $(".classBtn").index(this);    	
+    	let confirmAns = confirm("출고 완료하시겠습니까?");
+		if(confirmAns){
+			$(".form_update2").eq(index).submit();
+	    	return true;
+		}
+	});
 })
 
 </script>
@@ -236,29 +245,42 @@ $(function(){
 									<c:choose> 
 										<c:when test="${purchaseList[rowNum-1].order_ing eq 0}">
 											<td>
-												<span id="state_update" class="state_update">상품준비</span>
+												<div id="state_update1" class="state_update1 classBtn" style="margin-top: 2px; width:50px; height:18px; font-size: 10px; background-color:#9fb0b7; color:#ffffff; border-radius:3px;">상품준비</div>
 											</td>
 										</c:when>
 										<c:when test="${purchaseList[rowNum-1].order_ing eq 1}">
 											<td>
-												<span id="" class="">배송하기</span>
+												<div id="state_update2" class="state_update2 classBtn" style="margin-top: 2px; width:50px; height:18px; font-size: 10px; background-color:#7d99a4; color:#ffffff; border-radius:3px;">배송하기</div>
 											</td>
 										</c:when>
 										<c:when test="${purchaseList[rowNum-1].order_ing eq 2}">
-											<td>배송중</td>
+											<td>
+											배송중
+											<input type="hidden" class="classBtn">
+											</td>
 										</c:when>
 										<c:when test="${purchaseList[rowNum-1].order_ing eq 3}">
-											<td>배송완료</td>
+											<td>
+											배송완료
+											<input type="hidden" class="classBtn">
+											</td>
 										</c:when>
 										<c:otherwise>
-											<td style="color: #a4a4a4;">취소완료</td>
+											<td style="color: #a4a4a4;">
+											취소완료
+											<input type="hidden" class="classBtn">
+											</td>
 										</c:otherwise>
 									</c:choose>
 								</tr>
 							</c:if>
 							
-							<form action="update_state_process.do" class="form_update" method="post">
-								<input type="hidden" name="order_ing" value="${purchaseList[rowNum-1].order_num}">
+							<form action="update_state_process1.do" class="form_update1" method="post">
+								<input type="hidden" name="order_ing1" value="${purchaseList[rowNum-1].order_num}">
+							</form>
+							<form action="update_state_process2.do" class="form_update2" method="post">
+								<input type="hidden" name="order_ing2" value="${purchaseList[rowNum-1].order_num}">
+								<input type="hidden" name="order_ing3" value="${purchaseList[rowNum-1].order_idx}">
 							</form>
 							
 						</c:forEach>

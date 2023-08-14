@@ -299,7 +299,7 @@ function ProductDetail(searchWord, category_code, category_code_small,
 		<c:otherwise>
 			<!-- 일반용 -->
 			<article class="small_menu">
-				<a href="${pageContext.request.contextPath}/member/terms.do">회원가입</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/login.do">로그인</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/login.do">로그인</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
+				<a href="${pageContext.request.contextPath}/member/terms.do">회원가입</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/login.do">로그인</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
 			</article>
 		</c:otherwise>
 	</c:choose>
