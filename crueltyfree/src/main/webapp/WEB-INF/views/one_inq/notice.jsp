@@ -148,28 +148,28 @@
         
         <!-- 글목록 내용-->
 		<c:choose>
-			<c:when test="${empty NoticeVo}">
+			<c:when test="${empty noticeList[0].notice_idx}">
 				<tr>
 					<td colspan="3" style="height: 300px; color: #a4a4a4;"> 등록된 게시물이 없습니다. </td>
 				</tr>
 			</c:when>
 			<c:otherwise>
 				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
-					<c:if test="${NoticeVo[rowNum-1].notice_idx ne null}"> <!-- notice에 저장된 값이 있을 경우에만 출력 -->
+					<c:if test="${noticeList[rowNum-1].notice_idx ne null}"> <!-- notice에 저장된 값이 있을 경우에만 출력 -->
 						<tr>
-							<td>${NoticeVo[rowNum-1].notice_idx}</td> <!-- 번호 -->
+							<td>${noticeList[rowNum-1].notice_idx}</td> <!-- 번호 -->
 							<td id="td_title">
-								<a href="/notice_view.do?prdNum=${NoticeVo[rowNum-1].notice_idx}">${NoticeVo[rowNum-1].notice_title}</a> <!-- 제목 -->
-							</td>
+								<a href="${pageContext.request.contextPath}/one_inq/notice_view.do?prdNum=${noticeList[rowNum-1].notice_idx}">${noticeList[rowNum-1].notice_title}</a> <!-- 제목 -->
+							</td>			
 							<td>
-								<fmt:formatDate value="${NoticeVo[rowNum-1].notice_regDate}" type="date"
+								<fmt:formatDate value="${noticeList[rowNum-1].notice_regDate}" type="date"
 									pattern="yyyy/MM/dd" /> <!-- 날짜 -->
 							</td>
 						</tr>
 					</c:if>
 					
 					<form action="delete_pro_process.do" class="form_delete" method="post">
-						<input type="hidden" name="notice_idx" value="${NoticeVo[rowNum-1].notice_idx}">
+						<input type="hidden" name="notice_idx" value="${noticeList[rowNum-1].notice_idx}">
 					</form>
 					
 				</c:forEach>

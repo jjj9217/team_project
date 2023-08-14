@@ -40,4 +40,8 @@ public class MypageCountService implements MypageService {
 	return dao.selectcouponListCount(member_idx);
 	}
 	
+	public int selectconfirmCount(int member_idx) {
+	return dao.selectconfirmCount(member_idx);
+	}
+	
 }

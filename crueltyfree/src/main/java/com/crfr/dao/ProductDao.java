@@ -42,21 +42,15 @@ public class ProductDao {
 	}
 	
 	
-
+	//상품 목록 반환 구문
+	public List<ProductVo> MainselectList() {	
+		return sqlSession.selectList(MAPPER+".MainselectList");
+	}
 	
 	
-	/*
-	 * //검색 조건에 맞는 게시물 목록을 반환하는 메소드 public List<ProductVo>
-	 * selectList_saleCount(ExploreVo vo) { return
-	 * sqlSession.selectList(MAPPER+".selectList_saleCount", vo); }
-	 * 
-	 * //검색 조건에 맞는 게시물사진 목록을 반환하는 메소드 public List<FileVo>
-	 * selectListimg_saleCount(ExploreVo vo) { return
-	 * sqlSession.selectList(MAPPER+".selectListimg_saleCount", vo); }
-	 */
-
-	
-	
-	
-	
+	//상품 목록 사진 출력
+	public List<FileVo> MainselectListimg() {	
+		return sqlSession.selectList(MAPPER+".MainselectListimg");
+	}
+			
 }

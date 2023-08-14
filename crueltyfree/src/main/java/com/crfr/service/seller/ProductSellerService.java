@@ -83,4 +83,6 @@ public interface ProductSellerService {
 	// order_idx를 통해 주문 상품 리스트를 불러오는 서비스
 	default List<OrderProductVo> checkOrderProductList2 (int order_idx) {return null;}
 	
+	
+	default PageNav setSellerPageNav2(PageNav pageNav, String pageNum, String pageBlock, int member_idx) {return null;}
 }

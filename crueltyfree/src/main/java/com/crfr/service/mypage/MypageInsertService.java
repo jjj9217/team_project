@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.crfr.dao.MypageDao;
 import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.FileVo;
+import com.crfr.vo.ProductInqVo;
 import com.crfr.vo.ReviewVo;
 
 @Service("mpInsert")
@@ -72,6 +73,11 @@ public class MypageInsertService implements MypageService {
 	
 	public int insertdeliveryPost_normal(DeliveryVo vo) {
 		return dao.insertdeliveryPost_normal(vo);
+	}
+	
+	public int insertConfirm(ProductInqVo vo) {
+		System.out.println("마이서비스까지는 가지는건가?");
+		return dao.insertConfirm(vo);
 	}
 	
 }

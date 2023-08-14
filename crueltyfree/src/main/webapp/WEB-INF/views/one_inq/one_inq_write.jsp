@@ -172,6 +172,15 @@
 		line-height: 20px;
 		background-color: #eef3f5;	
 	}
+	
+	.regi_box {
+		border: 1px solid #a4a4a4;
+		border-radius: 13px;
+		outline-color: #7d99a4;
+		padding: 10px;
+		vertical-align: top;
+		margin-bottom: 18px;
+	}
 </style>
 
 </head>
@@ -194,19 +203,22 @@
 			<a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1 문의</a>
 		</article>
 	</div>
+
+<form name="notice_insert" method="post" action="oneinq_process.do" enctype="multipart/form-data" 
+          onsubmit="return validateForm()">
 	
 	<div class="one_inq_type">
 		<article class="oneinq_left">
 			&nbsp;&nbsp;<a>문의유형</a>
 		</article>
 		<article class="oneinq_right">
-			<select class="inq_type">
-				<option>회원정보</option>
-				<option>주문/결제</option>
-				<option>배송문의</option>
-				<option>취소/교환/환불</option>
-				<option>사이트 이용 오류/개선</option>
-				<option>판매자 등급 문의</option>
+			<select name="one_inq_title" class="inq_type">
+				<option value="회원정보">회원정보</option>
+				<option value="주문/결제">주문/결제</option>
+				<option value="배송문의">배송문의</option>
+				<option value="취소/교환/환불">취소/교환/환불</option>
+				<option value="사이트 이용 오류/개선">사이트 이용 오류/개선</option>
+				<option value="판매자 등급 문의">판매자 등급 문의</option>
 			</select>
 		</article>
 	</div>
@@ -216,7 +228,16 @@
 			&nbsp;&nbsp;<a>내용</a>
 		</article>
 		<article class="oneinq_right">
-			<textarea class="inq_sub" placeholder="내용을 1000자 이내로 입력해주세요"></textarea>
+			<textarea class="inq_sub" placeholder="내용을 1000자 이내로 입력해주세요" name="one_inq_content"></textarea>
+		</article>
+	</div>
+	
+	<div class="one_inq_type">
+		<article class="one_left">
+			&nbsp;&nbsp;<a>파일 첨부</a>
+		</article>
+		<article class="one_right">
+			<input type="file" name="attachedFile" id="thumFile" class="regi_box">
 		</article>
 	</div>
 	
@@ -225,7 +246,7 @@
 		<a href="#"><button id="one_inq_write">1:1 문의하기</button></a>
 		<a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do"><button id="one_inq_cancel">취소하기</button></a>
 	</div>
-	
+</form>	
 </section>
 <footer>
 	<jsp:include page="../main/footer.jsp" />
