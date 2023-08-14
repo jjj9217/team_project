@@ -151,6 +151,7 @@
 		
 </style>
 </head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
 
 function searchplz(){
@@ -164,6 +165,7 @@ function searchplz(){
 		
 }
 
+
 function getParameterValue(parameterName) {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -176,8 +178,84 @@ function getParameterValue(parameterName) {
 }
 
 
-</script>
+function ProductHeader(category_code, category_code_small
+        ) {
+	 
+    var insertcategory_code ="";
+    const paramcategory_code = getParameterValue("category_code");
+    if(category_code === ""){//받은 카테고리대 코드가 없을 때       
+        if(paramcategory_code === null){//URL에 있는 카테고리대 코드가 없을 때
+        insertcategory_code = '';
+        }
+        else{//URL에 있는 카테고리대 코드가 있을 때
+        insertcategory_code = paramcategory_code;
+        }        
+    }else{//받은 카테고리대 코드가 있을 때
+        insertcategory_code = category_code;
+        insertcategory_code_small = "";
+//         alert('초기화');
+    }
+    
+    var insertcategory_code_small ="";
+    const paramcategory_code_small = getParameterValue("category_code_small");
+    if(category_code_small === ""){//받은 카테고리소 코드가 없을 때
+        if(paramcategory_code_small === null){//URL에 있는 카테고리소 코드가 없을 때
+        insertcategory_code_small = '';}
+        else{//URL에 있는 카테고리소 코드가 있을 때
+//         	alert('마지막');
+        if(category_code === ""){
+//         	alert('여기로오면안됨');
+        insertcategory_code_small = paramcategory_code_small;}
+        else{insertcategory_code_small="";
+//         alert('여기로와야함');
+        	
+        }
+        }
+    }else{//받은 카테고리대 코드가 있을 때
+    	if(paramcategory_code !== null){
+    		insertcategory_code="";
+    		insertcategory_code_small = category_code_small;
+    	}
+    	else{
+        insertcategory_code_small = category_code_small;}
+    }
 
+   
+         
+    // 새 URL 구성    
+    var newURL = "${pageContext.request.contextPath}/product/product_list_enter_category.do" +  
+    "?category_code=" + insertcategory_code +
+    "&category_code_small=" + insertcategory_code_small
+    ;
+    // URL로 이동
+    window.location.href = newURL;
+
+    
+}
+
+
+function HeaderBest(sort_salecount) {    
+    var insertsort_salecount ="";
+    const paramsort_salecount = getParameterValue("sort_salecount");
+    if(sort_salecount === ""){
+        if(paramsort_salecount === null){
+        insertsort_salecount = '';}
+        else{
+        insertsort_salecount = paramsort_salecount;}
+    }else{
+        insertsort_salecount = sort_salecount;
+       
+    }
+
+    // 새 URL 구성    
+    var newURL = "${pageContext.request.contextPath}/product/product_list_enter_category.do" +  
+    "?sort_salecount=" + insertsort_salecount
+    ;
+    // URL로 이동
+    window.location.href = newURL;    
+}
+
+</script>
 
 <body>
 <div class="head">
@@ -222,47 +300,47 @@ function getParameterValue(parameterName) {
 <div class="menu_box">
 	<ul class="menu">
 		<li>
-			<a href="#">베스트</a>
+			<a href="#" onclick="HeaderBest('1')">베스트</a>
 		</li>
 		<li>
-			<a href="#">스킨케어</a>
+			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=skin" >스킨케어</a>
 			<ul class="submenu">
-				<li class="sub3"><a href="#">토너/로션/올인원</a></li>
-				<li class="sub3"><a href="#">에센스/크림</a></li>
-				<li class="sub3"><a href="#">미스트/오일</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_1">토너/로션/올인원</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_2">>에센스/크림</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_3">>미스트/오일</a></li>
 			</ul>
 		</li>
 		<li>
-			<a href="#">클렌징</a>
+			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=clensing" >클렌징</a>
 			<ul class="submenu">
-				<li class="sub2"><a href="#">클렌징폼/젤</a></li>
-				<li class="sub2"><a href="#">오일/워터/리무버</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=clensing_1">>클렌징폼/젤</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=clensing_2">>오일/워터/리무버</a></li>
 			</ul>
 		</li>
 		<li>
-			<a href="#">메이크업</a>
+			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=makeup" >메이크업</a>
 			<ul class="submenu">
-				<li class="sub3"><a href="#">립메이크업</a></li>
-				<li class="sub3"><a href="#">베이스메이크업</a></li>
-				<li class="sub3"><a href="#">아이메이크업</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_1">>립메이크업</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_2">>베이스메이크업</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_3">>아이메이크업</a></li>
 			</ul>
 		</li>
 		<li>
-			<a href="#">바디케어</a>
+			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=body" >바디케어</a>
 			<ul class="submenu">
-				<li class="sub2"><a href="#">샤워/입욕</a></li>
-				<li class="sub2"><a href="#">로션/오일</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=body_1">>샤워/입욕</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=body_2">>로션/오일</a></li>
 			</ul>
 		</li>
 		<li>
-			<a href="#">헤어케어</a>
+			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=hair" >헤어케어</a>
 			<ul class="submenu">
-				<li class="sub2"><a href="#">샴푸/린스/트리트먼트</a></li>
-				<li class="sub2"><a href="#">염색약/펌</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=hair_1">>샴푸/린스/트리트먼트</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=hair_2">>염색약/펌</a></li>
 			</ul>
 		</li>
 		<li>
-			<a href="#">미용소품</a>
+			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=prop" >미용소품</a>
 		</li>
 	</ul>
 </div>

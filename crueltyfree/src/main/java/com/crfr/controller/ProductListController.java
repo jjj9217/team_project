@@ -217,7 +217,6 @@ public class ProductListController {
 	public String list3(@ModelAttribute ExploreVo vo, 
 					   String pageNum, String pageBlock, Model model) {
 		System.out.println("ProductController's ExploreVo price_min:"+ vo.getProduct_price_min());		
-
 		//@RequestParam(value="category_code", required=false) String category_code,
 		//vo.setCategory_code(category_code);
 		System.out.println("받은 카테고리코드:"+ vo.getCategory_code());
