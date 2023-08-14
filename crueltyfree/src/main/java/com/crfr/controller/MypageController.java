@@ -182,7 +182,7 @@ public class MypageController {
 		vo.setMember_nickname(member_nickname);
 		vo.setMember_idx(member_idx);
 		
-		System.out.println("order_product_idx:"+ vo.getOrder_product_idx());
+		
 		System.out.println("멤버번호:"+vo.getMember_idx());
 		System.out.println("상품번호:"+vo.getProduct_idx());
 		System.out.println("리뷰스코어:"+vo.getReview_score());
@@ -197,7 +197,7 @@ public class MypageController {
 		// 위를 통해 mysql의 review테이블에 내용에 관한 쿼리가 삽입되는데, 이 때 쿼리에서 autoincrement되어 생성된
 		// review_idx값 조회하여 반환해야 한다
 		// 그래야 사진을 삽입하는데 파일테이블에 삽입될 review_idx를 얻어올 수 있기 때문이다
-		System.out.println("여기가 문제인가?");
+		
 		// review_idx값 조회
 		int searchReview_idx = mpInsert.selectReview_idx(vo);
 		System.out.println("생성된 review_idx번호:"+searchReview_idx);
@@ -581,11 +581,7 @@ public class MypageController {
 	//회원정보수정의 회원정보수정페이지 이동 클릭	
 	@GetMapping("/mypage_modify_info.do")
 	public String mypage_test7(HttpServletRequest request, Model model) {
-		
-		HttpSession session = request.getSession();		
-		//로그인된 회원의 member_idx 얻기
-		MemberVo mVo = (MemberVo)session.getAttribute("member");
-		model.addAttribute("MemberVo", mVo);
+				
 		return "mypage/mypage_modify_info";
 	}
 	
@@ -593,10 +589,7 @@ public class MypageController {
 	//회원정보 수정페이지로 이동
 	@PostMapping("/mypage_modify_changeinfo.do")
 	public String mypage_modify_changeinfo(MemberVo vo, HttpServletRequest request, Model model) {
-		HttpSession session = request.getSession();
-		session.setAttribute("MemberVo", vo);
-		MemberVo mVo = (MemberVo)session.getAttribute("MemberVo");
-		model.addAttribute("MemberVo", mVo);
+		
 		return "mypage/mypage_modify_changeinfo";
 	}
 	
