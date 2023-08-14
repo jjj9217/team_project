@@ -264,6 +264,7 @@ $("#do-search-period2").click(function(){
             <div class="password_btn">                  
                 <button type="button" class="btnLookup" id="do-search-period">취소</button>                                       
                 <button type="button" class="btnLookup" id="do-search-period2">확인</button>
+                ㅁㅁㅁㅁㅁㅁ
             </div>
 </form>       
      	<input type="hidden" id="pwdCheck" value="${member.member_pw}">
