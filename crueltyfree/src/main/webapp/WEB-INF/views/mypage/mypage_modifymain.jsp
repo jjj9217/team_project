@@ -42,7 +42,7 @@
     }
     
     #mypage{
-        
+        margin-top:30px;
         width: 199px;
         height:500px;
         float:left;     
@@ -127,10 +127,18 @@
     }
     
     .span_txt{
+    	margin-top:20px;
         padding-left: 20px;
         float: left;
-        font-size: 12px;
+		font: bold 20px Arial, sans-serif;
         height: 35px;
+    }
+    .span_txt2{
+        padding-left: 20px;
+        float: left;
+		font: bold 13px Arial, sans-serif;
+        height: 35px;
+        color:gray;
     }
 
     #member_info_update{
@@ -144,7 +152,32 @@
         margin-top: 5px;
         margin-right: 30px;
     }
-    
+   #hr{margin-top:10px; height:3px; background-color:#7d99a4; border:0;}
+   #hr2{margin-top:30px;}
+   #member_info_update{
+   		width:120px;
+   		height:30px;
+        margin-top: 20px;
+        font: bold 15px Arial, sans-serif;
+       	cursor:pointer;/*마우스를 올려놓았을 때 커서가 손모양으로 변경됨*/
+       	border-radius:0px;
+       	border:0;
+        background-color:#7d99a4;
+        color: white;
+   		border-radius:5px;
+   }
+	#password_update{
+   		width:120px;
+   		height:30px;
+        margin-top: 20px;
+        font: bold 15px Arial, sans-serif;
+       	cursor:pointer;/*마우스를 올려놓았을 때 커서가 손모양으로 변경됨*/
+       	border-radius:0px;
+       	border:0;
+        background-color:gray;
+        color: black;
+   		border-radius:5px;
+   }
 
 </style>
 </head>
@@ -184,15 +217,15 @@
         </div>
         <div class="tit_area">          
             <h2 class="tit">회원정보 수정</h2>
-            <hr width=100%;>
+            <hr id="hr" width=100%;>
             <p class="buy_list_txt">    
-                <span class="span_txt">회원 정보 및 비밀번호는 CJ ONE 사이트를 통해 수정 가능합니다.</span>                
-                <span class="span_txt">(카카오 간편회원은 CJ ONE에서 통합회원 전환하여 비밀번호 설정/수정 가능)</span>                      
+                <span class="span_txt">회원 정보 및 비밀번호는 CJ ONE 사이트를 통해 수정 가능합니다.</span><br>               
+                <span class="span_txt2">(카카오 간편회원은 CJ ONE에서 통합회원 전환하여 비밀번호 설정/수정 가능)</span>                      
                 <button type="button" id="member_info_update" onClick="location.href='mypage_modify_info.do'">회원정보 수정</button>
                 <button type="button" id="password_update" onClick="location.href='mypage_modify_password.do'">비밀번호 수정</button>                
             </p>
         </div>
-        <hr width=100%;>
+        <hr id="hr2" width=100%;>
         
         
 

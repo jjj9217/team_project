@@ -121,5 +121,28 @@ public class ManagerDao{
 	public ProductVo findProductPost(String product_idx) {
 		return sqlSession.selectOne(MAPPER+".findProductPost", product_idx);
 	}
-
+	public int productDeleteOne(String product_idx) {
+		int productIdx = Integer.parseInt(product_idx);
+		return sqlSession.delete(MAPPER+".productDeleteOne",productIdx);
+	}
+	public int memberDeleteOne(String member_idx) {
+		int memberIdx = Integer.parseInt(member_idx);
+		return sqlSession.delete(MAPPER+".memberDeleteOne",memberIdx);
+	}
+	public int oneinqDeleteOne(String one_inq_idx) {
+		int one_inq_Idx = Integer.parseInt(one_inq_idx);
+		return sqlSession.delete(MAPPER+".oneinqDeleteOne",one_inq_Idx);
+	}
+	public int seloneinqDeleteOne(String one_inq_idx) {
+		int one_inq_Idx = Integer.parseInt(one_inq_idx);
+		return sqlSession.delete(MAPPER+".seloneinqDeleteOne",one_inq_Idx);
+	}
+	public int productinqDeleteOne(String product_inq_idx) {
+		int product_inq_Idx = Integer.parseInt(product_inq_idx);
+		return sqlSession.delete(MAPPER+".productinqDeleteOne",product_inq_Idx);
+	}
+	public int reviewDeleteOne(String review_idx) {
+		int review_Idx = Integer.parseInt(review_idx);
+		return sqlSession.delete(MAPPER+".reviewDeleteOne",review_Idx);
+	}
 }

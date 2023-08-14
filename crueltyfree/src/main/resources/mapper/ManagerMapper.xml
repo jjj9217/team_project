@@ -312,4 +312,23 @@
 	<select id="findProductPost" parameterType="string" resultType="ProductVo">
 		select * from Product where product_idx = #{product_idx}
 	</select>
+
+	<delete id="productDeleteOne" parameterType="_int">
+		delete from product where product_idx = #{productIdx}
+	</delete>	
+	<delete id="memberDeleteOne" parameterType="_int">
+		delete from member where member_idx = #{memberIdx}
+	</delete>	
+	<delete id="oneinqDeleteOne" parameterType="_int">
+		delete from one_inq where one_inq_idx = #{one_inq_Idx}
+	</delete>	
+	<delete id="seloneinqDeleteOne" parameterType="_int">
+		delete from one_inq where one_inq_idx = #{one_inq_Idx}
+	</delete>
+	<delete id="productinqDeleteOne" parameterType="_int">
+		delete from product_inq where product_inq_idx = #{product_inq_Idx}
+	</delete>	
+	<delete id="reviewDeleteOne" parameterType="_int">
+		delete from review where review_idx = #{review_Idx}
+	</delete>		
 </mapper>

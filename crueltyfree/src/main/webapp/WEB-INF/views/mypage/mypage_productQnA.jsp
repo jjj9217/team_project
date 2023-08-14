@@ -192,7 +192,7 @@
         
         text-align: center;
     }
-
+	#mypage{margin-top:30px;}
 </style>
 </head>
 <script>

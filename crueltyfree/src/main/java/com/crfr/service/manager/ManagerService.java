@@ -43,4 +43,10 @@ public interface ManagerService {
 	default int productinqUpdate (String product_inq_answer, String product_inq_idx) {return 0;}
 	default int reviewUpdate (String review_content, String review_idx) {return 0;}
 	default ProductVo findProductPost(String product_idx) {return null;}
+	default int productDeleteOne(String product_idx) {return 0;}
+	default int memberDeleteOne(String member_idx) {return 0;}
+	default int oneinqDeleteOne(String one_inq_idx) {return 0;}
+	default int seloneinqDeleteOne(String one_inq_idx) {return 0;}
+	default int productinqDeleteOne(String product_inq_idx) {return 0;}
+	default int reviewDeleteOne(String review_idx) {return 0;}
 }

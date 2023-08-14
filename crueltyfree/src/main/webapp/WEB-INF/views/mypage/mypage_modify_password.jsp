@@ -40,7 +40,7 @@
     }
     
     #mypage{
-        
+        margin-top:30px;
         width: 199px;
         height:500px;
         float:left;     
@@ -168,6 +168,7 @@
         color: black;
         margin-left: 20px;                  
     }
+   #hr{margin-top:10px; height:3px; background-color:#7d99a4; border:0;}
 
 </style>
 <script>
@@ -244,7 +245,7 @@ function test() {
         </div>
         <div class="tit_area">          
             <h2 class="tit">비밀번호 수정</h2>
-            <hr width=100%;>
+            <hr id="hr" width=100%;>
             <div class="buy_list_txt">  
 <form name="caq" id="qw" action="${pageContext.request.contextPath}/mypage/mypage_modify_changepassword_process.do" method="post">
                 <table>
