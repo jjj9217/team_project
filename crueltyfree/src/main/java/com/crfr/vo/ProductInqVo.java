@@ -13,4 +13,5 @@ public class ProductInqVo {
 	private String product_inq_answer;
 	private Date product_inq_regDate;	
 	private String member_nickname;
+	private String product_name;
 }

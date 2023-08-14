@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.crfr.service.mypage.MypageService;
-import com.crfr.vo.DateVo;
+import com.crfr.vo.CouponVo;
 import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.LikeExploreVo;
 import com.crfr.vo.MemberVo;
 import com.crfr.vo.PageNav;
+import com.crfr.vo.ProductInqVo;
 import com.crfr.vo.ReviewExploreVo;
 import com.crfr.vo.ReviewVo;
 
@@ -181,7 +182,7 @@ public class MypageController {
 		vo.setMember_nickname(member_nickname);
 		vo.setMember_idx(member_idx);
 		
-		
+		System.out.println("order_product_idx:"+ vo.getOrder_product_idx());
 		System.out.println("멤버번호:"+vo.getMember_idx());
 		System.out.println("상품번호:"+vo.getProduct_idx());
 		System.out.println("리뷰스코어:"+vo.getReview_score());
@@ -196,7 +197,7 @@ public class MypageController {
 		// 위를 통해 mysql의 review테이블에 내용에 관한 쿼리가 삽입되는데, 이 때 쿼리에서 autoincrement되어 생성된
 		// review_idx값 조회하여 반환해야 한다
 		// 그래야 사진을 삽입하는데 파일테이블에 삽입될 review_idx를 얻어올 수 있기 때문이다
-		
+		System.out.println("여기가 문제인가?");
 		// review_idx값 조회
 		int searchReview_idx = mpInsert.selectReview_idx(vo);
 		System.out.println("생성된 review_idx번호:"+searchReview_idx);
@@ -502,11 +503,12 @@ public class MypageController {
 		String viewpage = "mypage_review_err";
 		// 배송지 등록
 		int insertreview=0;
+		System.out.println("배송지등록디폴트 기본설정시1인가?"+vo.getDefaultpost());
 		if(vo.getDefaultpost()==1) {		
-		insertreview = mpInsert.insertdeliveryPost(vo);
-		}else{
 			mpUpdate.updatedeliveryPostchangedefault(vo);
-			insertreview = mpInsert.insertdeliveryPost(vo);			
+			insertreview = mpInsert.insertdeliveryPost(vo);
+		}else{
+			insertreview = mpInsert.insertdeliveryPost_normal(vo);		
 		}
 		
 		// 배송지가 제대로 sql에 삽입되었다면 맨 처음 나의배송지페이지 주소값을 반환
@@ -630,19 +632,6 @@ public class MypageController {
 	
 	
 	
-	//상품QnA페이지로 이동
-	@GetMapping("/mypage_productQnA.do")
-	public String mypage_QnA(DateVo vo, HttpServletRequest request) {
-		HttpSession session = request.getSession();		
-		//로그인된 회원의 member_idx 얻기
-		MemberVo mVo = (MemberVo)session.getAttribute("member");		
-		int member_idx = mVo.getMember_idx();		
-		vo.setMember_idx(member_idx);
-		
-		
-		return "mypage/mypage_productQnA";
-	}
-	
 	
 	
 	
@@ -682,13 +671,21 @@ public class MypageController {
 	@PostMapping("/delete_process_like.do")
 	public String deletedelike(@RequestParam("no")int like_idx, LikeExploreVo vo, HttpServletRequest request) {
 		//request객체는 세션에 저장된 회원번호를 알아내기 위해 필요함
-		
+		HttpSession session = request.getSession();
+		MemberVo mVo = (MemberVo)session.getAttribute("member");		
+		int member_idx = mVo.getMember_idx();	
+		vo.setMember_idx(member_idx);
+		System.out.println("Member번호뭐냐"+vo.getMember_idx());
 		System.out.println(like_idx);
 		vo.setLike_idx(like_idx);		
 		System.out.println("like받았나?"+vo.getLike_idx());
 		//System.out.println("DeliveryVo.member_idx"+vo.getMember_idx());
 		//글삭제 요청 처리를 위해 BoardFileDeleteService 클래스 이용
-		int result = mpDelete.deletelike(vo);
+		
+		int result=0; 
+		if(vo.getLike_idx() != 0) {
+			mpDelete.deletelike(vo);}
+		else {mpDelete.deletelikeall(vo);}
 		System.out.println("삭제됨?"+result);
 		String viewPage = "boast/view";
 		if(result==1) {//글삭제 성공시
@@ -697,13 +694,152 @@ public class MypageController {
 		return viewPage;			
 	}
 	
-		
+	//좋아요전체삭제 요청 처리
+	@GetMapping("/delete_process_likeall.do")
+	public String deletedelikeall(LikeExploreVo vo, HttpServletRequest request) {
+		//request객체는 세션에 저장된 회원번호를 알아내기 위해 필요함
+		HttpSession session = request.getSession();
+		MemberVo mVo = (MemberVo)session.getAttribute("member");		
+		int member_idx = mVo.getMember_idx();	
+		vo.setMember_idx(member_idx);
+		System.out.println("Member번호뭐냐"+vo.getMember_idx());		
+		System.out.println("like받았나?"+vo.getLike_idx());
+			//System.out.println("DeliveryVo.member_idx"+vo.getMember_idx());
+			//글삭제 요청 처리를 위해 BoardFileDeleteService 클래스 이용
+			
+			int result=mpDelete.deletelikeall(vo);
+			System.out.println("삭제됨?"+result);
+			String viewPage = "boast/view";
+			if(result!=0) {//글삭제 성공시
+				viewPage = "redirect:/mypage/mypage_like.do?";
+			}
+			return viewPage;			
+		}	
 	
 	
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//쿠폰페이지로 이동
+	@GetMapping("/mypage_coupon.do")
+	public String mypage_coupon(CouponVo vo, HttpServletRequest request, String pageNum, String pageBlock, Model model) {
+		HttpSession session = request.getSession();		
+		//로그인된 회원의 member_idx 얻기
+		MemberVo mVo = (MemberVo)session.getAttribute("member");		
+		int member_idx = mVo.getMember_idx();		
+		vo.setMember_idx(member_idx);
+						
+		// 내가 구매한 목록 중 리뷰를 작성한 목록을 가져오는 요청에 대한 처리를 위한 MypageListService 클래스 이용
+		List<CouponVo> couponList = mpList.selectcouponList(member_idx);
+		model.addAttribute("couponList", couponList);
+							
+		// 총 레코드 수를 가져오기 위해 MypageCountService클래스 이용
+		int searchTotal = mpCount.selectcouponListCount(member_idx);
 
+		// 총 레코드 수 대입
+		pageNav.setTotalRows(searchTotal);
+		// 페이지네비게이션을 위해 MypagePageService클래스를 이용
+		pageNav = mpPage.setPageNav(pageNav, pageNum, pageBlock, member_idx);
+		
+		// html에서 사용하기 위해 세팅
+		model.addAttribute("pageNav", pageNav);
+				
+		return "mypage/mypage_coupon";
+	}
+	
+	
+	
+	
+	
+	//상품QnA페이지로 이동
+	@GetMapping("/mypage_productQnA.do")
+	public String mypage_QnA(FileVo vo, HttpServletRequest request, String pageNum, String pageBlock, Model model) {
+		HttpSession session = request.getSession();		
+		//로그인된 회원의 member_idx 얻기
+		MemberVo mVo = (MemberVo)session.getAttribute("member");		
+		int member_idx = mVo.getMember_idx();		
+		vo.setMember_idx(member_idx);
+		
+		// 내가 구매한 목록 중 리뷰를 작성한 사진목록을 가져오는 요청에 대한 처리를 위한 MypageListService 클래스 이용
+		List<FileVo> inqfileList = mpList.selectproductinqListimg(member_idx);
+		model.addAttribute("inqfileList", inqfileList);
+		
+		// 내가 구매한 목록 중 리뷰를 작성한 목록을 가져오는 요청에 대한 처리를 위한 MypageListService 클래스 이용
+		List<ProductInqVo> inqproductList = mpList.selectproductinqList(member_idx);
+		model.addAttribute("inqproductList", inqproductList);
+							
+		// 총 레코드 수를 가져오기 위해 MypageCountService클래스 이용
+		int searchTotal = mpCount.selectproductinqCount(member_idx);
+
+		// 총 레코드 수 대입
+		pageNav.setTotalRows(searchTotal);
+		// 페이지네비게이션을 위해 MypagePageService클래스를 이용
+		pageNav = mpPage.setPageNav(pageNav, pageNum, pageBlock, member_idx);
+		
+		// html에서 사용하기 위해 세팅
+		model.addAttribute("pageNav", pageNav);
+				
+		return "mypage/mypage_productQnA";
+	}
+	
+	//상품QnA 삭제 요청 처리
+	@PostMapping("/mypage_inqdel_process.do")
+	public String deleteinq(ProductInqVo vo, HttpServletRequest request) {
+		//request객체는 세션에 저장된 회원번호를 알아내기 위해 필요함
+		HttpSession session = request.getSession();
+		MemberVo mVo = (MemberVo)session.getAttribute("member");		
+		int member_idx = mVo.getMember_idx();	
+		vo.setMember_idx(member_idx);
+		System.out.println("Member번호뭐냐"+vo.getMember_idx());
+		System.out.println("문의번호:"+vo.getProduct_inq_idx());
+		
+		int result=mpDelete.deleteinq(vo);		
+		String viewPage = "boast/view";
+		if(result==1) {//글삭제 성공시
+			viewPage = "redirect:/mypage/mypage_productQnA.do?";
+		}
+		return viewPage;			
+	}
+	
+	//상품QnA 수정 요청 처리
+	@PostMapping("/mypage_oneinqModify_process.do")
+	public String oneinqModify(ProductInqVo vo, HttpServletRequest request) {
+		HttpSession session = request.getSession();		
+		//로그인된 회원의 member_idx 얻기
+		MemberVo mVo = (MemberVo)session.getAttribute("member");		
+		int member_idx = mVo.getMember_idx();		
+		vo.setMember_idx(member_idx);
+		System.out.println("멤버번호:"+vo.getMember_idx());
+		System.out.println("문의번호:"+vo.getProduct_inq_idx());
+		System.out.println("콘텐츠내용:"+vo.getProduct_inq_content());
+		
+		int result = mpUpdate.updateproductinq(vo);			
+				
+		String viewPage = "boast/view";
+		if(result==1) {//글삭제 성공시
+			viewPage = "redirect:/mypage/mypage_productQnA.do";
+		}
+		return viewPage;			
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

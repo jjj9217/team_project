@@ -16,4 +16,6 @@ public class ReviewExploreVo {
 	
 	private int product_idx;
 	private int review_idx;
+	
+	private int order_product_idx;
 }

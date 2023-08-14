@@ -16,6 +16,7 @@ import com.crfr.dao.MypageDao;
 import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.MemberVo;
+import com.crfr.vo.ProductInqVo;
 import com.crfr.vo.ReviewVo;
 
 @Service("mpUpdate")
@@ -208,5 +209,9 @@ public class MypageUpdateService implements MypageService {
 				result = dao.updatereviewimg0(vo);
 				}			
 		return result;}
+		
+	public int updateproductinq (ProductInqVo vo) {
+		return dao.updateproductinq(vo);
+	}
 	
 }

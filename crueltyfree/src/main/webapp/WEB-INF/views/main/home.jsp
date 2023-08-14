@@ -126,6 +126,7 @@
 	}
 </style>
 
+
 </head>
 <body>
 
@@ -324,6 +325,8 @@
 	<a href="${pageContext.request.contextPath}/purchase/refund.do">환불테스트</a><br>
 	<a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문배송조회</a><br>
 	<a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">환불취소조회</a><br>
+	<br>
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do">상품목록카테고리진입</a><br>
 <footer>
 	<jsp:include page="../main/footer.jsp" />
 </footer>
