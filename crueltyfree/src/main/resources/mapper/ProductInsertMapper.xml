@@ -234,9 +234,24 @@
 	</select>
 	
 	<!-- order_ing 업데이트 구문 -->
-	<update id="updateDeliveryState" parameterType="string">
+	<update id="updateDeliveryState1" parameterType="string">
 		update `order` set order_ing = "1"
 			where order_num = #{order_num}
+	</update>
+	<update id="updateDeliveryState2" parameterType="string">
+		update `order` set order_ing = "2"
+			where order_num = #{order_num}
+	</update>
+	
+	<!-- order_idx를 통해 주문 상품 리스트를 불러오는 구문 -->
+	<select id="checkOrderProductList2" parameterType="_int" resultType="OrderProductVo">
+		select * from order_product where order_idx = #{order_idx}
+	</select>
+	
+	<!-- 상품 총 수량 업데이트 구문 -->
+	<update id="updateProductCount" parameterType="map">
+		update product set product_saleCount = product_saleCount + #{count}
+			where product_idx = #{product_idx}
 	</update>
 
 </mapper>

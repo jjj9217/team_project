@@ -7,12 +7,12 @@ import com.crfr.vo.OrderVo;
 
 import lombok.RequiredArgsConstructor;
 
-@Service("pUpdateDeliveryState")
+@Service("pUpdateProductCount")
 @RequiredArgsConstructor
-public class ProductUpdateStateService implements ProductSellerService {
+public class ProductUpdateCountService implements ProductSellerService {
 	private final ProductSellerDao dao;
 	
-	public int updateDeliveryState(String order_num){
-		return dao.updateDeliveryState(order_num);
+	public int updateProductCount(String product_idx, int count){
+		return dao.updateProductCount(product_idx, count);
 	}
 }

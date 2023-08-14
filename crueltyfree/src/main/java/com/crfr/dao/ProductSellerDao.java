@@ -1,5 +1,6 @@
 package com.crfr.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -103,8 +104,24 @@ public class ProductSellerDao{
 	}
 	
 	// order_ing 상태 업데이트
-	public int updateDeliveryState(String order_num) {		
-		return sqlSession.update(MAPPER+".updateDeliveryState", order_num);
+	public int updateDeliveryState1(String order_num) {		
+		return sqlSession.update(MAPPER+".updateDeliveryState1", order_num);
+	}
+	public int updateDeliveryState2(String order_num) {
+		return sqlSession.update(MAPPER+".updateDeliveryState2", order_num);
+	}
+	
+	// product_saleCount 업데이트
+	public int updateProductCount(String product_idx, int count) {
+		Map<String, Object> map = new HashMap<>();
+	    map.put("product_idx", product_idx);
+	    map.put("count", count);
+		return sqlSession.update(MAPPER+".updateProductCount", map);
+	}
+	
+	//특정 order_idx에 해당되는 주문 상품 리스트
+	public List<OrderProductVo> checkOrderProductList2(int order_idx) {		
+		return sqlSession.selectList(MAPPER+".checkOrderProductList2", order_idx);
 	}
 	
 }

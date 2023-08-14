@@ -237,7 +237,7 @@ $(function(){
 										</c:otherwise>
 									</c:choose>
 									<td>
-										<span style="color:#7d99a4;" onclick="location.href='edit_pro.do?no=${checkProList[rowNum-1].product_idx}'">수정</span>  <span id="pro_delete" class="pro_delete">삭제</span>
+										<div style="margin-top: 2px; width:50px; height:18px; background-color:#7d99a4; color:#ffffff; border-radius:3px; display: inline-block;" onclick="location.href='edit_pro.do?no=${checkProList[rowNum-1].product_idx}'">수정</div>  <div style="width:50px; height:18px; background-color:#a4a4a4; color:#ffffff; border-radius:3px; display: inline-block;" id="pro_delete" class="pro_delete">삭제</div>
 									</td>
 								</tr>
 							</c:if>

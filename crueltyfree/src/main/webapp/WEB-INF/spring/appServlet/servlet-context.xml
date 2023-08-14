@@ -40,6 +40,8 @@
 	<context:component-scan base-package="com.crfr.service.email" />
 	<context:component-scan base-package="com.crfr.service.seller" />
 	<context:component-scan base-package="com.crfr.service.orderDelivery" />
+	<context:component-scan base-package="com.crfr.service.oneInq" />
+
 
 
 
