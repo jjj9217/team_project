@@ -856,7 +856,6 @@ $(function(){
                             <select name="coupon" id="coupon">
                                 <!-- 로그인되어있는 회원의 쿠폰 불러오기 -->
                                 <option value="0">적용 안함</option>
-                                <option value="1">신규 가입 환영 20% 할인</option>
                             </select>
                             <!-- 결제금액에 할인정보 계산한 결과 값 -->
                             <p class="txt_right_discount"> - 0원</p>

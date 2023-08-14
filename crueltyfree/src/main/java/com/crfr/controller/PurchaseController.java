@@ -83,6 +83,8 @@ public class PurchaseController {
 		return result;
 	}
 	
+	//본인인증
+	
 	//장바구니 페이지
 	@GetMapping("/basket.do")
 	public String basket(HttpServletRequest request, Model model) {

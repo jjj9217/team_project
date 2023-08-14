@@ -148,10 +148,54 @@
 	 .menu > li:hover a {
 	 	color: #ffffff;
 	}
-		
+	.basket_move{
+		cursor: pointer;
+		font-size: 12px;
+	}	
 </style>
 </head>
-<script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(function(){
+//장바구니 스크립트
+// 비회원 식별값을 가져오는 함수
+function getGuestId() {
+	let guestId = getCookie("guestId");
+	if (!guestId) {
+		// 쿠키에 비회원 식별값이 없으면 새로 생성하여 쿠키에 저장
+		guestId = generateGuestId(10);
+		document.cookie = "guestId=" + guestId + "; max-age=" + (60 * 60 * 24 * 7) + "; path=/";
+	}
+	return guestId;
+}
+
+// 쿠키 값을 가져오는 함수
+function getCookie(name) {
+	const value = "; " + document.cookie;
+	const parts = value.split("; " + name + "=");
+	if (parts.length === 2) return parts.pop().split(";").shift();
+}
+
+// 비회원 식별값 생성 함수 (랜덤 문자열 생성)
+function generateGuestId(length) {
+	const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+	let result = '';
+	for (let i = 0; i < length; i++) {
+		result += characters.charAt(Math.floor(Math.random() * characters.length));
+	}
+	return result;
+}
+
+// 장바구니 버튼 클릭 이벤트 처리
+$(".basket_move").click(function() {
+	// 비회원 식별값 가져오기
+	const guestId = getGuestId();		
+	
+	window.location.href = "${pageContext.request.contextPath}/purchase/basket.do"; 	    
+});
+
+});
+</script>
 <script>
 
 function searchplz(){
@@ -267,13 +311,13 @@ function HeaderBest(sort_salecount) {
 			<!-- 판매자용:회원등급1 -->
 			<!-- 회원용:회원등급0 -->
 			<article class="small_menu">
-				<a>${member.member_name}님</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/mypage/mypage_main.do">마이페이지</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
+				<a>${member.member_name}님</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/mypage/mypage_main.do">마이페이지</a>&nbsp;&nbsp;<span class="basket_move">장바구니</span>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
 			</article>
 		</c:when>
 		<c:otherwise>
 			<!-- 일반용 -->
 			<article class="small_menu">
-				<a href="${pageContext.request.contextPath}/member/terms.do">회원가입</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/login.do">로그인</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/login.do">로그인</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
+				<a href="${pageContext.request.contextPath}/member/terms.do">회원가입</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/login.do">로그인</a>&nbsp;&nbsp;<span class="basket_move">장바구니</span>&nbsp;&nbsp;<a href="#">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/login.do">로그인</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
 			</article>
 		</c:otherwise>
 	</c:choose>

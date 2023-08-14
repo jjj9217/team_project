@@ -47,10 +47,29 @@ function doPayment(){
 	    }, function (rsp) { // callback
 	      //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
 	          if (rsp.success) {
-	        	  var msg = '결제가 완료되었습니다.';
-			      alert(msg);
+			      $.ajax({
+			      	type: "post",
+			      	url: "${pageContext.request.contextPath}/purchase/refund_process.do",
+			      	data: JSON.stringify({
+			      		"merchant_uid":"CF23080838900372",//결제 UID
+			      		"order_idx":"15"//order_idx
+			      	}), 
+			      		//JSON.stringify(JSON타입 객체): JSON타입 객체를 String객체로 변환시킴
+			      	contentType: "application/json;charset=utf-8;",
+			      	//contentType: 사용자가 서버로 보내는 내용의 MIME타입
+			      	success: function(data) {
+			      		if(data == "success"){
+			      			alert("환불에 성공하였습니다.");
+			      		}else{
+			      			alert("환불에 실패하였습니다.");
+			      		}
+			          },
+			          error: function(error) {
+			          	alert("ajax 에러 발생");
+			          }
+			      });//end of ajax
 			    } else {
-			      var msg = '결제에 실패하였습니다.';
+			      var msg = '인증에 실패하였습니다.';
 			      msg += '에러내용 : ' + rsp.error_msg;
 			      alert(msg);
 			    }

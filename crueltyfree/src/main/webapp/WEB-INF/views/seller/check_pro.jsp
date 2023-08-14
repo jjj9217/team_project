@@ -111,13 +111,17 @@
 		height: 50px;
 	}
 	
+	tr {
+		height: 20px;
+	}
+	
 	th {
-		font-size: 12px;
+		font-size: 13px;
 		font-weight: none;
 	}
 	
 	td {
-		font-size: 14px;
+		font-size: 12px;
 		font-weight: none;
 		text-align: center;
 	}
@@ -136,6 +140,7 @@
 	#pro_list_tb td {
 		border-top: 1px solid #a4a4a4;
 	}
+	
 	#clear{clear: both;}
 </style>
 
@@ -216,12 +221,11 @@ $(function(){
 						</tr>
 					</c:when>
 					<c:otherwise>
-					
 						<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
 							<c:if test="${checkProList[rowNum-1].product_name ne null}"> <!-- product에 저장된 값이 있을 경우에만 출력 -->
 								<tr>
 									<td id="td_title">
-										<a href="../product/product_view.do?no=${checkProList[rowNum-1].product_idx}">${checkProList[rowNum-1].product_name}</a>
+										<a href="../product/product_view.do?prdNum=${checkProList[rowNum-1].product_idx}">${checkProList[rowNum-1].product_name}</a>
 									</td>
 									<td>${checkProList[rowNum-1].product_capa}</td>
 									<c:choose>
@@ -247,13 +251,13 @@ $(function(){
 					</c:otherwise>
 				</c:choose>
 		
-				<tr>
+				<tr height="30px;">
 					<td id="td_paging" colspan="4">
 						<!-- 페이지 네비게이션 구현 -->
-						<%@ include file="paging.jsp" %>
+						<%@ include file="paging_checkPro.jsp" %>
 					</td>
 				</tr>
-    </table>
+    		</table>
 		</article>
 	</div>
 </section>
