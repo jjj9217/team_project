@@ -229,6 +229,9 @@
         
     }
 
+	#mypage{margin-top:30px;}
+
+
     .review_content{
         height: auto;
     

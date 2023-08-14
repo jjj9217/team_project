@@ -224,6 +224,15 @@
 	}
 	#search{
 		float:right;
+	}
+	#delete_btn{
+		border:0;
+		background-color:gray;
+		color:white;
+		border-radius:3px;
+		width:65px;
+		height:25px;
+		font: bold 13px Arial, Sans-serif;
 	}	
 	.regi_line{
 		margin-top:30px;
@@ -292,11 +301,12 @@
 		cursor:pointer;
 	}
 	.ellipsis {
-		width:100px;
+		width:80px;
 	  	height: auto;
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
+  		background-color:pink;
 	}
 	.ellipsis2 {
 		width:200px;
@@ -304,7 +314,12 @@
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
+  		background-color:pink;
 	}
+    input[type="checkbox"]{
+		accent-color:#7d99a4;
+		cursor: pointer;
+    }
 </style>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -329,6 +344,58 @@ $(function(){
 })
 
 
+</script>
+<script>
+$(function(){
+	var chkObj = document.getElementsByName("RowCheck");
+	var rowCnt = chkObj.length;
+	
+	$("input[name='allCheck']").click(function(){
+		var chk_listArr = $("input[name='RowCheck']");
+		for(var i=0; i<chk_listArr.length;i++){
+			chk_listArr[i].checked = this.checked;
+		}
+	});
+	$("input[name='RowCheck']").click(function(){
+		if($("input[name='RowCheck']:checked").length==rowCnt){
+			$("input[name='allCheck']")[0].checked=true;
+		}
+		else{
+			$("input[name='allCheck']")[0].checked=false;
+		}
+	});
+	
+	$("#delete_btn").click(function(){
+		var selectedValues = [];
+		
+		$(".RowCheck:checked").each(function(){
+			selectedValues.push($(this).val());
+		});
+		
+		if(selectedValues.length==0){
+			alert("선택한 등록문의가 없습니다.");
+			return;
+		}
+		
+		$.ajax({
+			type:"post",
+			url:"sel_one_inq_delete_multiple.do",
+			data:{"one_inq_idxs":selectedValues},
+			success: function(data){
+				if (data=="success"){
+					alert("선택한 등록문의를 삭제하였습니다.");
+					window.location.href ="manager_5sign.do";
+				}else{
+					alert("삭제를 실패하였습니다.");
+				}
+			},
+			error: function(error){
+				alert("ajax 에러 발생");
+			}
+		});
+	});
+	
+});
 </script>
 </head>
 <body>
@@ -378,6 +445,7 @@ $(function(){
     <!-- 글목록 테이블 -->
     <table id="tbl_list" style="margin-top:80px;">
         <tr>
+        	<th><input type="checkbox" id="allCheck" class="allCheck" name="allCheck"/></th>
             <th width="">문의번호</th>
             <th width="">문의작성자</th>
             <th width="">문의내용</th>
@@ -401,6 +469,7 @@ $(function(){
 			
 				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
 					<tr>
+					<td><input type="checkbox" name="RowCheck" class="RowCheck" value="${selSelectList[rowNum-1].one_inq_idx}" ></td>
 						<td>${selSelectList[rowNum-1].one_inq_idx}</td>
 						<td><div class="ellipsis">${selSelectList[rowNum-1].member_nickname}</div></td>
 						<td><div class="ellipsis2">${selSelectList[rowNum-1].one_inq_content}</div></td>
@@ -415,6 +484,7 @@ $(function(){
 			</c:otherwise>
 		</c:choose>
     </table>
+    <input type="button" name="delete_btn" id="delete_btn" class="delete_btn" value="선택삭제" >
 	 	<div id="paging" class="pull-left">
 				<div id="td_paging">
 					<%@ include file="../manager/paging_sign.jsp" %>					
