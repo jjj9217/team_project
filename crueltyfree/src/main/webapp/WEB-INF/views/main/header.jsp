@@ -76,7 +76,7 @@
 		vertical-align: middle;
     }
     
-    .recent_pro a {
+    .recent_pro span {
     	font-size: 15.5px; 
 		color: black;
 		text-decoration-line: none;
@@ -151,6 +151,108 @@
 	.basket_move{
 		cursor: pointer;
 		font-size: 12px;
+	}
+	.recent_box{
+		display: none;
+		position: absolute;
+		left: 180px;
+		top: 100px;
+		width:900px; height:480px;
+		border: 2px solid #7d99a4;
+		border-radius: 5px;
+		background-color: #eef3f5;
+	}
+	.recent_title{
+		margin-top: 10px;
+		display:flex;
+		width:860px; height:30px;
+		padding: 5px 20px;
+	}
+	.recent_title_text{
+		width:430px;
+		display: block;
+		text-align: left;
+		font-size: 14px;
+		line-height: 30px;
+		color: #4a4a4a;
+		font-weight: bold;
+	}
+	.recent_title_btn{
+		width:430px;
+		display: block;
+	}
+	#recent_all_delete_btn{
+		width: 80px; height: 26px;
+		border: 1px solid #7d99a4;
+		border-radius: 5px;
+		background-color: #fff;
+		color: #4a4a4a;
+		font-weight: bold;
+	}
+	#recent_hr{
+	width: 860px; height: 4px; margin-left:20px; margin-top: 10px;
+	background-color:#7d99a4;
+	}
+	.recent_item_box{
+		margin-top:10px;
+		margin-left: 10px;
+		display:flex;
+		width: 900px; height: 360px;
+	}
+	.recent_item{
+		width: 260px; height: 340px;
+		margin-left: 10px;
+		padding: 10px;
+	}
+	.item_btn{
+		width: 260px; height: 30px;
+	}
+	.item_photo{
+		width: 260px; height: 200px;
+		text-align: center;
+	}
+	.item_seller{
+		width: 240px; height: 20px;
+		padding: 5px 10px;
+		text-align: left;
+		color: #4a4a4a;
+		font-weight: bold;
+		font-size: 15px;
+	}
+	.item_name{
+		width: 240px; height: 40px;
+		padding: 5px 10px;
+		text-align: left;
+		color: black;
+		font-size: 14px;
+		overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	}
+	.item_price{
+		width: 240px; height: 30px;
+		padding: 0 10px;
+		text-align: left;
+		color: #7d99a4;
+		font-weight: bold;
+		font-size: 18px;
+	}
+	.recent_delete_btn{
+		width: 30px; height: 30px;
+		color: #4a4a4a;
+		font-weight: bold;
+		border: 0px;
+		background-color: #eef3f5;
+	}
+	.photoImage{width: 200px; height: 200px;}
+	#recentViewBtn{cursor:pointer;}
+	.item_empty{
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	color: #4a4a4a;
+	font-size: 20px;
+	font-weight: bold;
 	}	
 </style>
 </head>
@@ -194,7 +296,14 @@ $(".basket_move").click(function() {
 	window.location.href = "${pageContext.request.contextPath}/purchase/basket.do"; 	    
 });
 
+//최근본상품 클릭
+$("#recentViewBtn").click(function(){
+	$(".recent_box").toggle();
 });
+
+
+});
+
 </script>
 <script>
 
@@ -336,7 +445,52 @@ function HeaderBest(sort_salecount) {
 	
 	<!-- 최근 본 상품 -->
 	<div class="recent_pro">
-		<a href="#">최근 본 상품 ▼</a>
+		<span id="recentViewBtn">최근 본 상품 ▼</span>
+		<div class="recent_box">
+			<div class="recent_title">
+				<div class="recent_title_text">최근 본 상품</div>
+				<div class="recent_title_btn">
+				<c:choose>
+				<c:when test="${empty recentView}">
+				</c:when>
+				<c:otherwise>
+				<button id="recent_all_delete_btn">X 전체삭제</button>
+				</c:otherwise>
+				</c:choose>
+				</div>
+			</div>
+			<div id="recent_hr"></div>
+			<c:choose>
+			<c:when test="${empty recentView}">
+			<div class="recent_item_box item_empty">
+			최근 본 상품이 없습니다!
+			</div>			
+			</c:when>
+			<c:otherwise>
+			<div class="recent_item_box">
+			<c:forEach var="itemRow" begin="1" end="3">						
+			<div class="recent_item">
+				<div class="item_btn">
+				<button class="recent_delete_btn">X</button>
+				</div>
+				<div class="item_photo">
+				<img class="photoImage" src="${pageContext.request.contextPath}/resources/img/test01.jpg">
+				</div>
+				<div class="item_seller">
+				람쥐천국
+				</div>
+				<div class="item_name">
+				[람쥐천국 특별행사] 다람쥐 볶음밥 1+1 특가 행사 [람쥐천국 특별행사] 다람쥐 볶음밥 1+1 특가 행사 [람쥐천국 특별행사] 다람쥐 볶음밥 1+1 특가 행사
+				</div>
+				<div class="item_price">
+				13,500원
+				</div>								
+			</div>
+			</c:forEach>			
+			</div>
+			</c:otherwise>
+			</c:choose>			
+		</div>		
 	</div>
 
 </div>
