@@ -42,12 +42,25 @@
     }
     
     #mypage{
-        
+    	margin-top:30px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+       	font-size:15px;
         width: 199px;
         height:500px;
-        float:left;     
+        float:left;
     }
-
+	#mypage a{color:black;}
+    .mypagetable{
+        font-size: 20px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-weight: bold;      
+        color:#7d99a4;
+    }
+    #mylink{
+        color: black;
+        font-size: 30px;
+        text-decoration: none;
+    }
     #mypage-conts{
         
         width:810px;
@@ -185,7 +198,40 @@
         color: black;
         margin-left: 20px;                  
     }
-
+    #address_cancel{
+        width: 200px;
+        height: 50px;
+        
+        color: black;
+        margin-left: 20px;                  
+    }
+    #input, #member_address, #member_address2,#delivery_get_method{width: 290px; height: 10px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none;}
+	#member_postNum{ width:180px; height: 10px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none;}
+	#select_postNum{ width:105px; height:38px; padding: 10px; border-radius: 37px; border: 1px solid #7d99a4; outline: none; background-color:#7d99a4; color:white;font-weight: bold;}
+	#hr, #hr2{margin-top:10px; height:3px; background-color:#7d99a4; border:0;}
+    #delivery_message{width: 315px; height:38px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none;}
+    #address_cancel{
+        width: 200px;
+        height: 50px;
+        border: 1px solid #7d99a4;
+        color: #7d99a4;
+        background-color: #fff;
+        font-weight: bold;   
+        border-radius: 5px; 
+        margin-right: 10px;   
+        font-size:20px;          
+    }
+    #address_ok{
+    	width: 200px;
+        height: 50px;
+        border: 1px solid #7d99a4;
+        color: #fff;
+        background-color: #7d99a4;
+        font-weight: bold;  
+        border-radius: 5px;  
+        font-size:20px;  
+    }
+ 	#defaultpostcheck{margin-left:10px;}
 </style>
 </head>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -294,13 +340,9 @@ $(function(){
         <div id="blank">            
         </div>
         <div class="tit_area">
-            <h2 class="tit">배송지/환불계좌</h2>           
+            <h2 class="tit">배송지 수정</h2>           
         </div>
-        <ul class="address_or_refund">
-            <li class="address_atag"><a href="#" id="address_atag">배송지</a></li>
-            <li class="refund_atag"><a href="#" id="refund_atag">환불계좌</a></li>
-        </ul>
-        <h3 class="sub-title">배송지 수정</h3>
+        <hr id="hr">
 <form name="caq" action="${pageContext.request.contextPath}/mypage/edit_process_deliveryreg.do" method="post">
         <table class="address_list">
             <colgroup>
@@ -310,35 +352,42 @@ $(function(){
             <tbody>
                 <tr>
                     <th>배송지명</th>
-                    <td><input type="text" name="delivery_address_name" placeholder="최대 10자" value="${DeliveryVo.delivery_address_name}"><input type="checkbox" id="defaultpostcheck" name="defaultpost" value="1"><input type="hidden" name="defaultpost" value="0" id="defaultpostcheck_hidden"/><label for="base-dlvp-yn-check">기본 배송지 설정</label>
+                    <td><input type="text" name="delivery_address_name" placeholder="최대 10자" id="input" value="${DeliveryVo.delivery_address_name}"><input type="checkbox" id="defaultpostcheck" name="defaultpost" value="1"><input type="hidden" name="defaultpost" value="0" id="defaultpostcheck_hidden"/><label for="base-dlvp-yn-check">기본 배송지 설정</label>
                     </td>
                 </tr>           
                 <tr>
                     <th>받는분</th>
-                    <td><input type="text" name="delivery_get_name" placeholder="최대 10자" value="${DeliveryVo.delivery_get_name}"></td>
+                    <td><input type="text" name="delivery_get_name" placeholder="최대 10자" id="input" value="${DeliveryVo.delivery_get_name}"></td>
                 </tr>
                 <tr>
                     <th>연락처</th>
-                    <td><input type="text" name="delivery_handphone" placeholder="- 를 제외한 숫자입력" value="${DeliveryVo.delivery_handphone}"></td>
+                    <td><input type="text" name="delivery_handphone" placeholder="- 를 제외한 숫자입력" id="input" value="${DeliveryVo.delivery_handphone}"></td>
                 </tr>
                 <tr>
                  <th><label>주소<br>                   
-                </label></th>                  
-                    <td><input type="text" name="delivery_postNum" id="member_postNum" placeholder="우편번호" value="${DeliveryVo.delivery_postNum}" readonly>
-                    <input type="button" name="select_postNum" id="select_postNum" value="우편번호 검색&nbsp;&nbsp;" onclick="kakaopost()" >
-                    <input type="text" name="delivery_address" id="member_address" placeholder="주소" value="${DeliveryVo.delivery_address}" readonly>
-                    <input type="text" name="delivery_address2" id="member_address2" placeholder="상세 주소" value="${DeliveryVo.delivery_address2}" ></td>
+                 </label></th>                  
+                    <td><input type="text" name="delivery_postNum" id="member_postNum" placeholder="우편번호" readonly >
+                    <input type="button" name="select_postNum" id="select_postNum" value="우편번호 검색&nbsp;&nbsp;" onclick="kakaopost()" ></td>
                 </tr>
+                <tr>
+                	<th></th>
+                	<td><input type="text" name="delivery_address" id="member_address" placeholder="주소" readonly></td>
+                </tr>
+                <tr>
+                	<th></th>
+                    <td><input type="text" name="delivery_address2" id="member_address2" placeholder="상세 주소"></td>
+        		</tr>
         </table>
         <h3 class="sub-title">배송지 요청사항</h3>
-        <table class="request_list">
+         <hr id="hr">
+        <table class="address_list">
             <colgroup>
                 <col style="width:170px">
                 <col style="width:622px">
             </colgroup>
             <tbody>
                 <tr>
-	                <td class="td_delivery_titl top bottom title">배송 메시지</td>
+	                <th class="row">배송 메시지</th>
 	                <td class="td_delivery_content top bottom">
 	                    <c:choose>
 	                       <c:when test="${!empty DeliveryVo.delivery_message}">

@@ -28,7 +28,9 @@
         background-color: #eef3f5;  
     }
      body{
-         width: 1020px; height: auto; margin: 0 auto;
+         width: 1020px; 
+         height: auto; 
+         margin: 0 auto;
          background-color: white;
      }
               
@@ -37,20 +39,22 @@
 
     #Container{
         overflow: hidden;
-        width: 1020px; margin: 0 auto;
+        width: 1020px; 
+        margin: 0 auto;
         height: auto;
     }
 
     #list_tit{
-        width: 350px;
-        height: 40px;
-        
+        width: 1020px;
+        margin-top:70px;
+        height: 70px;
+        text-align:center;
+        font: bold 25px Arial, sans-serif;
     }
 
     .detailSearch{
         width: 1020px;
         height: 112px;
-        
         display: flex;
         justify-content: center;
         align-items: center;
@@ -248,7 +252,7 @@
         width:75px;
         height:75px;
     }
-
+	#banner_name{font: bold 11px Arial, sans-serif;}
 </style>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -268,8 +272,10 @@ function getParameterValue(parameterName) {
 function ProductDetail(category_code, category_code_small, 
         sort_salecount, sort_view, 
         pageNum, pageBlock) {
-    
-  
+	  var p = pageNum.value;
+	  var b = pageBlock.value;
+  alert('페이지넘'+p);
+  alert('페이지블락'+b);
     var insertcategory_code_small ="";
     const paramcategory_code_small = getParameterValue("category_code_small");
     if(category_code_small === ""){
@@ -334,7 +340,7 @@ function ProductDetail(category_code, category_code_small,
         
     }
     
-  
+    
     // 새 URL 구성    
     var newURL = "product_list_enter_category.do" +  
     "?category_code=" + insertcategory_code +
@@ -353,9 +359,8 @@ function ProductDetail(category_code, category_code_small,
 
 
 </head>
-
 <body>
-<div class="head">
+
 	<header>    
         <jsp:include page="../main/header.jsp"/>    
     </header>
@@ -367,8 +372,8 @@ function ProductDetail(category_code, category_code_small,
 	<c:choose>
 		<c:when test="${!empty exploreVo.category_code and empty exploreVo.category_code_small}">
 			<!--     큰 카테고리로 진입시 -->
-		    <div id="list_tit">
-		        큰카테고리명 : 
+		    <div id="list_tit" style="background-color:red">
+		       
 		          <c:choose>
 		              <c:when test="${exploreVo.category_code eq 'skin'}">
 		              스킨케어
@@ -449,19 +454,22 @@ function ProductDetail(category_code, category_code_small,
 		    <div class="detailSearch">
 		        <ul id="imgArea">
 		            <li class="imgArea1">
-		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_1">
-		                     <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
-		                </a>		                
+		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_1" >
+		                     <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/skin_1.png" class="head_logo">
+		                </a>
+		                <p id="banner_name">토너/로션/올인원</p>		                
 		            </li>
 		            <li class="imgArea2">
 		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_2">
-                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/skin_2.png" class="head_logo">
                         </a>
+                        <p id="banner_name">에센스/크림</p>
 		            </li>
 		            <li class="imgArea3">
 		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_3">
-                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/skin_3.png" class="head_logo">
                         </a>
+                        <p id="banner_name">미스트/오일</p>
 		            </li>
 		        </ul>
 		    </div>
@@ -473,13 +481,15 @@ function ProductDetail(category_code, category_code_small,
 		        <ul id="imgArea">
 		            <li class="imgArea1">
 		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=clensing_1">
-                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/clean_1.png" class="head_logo">
                         </a>
+                        <p id="banner_name">클렌징폼/젤</p>
 		            </li>
 		            <li class="imgArea2">
 		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=clensing_2">
-                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/clean_2.png" class="head_logo">
                         </a>
+                        <p id="banner_name">오일/워터/리무버</p>
 		            </li>
 		        </ul>
 		    </div>
@@ -491,18 +501,21 @@ function ProductDetail(category_code, category_code_small,
 		        <ul id="imgArea">
 		            <li class="imgArea1">
 		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_1">
-                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/makeup_1.png" class="head_logo">
                         </a>
+                        <p id="banner_name">립메이크업</p>
 		            </li>
 		            <li class="imgArea2">
 		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_2">
-                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/makeup_2.png" class="head_logo">
                         </a>
+                        <p id="banner_name">베이스메이크업</p>
 		            </li>
 		            <li class="imgArea3">
 		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_3">
-                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/makeup_3.png" class="head_logo">
                         </a>
+                        <p id="banner_name">아이메이크업</p>
 		            </li>
 		        </ul>
 		    </div>
@@ -514,13 +527,15 @@ function ProductDetail(category_code, category_code_small,
 		        <ul id="imgArea">
 		            <li class="imgArea1">
 		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=body_1">
-                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/body_1.png" class="head_logo">
                         </a>
+                        <p id="banner_name">샤워/입욕</p>
 		            </li>
 		            <li class="imgArea2">
 		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=body_2">
-                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/body_2.png" class="head_logo">
                         </a>
+                        <p id="banner_name">로션/오일</p>
 		            </li>
 		        </ul>
 		    </div>
@@ -532,13 +547,15 @@ function ProductDetail(category_code, category_code_small,
 		        <ul id="imgArea">
 		            <li class="imgArea1">
 		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=hair_1">
-                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/hair_1.png" class="head_logo">
                         </a>
+                        <p id="banner_name">샴푸/린스/트리트먼트</p>
 		            </li>
 		            <li class="imgArea2">
 		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=hair_2">
-                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/CrueltyFree_logo.png" class="head_logo">
+                             <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/hair_2.png" class="head_logo">
                         </a>
+                        <p id="banner_name">클렌징폼/젤</p>
 		            </li>
 		        </ul>
 		    </div>
@@ -575,6 +592,7 @@ function ProductDetail(category_code, category_code_small,
                     <form name="sort_salecount" action="product_list_enter_searchword.do" method="get">
                         <input type="hidden" name="sort_salecount" value="1">
                     </form>
+                    
                     <a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '1', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">판매수량순</a>                
                     </li>
                                         
@@ -658,7 +676,7 @@ function ProductDetail(category_code, category_code_small,
             <c:if test="${i le pageNav.totalPageNum}">
                 <c:choose>
                     <c:when test = "${pageNav.pageNum eq i}">
-                        <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">
+                        <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '')">
                             <span style="color:red">${i}&nbsp;</span>
                         </a>
                     </c:when>
