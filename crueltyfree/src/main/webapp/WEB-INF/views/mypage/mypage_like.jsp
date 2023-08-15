@@ -37,6 +37,7 @@
         overflow:hidden;
 
         width: 1020px; margin: 0 auto;
+        
     }
     
     #mypage{
@@ -52,7 +53,7 @@
     #mypage-conts{
         
         width:810px;
-        height: 950px;      
+        height: auto;      
         float:left;
     }
 
@@ -344,7 +345,7 @@ function deletelikelistall() {
             </thead>
             <tbody>
                                 <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
-                          <c:if test="${empty likefileList[rowNum-1].saveFile}">
+                          <c:if test="${!empty likefileList[rowNum-1].saveFile}">
                 <tr>
                     <td>
                     <img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${likefileList[rowNum-1].saveFile}">
