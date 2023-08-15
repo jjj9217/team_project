@@ -27,4 +27,10 @@ public class NoticedeleteService implements OneInqService {
 	public int deleteoneinq(OneInqVo vo) {
 		return dao.deleteoneinq(vo);
 	}
+	
+	//1:1문의 파일 삭제하기
+	public int deleteoneinqimg(OneInqVo vo) {
+		return dao.deleteoneinqimg(vo);
+	}
+
 }

@@ -1,5 +1,7 @@
 package com.crfr.dao;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -222,9 +224,12 @@ public class MypageDao {
 	}
 	
 	//문의가 들어온 목록 답변하기
-	public int insertConfirm(ProductInqVo vo) {
+	public int insertConfirm(int product_inq_idx, String product_inq_answer) {
 		System.out.println("매퍼 이전까지도 가지는건가?");
-		return sqlSession.update(MAPPER+".insertConfirm", vo);
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("product_inq_idx", product_inq_idx);
+		map.put("product_inq_answer", product_inq_answer);
+		return sqlSession.update(MAPPER+".insertConfirm", map);
 	}
 	
 	

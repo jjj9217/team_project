@@ -617,8 +617,8 @@
     </select>
     
     <!-- 고객이 작성한 상품문의의 답변 작성 -->
-    <update id="insertConfirm" parameterType="ProductInqVo">
-        update product_inq set product_inq_answer=#{product_inq_answer} where product_inq_answer is null and product_inq_idx=#{product_inq_idx}  
+    <update id="insertConfirm" parameterType="map">
+        update product_inq set product_inq_answer=#{product_inq_answer} where product_inq_idx=#{product_inq_idx}  
     </update>
             
     

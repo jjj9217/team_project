@@ -161,6 +161,28 @@ const guestId = getGuestId();
 
 
 </head>
+<script>
+function HeaderBest(sort_salecount) {    
+    var insertsort_salecount ="";
+    const paramsort_salecount = getParameterValue("sort_salecount");
+    if(sort_salecount === ""){
+        if(paramsort_salecount === null){
+        insertsort_salecount = '';}
+        else{
+        insertsort_salecount = paramsort_salecount;}
+    }else{
+        insertsort_salecount = sort_salecount;
+       
+    }
+
+    // 새 URL 구성    
+    var newURL = "${pageContext.request.contextPath}/product/product_list_enter_category.do" +  
+    "?sort_salecount=" + insertsort_salecount
+    ;
+    // URL로 이동
+    window.location.href = newURL;    
+}
+</script>
 <body>
 
 <header>
@@ -187,18 +209,18 @@ const guestId = getGuestId();
 		
 	<article id="home_best">
 		<div class="cat_name">
-			<a href="#">베스트</a>
+			<a href="#" onclick="HeaderBest('1')">베스트</a>
 		</div>
 		<div class="pro_list">
 			<ul class="pro_list_line">
 				<li class="pro_first">
 					<div class="pro_info">
-						<a href="#">
+						<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[0].product_idx}">
 							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[0].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
-							<a href="#">
-								<span class="goods_nickname">아로마티카</span>
+							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[0].product_idx}">
+								<span class="goods_nickname">${productList[0].member_nickname}아로마티카</span>
 								<p class="goods_name">${productList[0].product_name}아로마티카 로즈마리 헤어 씨크닝 컨디셔너 400ml</p>
 							</a>
 						</div>
@@ -207,12 +229,12 @@ const guestId = getGuestId();
 				</li>
 				<li class="pro_second">
 					<div class="pro_info">
-						<a href="#">
+						<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[1].product_idx}">
 							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[1].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
-							<a href="#">
-								<span class="goods_nickname">아떼</span>
+							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[1].product_idx}">
+								<span class="goods_nickname">${productList[1].member_nickname}아떼</span>
 								<p class="goods_name">${productList[1].product_name}아떼 바이탈 씨 좀 토닝 캡슐 토너 130ml</p>
 							</a>
 						</div>
@@ -221,12 +243,12 @@ const guestId = getGuestId();
 				</li>
 				<li class="pro_third">
 					<div class="pro_info">
-						<a href="#">
+						<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[2].product_idx}">
 							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[2].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
-							<a href="#">
-								<span class="goods_nickname">톤28</span>
+							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[2].product_idx}">
+								<span class="goods_nickname">${productList[2].member_nickname}톤28</span>
 								<p class="goods_name">${productList[2].product_name}일하는 손 바를거리(워터블랑향)</p>
 							</a>
 						</div>
@@ -240,12 +262,12 @@ const guestId = getGuestId();
 			<ul class="pro_list_line">
 				<li class="pro_first">
 					<div class="pro_info">
-						<a href="#">
+						<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[3].product_idx}">
 							<img src="${pageContext.request.contextPath}/resources/iuploads/${fileList[3].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
-							<a href="#">
-								<span class="goods_nickname">이즈앤트리</span>
+							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[3].product_idx}">
+								<span class="goods_nickname">${productList[3].member_nickname}이즈앤트리</span>
 								<p class="goods_name">${productList[3].product_name}참마 비건 밀크 클렌저 220ml</p>
 							</a>
 						</div>
@@ -254,12 +276,12 @@ const guestId = getGuestId();
 				</li>
 				<li class="pro_second">
 					<div class="pro_info">
-						<a href="#">
+						<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[4].product_idx}">
 							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[4].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
-							<a href="#">
-								<span class="goods_nickname">보나쥬르</span>
+							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[4].product_idx}">
+								<span class="goods_nickname">${productList[4].member_nickname}보나쥬르</span>
 								<p class="goods_name">${productList[4].product_name}그린티 워터 토너 205ml</p>
 							</a>
 						</div>
@@ -268,12 +290,12 @@ const guestId = getGuestId();
 				</li>
 				<li class="pro_third">
 					<div class="pro_info">
-						<a href="#">
+						<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[5].product_idx}">
 							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[5].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
-							<a href="#">
-								<span class="goods_nickname">빌리프</span>
+							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[5].product_idx}">
+								<span class="goods_nickname">${productList[5].member_nickname}빌리프</span>
 								<p class="goods_name">${productList[5].product_name}빌리프 프러블럼 솔루션 비건 토너 패드 150ml / 70매</p>
 							</a>
 						</div>
@@ -287,12 +309,12 @@ const guestId = getGuestId();
 			<ul class="pro_list_line">
 				<li class="pro_first">
 					<div class="pro_info">
-						<a href="#">
+						<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[6].product_idx}">
 							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[6].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
-							<a href="#">
-								<span class="goods_nickname">에센허브</span>
+							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[6].product_idx}">
+								<span class="goods_nickname">${productList[6].member_nickname}에센허브</span>
 								<p class="goods_name">${productList[6].product_name}에센허브 티트리 수딩 인 카밍 크림 80ml</p>
 							</a>
 						</div>
@@ -301,12 +323,12 @@ const guestId = getGuestId();
 				</li>
 				<li class="pro_second">
 					<div class="pro_info">
-						<a href="#">
+						<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[7].product_idx}">
 							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[7].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
-							<a href="#">
-								<span class="goods_nickname">아떼</span>
+							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[7].product_idx}">
+								<span class="goods_nickname">${productList[7].member_nickname}아떼</span>
 								<p class="goods_name">${productList[7].product_name}[잡티완화세트] 비건 초록 비타민 세럼 + 크림</p>
 							</a>
 						</div>
@@ -315,12 +337,12 @@ const guestId = getGuestId();
 				</li>
 				<li class="pro_third">
 					<div class="pro_info">
-						<a href="#">
+						<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[8].product_idx}">
 							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[8].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
-							<a href="#">
-								<span class="goods_nickname">머지</span>
+							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[8].product_idx}">
+								<span class="goods_nickname">${productList[8].member_nickname}머지</span>
 								<p class="goods_name">${productList[8].product_name}머지 글로시 멜팅 틴티드 컬러 립밤 4g</p>
 							</a>
 						</div>
@@ -334,7 +356,7 @@ const guestId = getGuestId();
 	
 </section>
 	<a href="${pageContext.request.contextPath}/main/home.do">홈(로고)</a><br>
-	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=1">상품상세보기1</a><br>
+	s<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=1">상품상세보기1</a><br>
 	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=2">상품상세보기2</a><br>
 	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=3">상품상세보기3</a><br>
 	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=4">상품상세보기4</a><br>

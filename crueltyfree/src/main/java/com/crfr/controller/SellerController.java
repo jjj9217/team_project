@@ -61,6 +61,11 @@ public class SellerController {
 		this.mpCount = mpCount;
 	}
 	
+	@Autowired
+	public void setMpInsert(@Qualifier("mpInsert") MypageService mpInsert) {
+		this.mpInsert = mpInsert;
+	}
+	
 	@Setter(onMethod_={ @Autowired })
 	PageNav pageNav;
 	
@@ -404,14 +409,15 @@ public class SellerController {
 	//상품문의 답변하기 요청처리
 	@PostMapping("/confirm_process.do")
 	public String confirm_process(
-			ProductInqVo vo , HttpServletRequest request) {
+			int product_inq_idx, String product_inq_answer , HttpServletRequest request) {
 		
-		System.out.println("들어온 product_inq_answer:" + vo.getProduct_inq_answer());
-		System.out.println("들어온 inq_idx:" + vo.getProduct_inq_idx());
+//		System.out.println("들어온 product_inq_answer:" + vo.getProduct_inq_answer());
+//		System.out.println("들어온 inq_idx:" + vo.getProduct_inq_idx());
 		
 		String viewPage="boast/view";
 		
-		int result1 = mpInsert.insertConfirm(vo);
+		
+		int result1 = mpInsert.insertConfirm(product_inq_idx,product_inq_answer);
 		System.out.println("result결과:"+ result1);
 		if(result1 == 1) { // 글 등록 성공시 보여지는 페이지
 			viewPage = "redirect:/seller/confirm_inq.do";
@@ -424,14 +430,14 @@ public class SellerController {
 	//상품문의 수정하기 요청처리
 	@PostMapping("/confirmModify_process.do")
 	public String confirmModify_process(
-			ProductInqVo vo , HttpServletRequest request) {
+			int product_inq_idx, String product_inq_answer , HttpServletRequest request) {
 		
-		System.out.println("들어온 수정 product_inq_answer:" + vo.getProduct_inq_answer());
-		System.out.println("들어온 수정 inq_idx:" + vo.getProduct_inq_idx());
+//		System.out.println("들어온 수정 product_inq_answer:" + vo.getProduct_inq_answer());
+//		System.out.println("들어온 수정 inq_idx:" + vo.getProduct_inq_idx());
 		
 		String viewPage="boast/view";
 		
-		int result1 = mpInsert.insertConfirm(vo);
+		int result1 = mpInsert.insertConfirm(product_inq_idx,product_inq_answer);
 		System.out.println("result결과:"+ result1);
 		if(result1 == 1) { // 글 등록 성공시 보여지는 페이지
 			viewPage = "redirect:/seller/confirm_inq.do";
