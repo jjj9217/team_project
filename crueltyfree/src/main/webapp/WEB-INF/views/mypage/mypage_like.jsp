@@ -37,6 +37,7 @@
         overflow:hidden;
 
         width: 1020px; margin: 0 auto;
+        
     }
     
     #mypage{
@@ -52,7 +53,7 @@
     #mypage-conts{
         
         width:810px;
-        height: 950px;      
+        height: auto;      
         float:left;
     }
 
@@ -303,7 +304,7 @@ function deletelikelistall() {
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지/환불계좌</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지</a></td></tr>
         </table>       
     </div>
     
@@ -344,7 +345,7 @@ function deletelikelistall() {
             </thead>
             <tbody>
                                 <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
-                          <c:if test="${empty likefileList[rowNum-1].saveFile}">
+                          <c:if test="${!empty likefileList[rowNum-1].saveFile}">
                 <tr>
                     <td>
                     <img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${likefileList[rowNum-1].saveFile}">
