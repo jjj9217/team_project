@@ -210,6 +210,7 @@
 	.item_photo{
 		width: 260px; height: 200px;
 		text-align: center;
+		cursor: pointer;
 	}
 	.item_seller{
 		width: 240px; height: 20px;
@@ -218,6 +219,7 @@
 		color: #4a4a4a;
 		font-weight: bold;
 		font-size: 15px;
+		cursor: pointer;
 	}
 	.item_name{
 		width: 240px; height: 40px;
@@ -228,6 +230,7 @@
 		overflow: hidden;
 	    text-overflow: ellipsis;
 	    white-space: nowrap;
+	    cursor: pointer;
 	}
 	.item_price{
 		width: 240px; height: 30px;
@@ -236,6 +239,7 @@
 		color: #7d99a4;
 		font-weight: bold;
 		font-size: 18px;
+		cursor: pointer;
 	}
 	.recent_delete_btn{
 		width: 30px; height: 30px;
@@ -299,7 +303,49 @@ $(".basket_move").click(function() {
 //최근본상품 클릭
 $("#recentViewBtn").click(function(){
 	$(".recent_box").toggle();
+    if ($(".recent_box").is(":visible")) {
+        $("#recentViewBtn").text("최근 본 상품 ▼");
+      } else {
+        $("#recentViewBtn").text("최근 본 상품 ▲");
+      }
 });
+
+//상품뷰로 이동
+$(".item_photo").click(function(){
+	var index = $(".item_photo").index(this);
+	var prdNum = $(".recentViewIdx").eq(index).val();
+	window.location.href = "${pageContext.request.contextPath}/product/product_view.do?prdNum="+prdNum;
+});
+$(".item_seller").click(function(){
+	var index = $(".item_seller").index(this);
+	var prdNum = $(".recentViewIdx").eq(index).val();
+	window.location.href = "${pageContext.request.contextPath}/product/product_view.do?prdNum="+prdNum;
+});
+$(".item_name").click(function(){
+	var index = $(".item_name").index(this);
+	var prdNum = $(".recentViewIdx").eq(index).val();
+	window.location.href = "${pageContext.request.contextPath}/product/product_view.do?prdNum="+prdNum;
+});
+$(".item_price").click(function(){
+	var index = $(".item_price").index(this);
+	var prdNum = $(".recentViewIdx").eq(index).val();
+	window.location.href = "${pageContext.request.contextPath}/product/product_view.do?prdNum="+prdNum;
+});
+
+//전체삭제
+$("#recent_all_delete_btn").click(function(){
+    var confirmDelete = confirm("전체상품을 삭제하시겠습니까?");
+    if (confirmDelete) {
+    	window.location.href = "${pageContext.request.contextPath}/product/recentViewAllDelete.do";
+    }
+});
+
+//1개삭제
+$(".recent_delete_btn").click(function(){
+	var index = $(".recent_delete_btn").index(this);	
+	$(".deleteOneRecentFrm").eq(index).submit();
+});
+
 
 
 });
@@ -445,13 +491,13 @@ function HeaderBest(sort_salecount) {
 	
 	<!-- 최근 본 상품 -->
 	<div class="recent_pro">
-		<span id="recentViewBtn">최근 본 상품 ▼</span>
+		<span id="recentViewBtn">최근 본 상품 ▲</span>
 		<div class="recent_box">
 			<div class="recent_title">
 				<div class="recent_title_text">최근 본 상품</div>
 				<div class="recent_title_btn">
 				<c:choose>
-				<c:when test="${empty recentView}">
+				<c:when test="${empty RecentViewList}">
 				</c:when>
 				<c:otherwise>
 				<button id="recent_all_delete_btn">X 전체삭제</button>
@@ -461,29 +507,32 @@ function HeaderBest(sort_salecount) {
 			</div>
 			<div id="recent_hr"></div>
 			<c:choose>
-			<c:when test="${empty recentView}">
+			<c:when test="${empty RecentViewList}">
 			<div class="recent_item_box item_empty">
 			최근 본 상품이 없습니다!
 			</div>			
 			</c:when>
 			<c:otherwise>
 			<div class="recent_item_box">
-			<c:forEach var="itemRow" begin="1" end="3">						
+			<c:forEach var="itemRow" begin="1" end="${RecentViewListCount}">			
+			<form action="${pageContext.request.contextPath}/product/recentViewOneDelete.do" class="deleteOneRecentFrm" method="get">
+			<input type="hidden" class="recentViewIdx" name="product_idx" value="${RecentViewList[itemRow-1].product_idx}">
+			</form>					
 			<div class="recent_item">
 				<div class="item_btn">
 				<button class="recent_delete_btn">X</button>
 				</div>
 				<div class="item_photo">
-				<img class="photoImage" src="${pageContext.request.contextPath}/resources/uploads/test01.jpg">
+				<img class="photoImage" src="${pageContext.request.contextPath}/resources/uploads/${RecentViewList[itemRow-1].saveFile}">
 				</div>
 				<div class="item_seller">
-				람쥐천국
+				${RecentViewList[itemRow-1].member_nickname}
 				</div>
 				<div class="item_name">
-				[람쥐천국 특별행사] 다람쥐 볶음밥 1+1 특가 행사 [람쥐천국 특별행사] 다람쥐 볶음밥 1+1 특가 행사 [람쥐천국 특별행사] 다람쥐 볶음밥 1+1 특가 행사
+				${RecentViewList[itemRow-1].product_name}
 				</div>
 				<div class="item_price">
-				13,500원
+				${RecentViewList[itemRow-1].product_price}원
 				</div>								
 			</div>
 			</c:forEach>			
