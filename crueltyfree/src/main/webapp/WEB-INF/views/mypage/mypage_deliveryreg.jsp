@@ -42,12 +42,25 @@
     }
     
     #mypage{
-        
+    	margin-top:30px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+       	font-size:15px;
         width: 199px;
         height:500px;
-        float:left;     
+        float:left;
     }
-
+	#mypage a{color:black;}
+    .mypagetable{
+        font-size: 20px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-weight: bold;      
+        color:#7d99a4;
+    }
+    #mylink{
+        color: black;
+        font-size: 30px;
+        text-decoration: none;
+    }
     #mypage-conts{
         
         width:810px;
@@ -185,7 +198,10 @@
         color: black;
         margin-left: 20px;                  
     }
-
+    #input, #member_address, #member_address2{width: 290px; height: 10px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none;}
+	#member_postNum{ width:180px; height: 10px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none;}
+	#select_postNum{ width:105px; height:38px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none; background-color:#7d99a4; color:white;}
+	#hr, #hr2{margin-top:10px; height:3px; background-color:#7d99a4; border:0;}
 </style>
 </head>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -295,36 +311,32 @@ $(function(){
 <div id="Container">
     <div id="mypage">       
         <table>
-            <th><h3><a href="#" id="mylink">마이페이지</a></h3></th>         
+            <tr><th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
             <tr><td class="mypagetable">마이 쇼핑</td></tr>
-            <tr><td>주문/배송조회</td></tr>
-            <tr><td>취소/반품내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
-            <tr><td>장바구니</td></tr>
-            <tr><td>좋아요</td></tr>
-            <tr><td>쿠폰</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이활동</td></tr>
-            <tr><td>1:1문의내역</td></tr>
-            <tr><td>리뷰</td></tr>
-            <tr><td>상품문의내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
-            <tr><td>회원정보 수정</td></tr>
-            <tr><td>배송지/환불계좌</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지/환불계좌</a></td></tr>
         </table>        
     </div>
     <div id="mypage-conts">
         <div id="blank">            
         </div>
         <div class="tit_area">
-            <h2 class="tit">배송지/환불계좌</h2>           
+            <h2 class="tit">배송지 등록</h2>           
         </div>
-        <ul class="address_or_refund">
-            <li class="address_atag"><a href="#" id="address_atag">배송지</a></li>
-            <li class="refund_atag"><a href="#" id="refund_atag">환불계좌</a></li>
-        </ul>
-        <h3 class="sub-title">배송지 등록</h3>
+	<hr id="hr" width=100%;>
 <form name="caq" action="${pageContext.request.contextPath}/mypage/mypage_deliveryreg_write_process.do" method="post">
         <table class="address_list">
             <colgroup>
@@ -334,27 +346,35 @@ $(function(){
             <tbody>
                 <tr>
                     <th>배송지명</th>
-                    <td><input type="text" name="delivery_address_name" placeholder="최대 10자"><input type="checkbox" id="defaultpostcheck" value="1" name="defaultpost"><input type="hidden" name="defaultpost" value="0" id="defaultpostcheck_hidden"/><label for="base-dlvp-yn-check">기본 배송지 설정</label>
+                    <td><input type="text" name="delivery_address_name" id="input" placeholder="최대 10자"><input type="checkbox" id="defaultpostcheck" value="1" name="defaultpost"><input type="hidden" name="defaultpost" value="0" id="defaultpostcheck_hidden"/><label for="base-dlvp-yn-check">기본 배송지 설정</label>
                     </td>
                 </tr>           
                 <tr>
                     <th>받는분</th>
-                    <td><input type="text" name="delivery_get_name" placeholder="최대 10자"></td>
+                    <td><input type="text" name="delivery_get_name" id="input" placeholder="최대 10자"></td>
                 </tr>
                 <tr>
                     <th>연락처</th>
-                    <td><input type="text" name="delivery_handphone" placeholder="- 를 제외한 숫자입력"></td>
+                    <td><input type="text" name="delivery_handphone" id="input" placeholder="- 를 제외한 숫자입력"></td>
                 </tr>
                 <tr>
                  <th><label>주소<br>                   
                 </label></th>                  
-                    <td><input type="text" name="delivery_postNum" id="member_postNum" placeholder="우편번호" readonly>
-                    <input type="button" name="select_postNum" id="select_postNum" value="우편번호 검색&nbsp;&nbsp;" onclick="kakaopost()" >
-                    <input type="text" name="delivery_address" id="member_address" placeholder="주소" readonly>
-                    <input type="text" name="delivery_address2" id="member_address2" placeholder="상세 주소"></td>
+                    <td><input type="text" name="delivery_postNum" id="member_postNum" placeholder="우편번호" readonly >
+                    <input type="button" name="select_postNum" id="select_postNum" value="우편번호 검색&nbsp;&nbsp;" onclick="kakaopost()" ></td>
                 </tr>
+                <tr>
+                	<th></th>
+                	<td><input type="text" name="delivery_address" id="member_address" placeholder="주소" readonly></td>
+                </tr>
+                <tr>
+                	<th></th>
+                    <td><input type="text" name="delivery_address2" id="member_address2" placeholder="상세 주소"></td>
+        		</tr>
+        
         </table>
         <h3 class="sub-title">배송지 요청사항</h3>
+        <hr id="hr">
         <table class="request_list">
             <colgroup>
                 <col style="width:170px">

@@ -42,11 +42,14 @@
     }
     
     #mypage{
-        margin-top:30px;
+    	margin-top:30px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+       	font-size:15px;
         width: 199px;
         height:500px;
-        float:left;     
+        float:left;
     }
+	#mypage a{color:black;}
 
     #mypage-conts{
         
@@ -65,8 +68,13 @@
         font-size: 20px;
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;      
+        color:#7d99a4;
     }
-
+    #mylink{
+        color: black;
+        font-size: 30px;
+        text-decoration: none;
+    }
     #blank{
         width:100%;
         height: 35px;
@@ -174,7 +182,7 @@
        	cursor:pointer;/*마우스를 올려놓았을 때 커서가 손모양으로 변경됨*/
        	border-radius:0px;
        	border:0;
-        background-color:gray;
+        background-color:rgb(221, 219, 214);
         color: black;
    		border-radius:5px;
    }
@@ -192,24 +200,24 @@
 <div id="Container">
     <div id="mypage">       
         <table>
-            <th><h3><a href="#" id="mylink">마이페이지</a></h3></th>         
+            <tr><th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
             <tr><td class="mypagetable">마이 쇼핑</td></tr>
-            <tr><td>주문/배송조회</td></tr>
-            <tr><td>취소/반품내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
-            <tr><td>장바구니</td></tr>
-            <tr><td>좋아요</td></tr>
-            <tr><td>쿠폰</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이활동</td></tr>
-            <tr><td>1:1문의내역</td></tr>
-            <tr><td>리뷰</td></tr>
-            <tr><td>상품문의내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
-            <tr><td>회원정보 수정</td></tr>
-            <tr><td>배송지/환불계좌</td></tr>
-        </table>        
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지/환불계좌</a></td></tr>
+        </table>       
     </div>
     
     <div id="mypage-conts">
@@ -219,8 +227,8 @@
             <h2 class="tit">회원정보 수정</h2>
             <hr id="hr" width=100%;>
             <p class="buy_list_txt">    
-                <span class="span_txt">회원 정보 및 비밀번호는 CJ ONE 사이트를 통해 수정 가능합니다.</span><br>               
-                <span class="span_txt2">(카카오 간편회원은 CJ ONE에서 통합회원 전환하여 비밀번호 설정/수정 가능)</span>                      
+                <span class="span_txt">회원 정보 및 비밀번호는 크루얼티프리 사이트를 통해 수정 가능합니다.</span><br>               
+                <span class="span_txt2">새로운 정보를 입력하여 개인정보를 최신 상태로 유지하세요.</span>                      
                 <button type="button" id="member_info_update" onClick="location.href='mypage_modify_info.do'">회원정보 수정</button>
                 <button type="button" id="password_update" onClick="location.href='mypage_modify_password.do'">비밀번호 수정</button>                
             </p>

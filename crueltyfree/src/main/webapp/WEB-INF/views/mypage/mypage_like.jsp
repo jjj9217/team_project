@@ -40,11 +40,14 @@
     }
     
     #mypage{
-        
+    	margin-top:30px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+       	font-size:15px;
         width: 199px;
         height:500px;
-        float:left;     
+        float:left;
     }
+	#mypage a{color:black;}
 
     #mypage-conts{
         
@@ -63,6 +66,7 @@
         font-size: 20px;
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;      
+        color:#7d99a4;
     }
 
     #blank{
@@ -186,7 +190,6 @@
     .buy_list{
         width: 100%;
         height:340px;
-        
         text-align: center;
     }
 
@@ -201,19 +204,37 @@
     .span_txt{
         padding-left: 20px;
         float: left;
-        font-size: 12px;
+    	font: bold 15px Arial, sans-serif;
+    	margin-top:30px;
     }
 
     #all_del{
         float: right;
         margin-top: 10px;
+		background-color:#7d99a4;
+		color:white;
+		border:0;
+		cursor:pointer;
+		font: bold 17px Arial, sans-serif;
+		border-radius:3px;
+        width:100px;
+        height:30px;
     }
 
     .goodlist_thumb{
         width:150px;
-        height:150px;
-        
+        height:150px;    
     }
+    .buy_list_container{display: block; width: 790px; height: auto; margin: 0 auto; padding: 10px; margin-top: 50px;}
+    .buy_list, .order_list{border-collapse: collapse;}
+    .th_product{width: 135px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+    .th_price{width: 380px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+    .th_admin{width: 65px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+	.td_product{width: 125px; height: auto; padding: 30px 5px; text-align: center; font-size:14px; font-weight: bold;}
+    .td_price{width: 370px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .td_admin{width: 45px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .top{border-top: 2px solid #4a4a4a}
+    .bottom{border-bottom: 1px solid #a4a4a4}
 </style>
 </head>
 <script>
@@ -266,24 +287,24 @@ function deletelikelistall() {
 <div id="Container">
     <div id="mypage">       
         <table>
-            <th><h3><a href="#" id="mylink">마이페이지</a></h3></th>         
+            <tr><th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
             <tr><td class="mypagetable">마이 쇼핑</td></tr>
-            <tr><td>주문/배송조회</td></tr>
-            <tr><td>취소/반품내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
-            <tr><td>장바구니</td></tr>
-            <tr><td>좋아요</td></tr>
-            <tr><td>쿠폰</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이활동</td></tr>
-            <tr><td>1:1문의내역</td></tr>
-            <tr><td>리뷰</td></tr>
-            <tr><td>상품문의내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
-            <tr><td>회원정보 수정</td></tr>
-            <tr><td>배송지/환불계좌</td></tr>
-        </table>        
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지/환불계좌</a></td></tr>
+        </table>       
     </div>
     
     <div id="mypage-conts">
@@ -295,17 +316,19 @@ function deletelikelistall() {
         
         
 
-        
+       
         <p class="buy_list_txt">
-            <span class="span_txt">전체${pageNav.totalRows}개<%--  | 좋아요 상품은 최대 ${untitled}일간 보관됩니다. --%>             
+
+            <span class="span_txt" style="margin-bottom:10px;">전체${pageNav.totalRows}개<%--  | 좋아요 상품은 최대 ${untitled}일간 보관됩니다. --%>             
             </span>
-            <form name="frm_view2"> 
+           <form name="frm_view2"> 
             <c:if test="${!empty likeproductList[0].product_name}">      
-            <button type="button" onclick="deletelikelistall();" id="all_del">전체삭제</button>
+            <button type="button" onclick="deletelikelistall();" id="all_del" style="margin-bottom:10px;">전체삭제</button>
             </c:if>
             </from>            
         </p>
-<form name="frm_view">        
+
+		<form name="frm_view">  
         <table class="buy_list">
             <colgroup>
                 <col style="width:55%;">
@@ -313,16 +336,15 @@ function deletelikelistall() {
                 <col style="width:15%;">
             </colgroup>         
             <thead>
-                <hr width=100%>
                 <tr>
-                    <th scope="col">상품</th>
-                    <th scope="col">가격</th>
-                    <th scope="col">관리</th>
+                    <th class="th_product top bottom" scope="col">상품</th>
+                    <th class="th_price top bottom" scope="col">가격</th>
+                    <th class="th_admin top bottom" scope="col">관리</th>
                 </tr>
             </thead>
             <tbody>
                                 <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
-                          <c:if test="${!empty likefileList[rowNum-1].saveFile}">
+                          <c:if test="${empty likefileList[rowNum-1].saveFile}">
                 <tr>
                     <td>
                     <img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${likefileList[rowNum-1].saveFile}">
