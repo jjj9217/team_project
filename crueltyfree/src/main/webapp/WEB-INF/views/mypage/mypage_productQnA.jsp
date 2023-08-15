@@ -309,7 +309,7 @@ submit();
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지/환불계좌</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지</a></td></tr>
         </table>        
     </div>
     
