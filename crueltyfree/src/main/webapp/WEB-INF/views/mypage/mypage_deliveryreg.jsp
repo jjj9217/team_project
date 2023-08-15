@@ -183,13 +183,6 @@
         align-items : center;
     }
 
-    #address_ok{
-        width: 200px;
-        height: 50px;
-        
-        color: black;
-        margin-left: 20px;                  
-    }
 
     #address_cancel{
         width: 200px;
@@ -198,10 +191,33 @@
         color: black;
         margin-left: 20px;                  
     }
-    #input, #member_address, #member_address2{width: 290px; height: 10px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none;}
+    #input, #member_address, #member_address2,#delivery_get_method{width: 290px; height: 10px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none;}
 	#member_postNum{ width:180px; height: 10px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none;}
-	#select_postNum{ width:105px; height:38px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none; background-color:#7d99a4; color:white;}
+	#select_postNum{ width:105px; height:38px; padding: 10px; border-radius: 37px; border: 1px solid #7d99a4; outline: none; background-color:#7d99a4; color:white;font-weight: bold;}
 	#hr, #hr2{margin-top:10px; height:3px; background-color:#7d99a4; border:0;}
+    #delivery_message{width: 315px; height:38px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none;}
+    #address_cancel{
+        width: 200px;
+        height: 50px;
+        border: 1px solid #7d99a4;
+        color: #7d99a4;
+        background-color: #fff;
+        font-weight: bold;   
+        border-radius: 5px; 
+        margin-right: 10px;   
+        font-size:20px;          
+    }
+    #address_ok{
+    	width: 200px;
+        height: 50px;
+        border: 1px solid #7d99a4;
+        color: #fff;
+        background-color: #7d99a4;
+        font-weight: bold;  
+        border-radius: 5px;  
+        font-size:20px;  
+    }
+ 	#defaultpostcheck{margin-left:10px;}
 </style>
 </head>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -338,7 +354,7 @@ $(function(){
         </div>
 	<hr id="hr" width=100%;>
 <form name="caq" action="${pageContext.request.contextPath}/mypage/mypage_deliveryreg_write_process.do" method="post">
-        <table class="address_list">
+        <table class="address_list" >
             <colgroup>
                 <col style="width:25%;">
                 <col style="width:75%;">
@@ -346,7 +362,7 @@ $(function(){
             <tbody>
                 <tr>
                     <th>배송지명</th>
-                    <td><input type="text" name="delivery_address_name" id="input" placeholder="최대 10자"><input type="checkbox" id="defaultpostcheck" value="1" name="defaultpost"><input type="hidden" name="defaultpost" value="0" id="defaultpostcheck_hidden"/><label for="base-dlvp-yn-check">기본 배송지 설정</label>
+                    <td><input type="text" name="delivery_address_name" id="input" placeholder="최대 10자"><input type="checkbox" id="defaultpostcheck" value="1" name="defaultpost"><input type="hidden" name="defaultpost" value="0" id="defaultpostcheck_hidden"/><label for="base-dlvp-yn-check"> 기본 배송지 설정</label>
                     </td>
                 </tr>           
                 <tr>
@@ -373,16 +389,16 @@ $(function(){
         		</tr>
         
         </table>
-        <h3 class="sub-title">배송지 요청사항</h3>
+        <h3 class="tit">배송지 요청사항</h3>
         <hr id="hr">
-        <table class="request_list">
+        <table class="address_list"  >
             <colgroup>
                 <col style="width:170px">
                 <col style="width:622px">
             </colgroup>
             <tbody>
                 <tr>
-	                <td class="td_delivery_titl top bottom title">배송 메시지</td>
+	                <th id="row" scope="row">배송 메시지</th>
 	                <td class="td_delivery_content top bottom">
 	                    <select name="delivery_message" id="delivery_message">
 	                        <option value="">배송메시지를 선택해주세요</option>
@@ -397,7 +413,7 @@ $(function(){
 	                </td>
                 </tr>
                 <tr>
-                    <th scope="row">공동현관 출입방법</th>
+                    <th  id="row" scope="row">공동현관 출입방법</th>
                     <td class="imp_data">
                         <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_1" value="0" ><label for="dv_input_1" >비밀번호</label></span>
                         <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_2" value="1" ><label for="dv_input_2" >경비실 호출</label></span>
@@ -407,7 +423,7 @@ $(function(){
                     </td>
                 </tr>
                 <tr id="delivery_input_method">
-                    <th class="td_delivery_title">공동현관 비밀번호</th>
+                    <th  id="row"  class="td_delivery_title">공동현관 비밀번호</th>
                     <td class="td_delivery_content bottom">
                         <input class="input_focus" type="text" name="delivery_pass_content" id="delivery_get_method" value="">
                     </td>

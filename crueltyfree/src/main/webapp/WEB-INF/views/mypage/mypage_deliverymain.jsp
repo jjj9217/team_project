@@ -203,6 +203,7 @@
     .top{border-top: 2px solid #4a4a4a}
     .bottom{border-bottom: 1px solid #a4a4a4}
     #basic{font: bold 15px Arial, sans-serif; color:red;}
+    .buy_list td{border-bottom: 1px solid gray; height:100px;}
 </style>
 </head>
 <script>
@@ -211,13 +212,13 @@ function deletedeliveryPost(delivery_idx) {
     var confirmAns = confirm("정말로 삭제하겠습니까?");
     
     if (confirmAns) {
-    	alert('성공');
+
         frm_view.method = "post"; // 전송 방식 
         frm_view.action = "delete_process_comment.do?no="+delivery_idx; // 전송 경로
         frm_view.submit(); // 폼값 전송
         
     }else{
-    	alert('불가');
+
     }
     
 }
@@ -229,10 +230,10 @@ function deletedeliveryPost(delivery_idx) {
 
 function vieweditdeliveryPost(delivery_idx) {
     
-    var confirmAns = confirm("테스트");
+    var confirmAns = confirm();
     
     if (confirmAns) {
-        alert('성공');
+    	alert('성공');
         frm_view.method = "post"; // 전송 방식 
         frm_view.action = "edit_deliveryreg.do?no="+delivery_idx; // 전송 경로
         frm_view.submit(); // 폼값 전송
@@ -251,16 +252,16 @@ function vieweditdeliveryPost(delivery_idx) {
 	
 function updatedeliveryPostdefault(delivery_idx) {
     
-    var confirmAns = confirm("정말로 기본배송지로 설정하겠습니까?");
+    var confirmAns 
     
     if (confirmAns) {
-        alert('성공');
+
         frm_view.method = "post"; // 전송 방식 
         frm_view.action = "delete_process_comment2.do?no="+delivery_idx; // 전송 경로
         frm_view.submit(); // 폼값 전송
         
     }else{
-        alert('불가');
+
     }
     
 }
