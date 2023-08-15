@@ -101,7 +101,20 @@ public interface MypageService {
 	
 	default int updateproductinq (ProductInqVo vo) {return 0;}
 	
+<<<<<<< HEAD
 	default List<ReviewVo> reviewRegList2(ReviewVo vo) {return null;}
+=======
+	default List<FileVo> selectconfirmListimg(int member_idx) {return null;}
+	
+	default List<ProductInqVo> selectconfirmList(int member_idx) {return null;}
+	
+	default int selectconfirmCount(int member_idx) {return 0;}
+	
+	default int insertConfirm(ProductInqVo vo) {return 0;}
+	
+	default List<ReviewVo> reviewRegList2(ReviewVo vo) {
+		return null;}
+>>>>>>> refs/remotes/origin/main
 	
 	default MemberVo updateMemberInfo(MemberVo memberVo) {return null;}
 }

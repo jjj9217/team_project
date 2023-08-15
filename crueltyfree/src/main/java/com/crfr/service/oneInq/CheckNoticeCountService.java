@@ -18,4 +18,15 @@ public class CheckNoticeCountService implements OneInqService {
 	public int checkNoticeCount(String notice_idx) {
 		return dao.checkNoticeCount(notice_idx);
 	}
+	
+	//공지사항 리스트 개수
+	public int noticeListCount() {
+		return dao.noticeListCount();
+	}
+	
+	//1:1문의 개수
+	public int oneinqListCount() {
+	return dao.oneinqListCount();
+	}
+	
 }

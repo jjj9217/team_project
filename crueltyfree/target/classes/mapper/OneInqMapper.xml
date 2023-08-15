@@ -16,6 +16,121 @@
 			   			 	    #{notice_saveFile})
 	</insert>
 	
+	<!-- 	공지사항 리스트 -->
+	<select id="noticeList" resultType="NoticeVo">
+        select * from notice order by notice_regDate;            
+     </select>
+     
+     <!-- 공지사항 목록 개수 세기 -->
+     <select id="noticeListCount" resultType="_int">
+        select count(*) from notice order by notice_regDate;
+     </select>
+	
+	
+	
+	<!-- 	공지사항 뷰 보기 -->
+	<select id="noticeView" parameterType="_int" resultType="NoticeVo">
+        select * from notice where notice_idx = #{notice_idx}    
+    </select>
+    
+    <!-- 지정한 공지사항 수정 구문 -->
+    <update id="updatenotice" parameterType="NoticeVo">
+        update notice
+                <set>
+                    <if test="notice_title != null">
+                        notice_title=#{notice_title},    
+                    </if>
+                    <if test="notice_content != null">
+                        notice_content=#{notice_content},
+                    </if>
+                    <if test="notice_originFile != null">
+                        notice_originfile=#{notice_originFile},        
+                    </if>
+                    <if test="notice_saveFile != null">
+                        notice_savefile=#{notice_saveFile}        
+                    </if>
+                </set>                     
+                where notice_idx= #{notice_idx}   
+    </update>
+    
+    <!-- 지정한 게시글 삭제 구문 -->
+    <delete id="deletenotice" parameterType="_int">
+        delete from notice 
+            where notice_idx = #{notice_idx}
+    </delete>
+    
+    
+    
+    <!--  1:1문의 작성 -->
+    
+    <!--  1:1문의 내용 작성 -->
+    <insert id="insertOneinq" parameterType="OneInqVo">
+        insert into one_inq (member_idx,         		                    
+		                    one_inq_content,
+		                    member_nickname,
+		                    one_inq_title)
+                     values(#{member_idx},
+                     		#{one_inq_content}, 		                    
+                            #{member_nickname},
+                            #{one_inq_title}
+                            )                            
+    </insert>
+    
+    <!--  1:1문의 번호 반환하기 -->
+    <select id="selectOneinq_idx" parameterType="OneInqVo" resultType="_int">
+        select one_inq_idx from one_inq 
+            <where> 
+            member_idx= #{member_idx}
+            and one_inq_content = #{one_inq_content}
+            and member_nickname = #{member_nickname}
+            </where>
+    </select>
+    
+    <insert id="insertOneinqimg" parameterType="map">
+        insert into file  (one_inq_idx, 
+                           originFile, 
+                           saveFile)
+                    values                            
+                          (                          
+                            #{one_inq_idx},               
+                            #{originFile},
+                            #{saveFile}                           
+                           ) 
+    </insert>
+    
+    <!-- 	1:1문의 리스트 -->
+	<select id="oneinqList" resultType="OneInqVo">
+        select * from one_inq order by one_inq_regDate;            
+     </select>
+     
+     <!-- 1:1문의 목록 개수 세기 -->
+     <select id="oneinqListCount" resultType="_int">
+        select count(*) from one_inq order by one_inq_regDate;
+     </select>
+	
+	<!-- 작성한 1:1문의번호 삭제 --> 
+   	<delete id="deleteoneinq" parameterType="OneInqVo">
+        delete from one_inq
+			where one_inq_idx=#{one_inq_idx}
+		    and member_idx=#{member_idx}        
+    </delete>
+    
+    <!-- 작성한 1:1문의 수정 --> 
+   	<update id="updateoneinq" parameterType="OneInqVo">
+        update one_inq 
+        		<set>
+					<if test="one_inq_title != null">
+						one_inq_title=#{one_inq_title},
+					</if>
+					<if test="one_inq_content != null">
+						one_inq_content=#{one_inq_content}
+					</if>        			        			
+        		</set>
+					where one_inq_idx=#{one_inq_idx}
+                    and member_idx=#{member_idx}  
+    </update>
+	
+	
 	
 <!-- 	<select id="checkProductCount" parameterType="string" resultType="_int"> -->
 <!-- 		select count(*) from Notice where notice_idx = #{notice_idx} -->

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.crfr.vo.FileVo;
+import com.crfr.vo.NoticeVo;
+import com.crfr.vo.OneInqVo;
 import com.crfr.vo.OrderProductVo;
 import com.crfr.vo.OrderVo;
 import com.crfr.vo.PageNav;
@@ -18,6 +20,8 @@ import com.crfr.vo.PurchaseListVo;
 public interface OneInqService {
 	default PageNav setSellerPageNav(PageNav pageNav, String pageNum, String pageBlock) {return null;}
 	
+	default PageNav setPageNav(PageNav pageNav, String pageNum, String pageBlock, NoticeVo vo) {return null;}
+	default PageNav setPageNav2(PageNav pageNav, String pageNum, String pageBlock, OneInqVo vo) {return null;}
 	// 공지사항 카운트
 	default int checkNoticeCount(String notice_idx) {return 0;}
 	
@@ -26,9 +30,31 @@ public interface OneInqService {
 
 	
 	
+	default List<NoticeVo> noticeList() {return null;}
+			
+	default int noticeListCount() {return 0;}
+	
+	default NoticeVo noticeView(int notice_idx) {return null;} 
+
+
+	default int updatenotice(MultipartFile attachedFile, NoticeVo vo, HttpServletRequest request) {return 0;}
+
+	default int deletenotice(int notice_idx) {return 0;}
 	
 	
+	default int insertOneinq(OneInqVo vo) {return 0;}
 	
+	default int selectOneinq_idx(OneInqVo vo) {return 0;}
+	
+	default int insertOneinqimg (MultipartFile attachedFile,int selectOneinq_idx , HttpServletRequest request) {return 0;}
+	
+	default List<OneInqVo> oneinqList() {return null;}
+		
+	default int oneinqListCount() {return 0;}
+	
+	default int deleteoneinq(OneInqVo vo) {return 0;}
+	
+	default int updateoneinq (OneInqVo vo) {return 0;}
 	
 //	// 입력을 위해 product_idx를 불러오는 서비스
 //	default int findProductIdx (String product_name, String member_nickname) {return 0;}

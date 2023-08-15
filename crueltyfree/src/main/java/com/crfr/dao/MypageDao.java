@@ -208,6 +208,26 @@ public class MypageDao {
 	}
 	
 	
+	//판매자에게 문의가 들어온 상품 목록에 관한 Dao	
+	public List<FileVo> selectconfirmListimg(int member_idx) {
+				return sqlSession.selectList(MAPPER+".selectconfirmListimg", member_idx);
+	}
+	
+	public List<ProductInqVo> selectconfirmList(int member_idx) {
+		return sqlSession.selectList(MAPPER+".selectconfirmList", member_idx);
+	}
+	
+	public int selectconfirmCount(int member_idx) {
+		return sqlSession.selectOne(MAPPER+".selectconfirmCount", member_idx);
+	}
+	
+	//문의가 들어온 목록 답변하기
+	public int insertConfirm(ProductInqVo vo) {
+		System.out.println("매퍼 이전까지도 가지는건가?");
+		return sqlSession.update(MAPPER+".insertConfirm", vo);
+	}
+	
+	
 	public List<ReviewVo> reviewRegList2(ReviewVo vo) {
 		return sqlSession.selectList(MAPPER+".reviewRegList2", vo);
 	}

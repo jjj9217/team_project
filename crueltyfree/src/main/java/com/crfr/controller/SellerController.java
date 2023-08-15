@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,13 +18,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.crfr.service.mypage.MypageService;
 import com.crfr.service.seller.ProductSellerService;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.MemberVo;
+import com.crfr.vo.OneInqVo;
 import com.crfr.vo.OrderProductVo;
 import com.crfr.vo.OrderVo;
 import com.crfr.vo.PageNav;
 import com.crfr.vo.ProductInfoVo;
+import com.crfr.vo.ProductInqVo;
 import com.crfr.vo.ProductVo;
 import com.crfr.vo.PurchaseListVo;
 
@@ -35,7 +39,7 @@ public class SellerController {
 	//서비스 클래스로 사용할 클래스들을 멤버변수로 정의하고 의존 자동 주입받도록 함
 	@Setter(onMethod_={ @Autowired })
 	ProductSellerService pInsertFile, pInsertProduct, pInsertProductInfo, pfindProductIdx,
-	cProductList, cMemberIdxList, cProductCount, sPageNavSet, 
+	cProductList, cMemberIdxList, cProductCount, sPageNavSet, sPageNavSet2,
 	cOrderProductList, cOrderList, cProHistoryList,
 	pfineProductPost, pfineProductInfoPost, // findProductFilePost,
 	pUpdateProduct, pUpdateProductInfo, pfineProductFilePost,
@@ -45,8 +49,23 @@ public class SellerController {
 	pUpdateDeliveryState1, pUpdateDeliveryState2,
 	pUpdateProductCount, cOrderProductList2;
 	
+	MypageService mpList, mpCount, mpInsert;
+	
+	@Autowired
+	public void setMpList(@Qualifier("mpList") MypageService mpList) {
+		this.mpList = mpList;
+	}
+	
+	@Autowired
+	public void setMpCount(@Qualifier("mpCount") MypageService mpCount) {
+		this.mpCount = mpCount;
+	}
+	
 	@Setter(onMethod_={ @Autowired })
 	PageNav pageNav;
+	
+	@Setter(onMethod_={ @Autowired })
+	PageNav pageNav2;
 	
 	@GetMapping("/sale_stats.do")
 	public String sale_stats() {		
@@ -154,10 +173,10 @@ public class SellerController {
 		return viewPage;
 	}
 	
-	@GetMapping("/confirm_inq.do")
-	public String confirm_inq() {		
-		return "seller/confirm_inq";
-	}
+	
+	
+	
+	
 	
 	// 등록 상품 목록 확인
 	@GetMapping("/check_pro.do")
@@ -337,4 +356,93 @@ public class SellerController {
 			
 		return viewPage;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//상품 문의 목록 보이기
+	@GetMapping("/confirm_inq.do")
+	public String confirm_inq(FileVo vo, HttpServletRequest request, String pageNum, String pageBlock, Model model) {
+		HttpSession session = request.getSession();		
+		//로그인된 회원의 member_idx 얻기
+		MemberVo mVo = (MemberVo)session.getAttribute("member");		
+		int member_idx = mVo.getMember_idx();		
+		vo.setMember_idx(member_idx);
+		System.out.println("판매자 멤버idx:"+vo.getMember_idx());
+		// 내가 구매한 목록 중 리뷰를 작성한 사진목록을 가져오는 요청에 대한 처리를 위한 MypageListService 클래스 이용
+		List<FileVo> confirmfileList = mpList.selectconfirmListimg(member_idx);
+		model.addAttribute("confirmfileList", confirmfileList);
+		
+		// 내가 구매한 목록 중 리뷰를 작성한 목록을 가져오는 요청에 대한 처리를 위한 MypageListService 클래스 이용
+		List<ProductInqVo> confirmproductList = mpList.selectconfirmList(member_idx);
+		model.addAttribute("confirmproductList", confirmproductList);
+							
+		// 총 레코드 수를 가져오기 위해 MypageCountService클래스 이용
+		int searchTotal = mpCount.selectconfirmCount(member_idx);
+
+		// 총 레코드 수 대입
+		pageNav2.setTotalRows(searchTotal);
+		// 페이지네비게이션을 위해 MypagePageService클래스를 이용
+		pageNav2 = sPageNavSet2.setSellerPageNav2(pageNav, pageNum, pageBlock, member_idx);
+		
+		// html에서 사용하기 위해 세팅
+		model.addAttribute("pageNav", pageNav2);
+				
+		return "seller/confirm_inq";
+	}
+	
+	
+	
+	
+	
+	//상품문의 답변하기 요청처리
+	@PostMapping("/confirm_process.do")
+	public String confirm_process(
+			ProductInqVo vo , HttpServletRequest request) {
+		
+		System.out.println("들어온 product_inq_answer:" + vo.getProduct_inq_answer());
+		System.out.println("들어온 inq_idx:" + vo.getProduct_inq_idx());
+		
+		String viewPage="boast/view";
+		
+		int result1 = mpInsert.insertConfirm(vo);
+		System.out.println("result결과:"+ result1);
+		if(result1 == 1) { // 글 등록 성공시 보여지는 페이지
+			viewPage = "redirect:/seller/confirm_inq.do";
+		}
+		
+		return viewPage;
+	}
+	
+	
+	//상품문의 수정하기 요청처리
+	@PostMapping("/confirmModify_process.do")
+	public String confirmModify_process(
+			ProductInqVo vo , HttpServletRequest request) {
+		
+		System.out.println("들어온 수정 product_inq_answer:" + vo.getProduct_inq_answer());
+		System.out.println("들어온 수정 inq_idx:" + vo.getProduct_inq_idx());
+		
+		String viewPage="boast/view";
+		
+		int result1 = mpInsert.insertConfirm(vo);
+		System.out.println("result결과:"+ result1);
+		if(result1 == 1) { // 글 등록 성공시 보여지는 페이지
+			viewPage = "redirect:/seller/confirm_inq.do";
+		}
+		
+		return viewPage;
+	}
+	
+	
+	
+	
+	
+	
 }

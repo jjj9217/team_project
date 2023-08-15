@@ -67,6 +67,13 @@ public class MypageListService implements MypageService {
 		return dao.selectcouponList(member_idx);
 	}
 	
+	public List<FileVo> selectconfirmListimg(int member_idx) {
+		return dao.selectconfirmListimg(member_idx);
+	}
+	
+	public List<ProductInqVo> selectconfirmList(int member_idx) {
+		return dao.selectconfirmList(member_idx);
+	}
 	
 	public List<ReviewVo> reviewRegList2(ReviewVo vo) {
 		return dao.reviewRegList2(vo);
