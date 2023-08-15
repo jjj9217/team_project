@@ -474,7 +474,7 @@ function HeaderBest(sort_salecount) {
 				<button class="recent_delete_btn">X</button>
 				</div>
 				<div class="item_photo">
-				<img class="photoImage" src="${pageContext.request.contextPath}/resources/img/test01.jpg">
+				<img class="photoImage" src="${pageContext.request.contextPath}/resources/uploads/test01.jpg">
 				</div>
 				<div class="item_seller">
 				람쥐천국
