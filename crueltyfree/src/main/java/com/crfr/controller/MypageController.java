@@ -18,15 +18,19 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.crfr.service.mypage.MypageService;
+import com.crfr.service.oneInq.OneInqService;
 import com.crfr.vo.CouponVo;
 import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.LikeExploreVo;
 import com.crfr.vo.MemberVo;
+import com.crfr.vo.OneInqVo;
 import com.crfr.vo.PageNav;
 import com.crfr.vo.ProductInqVo;
 import com.crfr.vo.ReviewExploreVo;
 import com.crfr.vo.ReviewVo;
+
+import lombok.Setter;
 
 @Controller
 @RequestMapping("/mypage")
@@ -34,6 +38,9 @@ public class MypageController {
 
 	MypageService mpList, mpPage, mpCount, mpInsert, mpUpdate, mpDelete, mpView;
 	PageNav pageNav;
+	
+	@Setter(onMethod_={ @Autowired })
+	OneInqService mListNotice;
 
 	@Autowired
 	public void setMpList(@Qualifier("mpList") MypageService mpList) {
@@ -73,9 +80,33 @@ public class MypageController {
 	
 	//마이 페이지 메인으로 이동
 	@GetMapping("/mypage_main.do")
-	public String mypage_main() {
+	public String mypage_main(HttpServletRequest request, Model model) {
+				
+		HttpSession session = request.getSession();		
+		//로그인된 회원의 member_idx 얻기
+		MemberVo mVo = (MemberVo)session.getAttribute("member");		
+		int member_idx = mVo.getMember_idx();		
+		
+		//좋아요 사진목록을 가져오는 요청에 대한 처리를 위한 MypageListService 클래스 이용
+		List<FileVo> likefileList = mpList.selectlikeListimg(member_idx);
+		model.addAttribute("likefileList", likefileList);
+
+		//좋아요 목록을 가져오는 요청에 대한 처리를 위한 MypageListService 클래스 이용
+		List<LikeExploreVo> likeproductList = mpList.selectlikeList(member_idx);
+		model.addAttribute("likeproductList", likeproductList);
+
+		//1:1문의 내역 리스트
+		List<OneInqVo> oneinqList = mListNotice.oneinqList();
+		model.addAttribute("oneinqList", oneinqList);
+		
+		// 상품QnA 내역 리스트
+		// 내가 구매한 목록 중 리뷰를 작성한 목록을 가져오는 요청에 대한 처리를 위한 MypageListService 클래스 이용
+		List<ProductInqVo> inqproductList = mpList.selectproductinqList(member_idx);
+		model.addAttribute("inqproductList", inqproductList);
+						
 		return "mypage/mypage_main";
 	}
+	
 	
 	//리뷰페이지의 메인으로 이동
 	@GetMapping("/mypage_nonreview.do")

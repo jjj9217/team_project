@@ -328,7 +328,7 @@
 
 		<tr>
 			<td id="td_paging" colspan="4" style="border: none;">
-				<!-- 추후 페이징 구현 -->
+				<%@ include file="paging_oneinq.jsp" %>
 			</td>
 		</tr>
     </table>

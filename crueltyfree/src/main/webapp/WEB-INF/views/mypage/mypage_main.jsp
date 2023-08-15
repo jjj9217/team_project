@@ -306,7 +306,7 @@
         </div>
         <div class="tit_area">
             <h2 class="tit">주문/배송조회<em>(최근 1개월)</em></h2>
-           <a class="btnMore" id="orderListMore" href="#">더보기〉</a>
+           <a class="btnMore" id="orderListMore" href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">더보기〉</a>
         </div>
         <a class="order_view" href="#">
             <ul class="mypage-step">
@@ -329,43 +329,37 @@
         </a>
         <div class="tit_area">
             <h2 class="tit">좋아요</h2>
-            <a class="btnMore" id="wishListMore" href="#">더보기〉</a>      
+            <a class="btnMore" id="wishListMore" href="${pageContext.request.contextPath}/mypage/mypage_like.do">더보기〉</a>      
             <hr id="hr" width=100%>
             <div class="product_list_background">               
-                <ul>
-                    <li class="product_list">
-                        <div class="prd_info">
-                            <div class="goodlist_thumb_background">
-                                <a href="#"><img class="goodlist_thumb" src="images.jpg"></a>
-                            </div>
-                            <div class="prd_name">
-                                <a href="#" class="goodlist">
-                                    <p class="prd_title">${untitled}상품제목</p>
-                                </a>
-                            </div>
-                            <p class="prd_price">${untitled}원</p>
-                        </div>
-                    </li>
-                    <!-- c:if el사용 -->
-                   <!-- <li class="nodata">좋아요 상품이 없습니다.</li> -->                       
-               </ul>
-               <ul>
-                    <li class="product_list">
-                        <div class="prd_info">
-                            <div class="goodlist_thumb_background">
-                                <a href="#"><img class="goodlist_thumb" src="images.jpg"></a>
-                            </div>
-                            <div class="prd_name">
-                                <a href="#" class="goodlist">
-                                    <p class="prd_title">${untitled}상품제목</p>
-                                </a>
-                            </div>
-                            <p class="prd_price">${untitled}원</p>
-                        </div>
-                    </li>
-                    <!-- c:if el사용 -->
-                   <!-- <li class="nodata">좋아요 상품이 없습니다.</li> -->                       
-               </ul>
+                <c:choose>
+	                <c:when test="${!empty likeproductList[0].like_idx}">
+		                <ul>
+		                    <li class="product_list">
+		                        <c:forEach var="rowNum" begin="0" end="4">
+			                        <div class="prd_info">
+			                            <div class="goodlist_thumb_background">
+			                                <a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${likeproductList[rowNum].product_idx}"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${likefileList[rowNum].saveFile}"></a>
+			                            </div>
+			                            <div class="prd_name">
+			                                <a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${likeproductList[rowNum].product_idx}" class="goodlist">
+			                                    <p class="prd_title">상품제목: ${likeproductList[rowNum].product_name}</p>
+			                                </a>
+			                            </div>
+			                            <p class="prd_price">${likeproductList[rowNum].product_price} 원</p>
+			                        </div>
+			                    </c:forEach>    
+		                    </li>
+		                                    
+		                    <!-- c:if el사용 -->
+		                   <!-- <li class="nodata">좋아요 상품이 없습니다.</li> -->                       
+		               </ul>
+	               </c:when>
+	               <c:when test="${empty likeproductList[0].like_idx}">
+		               <h1>좋아요한 상품 목록이 없습니다!</h1>
+		           </c:when>
+		           <c:otherwise></c:otherwise>    
+                </c:choose>                   	               
             </div>
             <hr width=100%>
         </div>
@@ -373,41 +367,71 @@
             <div class="left">
                 <div class="tit_area">
                     <h2 class="tit">1:1문의내역</h2>
-                    <a class="btnMore" id="wishListMore" href="#">더보기〉</a>
+                    <a class="btnMore" id="wishListMore" href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">더보기〉</a>
                     <hr id="hr" width=100%>
                 </div>
                 <div class="list-customer">
-                    <ul class="nodata_ul">
-                        <!--
-                        <c:choose>
-                            <c:when test="el{empty untitled}">
-                                     최근1개월간 없다
-                            </c:when>
-                            <c:otherwise>                                   
-                                <c:choose>
-                                    <c:when test="el{untitled ne null}">1:1답변대기</c:when>
-                                    <c:otherwise>1:1답변완료</c:otherwise>
-                                </c:choose>
-                                    el{untitled}
-                                    <c:if test="el{untitled ne null }">el{1:1문의등록일}</c:if>                                                
-                            </c:otherwise>
-                        </c:choose>
-                        -->
-                        <li class="nodata">최근 1개월만 문의하신 내용이 없습니다.</li>                                              
-                    </ul>
+                    <c:choose>
+                        <c:when test="${!empty oneinqList[0].one_inq_idx}">
+                            <table>
+                                <c:forEach var="rowNum" begin="0" end="4">
+                                    <tr style="cursor:pointer" onclick="location.href='${pageContext.request.contextPath}/one_inq/one_inq_list.do?=${oneinqList[rowNum].one_inq_idx}'">
+                                        <td>문의번호 : ${oneinqList[rowNum].one_inq_idx}</td>
+                                        <td>문의내역 : ${oneinqList[rowNum].one_inq_content}</td>                                        
+                                        <td>
+                                            <c:if test="${!empty oneinqList[rowNum].one_inq_idx and !empty oneinqList[rowNum].one_inq_answer}">
+                                                답변완료
+                                            </c:if>
+                                            <c:if test="${empty oneinqList[rowNum].one_inq_answer}">
+                                                답변대기
+                                            </c:if>
+                                        </td>
+                                    </tr>
+                                </c:forEach>    
+                            </table>
+                        </c:when>
+                        <c:when test="${empty oneinqList[0].one_inq_idx}">
+                            <ul class="nodata_ul">                        
+		                        <li class="nodata">최근 1개월간 문의하신 내용이 없습니다.</li>                                              
+		                    </ul>
+                        </c:when>
+                        <c:otherwise></c:otherwise>
+                    </c:choose>                    
                 </div>
             </div>
             <div class="right">
                 <div class="tit_area">
                     <h2 class="tit">상품QnA내역</h2>
-                    <a class="btnMore" id="wishListMore" href="#">더보기〉</a>
+                    <a class="btnMore" id="wishListMore" href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">더보기〉</a>
                     <hr id="hr" width=100%>     
                 </div>
                 <div class="list-customer">
-                    <ul class="nodata_ul">
-                        <!-- c:if el{}사용 -->
-                        <li class="nodata">최근 1개월만 문의하신 내용이 없습니다.</li>                      
-                    </ul>
+                    <c:choose>
+                        <c:when test="${!empty oneinqList[0].one_inq_idx}">
+                            <table>
+                                <c:forEach var="rowNum" begin="0" end="4">
+                                    <tr style="cursor:pointer" onclick="location.href='${pageContext.request.contextPath}/mypage/mypage_productQnA.do?'">
+                                        <td>문의번호 : ${inqproductList[rowNum].product_inq_idx}</td>
+                                        <td>문의내역 : ${inqproductList[rowNum].product_inq_content}</td>                                        
+                                        <td>
+                                            <c:if test="${!empty inqproductList[rowNum].product_inq_idx and !empty inqproductList[rowNum].product_inq_answer}">
+                                                답변완료
+                                            </c:if>
+                                            <c:if test="${empty inqproductList[rowNum].product_inq_answer}">
+                                                답변대기
+                                            </c:if>
+                                        </td>
+                                    </tr>
+                                </c:forEach>    
+                            </table>
+                        </c:when>
+                        <c:when test="${empty oneinqList[0].one_inq_idx}">
+                            <ul class="nodata_ul">                        
+                                <li class="nodata">최근 1개월간 문의하신 내용이 없습니다.</li>                                              
+                            </ul>
+                        </c:when>
+                        <c:otherwise></c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
