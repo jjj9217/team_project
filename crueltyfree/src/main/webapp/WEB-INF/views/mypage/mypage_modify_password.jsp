@@ -117,6 +117,7 @@
     }   
 
     .buy_list_txt{
+    	padding-top: 30px;
         width: 100%;
         height: 250px;
         
@@ -152,60 +153,78 @@
         width: 230px;
     }
 
-    .password_btn{
+    .password_btn{    	
         width: 100%;
-        height: 80px;
-    
         display : flex;
-        justify-content: center;
-        align-items : center;
     }
 
-    #do-search-period{
-        width: 200px;
-        height: 50px;
-        
-        color: black;
-        margin-left: 20px;                  
+    #do-search-period1{
+        width: 160px;
+        height: 30px;
+        border-radius: 5px;
+        border: 1px solid #7d99a4;
+        background-color: #fff;
+        color:  #7d99a4;
+        font-weight: bold;
+        margin-right: 40px;               
+    }
+    #do-search-period2{
+    	width: 160px;
+        height: 30px;
+        border-radius: 5px;
+        border: 1px solid #7d99a4;
+        background-color: #7d99a4;
+        color:  #fff;
+        font-weight: bold;
     }
    #hr{margin-top:10px; height:3px; background-color:#7d99a4; border:0;}
-
+#tb_box .th_title{text-align: left; color: #4a4a4a; font-weight: bold; padding-right: 20px;}
+.input_pw{border: 1px solid #7d99a4; width: 191px; height: 10px; padding: 10px; border-radius: 5px; outline-color: #7d99a4;}
+#tb_box{margin-bottom: 20px;}
 </style>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-function test() {
-    var p1 = document.getElementById('password1').value;
-    var p2 = document.getElementById('password2').value;
-    var pwd = document.caq.pwd.value;
-    var pwd2=<c:out value='${MemberVo.member_pw}'/>;                    
-    if(p1.length < 8) {
-        alert('입력한 글자가 8글자 이상이어야 합니다.');
-        document.caq.password1.focus();
-        return false;
-    } 
-    if(p2==""){
-        alert("새 비밀번호 확인을 입력해주세요");
-        document.caq.password2.focus();
-        return false;
-    }        
-    if(pwd!=pwd2){
-        alert("현재 비밀번호를 입력해주세요");
-        document.caq.pwd.focus();
-        return false;
-    }
-    if( p1 != p2 ) {
-        alert("비밀번호가 일치 하지 않습니다");
-        return false;
-      } else{
-        alert("비밀번호가 변경되었습니다.");
-		document.caq.submit();
-        return true;
-      }
-    
-    
-    
-    /* document.getElementById('qw').submit(); */
-   
-  }
+$(function(){
+	$("#join_btn").click(function(){
+		checkInput();
+	});
+	$("#do-search-period2").click(function(){
+		var p1 = $("#password1").val();
+		var p2 = $("#password2").val();
+		var pwd = $("#pwd").val();
+		var pwd2 = $("#recent_pw").val();
+		
+		if(pwd.length == 0) {
+	        alert('비밀번호를 입력해주세요');
+	        $("#pwd").focus();
+	        return false;
+	    }else if(pwd.length < 8) {
+	        alert('입력한 글자가 8글자 이상이어야 합니다.');
+	        $("#pwd").focus();
+	        return false;
+	    }else if(p1 == ""){
+	        alert("새 비밀번호를 입력해주세요");
+	        $("#password1").focus();
+	        return false;
+	    }else if(p2 == ""){
+	        alert("새 비밀번호 확인을 입력해주세요");
+	        $("#password2").focus();
+	        return false;
+	    }else if(pwd != pwd2){
+	        alert("현재 비밀번호가 일치하지 않습니다.");
+	        $("#pwd").focus();
+	        return false;
+	    }if( p1 != p2 ) {
+	        alert("입력한 비밀번호가 서로 일치 하지 않습니다");
+	        $("#password1").focus();
+	        return false;
+	      } else{
+			$("#qw").submit();
+	        return true;
+	      }		
+
+	});
+});
 
 </script>
 </head>
@@ -220,7 +239,7 @@ function test() {
 <div id="Container">
     <div id="mypage">       
         <table>
-            <th><h3><a href="#" id="mylink">마이페이지</a></h3></th>         
+            <tr><th><h3><a href="#" id="mylink">마이페이지</a></h3></th></tr>         
             <tr><td class="mypagetable">마이 쇼핑</td></tr>
             <tr><td>주문/배송조회</td></tr>
             <tr><td>취소/반품내역</td></tr>
@@ -248,46 +267,43 @@ function test() {
             <hr id="hr" width=100%;>
             <div class="buy_list_txt">  
 <form name="caq" id="qw" action="${pageContext.request.contextPath}/mypage/mypage_modify_changepassword_process.do" method="post">
-                <table>
-                    <colgroup>
-                        <col style="width:200px;">
-                        <col style="width:367px;">
-                    </colgroup>
+                <table id="tb_box">                
                 <tbody>
-                    <tr class="input">
-                        <th>현재 비밀번호</th>
+                    <tr>
+                        <th class="th_title">현재 비밀번호</th>
                         <td>
                             <div class="input_group">
-                                <span class="input_txt"><input type="password" id="pwd" name="member_pw" class="text" placeholder="비밀번호를 입력해주세요."></span>
+                                <span class="input_txt"><input type="password" id="pwd" name="member_pw" class="text input_pw" placeholder="비밀번호를 입력해주세요."></span>
+                                <input type="hidden" id="recent_pw" value="${member.member_pw}">
                             </div>
                         </td>
                     </tr>
-                    <tr class="input">
-                        <th>새 비밀번호</th>
+                    <tr>
+                        <th class="th_title">새 비밀번호</th>
                         <td>
                             <div class="input_group">
-                                <span class="input_txt"><input type="password" id="password1" name="bef_pwd" class="text" placeholder="새 비밀번호를 입력해주세요."></span>
+                                <span class="input_txt"><input type="password" id="password1" name="bef_pwd" class="text input_pw" placeholder="새 비밀번호를 입력해주세요."></span>
                             </div>
                         </td>
                     </tr>
-                    <tr class="input">
-                        <th>새 비밀번호 확인</th>
+                    <tr>
+                        <th class="th_title">새 비밀번호 확인</th>
                         <td>
                             <div class="input_group">
-                                <span class="input_txt"><input type="password" id="password2" name="member_pw_change" class="text" placeholder="새 비밀번호를 재입력해주세요."></span>
+                                <span class="input_txt"><input type="password" id="password2" name="member_pw_change" class="text input_pw" placeholder="새 비밀번호를 재입력해주세요."></span>
                             </div>
                         </td>
                     </tr>
                 </tbody>
                 </table>                
                 <div class="password_btn">
-                    <button type="button" class="btnLookup" id="do-search-period">나중에</button>                                      
-                    <button type="button" class="btnLookup" id="do-search-period" onclick="test();">비밀번호 변경</button>
+                    <button type="button" class="btnLookup" id="do-search-period1" onclick="location.href='${pageContext.request.contextPath}/mypage/mypage_modifymain.do';">나중에</button>                                      
+                    <button type="button" class="btnLookup" id="do-search-period2">비밀번호 변경</button>
                 </div>
 </form>                
             </div>
         </div>
-        <hr width=100%;>
+        <hr id="hr" width=100%;>
         
         
 

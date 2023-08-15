@@ -25,6 +25,7 @@
  		<typeAlias alias="ReviewExploreVo" type="com.crfr.vo.ReviewExploreVo"/>
  		<typeAlias alias="LikeExploreVo" type="com.crfr.vo.LikeExploreVo"/>
  		<typeAlias alias="OrderProductVo" type="com.crfr.vo.OrderProductVo"/>
+ 		<typeAlias alias="RecentViewVo" type="com.crfr.vo.RecentViewVo"/>
  	</typeAliases>
  	
 </configuration>

@@ -175,5 +175,18 @@
 		update `review`
 		set review_recom_count=#{strRecomCount}
 		where review_idx = #{review_idx}					
-	</update>									
+	</update>
+
+	<!-- 최근본 상품 불러오기 -->
+	<select id="selectRecentView" parameterType="map" resultType="RecentViewVo">
+		SELECT * FROM recent_view 
+		WHERE product_idx = #{product_idx}
+		and client_num = #{client_num};
+	</select>
+	
+	<!-- 최근본 상품 등록 -->
+	<insert id="insertRecentView" parameterType="map">
+		insert into `recent_view` (product_idx, client_num)
+		values(#{product_idx}, #{client_num})						
+	</insert>											
 </mapper>

@@ -30,6 +30,7 @@ import com.crfr.vo.PageNav;
 import com.crfr.vo.ProductInfoVo;
 import com.crfr.vo.ProductInqVo;
 import com.crfr.vo.ProductVo;
+import com.crfr.vo.RecentViewVo;
 import com.crfr.vo.ReviewListVo;
 import com.crfr.vo.ReviewRecomVo;
 import com.crfr.vo.ReviewVo;
@@ -51,7 +52,7 @@ public class ProductViewController {
 	pSelectProductInqCount, pInsertProductInq, pUpdateProductInq, pDeleteProductInq, pSelectLike,
 	pInsertLike, pDeleteLike, pviPage, pvrPage,pSelectReviewCount, pSelectReviewListCount, pSelectReviewList,
 	pSelectReviewImage, pSelectReviewRecom, pSelectReviewVo, pInsertRecom, pDeleteRecom,
-	pSelectRecom, pUpdateRecom;		
+	pSelectRecom, pUpdateRecom, pSelectRecentView, pInsertRecentView;		
 	
 	PageNav pageNav1 = new PageNav();
 	PageNav pageNav2 = new PageNav();
@@ -79,6 +80,23 @@ public class ProductViewController {
 		}
 		model.addAttribute("likeVo", likeVo); //likeVo를 모델에 추가. 비회원은 null
 		
+		//최근본상품추가
+		String client_num = null;
+		Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
+	    if (cookies != null) {
+	        for (Cookie cookie : cookies) {
+	            if ("guestId".equals(cookie.getName())) { //이름이 "guestId"인 쿠키의 value를
+	            	client_num  = cookie.getValue();	//client_num에 넣음
+	                break;
+	            }//end of if - cookie 이름 조건문
+	        }//end of for
+	    }//end of if - cookie null값 조건문
+		
+	    RecentViewVo recentViewVo = pSelectRecentView.selectRecentView(client_num, product_idx);
+	    if(recentViewVo == null) {//최근본상품아니면 테이블에 추가
+	    	int insertRecentView = pInsertRecentView.insertRecentView(client_num, product_idx);
+	    }
+	    
 		//상품문의리스트
 		int productInqRows = pSelectProductInqCount.selectProductInqCount(product_idx);//상품문의 게시글 수
 		List<ProductInqVo> productInqList  = pSelectProductInq.selectProductInq(product_idx); //상품번호의 상품문의 리스트

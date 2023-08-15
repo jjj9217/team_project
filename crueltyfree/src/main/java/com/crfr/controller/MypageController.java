@@ -551,27 +551,25 @@ public class MypageController {
 	
 	//비밀번호 수정
 	@PostMapping("/mypage_modify_changepassword_process.do")
-	public String mypage_modify_changepassword_process(String member_pw_change, MemberVo vo, HttpServletRequest request, Model model) {
+	public String mypage_modify_changepassword_process(String member_pw_change, HttpServletRequest request, Model model
+			,RedirectAttributes redirectAttributes) {
 		HttpSession session = request.getSession();
 		
 		//로그인된 회원의 member_idx 얻기
-		MemberVo mVo = (MemberVo)session.getAttribute("member");
-		model.addAttribute("MemberVo", session);
-		int member_idx = mVo.getMember_idx();	
-		vo.setMember_idx(member_idx);		
+		MemberVo vo = (MemberVo)session.getAttribute("member");
 		vo.setMember_pw(member_pw_change);
 		
 		int ok = mpUpdate.changepassword(vo);
-		System.out.println("업데이트비밀번호:"+ok);
 		// 아래 내용이 성공적으로 이루어지지 않으면 실패페이지 주소 반환
-		String viewpage = "mypage_review_err";
-					
-		// 배송지가 제대로 sql에 수정되었다면 맨 처음 나의배송지페이지 주소값을 반환
-		if (ok ==1) {			
-			session.setAttribute("MemberVo", vo);
-			viewpage = "redirect:/mypage/mypage_modifymain.do";
-		}
-		return viewpage;
+		
+		if(ok == 1){//회원정보 수정 성공시;
+			session.removeAttribute("member");
+			session.setAttribute("member", vo);
+			redirectAttributes.addFlashAttribute("msgOk", "비밀번호가 성공적으로 수정되었습니다.");
+		}else {
+			redirectAttributes.addFlashAttribute("msgFail", "비밀번호 수정에 실패하였습니다.");
+		}		
+		return "redirect:/mypage/mypage_modifymain.do";
 	}
 	
 	

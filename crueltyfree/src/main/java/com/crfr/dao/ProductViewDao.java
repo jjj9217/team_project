@@ -12,6 +12,7 @@ import com.crfr.vo.LikeVo;
 import com.crfr.vo.ProductInfoVo;
 import com.crfr.vo.ProductInqVo;
 import com.crfr.vo.ProductVo;
+import com.crfr.vo.RecentViewVo;
 import com.crfr.vo.ReviewRecomVo;
 import com.crfr.vo.ReviewVo;
 
@@ -172,5 +173,27 @@ public class ProductViewDao {
 		map.put("review_idx", review_idx);
 		sqlSession.update(MAPPER+".updateRecom",map);
 	}
+	
+	//리뷰추천 정보 불러오기
+	public RecentViewVo selectRecentView(String client_num, int product_idx) {
+	    String strProductIdx = String.valueOf(product_idx);		
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("client_num", client_num);
+		map.put("product_idx", strProductIdx);
+		
+		return sqlSession.selectOne(MAPPER+".selectRecentView", map);
+	}	
+	
+	//추천등록
+	public int insertRecentView(String client_num, int product_idx) {
+	    String strProductIdx = String.valueOf(product_idx);		
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("client_num", client_num);
+		map.put("product_idx", strProductIdx);
+		
+		return sqlSession.insert(MAPPER+".insertRecentView",map);
+	}	
 	
 }
