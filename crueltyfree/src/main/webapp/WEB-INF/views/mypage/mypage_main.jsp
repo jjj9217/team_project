@@ -375,6 +375,7 @@
                         <c:when test="${!empty oneinqList[0].one_inq_idx}">
                             <table>
                                 <c:forEach var="rowNum" begin="0" end="4">
+                                    <c:if test="${!empty oneinqList[rowNum].one_inq_idx}">
                                     <tr style="cursor:pointer" onclick="location.href='${pageContext.request.contextPath}/one_inq/one_inq_list.do?=${oneinqList[rowNum].one_inq_idx}'">
                                         <td>문의번호 : ${oneinqList[rowNum].one_inq_idx}</td>
                                         <td>문의내역 : ${oneinqList[rowNum].one_inq_content}</td>                                        
@@ -387,6 +388,7 @@
                                             </c:if>
                                         </td>
                                     </tr>
+                                    </c:if>
                                 </c:forEach>    
                             </table>
                         </c:when>
@@ -410,6 +412,7 @@
                         <c:when test="${!empty oneinqList[0].one_inq_idx}">
                             <table>
                                 <c:forEach var="rowNum" begin="0" end="4">
+                                    <c:if test="${!empty inqproductList[rowNum].product_inq_idx}">
                                     <tr style="cursor:pointer" onclick="location.href='${pageContext.request.contextPath}/mypage/mypage_productQnA.do?'">
                                         <td>문의번호 : ${inqproductList[rowNum].product_inq_idx}</td>
                                         <td>문의내역 : ${inqproductList[rowNum].product_inq_content}</td>                                        
@@ -422,6 +425,7 @@
                                             </c:if>
                                         </td>
                                     </tr>
+                                    </c:if>
                                 </c:forEach>    
                             </table>
                         </c:when>
