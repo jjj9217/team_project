@@ -852,10 +852,10 @@ $(function(){
      .td_review_title{width: 225px; height: auto; font-weight: bold; padding-left: 30px; vertical-align: top;}
      .td_review_content, .review_content{width: 765px; height: auto;}
      .td_review_empty{width: 1020px; height: auto; text-align:center; font-size:24px; color: #4a4a4a;}
-     .score_area{display: flex; flex-wrap: wrap; width: 765px; height: 22px; margin-bottom: 15px; justify-items: center;}
-     .review_score, .review_score img{width: 112px; height: 20px;}
+     .score_area{display: flex; flex-wrap: wrap; width: 765px; height: 22px; margin-bottom: 25px; justify-items: center;}
+     .review_score{width: auto; height: 20px;}
      .review_regDate{width: 85px; height: 20px; margin-left: 15px; color: #a4a4a4; font-weight: bold;}
-     .txt_inner{width: 765px; height: auto; margin-bottom: 15px;}
+     .txt_inner{width: 765px; height: auto;  margin-bottom: 15px;}
      .recom_area{display: flex; flex-wrap: wrap; width: 765px; height: 32px; margin-top: 20px;}
      .recom_btn{border: 0px; background-color: #fff; font-size: 16px;}
      .recom_num_x{
@@ -1269,8 +1269,43 @@ $(function(){
                                 <div class="review_content">
                                     <div class="score_area">
                                         <span class="review_score">
-                                        	<!-- 점수에 따른 이미지 처리 해야됨 -->
-                                            ${reviewList[productReviewRows-1].review_score}
+                                        	<c:choose>
+                                        	<c:when test="${reviewList[productReviewRows-1].review_score == 1}">
+                                        	<img src="../resources/img/star_full.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+                                        	</c:when>
+                                        	<c:when test="${reviewList[productReviewRows-1].review_score == 2}">
+                                        	<img src="../resources/img/star_full.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_full.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+                                        	</c:when>
+                                        	<c:when test="${reviewList[productReviewRows-1].review_score == 3}">
+                                        	<img src="../resources/img/star_full.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_full.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_full.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+                                        	</c:when>
+                                        	<c:when test="${reviewList[productReviewRows-1].review_score == 4}">
+                                        	<img src="../resources/img/star_full.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_full.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_full.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_full.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+                                        	</c:when>
+                                        	<c:otherwise>
+                                        	<img src="../resources/img/star_full.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_full.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_full.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_full.png" width="20px" height="20px">
+                                        	<img src="../resources/img/star_full.png" width="20px" height="20px">  
+                                        	</c:otherwise>
+                                        	</c:choose>                                        	                                          
                                         </span>
                                         <span class="review_regDate">
                                             <fmt:formatDate value="${reviewList[productReviewRows-1].review_regDate}" pattern="yyyy.MM.dd" />
@@ -1306,7 +1341,7 @@ $(function(){
                                             </c:when>
                                             <c:otherwise>
                                             <span class="recom_num_x recom_change">
-                                                <img src="../resources/img/icon_recom_off.png" width="15px" height="15px">
+                                                <img src="../resources/img/recom_up.png" width="15px" height="15px">
                                                 <span class=" recom_target">${reviewList[productReviewRows-1].review_recom_count}</span>
                                             </span>
                                             </c:otherwise>

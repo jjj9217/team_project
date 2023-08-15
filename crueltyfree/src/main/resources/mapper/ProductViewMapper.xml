@@ -188,5 +188,22 @@
 	<insert id="insertRecentView" parameterType="map">
 		insert into `recent_view` (product_idx, client_num)
 		values(#{product_idx}, #{client_num})						
-	</insert>											
+	</insert>
+
+	<!-- 최근본 상품 목록 -->
+	<select id="selectRecentViewList" parameterType="string" resultType="RecentViewVo">
+		SELECT * FROM recent_view 
+		WHERE client_num = #{client_num}
+		order by recent_view_date desc
+	</select>
+	
+	<!-- 최근본 상품 1개 삭제 -->
+	<delete id="deleteOneRecentView" parameterType="map">
+		delete from `recent_view` where client_num = #{client_num} and product_idx = #{product_idx}
+	</delete>	
+	
+	<!-- 최근본 상품 전체 삭제 -->
+	<delete id="deleteAllRecentView" parameterType="string">
+		delete from `recent_view` where client_num = #{client_num}
+	</delete>															
 </mapper>

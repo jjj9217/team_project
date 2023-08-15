@@ -40,4 +40,7 @@ public interface ProductViewService {
 	default void updateRecom(String review_idx, int recomCount) {}
 	default RecentViewVo selectRecentView(String client_num, int product_idx) {return null;}
 	default int insertRecentView(String client_num, int product_idx) {return 0;}
+	default List<RecentViewVo> selectRecentViewList(String client_num) {return null;}
+	default int deleteOneRecentView(String client_num, int product_idx) {return 0;}
+	default int deleteAllRecentView(String client_num) {return 0;}
 }

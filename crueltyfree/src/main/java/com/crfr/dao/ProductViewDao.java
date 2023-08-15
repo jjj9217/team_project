@@ -174,7 +174,7 @@ public class ProductViewDao {
 		sqlSession.update(MAPPER+".updateRecom",map);
 	}
 	
-	//리뷰추천 정보 불러오기
+	//상품의 최근본목록
 	public RecentViewVo selectRecentView(String client_num, int product_idx) {
 	    String strProductIdx = String.valueOf(product_idx);		
 		
@@ -185,7 +185,7 @@ public class ProductViewDao {
 		return sqlSession.selectOne(MAPPER+".selectRecentView", map);
 	}	
 	
-	//추천등록
+	//최근본상품 등록
 	public int insertRecentView(String client_num, int product_idx) {
 	    String strProductIdx = String.valueOf(product_idx);		
 		
@@ -195,5 +195,24 @@ public class ProductViewDao {
 		
 		return sqlSession.insert(MAPPER+".insertRecentView",map);
 	}	
+
+	//전체 최근본목록 불러오기
+	public List<RecentViewVo> selectRecentViewList(String client_num) {		
+		return sqlSession.selectList(MAPPER+".selectRecentViewList", client_num);
+	}
+	
+	//최근본상품 1개삭제
+	public int deleteOneRecentView(String client_num, int product_idx) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("client_num", client_num);
+		map.put("product_idx", product_idx);
+		return sqlSession.delete(MAPPER+".deleteOneRecentView",map);
+	}
+
+	//최근본상품 전체삭제
+	public int deleteAllRecentView(String client_num) {
+		Map<String, String> map = new HashMap<>();
+		return sqlSession.delete(MAPPER+".deleteAllRecentView",client_num);
+	}
 	
 }
