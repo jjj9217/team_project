@@ -41,12 +41,25 @@
     }
     
     #mypage{
-        
+    	margin-top:30px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+       	font-size:15px;
         width: 199px;
         height:500px;
-        float:left;     
+        float:left;
     }
-
+	#mypage a{color:black;}
+    .mypagetable{
+        font-size: 20px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-weight: bold;      
+        color:#7d99a4;
+    }
+    #mylink{
+        color: black;
+        font-size: 30px;
+        text-decoration: none;
+    }
     #mypage-conts{
         
         width:810px;
@@ -132,7 +145,7 @@
     .buy_list{
         width: 100%;
         height:340px;
-    
+    	margin-top:10px;
         text-align: center;
     }
 
@@ -153,7 +166,43 @@
         color: black;
         margin-left: 20px;                  
     }
-
+    #adminbutton{
+   		width:120px;
+   		height:30px;
+        margin-top: 3px;
+        font: bold 15px Arial, sans-serif;
+       	cursor:pointer;/*마우스를 올려놓았을 때 커서가 손모양으로 변경됨*/
+       	border:0;
+        background-color:#7d99a4;
+        color: white;
+   		border-radius:3px;    	
+    }
+    #addrees_reg{
+   		width:200px;
+   		height:50px;
+        margin-top: 3px;
+        font: bold 20px Arial, sans-serif;
+       	cursor:pointer;/*마우스를 올려놓았을 때 커서가 손모양으로 변경됨*/
+       	border:0;
+        background-color:#7d99a4;
+        color: white;
+   		border-radius:3px;        
+    }
+    .buy_list_container{display: block; width: 790px; height: auto; margin: 0 auto; padding: 10px; margin-top: 50px;}
+    .buy_list, .order_list{border-collapse: collapse;}
+    .th_delivery{ height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+    .th_receiver{ height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+    .th_address{ height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+    .th_call{ height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+    .th_admin{ height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+	.td_delivery{ height: auto; padding: 30px 5px; text-align: center; font-size:14px; font-weight: bold;}
+    .td_receiver{height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .td_address{height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .td_call{height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .td_admin{height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .top{border-top: 2px solid #4a4a4a}
+    .bottom{border-bottom: 1px solid #a4a4a4}
+    #basic{font: bold 15px Arial, sans-serif; color:red;}
 </style>
 </head>
 <script>
@@ -230,37 +279,33 @@ function updatedeliveryPostdefault(delivery_idx) {
 <div id="Container">
     <div id="mypage">       
         <table>
-            <th><h3><a href="#" id="mylink">마이페이지</a></h3></th>         
+            <tr><th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
             <tr><td class="mypagetable">마이 쇼핑</td></tr>
-            <tr><td>주문/배송조회</td></tr>
-            <tr><td>취소/반품내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
-            <tr><td>장바구니</td></tr>
-            <tr><td>좋아요</td></tr>
-            <tr><td>쿠폰</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이활동</td></tr>
-            <tr><td>1:1문의내역</td></tr>
-            <tr><td>리뷰</td></tr>
-            <tr><td>상품문의내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
-            <tr><td>회원정보 수정</td></tr>
-            <tr><td>배송지/환불계좌</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지/환불계좌</a></td></tr>
         </table>        
     </div>
     <div id="mypage-conts">
         <div id="blank">            
         </div>
         <div class="tit_area">
-            <h2 class="tit">배송지/환불계좌</h2>           
+            <h2 class="tit">배송지</h2>           
         </div>
-        <ul class="address_or_refund">
-            <li class="address_atag"><a href="#" id="address_atag">배송지</a></li>
-            <li class="refund_atag"><a href="#" id="refund_atag">환불계좌</a></li>
-        </ul>
         <p class="notice-text">배송지는 최대 <strong class="colorGreen">${untitled}</strong>까지 등록 가능합니다.</p>
-<form name="frm_view">        
+		<form name="frm_view">        
         <table class="buy_list">
             <colgroup>
                 <col style="width:10%;">
@@ -270,13 +315,12 @@ function updatedeliveryPostdefault(delivery_idx) {
                 <col style="width:20%;">
             </colgroup>
             <thead>
-                <hr width=100%>
                 <tr>
-                    <th scope="col">배송지명</th>
-                    <th scope="col">받는사람</th>
-                    <th scope="col">주소</th>
-                    <th scope="col">연락처</th>
-                    <th scope="col">관리</th>
+                    <th class="th_delivery top bottom" scope="col">배송지명</th>
+                    <th class="th_receiver top bottom" scope="col">받는사람</th>
+                    <th class="th_address top bottom" scope="col">주소</th>
+                    <th class="th_call top bottom" scope="col">연락처</th>
+                    <th class="th_admin top bottom" scope="col">관리</th>
                 </tr>
             </thead>
             <tbody>
@@ -285,18 +329,18 @@ function updatedeliveryPostdefault(delivery_idx) {
 	                    <c:when test="${deliveryList[rowNum-1].defaultpost==1}">
 	                       <c:if test="${!empty deliveryList[rowNum-1].delivery_idx}">
 		                       <tr>
-				                    <td>${deliveryList[rowNum-1].delivery_address_name}배송지명</td>
-				                    <td>${deliveryList[rowNum-1].delivery_get_name}받는사람</td>
-				                    <td>기본배송지 오늘드림
+				                    <td>${deliveryList[rowNum-1].delivery_address_name}</td>
+				                    <td>${deliveryList[rowNum-1].delivery_get_name}</td>
+				                    <td><p id="basic">기본 배송지</p>
 				                        ${deliveryList[rowNum-1].delivery_postNum}
 				                        ${deliveryList[rowNum-1].delivery_address}
 				                        ${deliveryList[rowNum-1].delivery_address2}    
 				                        <c:if test="${!empty deliveryList[rowNum-1].delivery_pass_content}">
 				                        ${deliveryList[rowNum-1].delivery_pass_content}
 				                        </c:if>
-				                    <td>${deliveryList[rowNum-1].delivery_handphone}연락처</td>
+				                    <td>${deliveryList[rowNum-1].delivery_handphone}</td>
 				                    <td>
-				                        <input type="button" onclick="vieweditdeliveryPost(${deliveryList[rowNum-1].delivery_idx});" value="수정"></td>
+				                        <input type="button" onclick="vieweditdeliveryPost(${deliveryList[rowNum-1].delivery_idx});" id="adminbutton" value="수정"></td>
 				                </tr>
 			                </c:if>
 	                    </c:when>
@@ -304,22 +348,22 @@ function updatedeliveryPostdefault(delivery_idx) {
 	                       <c:if test="${!empty deliveryList[rowNum-1].delivery_idx}">
 		                       
 		                       <tr>
-				                    <td>${deliveryList[rowNum-1].delivery_address_name}배송지명</td>
-	                                <td>${deliveryList[rowNum-1].delivery_get_name}받는사람</td>                                
+				                    <td>${deliveryList[rowNum-1].delivery_address_name}</td>
+	                                <td>${deliveryList[rowNum-1].delivery_get_name}</td>                                
 	                                <td>${deliveryList[rowNum-1].delivery_postNum}
 	                                    ${deliveryList[rowNum-1].delivery_address}
 	                                    ${deliveryList[rowNum-1].delivery_address2}    
 	                                    <c:if test="${!empty deliveryList[rowNum-1].delivery_pass_content}">
 	                                    ${deliveryList[rowNum-1].delivery_pass_content}
 	                                    </c:if>
-	                                <td>${deliveryList[rowNum-1].delivery_handphone}연락처</td>
+	                                <td>${deliveryList[rowNum-1].delivery_handphone}</td>
 	                                <td>
 	                                    
-				                        <input type="button" onclick="updatedeliveryPostdefault(${deliveryList[rowNum-1].delivery_idx});" value="기본배송지 설정">
+				                        <input type="button" onclick="updatedeliveryPostdefault(${deliveryList[rowNum-1].delivery_idx});" id="adminbutton" value="기본배송지 설정"><br>
 
-				                      	<input type="button" onclick="vieweditdeliveryPost(${deliveryList[rowNum-1].delivery_idx});" value="수정">			                        
+				                      	<input type="button" onclick="vieweditdeliveryPost(${deliveryList[rowNum-1].delivery_idx});" id="adminbutton"  value="수정"><br>			                        
 				                        
-				                        <input type="button" onclick="deletedeliveryPost(${deliveryList[rowNum-1].delivery_idx});" value="삭제하기">
+				                        <input type="button" onclick="deletedeliveryPost(${deliveryList[rowNum-1].delivery_idx});" id="adminbutton"  value="삭제하기">
                                         
 				                        <%-- <input type="button" onclick="updatedeliveryPost(${deliveryList[rowNum-1].delivery_idx});" value="수정"> --%></td>
 				                        

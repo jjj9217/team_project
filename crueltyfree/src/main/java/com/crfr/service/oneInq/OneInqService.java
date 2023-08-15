@@ -54,6 +54,8 @@ public interface OneInqService {
 	
 	default int deleteoneinq(OneInqVo vo) {return 0;}
 	
+	default int deleteoneinqimg(OneInqVo vo) {return 0;}
+	
 	default int updateoneinq (OneInqVo vo) {return 0;}
 	
 //	// 입력을 위해 product_idx를 불러오는 서비스

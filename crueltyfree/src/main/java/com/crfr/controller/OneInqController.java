@@ -204,10 +204,10 @@ public class OneInqController {
 		vo.setMember_idx(member_idx);
 		System.out.println("Member번호뭐냐"+vo.getMember_idx());
 		System.out.println("문의번호:"+vo.getOne_inq_idx());
-		
-		int result=delNotice.deleteoneinq(vo);		
+		int result1=delNotice.deleteoneinqimg(vo);
+		int result2=delNotice.deleteoneinq(vo);		
 		String viewPage = "boast/view";
-		if(result==1) {//글삭제 성공시
+		if(result1==1 && result2==1) {//글삭제 성공시
 			viewPage = "redirect:/one_inq/one_inq_list.do?";
 		}
 		return viewPage;			

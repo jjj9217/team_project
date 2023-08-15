@@ -75,9 +75,9 @@ public class MypageInsertService implements MypageService {
 		return dao.insertdeliveryPost_normal(vo);
 	}
 	
-	public int insertConfirm(ProductInqVo vo) {
+	public int insertConfirm(int product_inq_idx, String product_inq_answer) {
 		System.out.println("마이서비스까지는 가지는건가?");
-		return dao.insertConfirm(vo);
+		return dao.insertConfirm(product_inq_idx, product_inq_answer);
 	}
 	
 }
