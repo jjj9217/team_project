@@ -15,10 +15,10 @@
     a{text-decoration: none;}
     input[type="button"], input[type="submit"], input[type="checkbox"], select, input[type="radio"], label, button{cursor: pointer;}
     header{
-    top: 0px;
-    width: 100%;
-    height: 165px;
-    background-color: white;
+	    top: 0px;
+	    width: 100%;
+	    height: 165px;
+	    background-color: white;
     }
     
     footer{
@@ -28,7 +28,8 @@
         line-height: 20px;
         background-color: #eef3f5;  
     }
-     body{
+    
+	body{
          width: 1020px; height: auto; margin: 0 auto;
          background-color: white;
      }
@@ -36,16 +37,14 @@
     /* 바디 CSS */
 
     #Container{
-        overflow:hidden;
-
-        width: 1020px; margin: 0 auto;
-        height: auto;
+    	margin: 0 auto;
+		height: auto;
     }
 
     #list_tit{
         width: 350px;
         height: 40px;
-        
+        margin-top: 30px;
     }
 
     .detailSearch{
@@ -262,14 +261,16 @@
         text-align: center;
         border-color: white;
         background-color: orange;
-        
     }
     
-
 	#isearchWord{
-		color:rgb(110, 206, 14);
+		color: #7d99a4;
 		font-size: 25px;
+		letter-spacing: -2px;
+		font-weight: bold;
 	}
+
+	#clear{clear: both;}
 	
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -503,16 +504,6 @@ function ProductDetail(searchWord, category_code, category_code_small,
 }
 
 
-	
-
-
-
-
-
-
-
-
-
 
 
 function ProductDel(searchWord, category_code, category_code_small, 
@@ -636,45 +627,21 @@ function ProductDel(searchWord, category_code, category_code_small,
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
    
 
 </script> 
 </head>
 
 <body>
-<div class="head">
-    <header>    
-        <jsp:include page="../main/header.jsp"/>    
-    </header>
+
+<header>    
+	<jsp:include page="../main/header.jsp"/>    
+</header>
 
 <!-- body시작 -->
-
-
-
 <div id="Container">
     <div id="list_tit">
-        <span id=isearchWord>${exploreVo.searchWord}</span> 검색결과 (전체 ${pageNav.totalRows}개의 상품)
+        <span id="isearchWord">${exploreVo.searchWord}</span> 검색결과 (전체 ${pageNav.totalRows}개의 상품)
     </div>
     <div class="detailSearch">      
         <div class="serach_category_big">
@@ -993,13 +960,13 @@ function ProductDel(searchWord, category_code, category_code_small,
 </div>
 
 
-
-<!-- footer -->
-    <footer>
-        <jsp:include page="../main/footer.jsp"/>        
-    </footer>
-
+	<div id="clear"></div>
 </body>
+<!-- footer -->
+<footer>
+	<jsp:include page="../main/footer.jsp"/>        
+</footer>
+
 </body>
 </html>
 
