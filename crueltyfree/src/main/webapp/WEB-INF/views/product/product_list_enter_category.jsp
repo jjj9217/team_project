@@ -272,6 +272,8 @@ function getParameterValue(parameterName) {
 function ProductDetail(category_code, category_code_small, 
         sort_salecount, sort_view, 
         pageNum, pageBlock) {
+  alert(pageNum);
+  alert(pageBlock);
 	  var p = pageNum.value;
 	  var b = pageBlock.value;
   alert('페이지넘'+p);
@@ -676,7 +678,7 @@ function ProductDetail(category_code, category_code_small,
             <c:if test="${i le pageNav.totalPageNum}">
                 <c:choose>
                     <c:when test = "${pageNav.pageNum eq i}">
-                        <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '')">
+                        <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">
                             <span style="color:red">${i}&nbsp;</span>
                         </a>
                     </c:when>
