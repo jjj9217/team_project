@@ -263,7 +263,7 @@ function HeaderBest(sort_salecount) {
 				<li class="pro_first">
 					<div class="pro_info">
 						<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[3].product_idx}">
-							<img src="${pageContext.request.contextPath}/resources/iuploads/${fileList[3].saveFile}" class="pro_img">
+							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[3].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
 							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[3].product_idx}">

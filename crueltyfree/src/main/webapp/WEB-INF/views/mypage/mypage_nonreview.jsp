@@ -150,42 +150,59 @@
 
     /* Modal */
 			
-        #modal{
-            width:100%;
-            height:100%;           
-            display: none;
-            
-            justify-content: center;
+        .modal{
+	 	width: 100%;
+	 	height: 100%;
+	 	position: fixed;
+	 	top: 0;
+	 	left: 0;
+	 	display: flex;
+	 	justify-content: center;
+	 	align-items: center;
+	 	background: rgba(0, 0, 0, 0.5);
         }  
-        #modal .modal-window {
-            background: rgba( 69, 139, 197, 0.70 );
-            box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-            backdrop-filter: blur( 13.5px );
-            -webkit-backdrop-filter: blur( 13.5px );
-            border-radius: 10px;
-            border: 1px solid rgba( 255, 255, 255, 0.18 );
+        .modal-window {
+            background-color: #ffffff;
+            border-radius: 5px;
             width: 560px;
             height: 700px;
-            position: relative;
-            top: -100px;
+            position: absolute;
             padding: 10px;
-            position: fixed;
-            top: 5%;
-            justify-content: center;
+            top: 100px;
+            left: 400px;
              
         }
-        #modal .title {
+        .title {
+        	width: 540px;
             padding-left: 10px;
-            display: inline;
-            text-shadow: 1px 1px 2px gray;
-            color: white;
+            padding-right: 10px;
+            display: block;
+            color: #7d99a4;
+            font-weight:bold;
             font-size: 20px;
-            
+            margin-bottom: 20px;
         }
-        #modal .title h2 {
+        .close_modal{
+        	float: right;
+        	display: block;
+        	font-size: 36px;
+        	cursor: pointer;
+        }
+        .hr_space{
+        	margin: 10px 0;
+        	width: 560px;
+        	height: 5px;
+        	background-color: #7d99a4;
+        }
+        .txt_info{
+        	  overflow: hidden;
+			  text-overflow: ellipsis;
+			  white-space: nowrap;
+        }
+        .title h2 {
             display: inline;
         }
-        #modal .close-area {
+        .close-area {
             display: inline;
             float: right;
             padding-right: 10px;
@@ -194,14 +211,16 @@
             color: white;
         }
         
-        #modal .content {
+        .content {
             margin-top: 20px;
             padding: 0px 10px;
             text-shadow: 1px 1px 2px gray;
             color: white;
         }
-
-
+		.hidden {
+	 	display: none;
+	 	}
+		.text_gray{color:#4a4a4a; font-weight: bold;}
 
 
 
@@ -245,13 +264,14 @@
 
         .thum{
             float: left;
-            width: 85px;
-            height: 85px;
+            width: 120px;
+            height: 120px;
+            padding: 10px;
         }
 
         .goodlist_thumb{
-            width: 85px;
-            height: 85px;
+            width: 120px;
+            height: 120px;
         }
 
         .write_step{
@@ -453,12 +473,10 @@ margin-left: 1px;
 float:left;}
     .buy_list_container{display: block; width: 790px; height: auto; margin: 0 auto; padding: 10px; margin-top: 50px;}
     .buy_list, .order_list{border-collapse: collapse;}
-    .th_product{width: 135px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
-    .th_date{width: 380px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
-    .th_review{width: 65px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
-	.td_product{width: 125px; height: auto; padding: 30px 5px; text-align: center; font-size:14px; font-weight: bold;}
-    .td_date{width: 370px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
-    .td_review{width: 45px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .th_product{width: 180px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+    .th_review{width: 30px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+	.td_product{width: 120px; height: auto; padding: 30px 5px; text-align: center; font-size:14px; font-weight: bold;}
+    .td_review{width: 30px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
     .top{border-top: 2px solid #4a4a4a}
     .bottom{border-bottom: 1px solid #a4a4a4}
     
@@ -478,6 +496,8 @@ float:left;}
         text-align: center;
         border-color: white;
         background-color: orange;
+    }
+    .prd_item_box{
     }
 </style>
 <script>
@@ -636,74 +656,60 @@ function setThumbnail5(event) {
                     <a href="#" id="refund_atag" onclick="document.forms['caf'].submit();">
             나의 리뷰</a></li>
         </ul>       
-        <table class="buy_list" style="margin-top:30px;">
-            <colgroup>
-                <col style="width:62%;">
-                <col style="width:21%;">
-                <col style="width:17%;">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th class="th_product top bottom" scope="col">상품</th>
-                    <th class="th_date top bottom"scope="col">작성기간</th>                   
-                    <th class="th_review top bottom"scope="col">리뷰작성</th>
-                </tr>
-            </thead>
-            <tbody>
-                                <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
-                    <!-- c:if nonreviewfileList[rowNum-1]. = null이면 리뷰안쓴목록만 출력하는방식도 있을 듯? -->
-                            <c:if test="${!empty nonreviewproductList[rowNum-1].product_name}">
-                <tr>                
-                    <td><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${nonreviewfileList[rowNum-1].saveFile}">
-                        구매일자: ${nonreviewproductList[rowNum-1].order_date}
-                        상품이름: ${nonreviewproductList[rowNum-1].product_name}
-                    </td>
-                    <td>작성기간: ${nonreviewproductList[rowNum-1].order_date} +90일</td>
-                    <td>
-                        <input type="button" class="btn" id="btn-modal" name="btn-modal" value="리뷰작성">
-                </tr>
-
-                                        <!-- 아래는 Modal -->
+        <table class="buy_list" style="margin-top:30px;">            
+        <tr>
+            <th class="th_product top bottom" scope="col">상품</th>
+            <th class="th_review top bottom"scope="col">리뷰작성</th>
+        </tr>
+        <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
+        <!-- c:if nonreviewfileList[rowNum-1]. = null이면 리뷰안쓴목록만 출력하는방식도 있을 듯? -->
+        <c:if test="${!empty nonreviewproductList[rowNum-1].product_name}">
+        <tr>                
+           <td class="td_product bottom">
+           <div class="prd_item_box">
+           <img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${nonreviewfileList[rowNum-1].saveFile}">
+           구매일자: 
+           <fmt:formatDate value="${nonreviewproductList[rowNum-1].order_date}" pattern="yyyy.MM.dd" /><br>
+           ${nonreviewproductList[rowNum-1].product_name}
+           </div>
+           </td>
+           <td class="td_review bottom">
+           <input type="button" class="btn" id="btn-modal" name="btn-modal" value="리뷰작성">
+           </td>
+        </tr>
+<!-- 아래는 Modal -->
 <form name="caq" class="test01" enctype="multipart/form-data" action="${pageContext.request.contextPath}/mypage/mypage_reviewReg_process.do" method="post">
-<div id="modal" class="modal">    
+<div id="modal" class="modal hidden">    
     <div class="modal-window">
         <div class="title">
             <h2>리뷰작성</h2>
-            <span class="close_modal">&times;</span>
-        <p>${rowNum}번째 Modal</p>
+            <span class="close_modal">X</span>
         </div>
+        <div class="hr_space"></div>
         <div class="item_info">            
                 <c:if test="${!empty nonreviewproductList[rowNum-1].product_name}">
                     <span class="thum"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${nonreviewfileList[rowNum-1].saveFile}"></span>
-                    <dl class="txt_info">
-                        <dt>상품이름: ${nonreviewproductList[rowNum-1].product_name}
-                            <input type="hidden" name="product_idx" value="${nonreviewproductList[rowNum-1].product_idx}">
-                        </dt>                                         
-                    </dl>
+                    <div class="txt_info">
+                    <span class="text_gray"> ${nonreviewproductList[rowNum-1].product_name} </span>
+                    <input type="hidden" name="product_idx" value="${nonreviewproductList[rowNum-1].product_idx}">
+                    </div>
                 </c:if>
+        <div class="review_star_box">
+        <img class="review_star" src="${pageContext.request.contextPath}/resources/img/star_empty.png" width="50px" height="50px">
+        <img class="review_star" src="${pageContext.request.contextPath}/resources/img/star_empty.png" width="50px" height="50px">
+        <img class="review_star" src="${pageContext.request.contextPath}/resources/img/star_empty.png" width="50px" height="50px">
+        <img class="review_star" src="${pageContext.request.contextPath}/resources/img/star_empty.png" width="50px" height="50px">
+        <img class="review_star" src="${pageContext.request.contextPath}/resources/img/star_empty.png" width="50px" height="50px">
         </div>
+        </div>
+        <input type="hidden" name="review_score" value="">
+        <input type="hidden" name="order_product_idx" value="${nonreviewproductList[rowNum-1].order_product_idx}">
         <ul class="write_step">
-            <li class="review_rating"><span class="review_tit">상품은 어떠셨나요? ${nonreviewproductList[rowNum-1].order_product_idx}</span>
-                <ul class="star_inner">
-                    <input type="hidden" name="review_score" value="3">
-                    <input type="hidden" name="order_product_idx" value="${nonreviewproductList[rowNum-1].order_product_idx}">
-                    <li>★</li>
-                    <li>★</li>
-                    <li>★</li>
-                    <li>★</li>
-                    <li>★</li>
-                </ul>
-            </li>                     
+            <span class="review_tit">상품은 어떠셨나요?</span>
             <li id="review_content_back">
                 <span class="tit">솔직한 상품 리뷰를 남겨주세요</span>
                 <div class="review_content">
-                    <textarea id="review_content_textarea" name="review_content" placeholder="꿀팁 가득, 상세한 리뷰를 작성해보세요!&#10;도움수가 올라가면 포인트도 받고,&#10;탑리뷰어가 될 확률도 높아져요!&#10;반품, 환불 관련 내용은 고객센터로 별도 문의해주세요."></textarea>
-                    <div class="review_content_bottom">
-                        <div class="count fix_txtNum" style="color:red"><!-- 25자 이하 입력 시 error class 추가 -->
-                            <b class="txt_en" style="color:red">0</b>
-                            <span>/</span> 1,000
-                        </div>
-                    </div>
+                    <textarea id="review_content_textarea" name="review_content" placeholder="리뷰내용을 작성해 주세요!&#10;반품, 환불 관련 내용은 고객센터로 별도 문의해주세요."></textarea>
                 </div>          
             </li>                        
             <li class="photo-update"><!-- 리뷰 고도화 : class 추가 -->
@@ -755,11 +761,9 @@ function setThumbnail5(event) {
     </div>    
 </div>
 </form>
-
                 
-                           </c:if>
-                                </c:forEach>       
-            </tbody>        
+        </c:if>
+		</c:forEach>       
         </table>
         
         <!--페이징처리 -->
