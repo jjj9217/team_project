@@ -190,8 +190,8 @@
     .buy_list{
         width: 100%;
         height:340px;
-    
         text-align: center;
+        margin-top:30px;
     }
 
 
@@ -211,7 +211,19 @@
         border-color: white;
         background-color: orange;
     }
-    
+    .buy_list_container{display: block; width: 790px; height: auto; margin: 0 auto; padding: 10px; margin-top: 50px;}
+    .buy_list, .order_list{border-collapse: collapse;}
+    .th_discount{height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+    .th_coupon{height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+    .th_couponcondition{height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+    .th_day{height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+	.td_discount{height: auto; padding: 30px 5px; text-align: center; font-size:14px; font-weight: bold;}
+    .td_coupon{height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .td_couponcondition{height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .td_day{height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .top{border-top: 2px solid #4a4a4a}
+    .bottom{border-bottom: 1px solid #a4a4a4}    
+	#no_coupon{text-align:center; }
 </style>
 </head>
 
@@ -264,12 +276,11 @@
                 <col style="width: 15%;">
             </colgroup>     
             <thead>
-                <hr width=100%>
                 <tr>
-                    <th scope="col">할인율</th>
-                    <th scope="col">쿠폰명</th>
-                    <th scope="col">쿠폰사용조건</th>
-                    <th scope="col">사용기간</th>
+                    <th class="th_discount top bottom" scope="col">할인율</th>
+                    <th class="th_coupon top bottom" scope="col">쿠폰명</th>
+                    <th class="th_couponcondition top bottom" scope="col">쿠폰사용조건</th>
+                    <th class="th_day top bottom" scope="col">사용기간</th>
                 </tr>
             </thead>
             <tbody>            
@@ -288,7 +299,7 @@
             </c:choose>                           
             </c:forEach>
                 <c:if test="${empty couponList[0].coupon_idx}">
-                    <tr><td>쿠폰이 없습니다.</td></tr>
+                    <tr><td id="no_coupon" colspan="4">쿠폰이 없습니다.</td></tr>
                 </c:if>           
             </tbody>
 
