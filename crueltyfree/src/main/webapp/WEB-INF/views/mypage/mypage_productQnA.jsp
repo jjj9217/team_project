@@ -169,7 +169,7 @@
     .buy_list{
         width: 100%;
         height:340px;
-        
+        margin-top:30px;
         text-align: center;
     }
     
@@ -269,6 +269,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        
     }
 
     #td_paging{
@@ -276,7 +277,29 @@
         font: 20px Arial, Sans-serif;
         text-align: center;
         border-color: white;
-        background-color: orange;
+    }
+	#no_coupon{text-align:center; }
+    .buy_list td{border-bottom: 1px solid gray; height:100px;}
+    #blue{font: bold 20px Arial, sans-serif; color:#7d99a4;}
+    #red{font: bold 20px Arial, sans-serif; color:red;}
+     .oneinqdel{
+        width: 100px;
+        height: 30px;
+        border-radius: 5px;
+        border: 1px solid #7d99a4;
+        background-color: #fff;
+        color:  #7d99a4;
+        font-weight: bold;
+        margin-right: 40px;               
+    }
+    .oneinqModifyup{
+    	width: 100px;
+        height: 30px;
+        border-radius: 5px;
+        border: 1px solid #7d99a4;
+        background-color: #7d99a4;
+        color:  #fff;
+        font-weight: bold;
     }
 </style>
 </head>
@@ -364,18 +387,19 @@ submit();
 				
 				
                 <tr style="cursor:pointer;" class="viewinq">     	                
-                    <td><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${inqfileList[rowNum-1].saveFile}">
-                        상품이름: ${inqproductList[rowNum-1].product_name}
-                        문의날짜: ${inqproductList[rowNum-1].product_inq_regDate}
+                    <td><img class="goodlist_thumb" style="width:150px;height:150px;" src="${pageContext.request.contextPath}/resources/uploads/${inqfileList[rowNum-1].saveFile}">
+                       <br>${inqproductList[rowNum-1].product_name}
                     </td>                                        
-                    <td>문의내용: ${inqproductList[rowNum-1].product_inq_content}</td>
+                    <td>${inqproductList[rowNum-1].product_inq_content}<br>
+                    	${inqproductList[rowNum-1].product_inq_regDate}
+                    </td>
                     <td>
                         <c:choose>
                             <c:when test="${empty inqproductList[rowNum-1].product_inq_answer}">
-                                답변대기
+                                <div id="blue">답변대기</div>
                             </c:when>
                             <c:when test="${!empty inqproductList[rowNum-1].product_inq_answer}">
-                                답변완료
+                                <div id="blue">답변완료</div>
                             </c:when>
                             <c:otherwise>
                             </c:otherwise>
@@ -384,7 +408,7 @@ submit();
                 </tr>
                 <tbody class="inqView" style="display:none;">
                 <tr>
-                <td colspan='2'>
+                <td colspan='2' style="background-color:#eef3f5;">
                 
                 
                 	                	
@@ -396,7 +420,7 @@ submit();
                 
                     
                 </td>
-                <td>
+                <td style="background-color:#eef3f5; width:300px;">
 				<form class="inqdelform" action="${pageContext.request.contextPath}/mypage/mypage_inqdel_process.do" method="post">
                 <input type="hidden" name="product_inq_idx" value="${inqproductList[rowNum-1].product_inq_idx}">
                 <c:if test="${empty inqproductList[rowNum-1].product_inq_answer}">
@@ -458,7 +482,7 @@ submit();
             
                         <tr><td>
                         <c:if test="${empty inqproductList[0].product_inq_content}">
-                                문의한 상품내역이 없습니다.
+                               <tr><td id="no_coupon" colspan="3">문의한 상품내역이 없습니다.</td></tr>
                             </c:if>
                         </td></tr>                            
             </tbody>
