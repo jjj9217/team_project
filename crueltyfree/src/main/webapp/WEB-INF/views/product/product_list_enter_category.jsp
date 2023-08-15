@@ -36,8 +36,7 @@
     /* 바디 CSS */
 
     #Container{
-        overflow:hidden;
-
+        overflow: hidden;
         width: 1020px; margin: 0 auto;
         height: auto;
     }
