@@ -107,7 +107,7 @@ public interface MypageService {
 	
 	default int selectconfirmCount(int member_idx) {return 0;}
 	
-	default int insertConfirm(ProductInqVo vo) {return 0;}
+	default int insertConfirm(int product_inq_idx, String product_inq_answer) {return 0;}
 	
 	default List<ReviewVo> reviewRegList2(ReviewVo vo) {return null;}
 	

@@ -91,6 +91,11 @@ public class OneInqDao{
 		return sqlSession.delete(MAPPER+".deleteoneinq", vo);
 	}
 	
+	//1:1문의 삭제하기
+	public int deleteoneinqimg(OneInqVo vo) {
+		return sqlSession.delete(MAPPER+".deleteoneinqimg", vo);
+	}
+	
 	//1:1문의 수정하기
 	public int updateoneinq (OneInqVo vo) {
 		return sqlSession.update(MAPPER+".updateoneinq", vo);

@@ -623,10 +623,10 @@ function ProductDetail(category_code, category_code_small,
 		                <li class="product_list">
 		                    <div class="prd_info">                    
 		                        <div class="goodlist_thumb_background">
-		                            <a href="#"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${fileList[rowNum-1].saveFile}"></a>
+		                            <a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[rowNum-1].product_idx}"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${fileList[rowNum-1].saveFile}"></a>
 		                        </div>
 		                        <div class="prd_name">                        
-		                            <a href="#" class="goodlist">
+		                            <a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[rowNum-1].product_idx}" class="goodlist">
 		                                <p class="prd_title">${productList[rowNum-1].product_name}</p>
 		                            </a>
 		                        </div>
