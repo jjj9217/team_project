@@ -82,11 +82,30 @@
 	}
 	
 	#notice_list {
-		font-size: 16px;
+		font-size: 14px;
 		border-top: 2px solid #a4a4a4;
 		border-bottom: 2px solid #a4a4a4;
 		text-align: center;
 		margin-bottom: 20px;
+	}
+	
+	#notice_list a {
+		color: #4a4a4a;
+	}
+	
+	#notice_list th {
+		border-bottom: 1px solid #a4a4a4;
+		color: #4a4a4a;
+	}
+	
+	#notice_list td {
+		height: 50px;
+		border-bottom: 1px solid #d9d9d9;
+	}
+	
+	#td_title {
+		text-align: left;
+		padding: 0 0 0 60px;
 	}
 
 	.div_write {
@@ -140,7 +159,7 @@
 	
 	<!-- 글목록 테이블 -->
     <table id="notice_list">
-        <tr height="40px;">
+        <tr height="50px;">
             <th width="100px;">번호</th>
             <th width="720px;">제목</th>
             <th width="200px;">등록일</th>
@@ -178,7 +197,7 @@
 		</c:choose>
 
 		<tr>
-			<td id="td_paging" colspan="3">
+			<td id="td_paging" colspan="3" style="border-bottom: none;">
 				<!-- 페이지 네비게이션 구현 -->
 				<%@ include file="paging_notice.jsp" %>
 			</td>

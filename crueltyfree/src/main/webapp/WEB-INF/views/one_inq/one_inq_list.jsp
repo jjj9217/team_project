@@ -81,11 +81,29 @@
 	}
 	
 	#one_inq_list {
-		font-size: 16px;
+		font-size: 14px;
 		border-top: 2px solid #a4a4a4;
 		border-bottom: 2px solid #a4a4a4;
 		text-align: center;
 		margin-bottom: 50px;
+		color: #4a4a4a;
+	}
+	
+	#one_inq_list a {
+	}
+	
+	#one_inq_list th {
+		border-bottom: 1px solid #a4a4a4;
+		color: #4a4a4a;
+	}
+	
+	#one_inq_list td {
+		height: 50px;
+		border-bottom: 1px solid #d9d9d9;
+	}
+	
+	#td_title {
+		color: #4a4a4a;
 	}
 	
 	.div_write {
@@ -164,6 +182,18 @@
         text-shadow: 1px 1px 2px gray;
         color: white;
     }
+    .inqView {
+    	line-height: 80px;
+    	background-color: #eef3f5;
+    	display: none;
+    }
+    
+    .oneinqModifyup {
+    	width: 70px;
+    	height: 20px;
+    	
+    }
+    
 </style>
 
 </head>
@@ -189,22 +219,22 @@
 		
 	<!-- 글목록 테이블 -->
     <table id="one_inq_list">
-        <tr height="40px;">
+        <tr height="50px;">
             <th width="100px;">번호</th>
-            <th width="720px;">제목</th>
+            <th width="620px;">제목</th>
             <th width="200px;">등록일</th>
+            <th width="100px;">상태</th>
         </tr>
         
         <!-- 글목록 내용-->
 		<c:choose>
 			<c:when test="${empty oneinqList[0].one_inq_idx}">
 				<tr>
-					<td colspan="3" style="height: 300px; color: #a4a4a4;"> 등록하신 1:1 문의가 없습니다. </td>
+					<td colspan="4" style="height: 300px; color: #a4a4a4;"> 등록하신 1:1 문의가 없습니다. </td>
 				</tr>
 			</c:when>
 			<c:otherwise>
 				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
-					
 					<c:if test="${oneinqList[rowNum-1].one_inq_idx ne null}"> <!-- notice에 저장된 값이 있을 경우에만 출력 -->
 						<tr style="cursor:pointer;" class="viewinq">
 							<td>${oneinqList[rowNum-1].one_inq_idx}</td> <!-- 번호 -->
@@ -215,87 +245,79 @@
 								<fmt:formatDate value="${oneinqList[rowNum-1].one_inq_regDate}" type="date"
 									pattern="yyyy/MM/dd" /> <!-- 날짜 -->
 							</td>
-							<td>
-		                        <c:choose>
-		                            <c:when test="${empty oneinqList[rowNum-1].one_inq_answer}">
-		                                답변대기
-		                            </c:when>
-		                            <c:when test="${!empty oneinqList[rowNum-1].one_inq_answer}">
-		                                답변완료
-		                            </c:when>
-		                            <c:otherwise>
-		                            </c:otherwise>
-		                        </c:choose>                                                                            
-		                    </td>
+							<c:choose>
+								<c:when test="${empty oneinqList[rowNum-1].one_inq_answer}">
+									<td style="color: #a4a4a4; font-weight: bold;">답변대기</td>
+								</c:when>
+								<c:otherwise>
+									<td style="color: #7d99a4; font-weight: bold;">답변완료</td>
+								</c:otherwise>
+							</c:choose>
 						</tr>
 					</c:if>
 					
-<tbody class="inqView" style="display:none;">
-           <tr>
-           <td colspan='2'>
-           
-           
-           	                	
-           	문의내용 : ${oneinqList[rowNum-1].one_inq_content}<br>
-           	
-           	<c:if test="${!empty oneinqList[rowNum-1].one_inq_answer}">
-           	답변내용 : ${oneinqList[rowNum-1].one_inq_answer} 
-           	</c:if>
-            
-                
-            </td>
-            <td>
-<form class="inqdelform" action="${pageContext.request.contextPath}/one_inq/one_inqdel_process.do" method="post">
-           <input type="hidden" name="one_inq_idx" value="${oneinqList[rowNum-1].one_inq_idx}">
-           <c:if test="${empty oneinqList[rowNum-1].one_inq_answer}">
-           <button type="button" class="oneinqModifyup">수정하기</button>
-           </c:if>
-           <button type="button" class="oneinqdel">삭제하기</button>                
-           </form>
-           
-           </td>
-           
-           </tr>
-           </tbody>
-           
-           
+					<!-- 클릭 시 보이는 내용 -->
+					<tr class="inqView">
+						<td style="height: 100px; font-size: 30px; font-weight: bold;">
+							<div style="color: #7d99a4;"><a>Q<br></a></div>
+							<c:if test="${!empty oneinqList[rowNum-1].one_inq_answer}">
+								<div style="color: #a4a4a4;"><a>A</a></div>
+							</c:if>
+						</td>
+						<td>
+							${oneinqList[rowNum-1].one_inq_content}<br>
+							<c:if test="${!empty oneinqList[rowNum-1].one_inq_answer}">
+								${oneinqList[rowNum-1].one_inq_answer}
+							</c:if>
+						</td>
+						<td></td>
+						<td>
+							<form class="inqdelform" action="${pageContext.request.contextPath}/one_inq/one_inqdel_process.do" method="post">
+								<input type="hidden" name="one_inq_idx" value="${oneinqList[rowNum-1].one_inq_idx}">
+								<c:if test="${empty oneinqList[rowNum-1].one_inq_answer}">
+									<button type="button" class="oneinqModifyup">수정하기</button>
+								</c:if>
+								<button type="button" class="oneinqdel">삭제하기</button>                
+							</form>
+						</td>
+					</tr>
 
-<!-- 상품문의 수정하기 Modal -->
-<form name="caq" class="oneModifyModal" action="${pageContext.request.contextPath}/one_inq/one_inqModify_process.do" method="post">
-<div id="modal" class="modal_modify">    
-    <div class="modal-window">
-        <div class="title">
-            <h2>1:1문의수정 </h2>
-            <span class="close_modalmodify">&times;</span>
-            <br>
-            <h1>문의내용 : ${oneinqList[rowNum-1].one_inq_title}</h1>                   
-        </div>        
-        <ul class="write_step">                           
-            <li id="review_content_back">  				             
-	            <select name="one_inq_title" class="inq_type">
-					<option value="회원정보">회원정보</option>
-					<option value="주문/결제">주문/결제</option>
-					<option value="배송문의">배송문의</option>
-					<option value="취소/교환/환불">취소/교환/환불</option>
-					<option value="사이트 이용 오류/개선">사이트 이용 오류/개선</option>
-					<option value="판매자 등급 문의">판매자 등급 문의</option>
-				</select>
-                <div class="review_content">
-                    <br><textarea id="review_content_textarea" name="one_inq_content" placeholder="문의내용을 입력해주세요.">${oneinqList[rowNum-1].one_inq_content}</textarea>                          
-              			<input type="hidden" name="one_inq_idx" value="${oneinqList[rowNum-1].one_inq_idx}">
-                </div>          
-            </li>
-        </ul>
-        <div class="review_reg_background">                                                                     
-<!--             <button type="button" class="btnLookup" id="review_ok">닫기</button> -->
-
+					<!-- 상품문의 수정하기 Modal -->
+					<form name="caq" class="oneModifyModal" action="${pageContext.request.contextPath}/one_inq/one_inqModify_process.do" method="post">
+					<div id="modal" class="modal_modify">    
+					    <div class="modal-window">
+					        <div class="title">
+					            <h2>1:1문의수정 </h2>
+					            <span class="close_modalmodify">&times;</span>
+					            <br>
+					            <h1>문의내용 : ${oneinqList[rowNum-1].one_inq_title}</h1>                   
+					        </div>        
+					        <ul class="write_step">                           
+					            <li id="review_content_back">  				             
+						            <select name="one_inq_title" class="inq_type">
+										<option value="회원정보">회원정보</option>
+										<option value="주문/결제">주문/결제</option>
+										<option value="배송문의">배송문의</option>
+										<option value="취소/교환/환불">취소/교환/환불</option>
+										<option value="사이트 이용 오류/개선">사이트 이용 오류/개선</option>
+										<option value="판매자 등급 문의">판매자 등급 문의</option>
+									</select>
+					                <div class="review_content">
+					                    <br><textarea id="review_content_textarea" name="one_inq_content" placeholder="문의내용을 입력해주세요.">${oneinqList[rowNum-1].one_inq_content}</textarea>                          
+					              			<input type="hidden" name="one_inq_idx" value="${oneinqList[rowNum-1].one_inq_idx}">
+					                </div>          
+					            </li>
+					        </ul>
+					        <div class="review_reg_background">                                                                     
+					<!--   <button type="button" class="btnLookup" id="review_ok">닫기</button> -->
 					
-
-            <button type="button" class="reviewModifyup" id="review_cancel" >문의 수정하기</button>                                  
-        </div>
-    </div>    
-</div>
-</form>
+										
+					
+					            <button type="button" class="reviewModifyup" id="review_cancel" >문의 수정하기</button>                                  
+					        </div>
+					    </div>    
+					</div>
+					</form>
 
 						
 				</c:forEach>
@@ -305,7 +327,7 @@
 		
 
 		<tr>
-			<td id="td_paging" colspan="6">
+			<td id="td_paging" colspan="4" style="border: none;">
 				<!-- 추후 페이징 구현 -->
 			</td>
 		</tr>
@@ -324,7 +346,7 @@ $(function(){
    	$(".viewinq").click(function(){ 
         var index = $(".viewinq").index(this);
         
-        $(".inqView").eq(index).css("display", "block");      
+        $(".inqView").eq(index).toggle();
     });
 
         

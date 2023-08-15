@@ -118,6 +118,19 @@
 	
 	.notice_title a {
 		font-size: 18px;
+		font-family: 'Noto Sans KR';
+		font-weight: 700;
+	}
+	
+	.notice_edit_delete {
+		width: 60px;
+		height: 20px;
+		margin: 10px 0 0 960px;
+		color: #a4a4a4;
+	}
+	
+	.notice_edit_delete a {
+		color: #a4a4a4;
 	}
 	
 	.notice_content {
@@ -128,6 +141,8 @@
 	.notice_content a {
 		font-size: 13px;
 		line-height: 30px;
+		font-family: 'Noto Sans KR';
+		font-weight: 400;
 	}
 
 	.div_write {
@@ -184,27 +199,17 @@
 			<a>${noticeView.notice_idx}</a>
 		</article>
 		<article class="notice_title">
-			<a>${noticeView.notice_title}크루얼티프리 시스템 작업 공지 (08/22 오전 2시~6시)</a>
+			<a>${noticeView.notice_title}</a>
 		</article>
+		<c:if test="${mVo.member_grade eq 2}">
+			<article class="notice_edit_delete">
+				<a href="${pageContext.request.contextPath}/one_inq/noticeModify.do?prdNum=${noticeView.notice_idx}">수정　</a>
+				<a href="${pageContext.request.contextPath}/one_inq/noticedel_process.do?prdNum=${noticeView.notice_idx}">삭제</a>
+			</article>
+		</c:if>
 		<article class="notice_content">
-			
-			<a>${noticeView.notice_content}안녕하세요, 크루얼티프리입니다.<br><br>
-				
-				보다 안정적인 서비스를 제공하고자, 크루얼티프리 시스템 점검을 진행할 예정입니다.<br>
-				작업 시간 동안 아래 서비스 이용이 불가하오니 고객 여러분의 양해 부탁드리겠습니다.<br><br>
-				
-				작업 시간 : 2023년 8월 22일(화) 오전 2시 ~ 오전 6시<br>
-				작업 내용 : 크루얼티프리 시스템 점검<br>
-				작업 영향 : <br>
-				 1) 크루얼티프리 회원 가입/탈퇴 불가<br>
-				 2) 크루얼티프리 포인트 적립/사용 불가 (주문에 대한 포인트는 사후 적립 처리됩니다.)<br>
-				 3) 크루얼티프리 사이트 자동 로그인 불가<br>
-				 4) 크루얼티프리 회원정보 수정 불가<br><br>
-				 
-				* 작업 시간은 다소 변동 될 수 있습니다.<br><br>
-								
-				더 좋은 서비스 제공을 위해 항상 노력하겠습니다.<br>
-				감사합니다.<br>				
+			<pre><a>${noticeView.notice_content}</a></pre>
+			<a>
 				<img src="${pageContext.request.contextPath}/resources/uploads/${noticeView.notice_saveFile}">
 			</a>
 		</article>
@@ -214,14 +219,7 @@
 	<div class="div_list">
 		<a href="${pageContext.request.contextPath}/one_inq/notice.do"><button id="notice_list">목록보기</button></a>
 	</div>
-	<c:if test="${mVo.member_grade eq 2}">
-		<div class="div_list">
-			<a href="${pageContext.request.contextPath}/one_inq/noticeModify.do?prdNum=${noticeView.notice_idx}"><button id="notice_list2">수정하기</button></a>
-		</div>
-		<div class="div_list">
-			<a href="${pageContext.request.contextPath}/one_inq/noticedel_process.do?prdNum=${noticeView.notice_idx}"><button id="notice_list3">삭제하기</button></a>
-		</div>
-	</c:if>
+
 </section>
 
 <footer>
