@@ -9,6 +9,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Header</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(function(){	
+	$(".review_star").click(function(){
+		
+	});
+	
+	
+});
+</script>
 <style>
 *{margin: 0; padding: 0;}
     a{text-decoration: none;}
@@ -221,15 +231,23 @@
 	 	display: none;
 	 	}
 		.text_gray{color:#4a4a4a; font-weight: bold;}
-
-
-
-
+		.review_star_box{
+		margin-left: 150px;
+		padding-top: 30px;
+		padding-bottom: 30px;
+		
+		}
+		.txtAr{
+		resize: none;
+		padding: 10px;
+		outline-color:#7d99a4;
+		}
+		.review_star{cursor: pointer;}
 
         .review_reg_background{
         width: 100%;
         height: 80px;
-        
+        margin-top: 70px;
         display : flex;
         justify-content: center;
         align-items : center;
@@ -238,16 +256,22 @@
         #review_ok{
             width: 200px;
             height: 50px;
-            
-            color: white;
+            color: #7d99a4;
+            font-weight: bold;
+            border: 1px solid #7d99a4;
+            background-color: #fff;
+            border-radius: 5px;
             margin-left: 20px;                  
         }
 
         #review_cancel{
             width: 200px;
             height: 50px;
-            
-            color: white;
+            color: #fff;
+            font-weight: bold;
+            border: 1px solid #7d99a4;
+            background-color: #7d99a4;
+            border-radius: 5px;
             margin-left: 20px;                  
         }
 
@@ -307,8 +331,8 @@
 
         .review_content{
             height: auto;
-        
-            float: right;
+        	padding: 10px;
+            float: left;
         }
         
         #review_content_textarea{
@@ -329,7 +353,7 @@
 
         .step_cont{
             height: 160px;          
-            
+            padding: 10px;
         }
 
         .photo-list-info{
@@ -361,7 +385,6 @@
             width: 80px;
             height: 80px;
         }
-
         .rw-photo-list p{
             font-size: 10px;
             text-align: center;
@@ -691,6 +714,7 @@ function setThumbnail5(event) {
                     <span class="thum"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${nonreviewfileList[rowNum-1].saveFile}"></span>
                     <div class="txt_info">
                     <span class="text_gray"> ${nonreviewproductList[rowNum-1].product_name} </span>
+                    
                     <input type="hidden" name="product_idx" value="${nonreviewproductList[rowNum-1].product_idx}">
                     </div>
                 </c:if>
@@ -705,16 +729,13 @@ function setThumbnail5(event) {
         <input type="hidden" name="review_score" value="">
         <input type="hidden" name="order_product_idx" value="${nonreviewproductList[rowNum-1].order_product_idx}">
         <ul class="write_step">
-            <span class="review_tit">상품은 어떠셨나요?</span>
             <li id="review_content_back">
-                <span class="tit">솔직한 상품 리뷰를 남겨주세요</span>
                 <div class="review_content">
-                    <textarea id="review_content_textarea" name="review_content" placeholder="리뷰내용을 작성해 주세요!&#10;반품, 환불 관련 내용은 고객센터로 별도 문의해주세요."></textarea>
+                    <textarea id="review_content_textarea" class="txtAr" name="review_content" placeholder="리뷰내용을 작성해 주세요!&#10;반품, 환불 관련 내용은 고객센터로 별도 문의해주세요."></textarea>
                 </div>          
             </li>                        
-            <li class="photo-update"><!-- 리뷰 고도화 : class 추가 -->
+            <li class="photo-update">
                 <div class="step_cont">
-                    <!-- 리뷰 고도화 : 추가 -->
                     <div class="photo-list-info">
                         <strong>포토</strong>
                     </div>
@@ -748,7 +769,7 @@ function setThumbnail5(event) {
                         </div>                                                                
 
                     	<p id="ppp">                     
-                                <br>사진은 10MB이하의 PNG, GIF, JPG 파일만 등록 가능합니다.                                             
+                                <br>사진은 8MB이하의 PNG, JPG 파일만 등록 가능합니다.                                             
                         </p>
                         </div>
                 </div>
