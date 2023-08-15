@@ -160,6 +160,8 @@
 </style>
 
 <script>
+alert('1');
+
 function categoryLarge(cate_large) {
 	var categorySmall_a = ["토너/로션/올인원", "에센스/크림", "미스트/오일"];
 	var categorySmall_b = ["클렌징폼/젤", "오일/워터/리무버"];
@@ -204,8 +206,11 @@ function categoryLarge(cate_large) {
 function validateForm(){
 //	if (form_insert.category_code.value == NULL) {
 //		alert("카테고리를 선택하세요."); }
-//	if ($('#thumFile').val() == "") {
-//		alert("썸네일을 등록해 주세요.")
+	var fileCk = $("#thumFile").val();	
+	if (!fileCk) {
+		alert("썸네일을 등록해 주세요.")
+		return false;
+		}
 	if (form_insert.product_name.value.length==0) {
 		alert("상품명을 입력하세요.");
 		form_insert.product_name.focus();

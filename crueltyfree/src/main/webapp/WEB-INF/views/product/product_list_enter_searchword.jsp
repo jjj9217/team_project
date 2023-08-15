@@ -348,7 +348,7 @@ function ProductDetail(searchWord, category_code, category_code_small,
 		product_price_min, product_price_max, sort_salecount, sort_view, 
 		pageNum, pageBlock) {
     
-	
+    alert('페이지넘'+pageNum);
 	
 	let min = document.getElementById("product_price_min");
     let max = document.getElementById("product_price_max");
