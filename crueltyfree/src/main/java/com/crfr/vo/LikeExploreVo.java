@@ -10,5 +10,6 @@ public class LikeExploreVo {
 	private String product_name;	
 	private int product_price;
 	private int like_idx;
+	private int product_idx;
 
 }

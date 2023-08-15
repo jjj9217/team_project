@@ -345,6 +345,7 @@
 				<tr>
 					<td id="history_paging" colspan="6">
 						<!-- 추후 페이징 구현 -->
+						<%@ include file="paging_confirm_inq.jsp" %>
 					</td>
 				</tr>
     </table>
