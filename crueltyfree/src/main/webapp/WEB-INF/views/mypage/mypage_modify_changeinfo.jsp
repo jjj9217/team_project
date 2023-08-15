@@ -11,7 +11,81 @@
 <title>Header</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+function kakaopost(){
+    var width = 500; // 팝업의 너비
+    var height = 600; // 팝업의 높이
+   
+    var top = (window.screen.height / 2) - (height / 2);
+
+    new daum.Postcode({
+        width: width,
+        height: height,
+        oncomplete: function(data) {
+            $("#member_postNum").val(data.zonecode);
+            $("#member_address").val(data.address);
+        }
+    }).open({
+        left: 1700,
+        top: top
+    });
+}
+</script>
+<script>
+var IMP = window.IMP;
+IMP.init("imp36534356");
+
+//yymmdd형태로 날짜 얻기
+function formatDateToYYMMDD(date) {
+    const year = date.getFullYear().toString().slice(-2);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return year+month+day;
+}
+
+//난수생성
+function generateRandomNumber(length) {
+    const randomNumber = Math.random().toString().slice(2, 2 + length);
+    return randomNumber.padStart(length, '0');
+}
+
+const currentDate = new Date();
+const formattedDate = formatDateToYYMMDD(currentDate);
+const randomDigits = generateRandomNumber(8);  //8자리의 난수생성
+
+function doPayment(){	
+	IMP.certification({
+			pg:'inicis_unified.MIIiasTest',//본인인증 설정이 2개이상 되어 있는 경우 필수 
+		    merchant_uid: "CFJOIN"+formattedDate+randomDigits, // 주문 번호
+	    }, function (rsp) { // callback
+	      	  //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+	          if (rsp.success) {
+	        	  $.ajax({
+	        	    	type: "post",
+	        	    	url: "${pageContext.request.contextPath}/purchase/certifications_process.do",
+	        	    	data: JSON.stringify({
+	        	    		"imp_uid": rsp.imp_uid //인증 UID
+	        	    	}), 
+	        	    		//JSON.stringify(JSON타입 객체): JSON타입 객체를 String객체로 변환시킴
+	        	    	contentType: "application/json;charset=utf-8;",
+	        	    	//contentType: 사용자가 서버로 보내는 내용의 MIME타입
+	        	    	dataType: "json",
+	        	    	success: function(data) {
+        	    		    $("#member_handphone").val(data.phone);
+	        	        },
+	        	        error: function(error) {
+	        	        	alert("ajax 에러 발생");
+	        	        }
+	        	    });//end of ajax
+			    } else {
+			      var msg = '인증에 실패하였습니다.';
+			      msg += '에러내용 : ' + rsp.error_msg;
+			      alert(msg);
+			    }
+	    });	
+}
+
 function checkInput(){	   
     if($("#member_handphone").val().length == 0){
     	alert("핸드폰 번호를 입력해주세요.");
@@ -37,17 +111,58 @@ function checkInput(){
         alert("주소를 입력해 주세요.");
         $("#member_address2").focus();
         return false;        
+    }else if($("#check_nickname").val() == "fail"){
+        alert("중복되지 않는 닉네임을 입력해 주세요.");
+        $("#check_nickname").focus();
+        return false;        
     }else{
-        alert("체크용");
+    	$("#update_frm").submit();
 	    return true;
     }
     
 }
 
 $(function(){
+	$("#select_postNum").click(function(){
+		kakaopost();
+	});
+	
 	$("#join_btn").click(function(){
 		checkInput();
 	});
+	
+	$("#member_identity").click(function(){
+		doPayment();
+	});
+	
+	$("#member_nickname").change(function(){
+		let member_nickname = $("#member_nickname").val();
+    	$.ajax({
+        type: "post",
+        url: "${pageContext.request.contextPath}/member/checkNickname_process.do",
+        data: { "member_nickname": member_nickname },
+        success: function(data) {
+	        	if (data == "success"){ 
+	        		if($("#member_nickname").val().length < 2){
+	                	$("#nickmsg").text("사용 불가능한 닉네임입니다.");
+	                	$("#nickmsg").css("color", "rgb(231, 76, 60)")
+	        		}else{
+	        			$("#nickmsg").text("사용 가능한 닉네임입니다.");
+	            		$("#nickmsg").css("color", "rgb(41, 128, 185)")
+	            		$("#check_nickname").val("ok");
+	            		} 
+	        	}else {
+	            	$("#nickmsg").text("사용 불가능한 닉네임입니다.");
+	            	$("#nickmsg").css("color", "rgb(231, 76, 60)")
+	            	$("#check_nickname").val("fail");
+	            }
+	        },
+	        error: function(error) {
+	        	alert("ajax 에러 발생");
+	        }
+	    });//end of ajax
+	});//end of event
+	
 });
 </script>
 <style>
@@ -198,7 +313,7 @@ $(function(){
     
     #container{
         width: 330px;
-        margin: 0 auto;
+        padding-left: 20px;
     }
     #logo{
         width: 100%;
@@ -279,10 +394,7 @@ $(function(){
         cursor:pointer;
         font: bold 13px Arial, sans-serif;
     }
-    #member_handphone,#member_email,#member_email2{
-        width:200px;
-    }
-    #member_postNum{
+    #member_handphone, #member_postNum{
         width:200px;
     }
     #idmsg,#errmsg,#nickmsg,#mail-check-warn,#birthmsg{
@@ -331,7 +443,7 @@ $(function(){
             color: #666;
         }
     	.tit_sub{color: #4a4a4a; margin-top:10px;}
-    
+    	#hr{margin-top:10px; height:3px; background-color:#7d99a4; border:0;}
     
     
     
@@ -381,21 +493,18 @@ $(function(){
         </div>
         <div class="tit_area">          
             <h2 class="tit">회원정보 수정</h2>
-            <hr width=100%;>            
+            <hr id="hr" width=100%;>            
 			<h4 class="tit tit_sub">휴대폰과 메일을 변경하시려면 새로 인증해주세요</h4>
     <div id="container">
-        <form action="infoupdate_process.do" method="post" name="frm" style="margin-top:35px;">         
+        <form action="infoupdate_process.do" method="post" id="update_frm" name="frm" style="margin-top:35px;">         
             <p>
                 <label>전화번호<br>
-                    <input type="text" name="member_handphone" id="member_handphone" maxlength="11" value="${member.member_handphone}" placeholder="-없이 연락처를 입력해 주세요."  numberonly="ture"></label>
+                    <input type="text" name="member_handphone" id="member_handphone" maxlength="11" value="${member.member_handphone}" placeholder="-없이 연락처를 입력해 주세요."  numberonly="ture" readonly></label>
                     <input type="button" name="member_identity" id="member_identity" value="본인인증&nbsp;&nbsp;">
                     </p>  
             <p>
                 <label>이메일<br>
                     <input type="text" name="member_email" id="member_email" placeholder="이메일을 입력해 주세요." value="${member.member_email}"></label>
-                    <input type="button" name="member_mail" id="member_mail" value="메일인증&nbsp;&nbsp;">
-                    <input type="text" name="member_email2" id="member_email2" maxlength="11" placeholder="인증번호" maxlength="6"></label>
-                    <input type="button" name="member_mail2" id="member_mail2" value="확인&nbsp;&nbsp;">
                     <span id="mail-check-warn"></span>
                     </p>
             <p>
@@ -412,13 +521,8 @@ $(function(){
                     <input type="text" name="member_address2" id="member_address2" placeholder="상세 주소" value="${member.member_address2}">
                 </label></p>
                 <input type="reset" id="reset_btn" value="취소하기" onclick="location.href='mypage_main.do';">
-                <input type="button" id="join_btn" name="join_btn" value="정보수정">
-        <input type="hidden" name="" id="originHandphone" value="${member.member_handphone}">
-        <input type="hidden" name="" id="originEmail" value="${member.member_email}"> 
-        <input type="hidden" name="" id="originNickname" value="${member.member_nickname}"> 
-        <input type="hidden" name="" id="originPostNum" value="${member.member_postNum}"> 
-        <input type="hidden" name="" id="originAddress" value="${member.member_address}">
-        <input type="hidden" name="" id="originAddress2" value="${member.member_address}">          
+                <input type="button" id="join_btn" name="join_btn" value="정보수정"> 
+                <input type="hidden" name="member_idx" id="member_idx"value="${member.member_idx}">         
         </form>
         
     </div>

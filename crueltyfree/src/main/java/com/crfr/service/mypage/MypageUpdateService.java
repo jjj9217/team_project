@@ -214,4 +214,7 @@ public class MypageUpdateService implements MypageService {
 		return dao.updateproductinq(vo);
 	}
 	
+	public MemberVo updateMemberInfo(MemberVo memberVo) {
+		return dao.updateMemberInfo(memberVo);
+	}	
 }

@@ -361,16 +361,22 @@ $(function(){
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 function kakaopost(){
-	var width=500;
-	var height = 600; //팝업의 높이
-	
-    new daum.Postcode({    	
-        oncomplete: function(data) {
-            document.querySelector("#member_postNum").value=data.zonecode;
-            document.querySelector("#member_address").value=data.address;
-        }
+    var width = 500; // 팝업의 너비
+    var height = 600; // 팝업의 높이
+   
+    var top = (window.screen.height / 2) - (height / 2);
 
-    }).open({left:10,top:200});
+    new daum.Postcode({
+        width: width,
+        height: height,
+        oncomplete: function(data) {
+            $("#member_postNum").val(data.zonecode);
+            $("#member_address").val(data.address);
+        }
+    }).open({
+        left: 1700,
+        top: top
+    });
 }
 </script>
 
