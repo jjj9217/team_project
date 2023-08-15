@@ -40,11 +40,13 @@
     }
     
     #mypage{
-        
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+       	font-size:15px;
         width: 199px;
         height:500px;
-        float:left;     
+        float:left;
     }
+	#mypage a{color:black;}
 
     #mypage-conts{
     
@@ -63,6 +65,7 @@
         font-size: 20px;
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;      
+        color:#7d99a4;
     }
 
     #blank{
@@ -256,9 +259,8 @@
         
    }
    table{margin-top:30px;}
-   .mypagetable{color:#7d99a4;}
-   a{color:black;}
    #hr{height:3px; background-color:#7d99a4; border:0;}
+   .product_list_background{margin-top:30px;}
 
 </style>
 </head>
@@ -278,18 +280,18 @@
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
-            <tr><td>장바구니</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이활동</td></tr>
-            <tr><td>1:1문의내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
             <tr><td>
 <%--             <form name="caa" action="${pageContext.request.contextPath}/mypage/mypage_nonreview.do" method="get">
                         <input type="hidden" name="member_idx" value="1">
                     </form>
                     <a href="#" onclick="document.forms['caa'].submit();">리뷰</a></td></tr> --%>
-                    <a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰테스트</a>
+                    <a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a>
                     
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
@@ -302,9 +304,9 @@
     <div id="mypage-conts">
         <div id="blank">            
         </div>
-        <div class="tit_area" style="background-color:red;">
-            <h2 class="tit" style="background-color:green; ">주문/배송조회<em>(최근 1개월)</em></h2>
-           <a class="btnMore" id="orderListMore" href="#" style="background-color:blue;">더보기〉</a>
+        <div class="tit_area">
+            <h2 class="tit">주문/배송조회<em>(최근 1개월)</em></h2>
+           <a class="btnMore" id="orderListMore" href="#">더보기〉</a>
         </div>
         <a class="order_view" href="#">
             <ul class="mypage-step">
