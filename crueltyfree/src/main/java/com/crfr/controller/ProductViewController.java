@@ -97,6 +97,10 @@ public class ProductViewController {
 	    	int insertRecentView = pInsertRecentView.insertRecentView(client_num, product_idx);
 	    }
 	    
+	    
+	    session.removeAttribute("recentView");
+	    session.setAttribute("recentView", recentViewVo);
+	    
 		//상품문의리스트
 		int productInqRows = pSelectProductInqCount.selectProductInqCount(product_idx);//상품문의 게시글 수
 		List<ProductInqVo> productInqList  = pSelectProductInq.selectProductInq(product_idx); //상품번호의 상품문의 리스트
