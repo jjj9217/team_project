@@ -168,38 +168,48 @@
 
 
     
-    <!-- 상품목록 원하는순서로 정렬하기 -->
+   
 
-    <!-- 검색조건에 맞는 게시물 목록 반환 구문 -->
-        
-     <!-- <select id="selectList_saleCount" parameterType="ExploreVo" resultType="ProductVo">
-        select * from product
-            <where>
-                <if test="searchWord !=null">
-                        product_name like CONCAT('%',#{searchWord},'%')                                                                           
-                </if>
-                <if test="category_code !=null">
-                        and category_code = #{category_code}
-                </if>
-                <if test="category_code_small !=null">
-                        and category_code_small = #{category_code_small}
-                </if>
-                <if test="product_price_min != 0 and product_price_max != 0">
-                        <![CDATA[
-                        and product_price>= #{product_price_min} and product_price<= #{product_price_max}]]>
-                </if>
-            </where>           
-            order by product_saleCount desc
-    </select> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- 상품 목록 반환 구문 -->
+    <select id="MainselectList" resultType="ProductVo">        
+        select * from product order by product_saleCount desc     
+    </select>
     
-    <!-- 상품리스트 상품목록별 사진 출력 -->
-    <!-- <select id="selectListimg_saleCount" parameterType="ExploreVo" resultType="FileVo">
-        select * from file
-            <where>
-                product_idx
-            </where>
-            order by product_idx desc
-    </select>   -->     
+    <!-- 상품 목록 사진 출력 -->
+    <select id="MainselectListimg" resultType="FileVo">
+        SELECT A.product_idx, A.file_idx, A.saveFile, B.product_price, B.product_saleCount, B.product_regDate, B.product_capa , B.category_code, B.category_code_small, B.product_name 
+            FROM file AS A  
+            INNER JOIN product AS B 
+            ON A.product_idx = B.product_idx
+            where
+            A.product_idx IS NOT NULL
+                    AND (A.product_idx, A.file_idx) 
+                    IN (
+                        SELECT A.product_idx, MIN(A.file_idx)                   
+                        FROM file
+                        GROUP BY A.product_idx
+                       )
+                       order by product_saleCount desc
+    </select>
+
+
+
+
+
+   
     
   
          

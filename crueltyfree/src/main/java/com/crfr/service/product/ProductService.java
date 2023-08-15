@@ -18,12 +18,8 @@ public interface ProductService {
 	
 	default PageNav setPageNav(PageNav pageNav, String pageNum, String pageBlock, ExploreVo vo) {return null;}
 	
-	
-	/*
-	 * default List<ProductVo> selectList_saleCount(ExploreVo vo){return null;}
-	 * 
-	 * default List<FileVo> selectListimg_saleCount(ExploreVo vo) {return null;}
-	 */
+	default List<ProductVo> MainselectList() {return null;}
 		
+	default List<FileVo> MainselectListimg() {return null;}
 	
 }

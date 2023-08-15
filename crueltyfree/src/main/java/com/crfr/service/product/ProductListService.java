@@ -28,27 +28,15 @@ public class ProductListService implements ProductService {
 		return dao.selectListimg(vo);
 	}
 	
-	/*
-	 * public List<ProductVo> selectList_saleCount(ExploreVo vo) { return
-	 * dao.selectList_saleCount(vo); }
-	 * 
-	 * public List<FileVo> selectListimg_saleCount(ExploreVo vo) { return
-	 * dao.selectListimg_saleCount(vo); }
-	 */
+	//상품 목록 반환 구문
+	public List<ProductVo> MainselectList() {	
+		return dao.MainselectList();
+	}
 	
-//	public List<ProductVo> selectList(String searchWord, String category_code, String category_code_small, int product_price, int product_price_max, int product_price_min){
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		if(searchWord != null) {
-//			map.put("searchWord", searchWord);
-//			map.put("category_code", category_code);
-//			map.put("category_code_small", category_code_small);
-//			map.put("product_price", product_price);
-//			map.put("product_price_max", product_price_max);
-//			map.put("product_price_min", product_price_min);
-//		}
-//		
-//		return dao.selectList(map);
-//	}
+	//상품 목록 사진 출력
+	public List<FileVo> MainselectListimg() {	
+		return dao.MainselectListimg();
+	}
 	
 
 }

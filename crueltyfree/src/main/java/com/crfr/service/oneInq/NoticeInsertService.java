@@ -49,7 +49,8 @@ public class NoticeInsertService implements OneInqService {
 		vo.setNotice_content(notice_content);
 		vo.setNotice_originFile(originFileName);
 		vo.setNotice_saveFile(saveFileName);
-		
+		System.out.println("글등록 겟오리진파일:"+ vo.getNotice_originFile());
+		System.out.println("글등록 겟세이브파일:"+ vo.getNotice_saveFile());
 		return dao.insertNotice(vo);
 		
 	}

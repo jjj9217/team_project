@@ -161,43 +161,43 @@
 				<li class="pro_first">
 					<div class="pro_info">
 						<a href="#">
-							<img src="${pageContext.request.contextPath}/resources/img/proImg_1.png" class="pro_img">
+							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[0].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
 							<a href="#">
 								<span class="goods_nickname">아로마티카</span>
-								<p class="goods_name">아로마티카 로즈마리 헤어 씨크닝 컨디셔너 400ml</p>
+								<p class="goods_name">${productList[0].product_name}아로마티카 로즈마리 헤어 씨크닝 컨디셔너 400ml</p>
 							</a>
 						</div>
-						<span class="pro_price">15,400원</span>
+						<span class="pro_price">${productList[0].product_price}15,400원</span>
 					</div>
 				</li>
 				<li class="pro_second">
 					<div class="pro_info">
 						<a href="#">
-							<img src="${pageContext.request.contextPath}/resources/img/proImg_2.png" class="pro_img">
+							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[1].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
 							<a href="#">
 								<span class="goods_nickname">아떼</span>
-								<p class="goods_name">아떼 바이탈 씨 좀 토닝 캡슐 토너 130ml</p>
+								<p class="goods_name">${productList[1].product_name}아떼 바이탈 씨 좀 토닝 캡슐 토너 130ml</p>
 							</a>
 						</div>
-						<span class="pro_price">18,000원</span>
+						<span class="pro_price">${productList[1].product_price}18,000원</span>
 					</div>
 				</li>
 				<li class="pro_third">
 					<div class="pro_info">
 						<a href="#">
-							<img src="${pageContext.request.contextPath}/resources/img/proImg_3.png" class="pro_img">
+							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[2].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
 							<a href="#">
 								<span class="goods_nickname">톤28</span>
-								<p class="goods_name">일하는 손 바를거리(워터블랑향)</p>
+								<p class="goods_name">${productList[2].product_name}일하는 손 바를거리(워터블랑향)</p>
 							</a>
 						</div>
-						<span class="pro_price">15,600원</span>
+						<span class="pro_price">${productList[2].product_price}15,600원</span>
 					</div>
 				</li>
 			</ul>
@@ -208,43 +208,43 @@
 				<li class="pro_first">
 					<div class="pro_info">
 						<a href="#">
-							<img src="${pageContext.request.contextPath}/resources/img/proImg_4.png" class="pro_img">
+							<img src="${pageContext.request.contextPath}/resources/iuploads/${fileList[3].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
 							<a href="#">
 								<span class="goods_nickname">이즈앤트리</span>
-								<p class="goods_name">참마 비건 밀크 클렌저 220ml</p>
+								<p class="goods_name">${productList[3].product_name}참마 비건 밀크 클렌저 220ml</p>
 							</a>
 						</div>
-						<span class="pro_price">20,000원</span>
+						<span class="pro_price">${productList[3].product_price}20,000원</span>
 					</div>
 				</li>
 				<li class="pro_second">
 					<div class="pro_info">
 						<a href="#">
-							<img src="${pageContext.request.contextPath}/resources/img/proImg_5.png" class="pro_img">
+							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[4].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
 							<a href="#">
 								<span class="goods_nickname">보나쥬르</span>
-								<p class="goods_name">그린티 워터 토너 205ml</p>
+								<p class="goods_name">${productList[4].product_name}그린티 워터 토너 205ml</p>
 							</a>
 						</div>
-						<span class="pro_price">16,000원</span>
+						<span class="pro_price">${productList[4].product_price}16,000원</span>
 					</div>
 				</li>
 				<li class="pro_third">
 					<div class="pro_info">
 						<a href="#">
-							<img src="${pageContext.request.contextPath}/resources/img/proImg_6.png" class="pro_img">
+							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[5].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
 							<a href="#">
 								<span class="goods_nickname">빌리프</span>
-								<p class="goods_name">빌리프 프러블럼 솔루션 비건 토너 패드 150ml / 70매</p>
+								<p class="goods_name">${productList[5].product_name}빌리프 프러블럼 솔루션 비건 토너 패드 150ml / 70매</p>
 							</a>
 						</div>
-						<span class="pro_price">30,600원</span>
+						<span class="pro_price">${productList[5].product_price}30,600원</span>
 					</div>
 				</li>
 			</ul>
@@ -255,43 +255,43 @@
 				<li class="pro_first">
 					<div class="pro_info">
 						<a href="#">
-							<img src="${pageContext.request.contextPath}/resources/img/proImg_7.png" class="pro_img">
+							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[6].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
 							<a href="#">
 								<span class="goods_nickname">에센허브</span>
-								<p class="goods_name">에센허브 티트리 수딩 인 카밍 크림 80ml</p>
+								<p class="goods_name">${productList[6].product_name}에센허브 티트리 수딩 인 카밍 크림 80ml</p>
 							</a>
 						</div>
-						<span class="pro_price">23,800원</span>
+						<span class="pro_price">${productList[6].product_price}23,800원</span>
 					</div>
 				</li>
 				<li class="pro_second">
 					<div class="pro_info">
 						<a href="#">
-							<img src="${pageContext.request.contextPath}/resources/img/proImg_8.png" class="pro_img">
+							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[7].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
 							<a href="#">
 								<span class="goods_nickname">아떼</span>
-								<p class="goods_name">[잡티완화세트] 비건 초록 비타민 세럼 + 크림</p>
+								<p class="goods_name">${productList[7].product_name}[잡티완화세트] 비건 초록 비타민 세럼 + 크림</p>
 							</a>
 						</div>
-						<span class="pro_price">45,700원</span>
+						<span class="pro_price">${productList[7].product_price}45,700원</span>
 					</div>
 				</li>
 				<li class="pro_third">
 					<div class="pro_info">
 						<a href="#">
-							<img src="${pageContext.request.contextPath}/resources/img/proImg_9.png" class="pro_img">
+							<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[8].saveFile}" class="pro_img">
 						</a>
 						<div class="pro_name">
 							<a href="#">
 								<span class="goods_nickname">머지</span>
-								<p class="goods_name">머지 글로시 멜팅 틴티드 컬러 립밤 4g</p>
+								<p class="goods_name">${productList[8].product_name}머지 글로시 멜팅 틴티드 컬러 립밤 4g</p>
 							</a>
 						</div>
-						<span class="pro_price">7,900원</span>
+						<span class="pro_price">${productList[8].product_price}7,900원</span>
 					</div>
 				</li>
 			</ul>

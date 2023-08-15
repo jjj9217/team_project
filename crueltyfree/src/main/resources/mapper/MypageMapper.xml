@@ -502,47 +502,7 @@
                 order by coupon_regDate;
     </select>
      
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+             
     
     <!-- 좋아요 목록 -->
     
@@ -602,6 +562,56 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    <!-- 고객이 작성한 상품문의 목록의 상품 사진 -->
+    <select id="selectconfirmListimg" parameterType="_int" resultType="FileVo">
+       select * from product_inq
+           inner join product
+           on product.product_idx = product_inq.product_idx
+           inner join file
+           on product_inq.product_idx = file.product_idx
+           <where> 
+           product.member_idx=#{member_idx}
+           and file.product_idx IS NOT NULL
+               AND (file.product_idx, file.file_idx) 
+                   IN (
+                   SELECT file.product_idx, MIN(file.file_idx)                   
+                   FROM file
+                   GROUP BY file.product_idx
+                   )
+           </where>        
+               order by product_inq_regDate desc;
+    </select>
+    
+    <!-- 고객이 작성한 상품문의의 상품 목록 -->
+    <select id="selectconfirmList" parameterType="_int" resultType="ProductInqVo">
+       select * from product_inq
+           inner join product
+           on product.product_idx = product_inq.product_idx
+           where product.member_idx=#{member_idx}
+               order by product_inq_regDate desc;
+    </select>
+    
+    <!-- 고객이 작성한 상품문의의 목록 개수 세기 -->
+    <select id="selectconfirmCount" parameterType="_int" resultType="_int">
+       select count(*) from product_inq
+           inner join product
+           on product.product_idx = product_inq.product_idx
+           where product.member_idx=#{member_idx}  
+               order by product_inq_regDate desc;
+    </select>
+    
+    <!-- 고객이 작성한 상품문의의 답변 작성 -->
+    <update id="insertConfirm" parameterType="ProductInqVo">
+        update product_inq set product_inq_answer=#{product_inq_answer} where product_inq_answer is null and product_inq_idx=#{product_inq_idx}  
+    </update>
+            
     
          
 </mapper>
