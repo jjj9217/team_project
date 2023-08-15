@@ -5,7 +5,40 @@
 <head>
 <meta charset="UTF-8">
 <title>CrueltyFree</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(function(){
+// 비회원 식별값을 가져오는 함수
+function getGuestId() {
+	let guestId = getCookie("guestId");
+	if (!guestId) {
+		// 쿠키에 비회원 식별값이 없으면 새로 생성하여 쿠키에 저장
+		guestId = generateGuestId(10);
+		document.cookie = "guestId=" + guestId + "; max-age=" + (60 * 60 * 24 * 7) + "; path=/";
+	}
+	return guestId;
+}
 
+// 쿠키 값을 가져오는 함수
+function getCookie(name) {
+	const value = "; " + document.cookie;
+	const parts = value.split("; " + name + "=");
+	if (parts.length === 2) return parts.pop().split(";").shift();
+}
+
+// 비회원 식별값 생성 함수 (랜덤 문자열 생성)
+function generateGuestId(length) {
+	const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+	let result = '';
+	for (let i = 0; i < length; i++) {
+		result += characters.charAt(Math.floor(Math.random() * characters.length));
+	}
+	return result;
+}	
+
+const guestId = getGuestId();
+});
+</script>
 <style>
     *{margin: 0; padding: 0;}
     a{text-decoration: none;}

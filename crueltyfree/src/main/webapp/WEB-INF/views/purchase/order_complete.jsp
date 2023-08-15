@@ -240,7 +240,7 @@
     </div>
     <div class="order_btn_area">
         <input type="button" name="do_shoppig_btn" id="do_shoppig_btn" value="쇼핑계속" onclick="location.href='${pageContext.request.contextPath}/main/home.do';">
-        <input type="button" name="order_list_btn" id="order_list_btn" value="주문내역조회">
+        <input type="button" name="order_list_btn" id="order_list_btn" value="주문내역조회" onclick="location.href='${pageContext.request.contextPath}/mypage/mypage_orderinq.do';">
     </div>
     <footer>
 		<jsp:include page="../main/footer.jsp"/>		

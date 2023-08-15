@@ -40,7 +40,7 @@
     }
     
     #mypage{
-        
+        margin-top:30px;
         width: 199px;
         height:500px;
         float:left;     
@@ -271,7 +271,7 @@ $("#do-search-period2").click(function(){
                 <input type="password" id="pwd" name="pwd" class="text" placeholder="비밀번호를 입력해주세요.">
             </div>
             <div class="password_btn">                  
-                <button type="button" class="btnLookup" id="do-search-period">취소</button>                                       
+                <button type="button" class="btnLookup" id="do-search-period"onclick="location.href='${pageContext.request.contextPath}/mypage/mypage_modifymain.do';">취소</button>                                       
                 <button type="button" class="btnLookup" id="do-search-period2">확인</button>
             </div>
 </form>       

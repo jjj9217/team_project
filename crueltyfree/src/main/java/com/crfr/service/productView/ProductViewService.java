@@ -9,6 +9,7 @@ import com.crfr.vo.PageNav;
 import com.crfr.vo.ProductInfoVo;
 import com.crfr.vo.ProductInqVo;
 import com.crfr.vo.ProductVo;
+import com.crfr.vo.RecentViewVo;
 import com.crfr.vo.ReviewRecomVo;
 import com.crfr.vo.ReviewVo;
 
@@ -37,4 +38,6 @@ public interface ProductViewService {
 	default int deleteRecom(String review_idx, String member_idx) {return 0;}
 	default int selectRecom(String review_idx) {return 0;}
 	default void updateRecom(String review_idx, int recomCount) {}
+	default RecentViewVo selectRecentView(String client_num, int product_idx) {return null;}
+	default int insertRecentView(String client_num, int product_idx) {return 0;}
 }
