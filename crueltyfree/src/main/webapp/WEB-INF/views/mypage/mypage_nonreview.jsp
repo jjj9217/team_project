@@ -42,11 +42,14 @@
     }
     
     #mypage{
-        
+    	margin-top:30px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+       	font-size:15px;
         width: 199px;
         height:500px;
-        float:left;     
+        float:left;
     }
+	#mypage a{color:black;}
 
     #mypage-conts{
         
@@ -54,13 +57,22 @@
         height: 950px;      
         float:left;
     }
-
+    #mylink{
+        color: black;
+        font-size: 30px;
+        text-decoration: none;
+    }
     #blank{
         width:100%;
         height: 35px;
     
     }
-
+    .mypagetable{
+        font-size: 20px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-weight: bold;      
+        color:#7d99a4;
+    }
     .tit_area{
         overflow: hidden;
         margin-top: 30px;
@@ -93,27 +105,33 @@
     .address_atag{
         float: left;
         width: 392px;
-        height: 37px;
+        height: 50px;
+        background-color:#7d99a4;
+        font: bold 17px Arial, Sans-serif;
     }
 
     .refund_atag{
         float: left;
-        width: 392px;
-        height: 37px;
+        width: 399px;
+        height: 50px;
+        background-color:rgb(221, 219, 214);
+        font: bold 17px Arial, Sans-serif;
     }
 
     #address_atag{
         float: left;
-        width: 392px;
+        width: 399px;
         height: 37px;
-        line-height: 35px;
+        line-height: 50px;
+        color:white;
     }
 
     #refund_atag{
         float: left;
         width: 392px;
         height: 37px;
-        line-height: 35px;
+        line-height: 50px;
+        color:black;
     }
     
     ul li{      
@@ -433,6 +451,16 @@ margin-left: 1px;
 
 #ppp{
 float:left;}
+    .buy_list_container{display: block; width: 790px; height: auto; margin: 0 auto; padding: 10px; margin-top: 50px;}
+    .buy_list, .order_list{border-collapse: collapse;}
+    .th_product{width: 135px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+    .th_date{width: 380px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+    .th_review{width: 65px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+	.td_product{width: 125px; height: auto; padding: 30px 5px; text-align: center; font-size:14px; font-weight: bold;}
+    .td_date{width: 370px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .td_review{width: 45px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .top{border-top: 2px solid #4a4a4a}
+    .bottom{border-bottom: 1px solid #a4a4a4}
     
 </style>
 <script>
@@ -555,23 +583,23 @@ function setThumbnail5(event) {
 <div id="Container">
     <div id="mypage">       
         <table>
-            <th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th>         
+            <tr><th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
             <tr><td class="mypagetable">마이 쇼핑</td></tr>
-            <tr><td>주문/배송조회</td></tr>
-            <tr><td>취소/반품내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
-            <tr><td>장바구니</td></tr>
-            <tr><td>좋아요</td></tr>
-            <tr><td>쿠폰</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이활동</td></tr>
-            <tr><td>1:1문의내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
-            <tr><td>상품문의내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
-            <tr><td>회원정보 수정</td></tr>
-            <tr><td>배송지/환불계좌</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지/환불계좌</a></td></tr>
         </table>        
     </div>
     <div id="mypage-conts">
@@ -591,18 +619,17 @@ function setThumbnail5(event) {
                     <a href="#" id="refund_atag" onclick="document.forms['caf'].submit();">
             나의 리뷰</a></li>
         </ul>       
-        <table class="buy_list">
+        <table class="buy_list" style="margin-top:30px;">
             <colgroup>
                 <col style="width:62%;">
                 <col style="width:21%;">
                 <col style="width:17%;">
             </colgroup>
             <thead>
-                <hr width=100%>
                 <tr>
-                    <th scope="col">상품</th>
-                    <th scope="col">작성기간</th>                   
-                    <th scope="col">리뷰작성</th>
+                    <th class="th_product top bottom" scope="col">상품</th>
+                    <th class="th_date top bottom"scope="col">작성기간</th>                   
+                    <th class="th_review top bottom"scope="col">리뷰작성</th>
                 </tr>
             </thead>
             <tbody>

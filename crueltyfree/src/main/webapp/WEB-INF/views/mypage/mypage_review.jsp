@@ -42,12 +42,25 @@
     }
     
     #mypage{
-        
+    	margin-top:30px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+       	font-size:15px;
         width: 199px;
         height:500px;
-        float:left;     
+        float:left;
     }
-
+	#mypage a{color:black;}
+    .mypagetable{
+        font-size: 20px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-weight: bold;      
+        color:#7d99a4;
+    }
+    #mylink{
+        color: black;
+        font-size: 30px;
+        text-decoration: none;
+    }
     #mypage-conts{
         
         width:810px;
@@ -89,7 +102,6 @@
     .address_or_refund{
         width: 100%;
         height: 52px;   
-        
         padding-inline-start: 0px;
         display : flex;
         justify-content: center;
@@ -101,27 +113,33 @@
     .address_atag{
         float: left;
         width: 392px;
-        height: 37px;
+        height: 50px;
+        background-color:rgb(221, 219, 214);
+        font: bold 17px Arial, Sans-serif;
     }
 
     .refund_atag{
         float: left;
-        width: 392px;
-        height: 37px;
+        width: 399px;
+        height: 50px;
+        background-color:#7d99a4; 
+        font: bold 17px Arial, Sans-serif;
     }
 
     #address_atag{
         float: left;
-        width: 392px;
+        width: 399px;
         height: 37px;
-        line-height: 35px;
+        line-height: 50px;
+        color:black;
     }
 
     #refund_atag{
         float: left;
         width: 392px;
         height: 37px;
-        line-height: 35px;
+        line-height: 50px;
+        color:white;
     }
     
     ul li{      
@@ -344,7 +362,14 @@
         text-align: center;
         
     }
-
+    .buy_list_container{display: block; width: 790px; height: auto; margin: 0 auto; padding: 10px; margin-top: 50px;}
+    .buy_list, .order_list{border-collapse: collapse;}
+    .th_product{ height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+    .th_review{ height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+	.td_product{ height: auto; padding: 30px 5px; text-align: center; font-size:14px; font-weight: bold;}
+    .td_review{height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .top{border-top: 2px solid #4a4a4a}
+    .bottom{border-bottom: 1px solid #a4a4a4}
 </style>
 </head>
 
@@ -358,23 +383,23 @@
 <div id="Container">
     <div id="mypage">       
         <table>
-            <th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th>         
+            <tr><th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
             <tr><td class="mypagetable">마이 쇼핑</td></tr>
-            <tr><td>주문/배송조회</td></tr>
-            <tr><td>취소/반품내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
-            <tr><td>장바구니</td></tr>
-            <tr><td>좋아요</td></tr>
-            <tr><td>쿠폰</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이활동</td></tr>
-            <tr><td>1:1문의내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
-            <tr><td>상품문의내역</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
-            <tr><td>회원정보 수정</td></tr>
-            <tr><td>배송지/환불계좌</td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지/환불계좌</a></td></tr>
         </table>        
     </div>
     <div id="mypage-conts">
@@ -398,17 +423,16 @@
         <div class="accumulate_tit">
             <h2 class="tit">누적 리뷰 건수 ${untitled}건</h2>
         </div>
-        <table class="buy_list">
+        <table class="buy_list" style="margin-top:20px;">
             <colgroup>
                 <col style="width:359px;">
                 <col style="width:310px;">
                 <col style="width:auto">
             </colgroup>
             <thead>
-                <hr width=100%>
                 <tr>
-                    <th scope="col">상품</th>
-                    <th scope="col">리뷰</th>                 
+                    <th class="th_product top bottom" scope="col">상품</th>
+                    <th class="th_review top bottom" scope="col">리뷰</th>                 
                 </tr>
             </thead>
             <tbody>
