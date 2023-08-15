@@ -350,37 +350,37 @@ function HeaderBest(sort_salecount) {
 			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=skin" >스킨케어</a>
 			<ul class="submenu">
 				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_1">토너/로션/올인원</a></li>
-				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_2">>에센스/크림</a></li>
-				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_3">>미스트/오일</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_2">에센스/크림</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_3">미스트/오일</a></li>
 			</ul>
 		</li>
 		<li>
 			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=clensing" >클렌징</a>
 			<ul class="submenu">
-				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=clensing_1">>클렌징폼/젤</a></li>
-				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=clensing_2">>오일/워터/리무버</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=clensing_1">클렌징폼/젤</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=clensing_2">오일/워터/리무버</a></li>
 			</ul>
 		</li>
 		<li>
 			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=makeup" >메이크업</a>
 			<ul class="submenu">
-				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_1">>립메이크업</a></li>
-				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_2">>베이스메이크업</a></li>
-				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_3">>아이메이크업</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_1">립메이크업</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_2">베이스메이크업</a></li>
+				<li class="sub3"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_3">아이메이크업</a></li>
 			</ul>
 		</li>
 		<li>
 			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=body" >바디케어</a>
 			<ul class="submenu">
-				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=body_1">>샤워/입욕</a></li>
-				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=body_2">>로션/오일</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=body_1">샤워/입욕</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=body_2">로션/오일</a></li>
 			</ul>
 		</li>
 		<li>
 			<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=hair" >헤어케어</a>
 			<ul class="submenu">
-				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=hair_1">>샴푸/린스/트리트먼트</a></li>
-				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=hair_2">>염색약/펌</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=hair_1">샴푸/린스/트리트먼트</a></li>
+				<li class="sub2"><a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=hair_2">염색약/펌</a></li>
 			</ul>
 		</li>
 		<li>

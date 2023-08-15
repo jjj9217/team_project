@@ -228,7 +228,19 @@
         <hr id="hr2" width=100%;>
         
         
-
+		<!-- 수정 성공 메시지 -->
+		<c:if test="${not empty msgOk}">
+		    <script>
+		        alert("${msgOk}");
+		    </script>
+		</c:if>
+		
+		<!-- 수정 실패 메시지 -->
+		<c:if test="${not empty msgFail}">
+		    <script>
+		        alert("${msgFail}");
+		    </script>
+		</c:if>
         
         
         

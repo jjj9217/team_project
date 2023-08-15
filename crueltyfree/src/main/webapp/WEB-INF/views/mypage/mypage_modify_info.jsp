@@ -49,7 +49,7 @@
     #mypage-conts{
         
         width:810px;
-        height: 950px;      
+        height: auto;      
         float:left;
     }
 
@@ -118,10 +118,12 @@
 
     .buy_list_txt{
         width: 100%;
-        height: 350px;
-        
+        height: auto;
+        color: #4a4a4a;
+        font-size: 14px;
+        font-weight: bold;
         line-height: 50px;
-        text-align: center;
+        text-align: left;
 
     }
     
@@ -154,10 +156,7 @@
     .password_btn{
         width: 100%;
         height: 80px;
-        
         display : flex;
-        justify-content: center;
-        align-items : center;
     }
 
     #bef_pwd{
@@ -167,26 +166,38 @@
 
     .password_input{
         width: 100%;
-        height: 80px;
-        
+        height: auto;
+        margin-bottom: 10px;
+        margin-top: 10px;
         display : flex;
-        justify-content: center;
-        align-items : center;
     }
 
-    #do-search-period, #do-search-period2{
-        width: 200px;
-        height: 50px;
-        
-        color: black;
-        margin-left: 20px;                  
+    #do-search-period{
+        width: 150px;
+        height: 30px;
+        border: 1px solid #7d99a4;
+        color: #7d99a4;
+        background-color: #fff;
+        font-weight: bold;   
+        border-radius: 5px; 
+        margin-right: 10px;              
     }
-    
+    #do-search-period2{
+    	width: 154px;
+        height: 30px;
+        border: 1px solid #7d99a4;
+        color: #fff;
+        background-color: #7d99a4;
+        font-weight: bold;  
+        border-radius: 5px;  
+    }
     .goodlist_thumb{
         width:150px;
         height:150px;
     }
-     
+    #hr, #hr2{margin-top:10px; height:3px; background-color:#7d99a4; border:0;}
+    #hr2{margin-bottom: 30px;}
+    #pwd{width: 290px; height: 10px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none;}
 }
 
 </style>
@@ -249,25 +260,23 @@ $("#do-search-period2").click(function(){
         </div>
         <div class="tit_area">          
             <h2 class="tit">회원정보 수정</h2>
-            <hr width=100%;>            
+            <hr id="hr" width=100%;>            
 <form name="caq" id="qw" action="${pageContext.request.contextPath}/mypage/mypage_modify_changeinfo.do" method="post">
             <div class="buy_list_txt">              
-                <div class="goodlist_thumb_background">
-                    <a href="#"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/images10.jpg"></a>
-                </div>
                 <p4>회원정보를 수정하시려면 비밀번호를 입력하셔야 합니다.</p4><br>
-                <p1>회원님의 개인정보 보호를 위한 본인 확인 절차이오니, CJ ONE 회원 로그인 시 사용하시는 비밀번호를 입력해주세요.</p1>                
+                <p1>회원님의 개인정보 보호를 위한 본인 확인 절차이오니,<br>
+                 CrueltyFree 회원 로그인 시 사용하시는 비밀번호를 입력해주세요.</p1>                
             </div>
             <div class="password_input">
-                <input type="password" id="pwd"name="pwd" class="text" placeholder="비밀번호를 입력해주세요.">
+                <input type="password" id="pwd" name="pwd" class="text" placeholder="비밀번호를 입력해주세요.">
             </div>
             <div class="password_btn">                  
                 <button type="button" class="btnLookup" id="do-search-period">취소</button>                                       
                 <button type="button" class="btnLookup" id="do-search-period2">확인</button>
-                ㅁㅁㅁㅁㅁㅁ
             </div>
 </form>       
      	<input type="hidden" id="pwdCheck" value="${member.member_pw}">
+     	<hr id="hr2" width=100%;>
         </div>        
     </div>
 </div>

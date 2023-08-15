@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.crfr.service.mypage.MypageService;
 import com.crfr.vo.CouponVo;
@@ -69,7 +70,6 @@ public class MypageController {
 	public void setMpView(@Qualifier("mpView") MypageService mpView) {
 		this.mpView = mpView;
 	}
-	
 	
 	//마이 페이지 메인으로 이동
 	@GetMapping("/mypage_main.do")
@@ -593,24 +593,25 @@ public class MypageController {
 		return "mypage/mypage_modify_changeinfo";
 	}
 	
-	//비밀번호 수정
+	//회원정보 수정
 	@PostMapping("/infoupdate_process.do")
-	public String mypage_modify_changeinfo_process(MemberVo memberVo, HttpServletRequest request, Model model) {
+	public String mypage_modify_changeinfo_process(MemberVo memberVo, HttpServletRequest request, Model model,
+			RedirectAttributes redirectAttributes) {
 		//커맨드 객체: 폼의 입력값 전송을 처리하는 메소드에서 파라미터 값들을 저장하는데 사용되는 자바 객체
 		
 		//회원정보 수정을 처리할 MemberUpdateService클래스를 이용
-//		MemberVo vo = mUpdate.update(memberVo);
+		MemberVo vo = mpUpdate.updateMemberInfo(memberVo);
+				
+		if(vo != null){//회원정보 수정 성공시
+			HttpSession session = request.getSession();
+			session.removeAttribute("member");
+			session.setAttribute("member", vo);
+			redirectAttributes.addFlashAttribute("msgOk", "회원정보가 성공적으로 수정되었습니다.");
+		}else {
+			redirectAttributes.addFlashAttribute("msgFail", "회원정보 수정에 실패하였습니다.");
+		}
 		
-		String viewPage="member/update";
-		
-//		if(vo != null){//회원정보 수정 성공시
-//			HttpSession session = request.getSession();
-//			session.removeAttribute("member");
-//			session.setAttribute("member", vo);
-//			viewPage = "redirect:/mypage/mypage_modifymain.do";
-//		}
-		
-		return viewPage;
+		return "redirect:/mypage/mypage_modifymain.do";
 	}
 	
 	

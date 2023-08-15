@@ -559,9 +559,18 @@
             where member_idx=#{member_idx}
     </delete>
     
+    <!-- 회원정보 수정 --> 
+   	<update id="updateMemberInfo" parameterType="MemberVo">
+        update `member` set member_handphone=#{member_handphone}, member_email=#{member_email},
+        member_nickname=#{member_nickname},member_postNum=#{member_postNum},
+        member_address=#{member_address},member_address2=#{member_address2}
+		where member_idx=#{member_idx}
+    </update>
     
-    
-    
+	<!-- 업데이트된 회원정보 가져오는 구문 -->
+	<select id="selectMemberInfo" parameterType="MemberVo" resultType="MemberVo">
+		select * from member where member_idx=#{member_idx}
+	</select>	
     
     
     

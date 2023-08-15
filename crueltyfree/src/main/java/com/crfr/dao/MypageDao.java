@@ -230,7 +230,15 @@ public class MypageDao {
 	
 	public List<ReviewVo> reviewRegList2(ReviewVo vo) {
 		return sqlSession.selectList(MAPPER+".reviewRegList2", vo);
-		}
+	}
 	
-	
+	//회원정보 수정하기
+	public MemberVo updateMemberInfo(MemberVo memberVo) {
+		 int result = sqlSession.update(MAPPER+".updateMemberInfo", memberVo);
+		 MemberVo vo = null;
+		 if (result == 1) {
+			 vo = sqlSession.selectOne(MAPPER+".selectMemberInfo", memberVo);
+		 }
+		 return vo;
+	}	
 }
