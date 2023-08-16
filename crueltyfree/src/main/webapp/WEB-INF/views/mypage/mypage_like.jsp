@@ -360,7 +360,7 @@ function deletelikelistall() {
             <c:if test="${!empty likeproductList[0].product_name}">      
             <button type="button" onclick="deletelikelistall();" id="all_del" style="margin-bottom:10px;">전체삭제</button>
             </c:if>
-            </from>            
+            </form>            
         </p>
 
 		<form name="frm_view">  
