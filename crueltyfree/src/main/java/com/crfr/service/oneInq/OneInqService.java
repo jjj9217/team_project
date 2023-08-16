@@ -48,9 +48,9 @@ public interface OneInqService {
 	
 	default int insertOneinqimg (MultipartFile attachedFile,int selectOneinq_idx , HttpServletRequest request) {return 0;}
 	
-	default List<OneInqVo> oneinqList() {return null;}
+	default List<OneInqVo> oneinqList(OneInqVo vo) {return null;}
 		
-	default int oneinqListCount() {return 0;}
+	default int oneinqListCount(OneInqVo vo) {return 0;}
 	
 	default int deleteoneinq(OneInqVo vo) {return 0;}
 	

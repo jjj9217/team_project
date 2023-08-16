@@ -74,14 +74,13 @@
         
     }
 
-    .tit_area{
+    .tit_area {
         overflow: hidden;
         margin-top: 30px;
         position: relative;
         width: 100%;
         font-size: 0;
         line-height: 0;
-        
     }
 
     .tit_area .tit{
@@ -200,19 +199,20 @@
    }
     
     .product_list_background{
-        width: 850px;
+        width: 810px;
         height: 301px;
-    
     }
 
-    .product_list{
-        width: 198px;
-        height: 301px;
+    .product_list {
+        width: 180px;
+        height: 300px;
     
         display: flex;
         justify-content: center;
         align-items: center;
+        margin: 0 auto;
     }
+    
     .prd_info{
         width: 180px;
         height: 290px;
@@ -330,13 +330,16 @@
         <div class="tit_area">
             <h2 class="tit">좋아요</h2>
             <a class="btnMore" id="wishListMore" href="${pageContext.request.contextPath}/mypage/mypage_like.do">더보기〉</a>      
+        </div>
             <hr id="hr" width=100%>
             <div class="product_list_background">               
                 <c:choose>
 	                <c:when test="${!empty likeproductList[0].like_idx}">
-		                <ul>
+		                <div class="like_list">
+		                  <ul>
 		                    <li class="product_list">
-		                        <c:forEach var="rowNum" begin="0" end="4">
+		                        <c:forEach var="rowNum" begin="0" end="3">
+		                          <c:if test="${!empty likeproductList[rowNum].like_idx}">
 			                        <div class="prd_info">
 			                            <div class="goodlist_thumb_background">
 			                                <a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${likeproductList[rowNum].product_idx}"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${likefileList[rowNum].saveFile}"></a>
@@ -348,12 +351,14 @@
 			                            </div>
 			                            <p class="prd_price">${likeproductList[rowNum].product_price} 원</p>
 			                        </div>
+			                      </c:if> 
 			                    </c:forEach>    
 		                    </li>
 		                                    
 		                    <!-- c:if el사용 -->
 		                   <!-- <li class="nodata">좋아요 상품이 없습니다.</li> -->                       
 		               </ul>
+		              </div>
 	               </c:when>
 	               <c:when test="${empty likeproductList[0].like_idx}">
 		               <h1>좋아요한 상품 목록이 없습니다!</h1>
@@ -362,7 +367,6 @@
                 </c:choose>                   	               
             </div>
             <hr width=100%>
-        </div>
         <div class="area-over">
             <div class="left">
                 <div class="tit_area">
