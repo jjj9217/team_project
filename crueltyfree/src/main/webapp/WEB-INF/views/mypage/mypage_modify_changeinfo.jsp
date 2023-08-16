@@ -494,7 +494,7 @@ $(function(){
         <div class="tit_area">          
             <h2 class="tit">회원정보 수정</h2>
             <hr id="hr" width=100%;>            
-			<h4 class="tit tit_sub">휴대폰과 메일을 변경하시려면 새로 인증해주세요</h4>
+			<h4 class="tit tit_sub">※ 휴대폰번호을 변경하시려면 새로 인증해주세요</h4>
     <div id="container">
         <form action="infoupdate_process.do" method="post" id="update_frm" name="frm" style="margin-top:35px;">         
             <p>
