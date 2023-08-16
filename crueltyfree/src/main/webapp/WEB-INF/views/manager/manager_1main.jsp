@@ -205,7 +205,7 @@
 			</c:when>
 			<c:otherwise>
 			
-				<c:forEach var="rowNum" begin="1" end="5">
+				<c:forEach var="rowNum"  begin="1" end="5">
 					<tr>
 						<td><div class="ellipsis">${oneinqList[rowNum-1].one_inq_content}</div></td>
 						<td><div class="ellipsis2">${oneinqList[rowNum-1].member_nickname}</div></td>
@@ -257,14 +257,14 @@
  	 <tbody>
         <!-- 글목록 내용-->
 		<c:choose>
-			<c:when test="${empty productinqList}">
+			<c:when test="${empty productinqList}" >
 				<tr>
 					<td colspan="2"> 등록된 상품문의가 없습니다. </td>
 				</tr>
 			</c:when>
 			<c:otherwise>
 			
-				<c:forEach var="rowNum" begin="1" end="5">
+				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
 					<tr>
 						<td><div class="ellipsis">${productinqList[rowNum-1].product_inq_content}</div></td>
 						<td><div class="ellipsis2">${productinqList[rowNum-1].member_nickname}</div></td>

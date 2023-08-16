@@ -298,7 +298,6 @@
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
-   		background-color:pink;
 	}
 	.ellipsis2 {
 		width:70px;
@@ -306,7 +305,6 @@
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
-  		background-color:pink;	
 	}
     input[type="checkbox"]{
 		accent-color:#7d99a4;
