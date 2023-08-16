@@ -205,11 +205,29 @@ function categoryLarge(cate_large) {
 function validateForm(){
 //	if (form_insert.category_code.value == NULL) {
 //		alert("카테고리를 선택하세요."); }
+	
+	var cateCk = $("#categoryid").val();
+	if (cateCk=='대분류') {
+        alert("대분류를 등록해주세요 주세요.")
+        document.form_insert.categoryid.focus();
+        return false;
+        }
+		
+	var catesmallCk = $("#categorySmall").val();
+    if (catesmallCk=='소분류') {
+        alert("소분류를 등록해주세요 주세요.")
+        document.form_insert.categorySmall.focus();
+        return false;
+        }
+	
+		
 	var fileCk = $("#thumFile").val();	
 	if (!fileCk) {
 		alert("썸네일을 등록해 주세요.")
+		document.form_insert.thumFile.focus();
 		return false;
-		}
+		}		
+	
 	if (form_insert.product_name.value.length==0) {
 		alert("상품명을 입력하세요.");
 		form_insert.product_name.focus();
@@ -266,7 +284,7 @@ function validateForm(){
 			&nbsp;&nbsp;<a>카테고리</a>
 		</article>
 		<article class="regi_right">
-			<select name="category_code" class="regi_box" onchange="categoryLarge(this)">
+			<select id="categoryid" name="category_code" class="regi_box" onchange="categoryLarge(this)">
 				<option>대분류</option>
 				<option value="skin">스킨케어</option>
 				<option value="clensing">클렌징</option>

@@ -15,11 +15,6 @@
     a{text-decoration: none;}
     input[type="button"], input[type="submit"], input[type="checkbox"], select, input[type="radio"], label, button {cursor: pointer;}
     
-    ul li{      
-        list-style:none;
-        float: left;
-    }  
-    
     header{
 	    top: 0px;
 	    width: 100%;
@@ -54,6 +49,11 @@
     #list_tit a {
         font-size: 20px;
     }
+    
+    #list_tit li {
+    	list-style:none;
+        float: left;
+    }
 
     .category_filter {
 		border-top: 2px solid #4a4a4a;
@@ -64,7 +64,6 @@
     .serach_category_small{
         width: 1020px;
         height: 55px;
-        
     }
 
     .search_price{
@@ -109,7 +108,7 @@
 		font-weight: bold;
 	}
 
-    .change_later{
+    .change_later {
         margin: 0;
         width: 150px;
         height: 37px;
@@ -117,12 +116,12 @@
         padding-top: 17px;
     }
 
-    .classification{
+    .classification {
         width: 18px;
         height: 18px;   
     }   
 
-    .list_classification{
+    .list_classification {
         float: left;
         width: 870px;
         height: 20px;
@@ -130,10 +129,12 @@
         padding-inline-start: 0px;
     }
     
-    .list_classification li{
+    .list_classification li {
         width: 135px;
         height: 20px;
         margin-left: 10px;
+        list-style:none;
+        float: left;
     }
 
     .cate_info_tx {
@@ -157,7 +158,7 @@
         font-weight: bold;
     }
 
-    .price_input{
+    .price_input {
         width: 80px;
         height: 25px;
         padding-left: 10px;
@@ -204,6 +205,8 @@
     .cate_view li {
     	width: 30px;
     	font-size: 14px;
+    	list-style:none;
+        float: left;
     }
     
     .cate_view a {
@@ -228,6 +231,8 @@
         font-size: 14px;
         color: #000000;
         border-right: 1px solid #ededed;
+        list-style:none;
+        float: left;
     }
 
 
@@ -236,7 +241,6 @@
     .product_list_background {
         width: 1020px;
         height: auto;
-        background-color: #eef3f5;
     }
     
     .product_list {
@@ -246,32 +250,48 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		list-style:none;
+        float: left;
 	}
 	
-	.prd_info{
+	.prd_info {
 		width: 180px;
 		height: 290px;
+		text-align: center;
 	}
 
-    .prd_price{
+    .prd_price {
 		width: 180px;
 		height: 25px;
 
 		text-align: center;
-		font-size: 14px;
+		font-size: 20px;
+		font-weight: bold;
 		line-height: 25px;
+		color: #7d99a4;
+	}
+	
+    .prd_price a {
+		color: #7d99a4;
 	}
 
 	.prd_nickname {
 		text-align: center;
 		color: #4a4a4a;
 		font-size: 13px;
+		font-weight: bold;
+		margin-bottom: 5px;
 	}
 
 	.prd_name {
 		width: 180px;
-		height: 55px;   
+		height: 55px;
+		font-size: 15px;
     }
+    
+	.prd_name a {
+		color: #000000;
+	}
 
     .prd_title {     
 		text-align: center;
@@ -290,7 +310,7 @@
 		height: 180px;       
 	}
     
-    .paging{
+    .paging {
         width:1020px;
         height:150px;
         float:left;
@@ -843,7 +863,7 @@ function ProductDel(searchWord, category_code, category_code_small,
                 </c:if>
             </div>                              
         <p class="cate_info_tx">
-            전체<span style="color: #7d99a4; font-weight: bold;">${pageNav.totalRows}</span>개의 상품이 등록되어 있습니다.
+            전체<span style="color: #7d99a4; font-weight: bold;"> ${pageNav.totalRows} </span>개의 상품이 등록되어 있습니다.
         </p>
         <div class="cate_sort_box">
             <div class="cate_sort">
@@ -948,10 +968,8 @@ function ProductDel(searchWord, category_code, category_code_small,
 		        </table>   
            </div>           
     </div>    
-</div>
 
-
-	<div id="clear"></div>
+<div id="clear"></div>
 </body>
 <!-- footer -->
 <footer>
