@@ -537,8 +537,401 @@
     .edit_star{
     	cursor: pointer;
     }
+    
+    
+    
+    
+    /*       파일업로드 선택 디자인 */
+
+	    .gallery-file {
+  display: none; /* input 노드 숨기기 */
+}
+
+.file-button {
+	width:65px;
+	height:65px;
+	margin-right: 1px;
+	margin-left: 1px;
+  background-color: orange;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  float:left;
+}
+
+	    .gallery-file2 {
+  display: none; /* input 노드 숨기기 */
+}
+
+.file-button2 {
+	width:65px;
+	height:65px;
+	margin-right: 1px;
+	margin-left: 1px;
+  background-color: orange;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  float:left;
+}
+
+	    .gallery-file3 {
+  display: none; /* input 노드 숨기기 */
+}
+
+.file-button3 {
+	width:65px;
+	height:65px;
+	margin-right: 1px;
+	margin-left: 1px;
+  background-color: orange;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  float:left;
+}
+
+	    .gallery-file4 {
+  display: none; /* input 노드 숨기기 */
+}
+
+.file-button4 {
+	width:65px;
+	height:65px;
+	margin-right: 1px;
+	margin-left: 1px;
+  background-color: orange;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  float:left;
+}
+
+	    .gallery-file5 {
+  display: none; /* input 노드 숨기기 */
+}
+
+.file-button5 {
+	width:65px;
+	height:65px;
+	margin-right: 1px;
+	margin-left: 1px;
+  background-color: orange;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  float:left;
+}
+
+.modifyreviewimg{
+	width:75px;
+	height:75px;
+	margin-right: 1px;
+	margin-left: 1px;
+	  
+  
+}
 </style>
 </head>
+<script>
+
+function setThumbnail(event) {
+    var reader = new FileReader();
+
+    reader.onload = function(event) {
+      var img = document.createElement("img");
+      img.setAttribute("src", event.target.result);
+      img.setAttribute("width", "75");
+      img.setAttribute("height", "75");
+      img.setAttribute("id", "img01");
+      document.querySelector("div#image_container").appendChild(img);
+    };
+
+    reader.readAsDataURL(event.target.files[0]);
+    
+    var con = document.getElementById("myimg1"); 	
+    if(con.style.display=='none'){ 		
+    	con.style.display = 'block'; 	
+    }else{ 		
+    	con.style.display = 'none'; 	
+    }     
+
+    var fileck001=document.getElementById("file01").value;
+    var fi = document.getElementById("fileclose01");
+    if(fileck001){
+      alert('a');
+      if(fi.style.display=='none'){
+      fi.style.display=='block';
+     	 }    
+      }		
+
+}
+
+
+
+function uploadimgdel(){
+	  document.getElementById("file01").value = "";
+	  var fileck01=document.getElementById("file01").value;
+	        
+	  //기존에 올라온 사진이미지를 다시 제거  
+	  if(!fileck01){
+	  alert("첨부없음");
+	  var con = document.getElementById("myimg1");  
+	    if(con.style.display=='none'){ 		
+	    	con.style.display = 'block'; 	
+	    }else{ 		
+	    	con.style.display = 'none';      
+	    }
+	    
+	    $('#img01').remove();
+	  
+	}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function setThumbnail2(event) {
+    var reader = new FileReader();
+
+    reader.onload = function(event) {
+      var img = document.createElement("img");
+      img.setAttribute("src", event.target.result);
+      img.setAttribute("width", "75");
+      img.setAttribute("height", "75");
+      img.setAttribute("id", "img02");
+      document.querySelector("div#image_container2").appendChild(img);
+    };
+
+    reader.readAsDataURL(event.target.files[0]);
+    
+    var con = document.getElementById("myimg2"); 	
+    if(con.style.display=='none'){ 		
+    	con.style.display = 'block'; 	
+    }else{ 		
+    	con.style.display = 'none'; 	
+    }
+    
+    var fileck002=document.getElementById("file02").value;
+    var fi = document.getElementById("fileclose02");
+    if(fileck002){
+      if(fi.style.display=='none'){
+      fi.style.display=='block';
+     	 }    
+      }
+    
+}
+
+
+
+
+function uploadimgdel2(){
+	  document.getElementById("file02").value = "";
+	  var fileck02=document.getElementById("file02").value;
+	        
+	  //기존에 올라온 사진이미지를 다시 제거  
+	  if(!fileck02){
+	  var con = document.getElementById("myimg2");  
+	    if(con.style.display=='none'){ 		
+	    	con.style.display = 'block'; 	
+	    }else{ 		
+	    	con.style.display = 'none';      
+	    }
+	    
+	    $('#img02').remove();
+	  
+	}
+	}
+	
+	
+	
+	
+	
+
+
+
+
+
+function setThumbnail3(event) {
+    var reader = new FileReader();
+
+    reader.onload = function(event) {
+      var img = document.createElement("img");
+      img.setAttribute("src", event.target.result);
+      img.setAttribute("width", "75");
+      img.setAttribute("height", "75");
+      img.setAttribute("id", "img03");
+      document.querySelector("div#image_container3").appendChild(img);
+    };
+
+    reader.readAsDataURL(event.target.files[0]);
+    
+    var con = document.getElementById("myimg3"); 	
+    if(con.style.display=='none'){ 		
+    	con.style.display = 'block'; 	
+    }else{ 		
+    	con.style.display = 'none'; 	
+    }     
+}
+
+
+
+function uploadimgdel3(){
+	  document.getElementById("file03").value = "";
+	  var fileck03=document.getElementById("file03").value;
+	        
+	  //기존에 올라온 사진이미지를 다시 제거  
+	  if(!fileck03){
+	  var con = document.getElementById("myimg3");  
+	    if(con.style.display=='none'){ 		
+	    	con.style.display = 'block'; 	
+	    }else{ 		
+	    	con.style.display = 'none';      
+	    }
+	    
+	    $('#img03').remove();
+	  
+	}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function setThumbnail4(event) {
+    var reader = new FileReader();
+
+    reader.onload = function(event) {
+      var img = document.createElement("img");
+      img.setAttribute("src", event.target.result);
+      img.setAttribute("width", "75");
+      img.setAttribute("height", "75");
+      img.setAttribute("id", "img04");
+      document.querySelector("div#image_container4").appendChild(img);
+    };
+
+    reader.readAsDataURL(event.target.files[0]);
+    
+    var con = document.getElementById("myimg4"); 	
+    if(con.style.display=='none'){ 		
+    	con.style.display = 'block'; 	
+    }else{ 		
+    	con.style.display = 'none'; 	
+    }     
+}
+
+
+function uploadimgdel4(){
+	  document.getElementById("file04").value = "";
+	  var fileck04=document.getElementById("file04").value;
+	        
+	  //기존에 올라온 사진이미지를 다시 제거  
+	  if(!fileck04){
+	  var con = document.getElementById("myimg4");  
+	    if(con.style.display=='none'){ 		
+	    	con.style.display = 'block'; 	
+	    }else{ 		
+	    	con.style.display = 'none';      
+	    }
+	    
+	    $('#img04').remove();
+	  
+	}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+function setThumbnail5(event) {
+    var reader = new FileReader();
+
+    reader.onload = function(event) {
+      var img = document.createElement("img");
+      img.setAttribute("src", event.target.result);
+      img.setAttribute("width", "75");
+      img.setAttribute("height", "75");
+      img.setAttribute("id", "img05");
+      document.querySelector("div#image_container5").appendChild(img);
+    };
+
+    reader.readAsDataURL(event.target.files[0]);
+    
+    var con = document.getElementById("myimg5"); 	
+    if(con.style.display=='none'){ 		
+    	con.style.display = 'block'; 	
+    }else{ 		
+    	con.style.display = 'none'; 	
+    }     
+}
+
+function uploadimgdel5(){
+	  document.getElementById("file05").value = "";
+	  var fileck05=document.getElementById("file05").value;
+	        
+	  //기존에 올라온 사진이미지를 다시 제거  
+	  if(!fileck05){
+	  var con = document.getElementById("myimg5");  
+	    if(con.style.display=='none'){ 		
+	    	con.style.display = 'block'; 	
+	    }else{ 		
+	    	con.style.display = 'none';      
+	    }
+	    
+	    $('#img05').remove();
+	  
+	}
+	}
+
+
+
+
+
+
+
+</script>
 
 <body>
     <header>    
@@ -751,11 +1144,12 @@
                 <div class="step_cont">
                     <!-- 리뷰 고도화 : 추가 -->
                     <div class="photo-list-info">
-                        <strong>리뷰 포토</strong>
+                        <strong>리뷰 포토${reviewRegList[0]}</strong>
                     </div>
                     <div class="rw-photo-list">
-                        <c:forEach var="fileVoList" items="${reviewRegList}">
+                        <c:forEach var="fileVoList" items="${reviewRegList}">										
                             <c:forEach var="fileVo" items="${fileVoList}">
+                            		<p>AAASEAEAEA</p>                            		
                                 <c:if test="${reviewproductList[rowNum-1].review_idx eq fileVo.review_idx}">
                                        <span class="thum"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}"></span>
                                 </c:if>                                
@@ -841,13 +1235,54 @@
 	            <div class="photo-list-info">
 	                <strong>포토</strong>
 	            </div>
-	            <div class="rw-photo-list2">                            
-	                <input type="file" class="CattachedFile" name="attachedFile"><br>
-	                <input type="file" class="CattachedFile" name="attachedFile"><br>
-	                <input type="file" class="CattachedFile" name="attachedFile"><br>
-	                <input type="file" class="CattachedFile" name="attachedFile"><br>
-	                <input type="file" class="CattachedFile" name="attachedFile"><br>                                                            
-	                <span class="grayText">사진은 8MB이하의 PNG, JPG 파일만 등록 가능합니다.</span>
+	            <div class="rw-photo-list2">                            	                                                                          
+	                <div>
+                        <input type="file" id="file01" class="gallery-file" name="attachedFile" onchange="setThumbnail(event);">
+                        <span class="file-button" id="myimg1"><img class="modifyreviewimg" src="${pageContext.request.contextPath}/resources/uploads/${reviewfileList[rowNum-1].saveFile}"></span>
+                        <div id="image_container"></div>                        
+                        </div>
+                        <div>                        
+                        <input type="file" id="file02" class="gallery-file2" name="attachedFile" onchange="setThumbnail2(event);">
+                        <span class="file-button2" id="myimg2"><img class="modifyreviewimg" src="${pageContext.request.contextPath}/resources/uploads/${reviewfileList[rowNum-1].saveFile}"></span>
+                        <div id="image_container2"></div>
+                        </div>
+                        <div>
+                        <input type="file" id="file03" class="gallery-file3" name="attachedFile" onchange="setThumbnail3(event);">
+                        <span class="file-button3" id="myimg3"><img class="modifyreviewimg" src="${pageContext.request.contextPath}/resources/uploads/${reviewfileList[rowNum-1].saveFile}"></span>
+                        <div id="image_container3"></div>
+                        </div>
+                        
+                        <div>
+                        <input type="file" id="file04" class="gallery-file4" name="attachedFile" onchange="setThumbnail4(event);">
+                        <span class="file-button4" id="myimg4"><img class="modifyreviewimg" src="${pageContext.request.contextPath}/resources/uploads/${reviewfileList[rowNum-1].saveFile}"></span>
+                        <div id="image_container4"></div>
+                        </div>
+                        
+                        <div>
+                        <input type="file" id="file05" class="gallery-file5" name="attachedFile" onchange="setThumbnail5(event);">
+                        <span class="file-button5" id="myimg5"><img class="modifyreviewimg" src="${pageContext.request.contextPath}/resources/uploads/${reviewfileList[rowNum-1].saveFile}"></span>
+                        <div id="image_container5"></div>
+                    </div> 
+	                
+	                
+	                
+	                
+	                
+	                <span class="grayText">
+	                			<input type="button" id="fileclose01" onclick="uploadimgdel()" value="1번째"><br>
+                    			<input type="button" id="fileclose02" onclick="uploadimgdel2()" value="2번째"><br>                     
+                    			<input type="button" id="fileclose03" onclick="uploadimgdel3()" value="3번째"><br>
+                    			<input type="button" id="fileclose04" onclick="uploadimgdel4()" value="4번째"><br>
+                    			<input type="button" id="fileclose05" onclick="uploadimgdel5()" value="5번째"><br>
+	                
+	                
+	                
+	                
+	                
+	                
+	                
+	                
+	                사진은 8MB이하의 PNG, JPG 파일만 등록 가능합니다.</span>
 	            </div>
 	        </div>            
 	        <div class="review_reg_background">                                                                     
@@ -951,6 +1386,128 @@ $(function(){
         $(".test01").eq(index2).submit();                   
     });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const fileButton = document.querySelector(".file-button");
+const galleryFile = document.querySelector(".gallery-file");
+
+fileButton.addEventListener("click", function () {
+
+  // 클릭 마우스이벤트 생성
+  const event = new MouseEvent("click", {
+    bubbles: true,
+    cancelable: true,
+    view: window
+  });
+  
+  // 위에서 생성한 이벤트를 스팬 노드로 전달
+  galleryFile.dispatchEvent(event);
+  
+});	
+
+const fileButton2 = document.querySelector(".file-button2");
+const galleryFile2 = document.querySelector(".gallery-file2");
+
+fileButton2.addEventListener("click", function () {
+
+  // 클릭 마우스이벤트 생성
+  const event = new MouseEvent("click", {
+    bubbles: true,
+    cancelable: true,
+    view: window
+  });
+  
+  // 위에서 생성한 이벤트를 스팬 노드로 전달
+  galleryFile2.dispatchEvent(event);
+  
+});
+
+const fileButton3 = document.querySelector(".file-button3");
+const galleryFile3 = document.querySelector(".gallery-file3");
+
+fileButton3.addEventListener("click", function () {
+
+  // 클릭 마우스이벤트 생성
+  const event = new MouseEvent("click", {
+    bubbles: true,
+    cancelable: true,
+    view: window
+  });
+  
+  // 위에서 생성한 이벤트를 스팬 노드로 전달
+  galleryFile3.dispatchEvent(event);
+  
+});
+
+const fileButton4 = document.querySelector(".file-button4");
+const galleryFile4 = document.querySelector(".gallery-file4");
+
+fileButton4.addEventListener("click", function () {
+
+  // 클릭 마우스이벤트 생성
+  const event = new MouseEvent("click", {
+    bubbles: true,
+    cancelable: true,
+    view: window
+  });
+  
+  // 위에서 생성한 이벤트를 스팬 노드로 전달
+  galleryFile4.dispatchEvent(event);
+  
+});
+
+const fileButton5 = document.querySelector(".file-button5");
+const galleryFile5 = document.querySelector(".gallery-file5");
+
+fileButton5.addEventListener("click", function () {
+
+  // 클릭 마우스이벤트 생성
+  const event = new MouseEvent("click", {
+    bubbles: true,
+    cancelable: true,
+    view: window
+  });
+  
+  // 위에서 생성한 이벤트를 스팬 노드로 전달
+  galleryFile5.dispatchEvent(event);
+  
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 <script>
 $(function() {    
