@@ -67,6 +67,7 @@ public class ManagerController {
 		this.mPage = mPage;
 		this.pageNav = pageNav;
 	}
+
 	@Autowired
 	public void setRvCount(@Qualifier("rvCount") ManagerService rvCount) {
 		this.rvCount = rvCount;
@@ -208,10 +209,7 @@ public class ManagerController {
 		if(productinqList != null) {
 			model.addAttribute("productinqList", productinqList);
 		}
-		int totRows = proinqCount.proinqselectCount(searchField,searchWord);
-		pageNav.setTotalRows(totRows);
-		pageNav=mPage.setPageNav(pageNav, pageNum, pageBlock);
-		model.addAttribute("pageNav",pageNav);
+	
 		
 		return "manager/manager_1main";
 	}

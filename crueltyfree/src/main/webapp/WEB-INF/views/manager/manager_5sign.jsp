@@ -473,7 +473,12 @@ $(function(){
                         <fmt:formatDate value="${selSelectList[rowNum-1].one_inq_regDate}" type="date" pattern="yyyy-MM-dd HH:mm" var="formatDate"/>						
 						<td>${formatDate}</td>
 						<td>
-						<input type="button" id="edit" class="edit" value="답변">
+							<c:if test="${empty selSelectList[rowNum-1].one_inq_answer}">
+		                            <input type="button" id="edit" class="edit" value="답변">
+		                    </c:if>
+		                     <c:if test="${!empty selSelectList[rowNum-1].one_inq_answer}">
+		                           <input type="button" id="edit" class="edit" value="완료" style="background-color:gray;">
+		                    </c:if>
 						<input type="button" id="delete" class="delete" value="삭제">
 						</td>						
 					</tr>

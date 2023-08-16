@@ -435,12 +435,12 @@ $(function(){
 		<c:choose>
 			<c:when test="${empty memberList}">
 				<tr>
-					<td colspan="7"> 데이터가 없습니다. </td>
+					<td colspan="8"> 데이터가 없습니다. </td>
 				</tr>
 			</c:when>			
 			<c:when test="${empty memSelectList}">
 				<tr>
-					<td colspan="7"> 데이터가 없습니다. </td>
+					<td colspan="8"> 데이터가 없습니다. </td>
 				</tr>
 			</c:when>
 			<c:otherwise>

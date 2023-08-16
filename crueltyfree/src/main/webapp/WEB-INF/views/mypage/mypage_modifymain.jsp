@@ -113,18 +113,7 @@
 
     
 
-    
-
-
-
-
-
-    
-    
-    ul li{      
-        list-style:none;
-        float: left;
-    }   
+   
 
     .buy_list_txt{
         width: 100%;

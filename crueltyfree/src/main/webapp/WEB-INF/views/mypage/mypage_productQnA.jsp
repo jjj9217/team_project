@@ -158,10 +158,6 @@
         padding-left: 15px;
     }
 
-    ul li{      
-        list-style:none;
-        float: left;
-    }   
 
 
     
@@ -327,6 +323,8 @@
     }
 #font{font: bold 13px Arial, sans-serif;}
 #font2{font: bold 13px Arial, sans-serif; color:gray;}
+#title_content{text-align:left; font: bold 13px Arial, Sans-serif; color:#7d99a4; float:left; margin-left:30px;}
+#sub_content{margin-left:10px; font: bold 13px Arial, Sans-serif; float:left;}
 </style>
 </head>
 <script>
@@ -439,10 +437,10 @@ submit();
                 
                 
                 	                	
-                	문의내용 : ${inqproductList[rowNum-1].product_inq_content}<br>
+                	<span id="title_content">문의내용:</span> <span id="sub_content">${inqproductList[rowNum-1].product_inq_content}</span><br>
                 	
                 	<c:if test="${!empty inqproductList[rowNum-1].product_inq_answer}">
-                	답변내용 : ${inqproductList[rowNum-1].product_inq_answer} 
+                		<span id="title_content">답변내용: </span><span id="sub_content">${inqproductList[rowNum-1].product_inq_answer}</span>
                 	</c:if>
                 
                     
@@ -508,7 +506,7 @@ submit();
             </c:forEach>
                              <tr><td style="border-bottom:0px;">
                         <c:if test="${empty inqproductList[0].product_inq_content}">
-                               <tr><td id="no_coupon" colspan="3">문의한 상품내역이 없습니다.</td></tr>
+                               <tr><td id="no_coupon" colspan="3" style="height: auto;">문의한 상품내역이 없습니다.</td></tr>
                             </c:if>
                         </td></tr>   
 

@@ -457,12 +457,12 @@ $(function(){
 		<c:choose>
 			<c:when test="${empty productinqList}">
 				<tr>
-					<td colspan="6"> 데이터가 없습니다. </td>
+					<td colspan="7"> 데이터가 없습니다. </td>
 				</tr>
 			</c:when>
 			<c:when test="${empty proinqSelectList}">
 				<tr>
-					<td colspan="6"> 데이터가 없습니다. </td>
+					<td colspan="7"> 데이터가 없습니다. </td>
 				</tr>
 			</c:when>
 			<c:otherwise>

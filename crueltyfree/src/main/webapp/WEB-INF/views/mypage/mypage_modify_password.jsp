@@ -40,11 +40,14 @@
     }
     
     #mypage{
-        margin-top:30px;
+    	margin-top:30px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+       	font-size:15px;
         width: 199px;
         height:500px;
-        float:left;     
+        float:left;
     }
+	#mypage a{color:black;}
 
     #mypage-conts{
         
@@ -53,16 +56,17 @@
         float:left;
     }
 
-    #mylink{
-        color: black;
-        font-size: 30px;
-        text-decoration: none;
-    }
-
     .mypagetable{
         font-size: 20px;
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;      
+        color:#7d99a4;
+    }
+
+    #mylink{
+        color: black;
+        font-size: 30px;
+        text-decoration: none;
     }
 
     #blank{
