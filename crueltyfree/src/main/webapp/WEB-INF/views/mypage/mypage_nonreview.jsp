@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Header</title>
+<title>리뷰 | CreultyFree</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 $(function() {    
@@ -172,7 +172,8 @@ $(function() {
     
 
     .buy_list{
-        width: 100%;
+    	margin-left: 10px;
+        width: 790px;
         height:340px;
     
         text-align: center;
@@ -312,12 +313,6 @@ $(function() {
             height: 120px;
             padding: 10px;
         }
-
-        .goodlist_thumb{
-            width: 120px;
-            height: 120px;
-        }
-
         .write_step{
             width: 480px;
             height: auto;
@@ -516,10 +511,11 @@ margin-left: 1px;
 float:left;}
     .buy_list_container{display: block; width: 790px; height: auto; margin: 0 auto; padding: 10px; margin-top: 50px;}
     .buy_list, .order_list{border-collapse: collapse;}
-    .th_product{width: 180px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
-    .th_review{width: 30px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
-	.td_product{width: 120px; height: auto; padding: 30px 5px; text-align: center; font-size:14px; font-weight: bold;}
-    .td_review{width: 30px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .th_product{width: 690px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+    .th_review{width: 100px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+	.td_product{width: 680px; height: auto; padding: 10px 5px; font-size:14px; font-weight: bold;}
+    .td_review{width: 90px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .td_empty{width: 790px; height: auto;}
     .top{border-top: 2px solid #4a4a4a}
     .bottom{border-bottom: 1px solid #a4a4a4}
     
@@ -540,8 +536,45 @@ float:left;}
         border-color: white;
         background-color: orange;
     }
-    .prd_item_box{
+    .prd_box{
+    	display:flex;
     }
+    .prd_img_box{
+    	display:block;
+    	margin-right: 10px;
+    	cursor: pointer;
+    }
+    .prd_item_box{    	
+    	display:block;
+    	text-align: left;
+    	width:400px;
+    	height:80px;
+    	cursor: pointer;
+    }
+    .goodlist_thumb0{
+    	width:80px;
+    	height:80px;
+    }
+    .goodlist_thumb{
+    	width:120px;
+    	height:120px;
+    }
+    .grayDate{
+    display: block;
+    width:320px;
+    height:16px;
+    color: #4a4a4a;
+    font-weight: bold;
+    }
+	.reviewInsertBtn{
+	width:80px;
+    height:30px;
+    border: 1px solid #7d99a4;
+    color: #fff;
+    background-color: #7d99a4;
+    font-weight: bold;
+    border-radius: 5px;
+	}
 </style>
 <script>
 
@@ -686,7 +719,7 @@ function setThumbnail5(event) {
         <div id="blank">            
         </div>
         <div class="tit_area">
-            <h2 class="tit">리뷰</h2>         
+            <h2 class="tit">&nbsp;&nbsp;리뷰</h2>         
         </div>
         <ul class="address_or_refund">
             <li class="address_atag">                   
@@ -705,19 +738,42 @@ function setThumbnail5(event) {
             <th class="th_review top bottom"scope="col">리뷰작성</th>
         </tr>
         <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
+        <c:if test="${empty nonreviewproductList[rowNum-1]}">
+        
+        <c:choose>
+        <c:when test="${!empty nonreviewproductList[0].product_name}">
+        </c:when>
+        <c:otherwise>
+        <c:if test="${rowNum == 1}">
+        	<tr>
+           <td class="td_empty bottom" colspan="2">
+           구매하신 상품이 없습니다!
+           </td>
+           </tr>
+        </c:if>
+        </c:otherwise>
+        </c:choose>                
+           
+        </c:if>
         <!-- c:if nonreviewfileList[rowNum-1]. = null이면 리뷰안쓴목록만 출력하는방식도 있을 듯? -->
         <c:if test="${!empty nonreviewproductList[rowNum-1].product_name}">
         <tr>                
            <td class="td_product bottom">
+           <div class="prd_box">
+           <div class="prd_img_box">
+           <img class="goodlist_thumb0" src="${pageContext.request.contextPath}/resources/uploads/${nonreviewfileList[rowNum-1].saveFile}">
+           </div>
            <div class="prd_item_box">
-           <img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${nonreviewfileList[rowNum-1].saveFile}">
-           구매일자: 
-           <fmt:formatDate value="${nonreviewproductList[rowNum-1].order_date}" pattern="yyyy.MM.dd" /><br>
+           <span class="grayDate">구매일자: &nbsp;<fmt:formatDate value="${nonreviewproductList[rowNum-1].order_date}" pattern="yyyy.MM.dd" /></span><br>
+           <div class="prd_item_name">
            ${nonreviewproductList[rowNum-1].product_name}
+           <input type="hidden" class="prdIdxClass" value="${nonreviewproductList[rowNum-1].product_idx}">
+           </div>
+           </div>
            </div>
            </td>
            <td class="td_review bottom">
-           <input type="button" class="btn" id="btn-modal" name="btn-modal" value="리뷰작성">
+           <input type="button" class="btn reviewInsertBtn" id="btn-modal" name="btn-modal" value="리뷰작성">
            </td>
         </tr>
 <!-- 아래는 Modal -->
@@ -851,6 +907,18 @@ function setThumbnail5(event) {
 <script>
 $(function(){
 	//jQuery
+	$(".prd_img_box").click(function(){ 
+		var index = $(".prd_img_box").index(this);
+		var prdNum = $(".prdIdxClass").eq(index).val();
+		window.location.href = "${pageContext.request.contextPath}/product/product_view.do?prdNum="+prdNum;
+	});
+	
+	$(".prd_item_box").click(function(){ 
+		var index = $(".prd_item_box").index(this);
+		var prdNum = $(".prdIdxClass").eq(index).val();
+		window.location.href = "${pageContext.request.contextPath}/product/product_view.do?prdNum="+prdNum;
+	});
+	
 	$(".btn").click(function(){ 
 		var index = $(".btn").index(this);
 	    $(".modal").eq(index).removeClass("hidden");

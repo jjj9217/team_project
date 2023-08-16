@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Header</title>
+<title>리뷰 | CreultyFree</title>
 <style>
     *{margin: 0; padding: 0;}
     a{text-decoration: none;}
@@ -150,15 +150,20 @@
     
 
     .buy_list{
-        width: 100%;
+    	margin-left: 10px;
+        width: 790px;
         height:340px;
-        
+    
         text-align: center;
     }
 
+    .goodlist_thumb0{
+    	width:80px;
+    	height:80px;
+    }
     .goodlist_thumb{
-            width: 85px;
-            height: 85px;
+    	width:120px;
+    	height:120px;
     }
 
     /* 모달 */
@@ -264,11 +269,6 @@
         height: 85px;
     }
 
-    .goodlist_thumb{
-        width: 85px;
-        height: 85px;
-    }
-
     .write_step{
         width: 480px;
         height: auto;
@@ -364,10 +364,11 @@
     }
     .buy_list_container{display: block; width: 790px; height: auto; margin: 0 auto; padding: 10px; margin-top: 50px;}
     .buy_list, .order_list{border-collapse: collapse;}
-    .th_product{ height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
-    .th_review{ height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
-	.td_product{ height: auto; padding: 30px 5px; text-align: center; font-size:14px; font-weight: bold;}
-    .td_review{height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .th_product{width: 290px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+    .th_review{width: 500px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
+	.td_product{width: 280px; height: auto; padding: 10px 5px; font-size:14px; font-weight: bold;}
+    .td_review{width: 490px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
+    .td_empty{width: 790px; height: auto;}
     .top{border-top: 2px solid #4a4a4a}
     .bottom{border-bottom: 1px solid #a4a4a4}
     
@@ -386,6 +387,87 @@
         text-align: center;
         border-color: white;
         background-color: orange;
+    }
+    
+    .prd_box,.review_box{
+    	display:flex;
+    }
+    .prd_img_box{
+    	display:block;
+    	margin-right: 10px;
+    	cursor: pointer;
+    }
+    .prd_item_box{    	
+    	display:block;
+    	text-align: left;
+    	width:260px;
+    	height:80px;
+    	cursor: pointer;
+    }
+    .grayDate{
+    display: block;
+    width:200px;
+    height:16px;
+    color: #4a4a4a;
+    font-weight: bold;
+    }
+    .prd_item_name{
+      overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+        display: block;
+    width:260px;
+    height:16px;
+    }
+    .review_item_box{
+        	display:block;
+    	text-align: left;
+    	width:280px;
+    	height:80px;
+    	margin-left: 10px;
+    }
+    .review_btn_box{
+            	display:block;
+    	text-align: center;
+    	width:120px;
+    	height:80px;
+    	cursor: pointer;
+    }
+    .star_box{
+    padding: 5px;
+    margin: 5px 0;
+    }
+    .review_content_box{
+          overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+        display: block;
+    width:260px;
+    height:16px;
+    }
+    .review_edit_btn{
+    	padding: 10px 0; 
+    }
+    .review_view_btn{
+    padding-bottom: 10px;
+    }    
+    .reviewmodify{
+    	width: 80px;
+    	height: 30px;
+    	border: 1px solid #7d99a4;
+    	color: #7d99a4;
+    	background-color: #fff;
+    	border-radius: 5px;
+    	font-weight: bold;
+    }
+    .reviewView{
+    	width: 80px;
+    	height: 30px;
+    	border: 1px solid #7d99a4;
+    	color: #fff;
+    	background-color: #7d99a4;
+    	border-radius: 5px;
+    	font-weight: bold;
     }
 </style>
 </head>
@@ -423,7 +505,7 @@
         <div id="blank">            
         </div>
         <div class="tit_area">
-            <h2 class="tit">리뷰</h2>         
+            <h2 class="tit">&nbsp;&nbsp;리뷰</h2>         
         </div>
         <ul class="address_or_refund">
             <li class="address_atag">
@@ -437,41 +519,104 @@
                     <a href="#" id="refund_atag" onclick="document.forms['caf'].submit();">
             나의 리뷰</a></li>
         </ul>
-        <div class="accumulate_tit">
-            <h2 class="tit">누적 리뷰 건수 ${untitled}건</h2>
-        </div>
-        <table class="buy_list" style="margin-top:20px;">
-            <colgroup>
-                <col style="width:359px;">
-                <col style="width:310px;">
-                <col style="width:auto">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th class="th_product top bottom" scope="col">상품</th>
-                    <th class="th_review top bottom" scope="col">리뷰</th>                 
-                </tr>
-            </thead>
-            <tbody>
-            
-                        
-                
-                
-                           <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
-                    <!-- c:if nonreviewfileList[rowNum-1]. = null이면 리뷰안쓴목록만 출력하는방식도 있을 듯? -->
-                            <c:if test="${!empty reviewproductList[rowNum-1].review_content}">
-                <tr>                
-                    <td><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${reviewfileList[rowNum-1].saveFile}">
-                        구매일자: ${reviewproductList[rowNum-1].order_date}
-                        상품이름: ${reviewproductList[rowNum-1].product_name}
-                    </td>                                        
-                    <td>작성날짜: ${reviewproductList[rowNum-1].review_regDate}</td>
-                    <td>별점: ${reviewproductList[rowNum-1].review_score}</td>
-                    <td>리뷰내용: ${reviewproductList[rowNum-1].review_content}</td>
-                    <td>
-                        <button type="button" class="reviewmodify" id="review_View" >리뷰 수정</button>
-                        <button type="button" class="reviewView" id="review_View" >리뷰 보기</button>
-                </tr>
+        <table class="buy_list" style="margin-top:20px;">        
+         <tr>
+             <th class="th_product top bottom" scope="col">상품</th>
+             <th class="th_review top bottom" scope="col">리뷰</th>                 
+         </tr>
+         <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
+	        <c:if test="${empty reviewproductList[rowNum-1]}">
+	        
+	        <c:choose>
+	        <c:when test="${!empty reviewproductList[0].product_name}">
+	        </c:when>
+	        <c:otherwise>
+	        <c:if test="${rowNum == 1}">
+	        	<tr>
+	           <td class="td_empty bottom" colspan="2">
+	           작성하신 리뷰가 없습니다!
+	           </td>
+	           </tr>
+	        </c:if>
+	        </c:otherwise>
+	        </c:choose>                
+	           
+	        </c:if>         
+         <!-- c:if nonreviewfileList[rowNum-1]. = null이면 리뷰안쓴목록만 출력하는방식도 있을 듯? -->
+         <c:if test="${!empty reviewproductList[rowNum-1].review_content}">
+         <tr>                
+             <td class="td_product bottom">
+             <div class="prd_box">
+             <div class="prd_img_box">
+             <img class="goodlist_thumb0" src="${pageContext.request.contextPath}/resources/uploads/${reviewfileList[rowNum-1].saveFile}">
+             </div>
+             <div class="prd_item_box">
+             <span class="grayDate">구매일자: &nbsp;<fmt:formatDate value="${reviewproductList[rowNum-1].order_date}" pattern="yyyy.MM.dd" /></span><br>
+             <div class="prd_item_name">
+             ${reviewproductList[rowNum-1].product_name}
+             <input type="hidden" class="prdIdxClass" value="${reviewproductList[rowNum-1].product_idx}">
+             </div>
+             </div>
+             </div>
+             </td>                                        
+             <td class="td_review bottom">
+             <div class="review_box">
+             <div class="review_item_box">
+             <span class="grayDate">&nbsp;작성날짜: &nbsp;<fmt:formatDate value="${reviewproductList[rowNum-1].review_regDate}" pattern="yyyy.MM.dd" /></span>
+	         <div class="star_box">
+          	<c:choose>
+          	<c:when test="${reviewproductList[rowNum-1].review_score == 1}">
+          	<img src="../resources/img/star_full.png" width="20px" height="20px">
+          	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+          	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+          	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+          	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+          	</c:when>
+          	<c:when test="${reviewproductList[rowNum-1].review_score == 2}">
+          	<img src="../resources/img/star_full.png" width="20px" height="20px">
+          	<img src="../resources/img/star_full.png" width="20px" height="20px">
+          	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+          	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+          	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+          	</c:when>
+          	<c:when test="${reviewproductList[rowNum-1].review_score == 3}">
+          	<img src="../resources/img/star_full.png" width="20px" height="20px">
+          	<img src="../resources/img/star_full.png" width="20px" height="20px">
+          	<img src="../resources/img/star_full.png" width="20px" height="20px">
+          	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+          	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+          	</c:when>
+          	<c:when test="${reviewproductList[rowNum-1].review_score == 4}">
+          	<img src="../resources/img/star_full.png" width="20px" height="20px">
+          	<img src="../resources/img/star_full.png" width="20px" height="20px">
+          	<img src="../resources/img/star_full.png" width="20px" height="20px">
+          	<img src="../resources/img/star_full.png" width="20px" height="20px">
+          	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+          	</c:when>
+          	<c:otherwise>
+          	<img src="../resources/img/star_full.png" width="20px" height="20px">
+          	<img src="../resources/img/star_full.png" width="20px" height="20px">
+          	<img src="../resources/img/star_full.png" width="20px" height="20px">
+          	<img src="../resources/img/star_full.png" width="20px" height="20px">
+          	<img src="../resources/img/star_full.png" width="20px" height="20px">  
+          	</c:otherwise>
+          	</c:choose>                                    
+	         </div>
+	         <div class="review_content_box">
+	         &nbsp;${reviewproductList[rowNum-1].review_content}
+	         </div>
+             </div>
+             <div class="review_btn_box">
+             <div class="review_edit_btn">
+                 <button type="button" class="reviewmodify" id="review_View" >리뷰 수정</button>
+             </div>
+             <div class="review_view_btn">
+                 <button type="button" class="reviewView" id="review_View" >리뷰 보기</button>
+             </div>
+             </div>
+             </div>
+             </td>    
+         </tr>
 
 
 <div id="modal" class="modal">    
@@ -621,12 +766,7 @@
 
                             </c:if>
                                 </c:forEach>
-                 
-                 
-                 
-                 
-                                       
-            </tbody>        
+
         </table>
         
         
