@@ -575,6 +575,32 @@ float:left;}
     font-weight: bold;
     border-radius: 5px;
 	}
+	
+	#fileclose01{
+	float:left;
+	margin-top:3px;
+	}
+	
+	#fileclose02{
+	float:left;
+	margin-top:-10px;
+	}
+	
+	#fileclose03{
+	float:left;
+	
+	}
+	
+	#fileclose04{
+	float:left;
+	
+	}
+	
+	#fileclose05{
+	float:left;
+	
+	}
+	
 </style>
 <script>
 
@@ -586,6 +612,7 @@ function setThumbnail(event) {
       img.setAttribute("src", event.target.result);
       img.setAttribute("width", "75");
       img.setAttribute("height", "75");
+      img.setAttribute("id", "img01");
       document.querySelector("div#image_container").appendChild(img);
     };
 
@@ -597,7 +624,54 @@ function setThumbnail(event) {
     }else{ 		
     	con.style.display = 'none'; 	
     }     
+
+    var fileck001=document.getElementById("file01").value;
+    var fi = document.getElementById("fileclose01");
+    if(fileck001){
+      alert('a');
+      if(fi.style.display=='none'){
+      fi.style.display=='block';
+     	 }    
+      }		
+
 }
+
+
+
+function uploadimgdel(){
+	  document.getElementById("file01").value = "";
+	  var fileck01=document.getElementById("file01").value;
+	        
+	  //기존에 올라온 사진이미지를 다시 제거  
+	  if(!fileck01){
+	  alert("첨부없음");
+	  var con = document.getElementById("myimg1");  
+	    if(con.style.display=='none'){ 		
+	    	con.style.display = 'block'; 	
+	    }else{ 		
+	    	con.style.display = 'none';      
+	    }
+	    
+	    $('#img01').remove();
+	  
+	}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function setThumbnail2(event) {
     var reader = new FileReader();
@@ -607,6 +681,7 @@ function setThumbnail2(event) {
       img.setAttribute("src", event.target.result);
       img.setAttribute("width", "75");
       img.setAttribute("height", "75");
+      img.setAttribute("id", "img02");
       document.querySelector("div#image_container2").appendChild(img);
     };
 
@@ -617,8 +692,47 @@ function setThumbnail2(event) {
     	con.style.display = 'block'; 	
     }else{ 		
     	con.style.display = 'none'; 	
-    }     
+    }
+    
+    var fileck002=document.getElementById("file02").value;
+    var fi = document.getElementById("fileclose02");
+    if(fileck002){
+      if(fi.style.display=='none'){
+      fi.style.display=='block';
+     	 }    
+      }
+    
 }
+
+
+
+
+function uploadimgdel2(){
+	  document.getElementById("file02").value = "";
+	  var fileck02=document.getElementById("file02").value;
+	        
+	  //기존에 올라온 사진이미지를 다시 제거  
+	  if(!fileck02){
+	  var con = document.getElementById("myimg2");  
+	    if(con.style.display=='none'){ 		
+	    	con.style.display = 'block'; 	
+	    }else{ 		
+	    	con.style.display = 'none';      
+	    }
+	    
+	    $('#img02').remove();
+	  
+	}
+	}
+	
+	
+	
+	
+	
+
+
+
+
 
 function setThumbnail3(event) {
     var reader = new FileReader();
@@ -628,6 +742,7 @@ function setThumbnail3(event) {
       img.setAttribute("src", event.target.result);
       img.setAttribute("width", "75");
       img.setAttribute("height", "75");
+      img.setAttribute("id", "img03");
       document.querySelector("div#image_container3").appendChild(img);
     };
 
@@ -641,6 +756,47 @@ function setThumbnail3(event) {
     }     
 }
 
+
+
+function uploadimgdel3(){
+	  document.getElementById("file03").value = "";
+	  var fileck03=document.getElementById("file03").value;
+	        
+	  //기존에 올라온 사진이미지를 다시 제거  
+	  if(!fileck03){
+	  var con = document.getElementById("myimg3");  
+	    if(con.style.display=='none'){ 		
+	    	con.style.display = 'block'; 	
+	    }else{ 		
+	    	con.style.display = 'none';      
+	    }
+	    
+	    $('#img03').remove();
+	  
+	}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function setThumbnail4(event) {
     var reader = new FileReader();
 
@@ -649,6 +805,7 @@ function setThumbnail4(event) {
       img.setAttribute("src", event.target.result);
       img.setAttribute("width", "75");
       img.setAttribute("height", "75");
+      img.setAttribute("id", "img04");
       document.querySelector("div#image_container4").appendChild(img);
     };
 
@@ -662,6 +819,36 @@ function setThumbnail4(event) {
     }     
 }
 
+
+function uploadimgdel4(){
+	  document.getElementById("file04").value = "";
+	  var fileck04=document.getElementById("file04").value;
+	        
+	  //기존에 올라온 사진이미지를 다시 제거  
+	  if(!fileck04){
+	  var con = document.getElementById("myimg4");  
+	    if(con.style.display=='none'){ 		
+	    	con.style.display = 'block'; 	
+	    }else{ 		
+	    	con.style.display = 'none';      
+	    }
+	    
+	    $('#img04').remove();
+	  
+	}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 function setThumbnail5(event) {
     var reader = new FileReader();
 
@@ -670,6 +857,7 @@ function setThumbnail5(event) {
       img.setAttribute("src", event.target.result);
       img.setAttribute("width", "75");
       img.setAttribute("height", "75");
+      img.setAttribute("id", "img05");
       document.querySelector("div#image_container5").appendChild(img);
     };
 
@@ -682,6 +870,24 @@ function setThumbnail5(event) {
     	con.style.display = 'none'; 	
     }     
 }
+
+function uploadimgdel5(){
+	  document.getElementById("file05").value = "";
+	  var fileck05=document.getElementById("file05").value;
+	        
+	  //기존에 올라온 사진이미지를 다시 제거  
+	  if(!fileck05){
+	  var con = document.getElementById("myimg5");  
+	    if(con.style.display=='none'){ 		
+	    	con.style.display = 'block'; 	
+	    }else{ 		
+	    	con.style.display = 'none';      
+	    }
+	    
+	    $('#img05').remove();
+	  
+	}
+	}
 </script>
 
 </head>
@@ -817,41 +1023,48 @@ function setThumbnail5(event) {
                     </div>
                     <div class="rw-photo-list">                            
                     	<div>
-                        <input type="file" class="gallery-file" name="attachedFile" onchange="setThumbnail(event);">
+                        <input type="file" id="file01" class="gallery-file" name="attachedFile" onchange="setThumbnail(event);">
                         <span class="file-button" id="myimg1">+</span>
-                        <div id="image_container"></div>
+                        <div id="image_container"></div>                        
                         </div>
                         <div>                        
-                        <input type="file" class="gallery-file2" name="attachedFile" onchange="setThumbnail2(event);">
+                        <input type="file" id="file02" class="gallery-file2" name="attachedFile" onchange="setThumbnail2(event);">
                         <span class="file-button2" id="myimg2">+</span>
                         <div id="image_container2"></div>
                         </div>
                         <div>
-                        <input type="file" class="gallery-file3" name="attachedFile" onchange="setThumbnail3(event);">
+                        <input type="file" id="file03" class="gallery-file3" name="attachedFile" onchange="setThumbnail3(event);">
                         <span class="file-button3" id="myimg3">+</span>
                         <div id="image_container3"></div>
                         </div>
                         
                         <div>
-                        <input type="file" class="gallery-file4" name="attachedFile" onchange="setThumbnail4(event);">
+                        <input type="file" id="file04" class="gallery-file4" name="attachedFile" onchange="setThumbnail4(event);">
                         <span class="file-button4" id="myimg4">+</span>
                         <div id="image_container4"></div>
                         </div>
                         
                         <div>
-                        <input type="file" class="gallery-file5" name="attachedFile" onchange="setThumbnail5(event);">
+                        <input type="file" id="file05" class="gallery-file5" name="attachedFile" onchange="setThumbnail5(event);">
                         <span class="file-button5" id="myimg5">+</span>
                         <div id="image_container5"></div>
                         </div>                                                                
-
-                    	<p id="ppp">                     
-                                <br>사진은 8MB이하의 PNG, JPG 파일만 등록 가능합니다.                                             
+						
+                    	<p id="ppp">
+                    			<input type="button" id="fileclose01" onclick="uploadimgdel()" value="1번째"><br>
+                    			<input type="button" id="fileclose02" onclick="uploadimgdel2()" value="2번째"><br>                     
+                    			<input type="button" id="fileclose03" onclick="uploadimgdel3()" value="3번째"><br>
+                    			<input type="button" id="fileclose04" onclick="uploadimgdel4()" value="4번째"><br>
+                    			<input type="button" id="fileclose05" onclick="uploadimgdel5()" value="5번째"><br>
+                                <br>사진은 8MB이하의 PNG, JPG 파일만 등록 가능합니다. 
+                                                                            
                         </p>
+                        
                         </div>
                 </div>
             </li>       
         </ul>
-        <div class="review_reg_background">                                                                     
+        <div class="review_reg_background">        	                                                                   
             <button type="button" class="btnLookup closeBtnBottom" id="review_ok">닫기</button>
             <button type="button" class="reviewLookup" id="review_cancel" >리뷰 등록하기</button>                                  
         </div>
