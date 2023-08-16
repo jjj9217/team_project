@@ -30,7 +30,7 @@
 	}
 	#full{
 		width: 1000px;
-        height: 1300px;
+        height: 1200px;
         margin: 0 auto;
         font: bold 25px Arial, Sans-serif;
       	margin-top:10px;
@@ -50,22 +50,22 @@
 	}
 	#content{
 		width:700px;
-		height:1100px;
+		height:1000px;
 		float:left;
 		margin-left:10px;
 	}
 	#sub{
 		width:700px;
-		height:350px;
+		height:300px;
 	}
 	#sub2{
 		width:700px;
-		height:350px;
+		height:300px;
 		margin-top:35px;
 	}
 	#sub3{
 		width:700px;
-		height:350px;
+		height:300px;
 		margin-top:35px;
 	}
   	a{
@@ -205,11 +205,13 @@
 			</c:when>
 			<c:otherwise>
 			
-				<c:forEach var="rowNum"  begin="1" end="5">
+				<c:forEach var="rowNum"  begin="${pageNav.startNum}" end="5">
+					<c:if test="${!empty oneinqList[rowNum-1]}">
 					<tr>
 						<td><div class="ellipsis">${oneinqList[rowNum-1].one_inq_content}</div></td>
 						<td><div class="ellipsis2">${oneinqList[rowNum-1].member_nickname}</div></td>
 					</tr>
+					</c:if>
 				</c:forEach>		
 			</c:otherwise>
 		</c:choose>
@@ -234,11 +236,13 @@
 			</c:when>
 			<c:otherwise>
 			
-				<c:forEach var="rowNum" begin="1" end="5">
+				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="5">
+					<c:if test="${!empty sellerList[rowNum-1]}">
 					<tr>
 						<td><div class="ellipsis">${sellerList[rowNum-1].one_inq_content}</div></td>
 						<td><div class="ellipsis2">${sellerList[rowNum-1].member_nickname}</div></td>
 					</tr>
+					</c:if>
 				</c:forEach>		
 			</c:otherwise>
 		</c:choose>
@@ -251,7 +255,7 @@
 	<thead>
  	 <tr>
  		<th width="300" id="name">상품 문의</th>
- 		<th width="50" id="right"><a href="manager_41d1.do" id="right">더보기 〉</a></th>
+ 		<th width="50" id="right"><a href="manager_7goods.do" id="right">더보기 〉</a></th>
  	 </tr>
  	 </thead>
  	 <tbody>
@@ -264,11 +268,13 @@
 			</c:when>
 			<c:otherwise>
 			
-				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
+				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="5">
+					<c:if test="${!empty productinqList[rowNum-1]}">
 					<tr>
 						<td><div class="ellipsis">${productinqList[rowNum-1].product_inq_content}</div></td>
 						<td><div class="ellipsis2">${productinqList[rowNum-1].member_nickname}</div></td>
 					</tr>
+					</c:if>
 				</c:forEach>		
 			</c:otherwise>
 		</c:choose>

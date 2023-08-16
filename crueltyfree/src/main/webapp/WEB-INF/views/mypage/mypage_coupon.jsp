@@ -179,10 +179,6 @@
         padding-left: 15px;
     }
 
-    ul li{      
-        list-style:none;
-        float: left;
-    }   
 
 
     
