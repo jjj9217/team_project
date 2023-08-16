@@ -160,7 +160,6 @@
 </style>
 
 <script>
-alert('1');
 
 function categoryLarge(cate_large) {
 	var categorySmall_a = ["토너/로션/올인원", "에센스/크림", "미스트/오일"];
