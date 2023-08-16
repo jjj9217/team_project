@@ -189,9 +189,29 @@
     }
     
     .oneinqModifyup {
-    	width: 70px;
-    	height: 20px;
-    	
+    	width: 80px;
+        height: 25px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 0.5em;
+        background-color: #ffffff;
+        color: #7d99a4;
+        border: 1px solid #7d99a4;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .oneinqdel {
+    	width: 78px;
+        height: 25px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 0.5em;
+        background-color: #7d99a4;
+        color: #ffffff;
+        border: none;
+        font-size: 12px;
+        font-weight: bold;
     }
     
 </style>

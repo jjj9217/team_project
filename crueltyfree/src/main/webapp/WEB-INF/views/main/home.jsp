@@ -125,6 +125,12 @@ const guestId = getGuestId();
 		display: inline-block;
 	}
 	
+	.goodlist_thumb_background {
+		width: 190px;
+		height: 190px;
+		margin-bottom: 10px;
+	}
+	
 	.pro_img {
 		width: 330px;
 	}
@@ -219,49 +225,55 @@ function HeaderBest(sort_salecount) {
 			<ul class="pro_list_line">
 			    <c:if test="${!empty productList[0].product_idx}">				
 					<li class="pro_first" >				    				            
-						<div class="pro_info">											
-							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[0].product_idx}">
-								<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[0].saveFile}" class="pro_img">
-							</a>
-							<div class="pro_name">
+						<div class="pro_info">	
+							<div class="goodlist_thumb_background">										
 								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[0].product_idx}">
-									<span class="goods_nickname">${productList[0].member_nickname}아로마티카</span>
-									<p class="goods_name">${productList[0].product_name}아로마티카 로즈마리 헤어 씨크닝 컨디셔너 400ml</p>
+									<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[0].saveFile}" class="pro_img">
 								</a>
 							</div>
-							<span class="pro_price">${productList[0].product_price}15,400원</span>
+							<div class="pro_name">
+								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[0].product_idx}">
+									<span class="goods_nickname">${productList[0].member_nickname}</span>
+									<p class="goods_name">${productList[0].product_name}</p>
+								</a>
+							</div>
+							<span class="pro_price">${productList[0].product_price}원</span>
 						</div>					 
 					</li>
 				</c:if>	
 				<c:if test="${!empty productList[1].product_idx}">					
 					<li class="pro_second">
 						<div class="pro_info">
-							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[1].product_idx}">
-								<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[1].saveFile}" class="pro_img">
-							</a>
-							<div class="pro_name">
+							<div class="goodlist_thumb_background">
 								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[1].product_idx}">
-									<span class="goods_nickname">${productList[1].member_nickname}아떼</span>
-									<p class="goods_name">${productList[1].product_name}아떼 바이탈 씨 좀 토닝 캡슐 토너 130ml</p>
+									<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[1].saveFile}" class="pro_img">
 								</a>
 							</div>
-							<span class="pro_price">${productList[1].product_price}18,000원</span>
+							<div class="pro_name">
+								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[1].product_idx}">
+									<span class="goods_nickname">${productList[1].member_nickname}</span>
+									<p class="goods_name">${productList[1].product_name}</p>
+								</a>
+							</div>
+							<span class="pro_price">${productList[1].product_price}원</span>
 						</div>
 					</li>
 				</c:if>
 				<c:if test="${!empty productList[2].product_idx}">	
 					<li class="pro_third">
 						<div class="pro_info">
-							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[2].product_idx}">
-								<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[2].saveFile}" class="pro_img">
-							</a>
-							<div class="pro_name">
+							<div class="goodlist_thumb_background">
 								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[2].product_idx}">
-									<span class="goods_nickname">${productList[2].member_nickname}톤28</span>
-									<p class="goods_name">${productList[2].product_name}일하는 손 바를거리(워터블랑향)</p>
+									<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[2].saveFile}" class="pro_img">
 								</a>
 							</div>
-							<span class="pro_price">${productList[2].product_price}15,600원</span>
+							<div class="pro_name">
+								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[2].product_idx}">
+									<span class="goods_nickname">${productList[2].member_nickname}</span>
+									<p class="goods_name">${productList[2].product_name}</p>
+								</a>
+							</div>
+							<span class="pro_price">${productList[2].product_price}원</span>
 						</div>
 					</li>
 				</c:if>
@@ -273,48 +285,54 @@ function HeaderBest(sort_salecount) {
 				<c:if test="${!empty productList[3].product_idx}">
 					<li class="pro_first">
 						<div class="pro_info">
-							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[3].product_idx}">
-								<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[3].saveFile}" class="pro_img">
-							</a>
-							<div class="pro_name">
+							<div class="goodlist_thumb_background">
 								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[3].product_idx}">
-									<span class="goods_nickname">${productList[3].member_nickname}이즈앤트리</span>
-									<p class="goods_name">${productList[3].product_name}참마 비건 밀크 클렌저 220ml</p>
+									<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[3].saveFile}" class="pro_img">
 								</a>
 							</div>
-							<span class="pro_price">${productList[3].product_price}20,000원</span>
+							<div class="pro_name">
+								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[3].product_idx}">
+									<span class="goods_nickname">${productList[3].member_nickname}</span>
+									<p class="goods_name">${productList[3].product_name}</p>
+								</a>
+							</div>
+							<span class="pro_price">${productList[3].product_price}원</span>
 						</div>
 					</li>
 				</c:if>
 				<c:if test="${!empty productList[4].product_idx}">
 					<li class="pro_second">
 						<div class="pro_info">
-							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[4].product_idx}">
-								<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[4].saveFile}" class="pro_img">
-							</a>
-							<div class="pro_name">
+							<div class="goodlist_thumb_background">
 								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[4].product_idx}">
-									<span class="goods_nickname">${productList[4].member_nickname}보나쥬르</span>
-									<p class="goods_name">${productList[4].product_name}그린티 워터 토너 205ml</p>
+									<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[4].saveFile}" class="pro_img">
 								</a>
 							</div>
-							<span class="pro_price">${productList[4].product_price}16,000원</span>
+							<div class="pro_name">
+								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[4].product_idx}">
+									<span class="goods_nickname">${productList[4].member_nickname}</span>
+									<p class="goods_name">${productList[4].product_name}</p>
+								</a>
+							</div>
+							<span class="pro_price">${productList[4].product_price}원</span>
 						</div>
 					</li>
 				</c:if>
 				<c:if test="${!empty productList[5].product_idx}">
 					<li class="pro_third">
 						<div class="pro_info">
-							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[5].product_idx}">
-								<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[5].saveFile}" class="pro_img">
-							</a>
-							<div class="pro_name">
+							<div class="goodlist_thumb_background">
 								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[5].product_idx}">
-									<span class="goods_nickname">${productList[5].member_nickname}빌리프</span>
-									<p class="goods_name">${productList[5].product_name}빌리프 프러블럼 솔루션 비건 토너 패드 150ml / 70매</p>
+									<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[5].saveFile}" class="pro_img">
 								</a>
 							</div>
-							<span class="pro_price">${productList[5].product_price}30,600원</span>
+							<div class="pro_name">
+								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[5].product_idx}">
+									<span class="goods_nickname">${productList[5].member_nickname}</span>
+									<p class="goods_name">${productList[5].product_name}</p>
+								</a>
+							</div>
+							<span class="pro_price">${productList[5].product_price}원</span>
 						</div>
 					</li>
 			    </c:if>
@@ -326,48 +344,54 @@ function HeaderBest(sort_salecount) {
 				<c:if test="${!empty productList[6].product_idx}">
 					<li class="pro_first">
 						<div class="pro_info">
-							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[6].product_idx}">
-								<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[6].saveFile}" class="pro_img">
-							</a>
-							<div class="pro_name">
+							<div class="goodlist_thumb_background">
 								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[6].product_idx}">
-									<span class="goods_nickname">${productList[6].member_nickname}에센허브</span>
-									<p class="goods_name">${productList[6].product_name}에센허브 티트리 수딩 인 카밍 크림 80ml</p>
+									<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[6].saveFile}" class="pro_img">
 								</a>
 							</div>
-							<span class="pro_price">${productList[6].product_price}23,800원</span>
+							<div class="pro_name">
+								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[6].product_idx}">
+									<span class="goods_nickname">${productList[6].member_nickname}</span>
+									<p class="goods_name">${productList[6].product_name}</p>
+								</a>
+							</div>
+							<span class="pro_price">${productList[6].product_price}원</span>
 						</div>
 					</li>
 				</c:if>
 				<c:if test="${!empty productList[7].product_idx}">	
 					<li class="pro_second">
 						<div class="pro_info">
-							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[7].product_idx}">
-								<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[7].saveFile}" class="pro_img">
-							</a>
-							<div class="pro_name">
+							<div class="goodlist_thumb_background">
 								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[7].product_idx}">
-									<span class="goods_nickname">${productList[7].member_nickname}아떼</span>
-									<p class="goods_name">${productList[7].product_name}[잡티완화세트] 비건 초록 비타민 세럼 + 크림</p>
+									<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[7].saveFile}" class="pro_img">
 								</a>
 							</div>
-							<span class="pro_price">${productList[7].product_price}45,700원</span>
+							<div class="pro_name">
+								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[7].product_idx}">
+									<span class="goods_nickname">${productList[7].member_nickname}</span>
+									<p class="goods_name">${productList[7].product_name}</p>
+								</a>
+							</div>
+							<span class="pro_price">${productList[7].product_price}원</span>
 						</div>
 					</li>
 				</c:if>
 				<c:if test="${!empty productList[8].product_idx}">	
 					<li class="pro_third">
 						<div class="pro_info">
-							<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[8].product_idx}">
-								<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[8].saveFile}" class="pro_img">
-							</a>
-							<div class="pro_name">
+							<div class="goodlist_thumb_background">
 								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[8].product_idx}">
-									<span class="goods_nickname">${productList[8].member_nickname}머지</span>
-									<p class="goods_name">${productList[8].product_name}머지 글로시 멜팅 틴티드 컬러 립밤 4g</p>
+									<img src="${pageContext.request.contextPath}/resources/uploads/${fileList[8].saveFile}" class="pro_img">
 								</a>
 							</div>
-							<span class="pro_price">${productList[8].product_price}7,900원</span>
+							<div class="pro_name">
+								<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[8].product_idx}">
+									<span class="goods_nickname">${productList[8].member_nickname}</span>
+									<p class="goods_name">${productList[8].product_name}</p>
+								</a>
+							</div>
+							<span class="pro_price">${productList[8].product_price}원</span>
 						</div>
 					</li>
 			    </c:if>
