@@ -24,8 +24,8 @@ public class NoticeListService implements OneInqService {
 	}
 		
 	//1:1문의 리스트
-	public List<OneInqVo> oneinqList() {
-	return dao.oneinqList();
+	public List<OneInqVo> oneinqList(OneInqVo vo) {
+	return dao.oneinqList(vo);
 	}
 	
 	

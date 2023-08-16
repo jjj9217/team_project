@@ -49,6 +49,7 @@
 	<!-- Interceptor 관련 설정: 사용자의 요청에 대해서 로그인 여부를 체크하는 LoginInterCeptor 설정 -->
 	<interceptors>
 		<interceptor>
+		    
 		    <!-- 로그인 체크를 해야만 들어갈 수 있는 주소 -->
 			<!-- <mapping path="/**/*.do"/> -->
 			<!-- 경로 패턴을 가리키는 특수문자(*: 0개 또는 그 이상의 글자, ?: 1개 글자, **: 0개 또는 그 이상의 폴더 -->
@@ -67,15 +68,59 @@
 		    <mapping path="/**/mypage_orderinq.do"/>
        <!-- <mapping path="mypage_orderinq_view.do"/> -->		    
 		    <mapping path="/**/mypage_productQnA.do"/>
-		    <mapping path="/**/mypage_review.do"/>
-			
+		    <mapping path="/**/mypage_review.do"/>			
 			<!-- 로그인 체크를 하지 않아도 들어갈 수 있는 주소 / 
 			예제와 거꾸로 할 거기 때문에 로그인 체크만 막아주면 예외는 필요없음-->
-			<!-- <exclude-mapping path="/index.do"/> -->
-			
-			
-			<beans:bean id="LoginInterceptor" class="com.crfr.common.LoginInterceptor"/>
+			<!-- <exclude-mapping path="/index.do"/> -->						
+			<beans:bean id="GeneralLoginInterceptor" class="com.crfr.common.GeneralLoginInterceptor"/>
 		</interceptor>
-	</interceptors>		
+	</interceptors>
 	
+    
+    
+<!-- 판매자용 로그인인터셉터 -->
+    <interceptors>
+        <interceptor>
+            <!-- 로그인 체크를 해야만 들어갈 수 있는 주소 -->
+            <!-- <mapping path="/**/*.do"/> -->
+            <!-- 경로 패턴을 가리키는 특수문자(*: 0개 또는 그 이상의 글자, ?: 1개 글자, **: 0개 또는 그 이상의 폴더 -->
+            
+            <mapping path="/**/check_pro.do"/>
+            <mapping path="/**/confirm_inq.do"/>
+            <mapping path="/**/purchase_history.do"/>
+            <mapping path="/**/sale_stats.do"/>
+            <mapping path="/**/regi_pro.do"/>
+            <mapping path="/**/edit_pro.do"/>
+                        
+            <!-- 로그인 체크를 하지 않아도 들어갈 수 있는 주소 / 
+            예제와 거꾸로 할 거기 때문에 로그인 체크만 막아주면 예외는 필요없음-->
+            <!-- <exclude-mapping path="/index.do"/> -->                        
+            <beans:bean id="SellerLoginInterceptor" class="com.crfr.common.SellerLoginInterceptor"/>
+        </interceptor>
+    </interceptors>  
+      
+
+
+<!-- 관리자용 로그인인터셉터 -->
+    <interceptors>
+        <interceptor>
+            <!-- 로그인 체크를 해야만 들어갈 수 있는 주소 -->
+            <!-- <mapping path="/**/*.do"/> -->
+            <!-- 경로 패턴을 가리키는 특수문자(*: 0개 또는 그 이상의 글자, ?: 1개 글자, **: 0개 또는 그 이상의 폴더 -->
+            
+            <mapping path="/**/manager_1main.do"/>
+            <mapping path="/**/manager_2product.do"/>
+            <mapping path="/**/manager_2product_edit.do"/>
+            <mapping path="/**/manager_3member.do"/>
+            <mapping path="/**/manager_41d1.do"/>
+            <mapping path="/**/manager_5sign.do"/>
+            <mapping path="/**/manager_7goods.do"/>
+            <mapping path="/**/manager_8review.do"/>            
+            <!-- 로그인 체크를 하지 않아도 들어갈 수 있는 주소 / 
+            예제와 거꾸로 할 거기 때문에 로그인 체크만 막아주면 예외는 필요없음-->
+            <!-- <exclude-mapping path="/index.do"/> -->                        
+            <beans:bean id="AdminLoginInterceptor" class="com.crfr.common.AdminLoginInterceptor"/>
+        </interceptor>
+    </interceptors>
+    	
 </beans:beans>

@@ -99,13 +99,13 @@
     </insert>
     
     <!-- 	1:1문의 리스트 -->
-	<select id="oneinqList" resultType="OneInqVo">
-        select * from one_inq order by one_inq_regDate;            
+	<select id="oneinqList" parameterType="OneInqVo" resultType="OneInqVo">
+        select * from one_inq where member_idx=#{member_idx} order by one_inq_regDate            
      </select>
      
      <!-- 1:1문의 목록 개수 세기 -->
-     <select id="oneinqListCount" resultType="_int">
-        select count(*) from one_inq order by one_inq_regDate;
+     <select id="oneinqListCount" parameterType="OneInqVo" resultType="_int">
+        select count(*) from one_inq where member_idx=#{member_idx} order by one_inq_regDate
      </select>
 	
 	<!-- 작성한 1:1문의번호 삭제 --> 

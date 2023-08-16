@@ -80,12 +80,13 @@ public class MypageController {
 	
 	//마이 페이지 메인으로 이동
 	@GetMapping("/mypage_main.do")
-	public String mypage_main(HttpServletRequest request, Model model) {
+	public String mypage_main(OneInqVo vo,HttpServletRequest request, Model model) {
 				
 		HttpSession session = request.getSession();		
 		//로그인된 회원의 member_idx 얻기
 		MemberVo mVo = (MemberVo)session.getAttribute("member");		
 		int member_idx = mVo.getMember_idx();		
+		vo.setMember_idx(member_idx);
 		
 		//좋아요 사진목록을 가져오는 요청에 대한 처리를 위한 MypageListService 클래스 이용
 		List<FileVo> likefileList = mpList.selectlikeListimg(member_idx);
@@ -96,7 +97,7 @@ public class MypageController {
 		model.addAttribute("likeproductList", likeproductList);
 
 		//1:1문의 내역 리스트
-		List<OneInqVo> oneinqList = mListNotice.oneinqList();
+		List<OneInqVo> oneinqList = mListNotice.oneinqList(vo);
 		model.addAttribute("oneinqList", oneinqList);
 		
 		// 상품QnA 내역 리스트

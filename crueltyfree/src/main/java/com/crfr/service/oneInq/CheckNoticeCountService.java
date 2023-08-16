@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.crfr.dao.OneInqDao;
 import com.crfr.service.seller.ProductSellerService;
+import com.crfr.vo.OneInqVo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,8 +26,8 @@ public class CheckNoticeCountService implements OneInqService {
 	}
 	
 	//1:1문의 개수
-	public int oneinqListCount() {
-	return dao.oneinqListCount();
+	public int oneinqListCount(OneInqVo vo) {
+	return dao.oneinqListCount(vo);
 	}
 	
 }
