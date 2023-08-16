@@ -385,9 +385,9 @@ function deletelikelistall() {
                           <c:if test="${!empty likefileList[rowNum-1].saveFile}">
                 <tr>
                     <td>
-                     asd
+                     
                     <a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${likeproductList[rowNum-1].product_idx}"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${likefileList[rowNum-1].saveFile}"></a>
-                    <br><div id="font">${likeproductList[rowNum-1].product_name}</div></td>
+                    <br><div id="font"><a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${likeproductList[rowNum-1].product_idx}" class="goodlist"> ${likeproductList[rowNum-1].product_name}</a></div></td>
                         <fmt:formatNumber value="${likeproductList[rowNum-1].product_price}" type="number" var="formatNumber"/>						
 						<td><span id="font2">${formatNumber}</span><span id="font3"> 원</span></td>
                     <td >
