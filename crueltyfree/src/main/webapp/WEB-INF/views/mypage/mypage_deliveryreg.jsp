@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Header</title>
+<title>배송지 등록 | CrueltyFree</title>
 <style>
 
     *{margin: 0; padding: 0;}
@@ -454,7 +454,7 @@ $(function(){
                     <a href="#" onclick="document.forms['caq'].submit();">
             배송지TEST</a> --%>
             
-            <button type="button" class="btnLookup" id="address_cancel">취소</button>                                     
+            <button type="button" class="btnLookup" id="address_cancel" onclick="location.href='mypage_deliverymain.do';">취소</button>                                     
         </div>  
     </div>
 </div>

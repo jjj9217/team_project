@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Header</title>
+<title>좋아요내역 | CrueltyFree</title>
 <style>
 *{margin: 0; padding: 0;}
     a{text-decoration: none;}
@@ -236,13 +236,34 @@
     .td_admin{width: 45px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
     .top{border-top: 2px solid #4a4a4a}
     .bottom{border-bottom: 1px solid #a4a4a4}
-    
-    
-    
+    .buy_list td{border-bottom: 1px solid gray; height:100px;}    
+	#font{font: bold 13px Arial, sans-serif;}    
+	#font2{font: bold 15px Arial, sans-serif; color:#7d99a4;}
+	#font3{font: bold 15px Arial, sans-serif;} 
+    #td_cancel{
+        width: 100px;
+        height: 30px;
+        border-radius: 5px;
+        border: 1px solid #7d99a4;
+        background-color: #fff;
+        color:  #7d99a4;
+        font-weight: bold;
+        margin-right: 20px; 
+    }
+     #td_basket{
+    	width: 100px;
+        height: 30px;
+        border-radius: 5px;
+        border: 1px solid #7d99a4;
+        background-color: #7d99a4;
+        color:  #fff;
+        font-weight: bold;
+ 		float:left;
+    }    
     
     
      .paging{
-        width:1020px;
+        width:820px;
         height:150px;
         float:left;
         display: flex;
@@ -255,7 +276,6 @@
         font: 20px Arial, Sans-serif;
         text-align: center;
         border-color: white;
-        background-color: orange;
     }
 </style>
 </head>
@@ -265,13 +285,11 @@ function deletelikelist(like_idx) {
     var confirmAns = confirm("정말로 삭제하겠습니까?");
     
     if (confirmAns) {
-        alert('성공');
+        alert('삭제하였습니다');
         frm_view.method = "post"; // 전송 방식 
         frm_view.action = "delete_process_like.do?no="+like_idx; // 전송 경로
         frm_view.submit(); // 폼값 전송
         
-    }else{
-        alert('불가');
     }
     
 }
@@ -280,18 +298,16 @@ function deletelikelist(like_idx) {
 
 function deletelikelistall() {
     
-    var confirmAns = confirm("정말로 삭제하겠습니까!?");
+    var confirmAns = confirm("정말로 삭제하겠습니까?");
     
     if (confirmAns) {
-        alert('성공');
+        alert('삭제하였습니다.');
         
         frm_view2.method = "get"; // 전송 방식 
         frm_view2.action = "delete_process_likeall.do?" // 전송 경로
         frm_view2.submit(); // 폼값 전송
           
         
-    }else{
-        alert('불가');
     }
     
 }
@@ -353,9 +369,9 @@ function deletelikelistall() {
 		<form name="frm_view">  
         <table class="buy_list">
             <colgroup>
-                <col style="width:55%;">
+                <col style="width:40%;">
                 <col style="width:30%;">
-                <col style="width:15%;">
+                <col style="width:30%;">
             </colgroup>         
             <thead>
                 <tr>
@@ -370,11 +386,12 @@ function deletelikelistall() {
                 <tr>
                     <td>
                     <img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${likefileList[rowNum-1].saveFile}">
-                    ${likeproductList[rowNum-1].product_name}</td>
-                    <td>${likeproductList[rowNum-1].product_price}</td>
-                    <td>
-                        <input type="button" value="장바구니">
-                        <input type="button" onclick="deletelikelist(${likeproductList[rowNum-1].like_idx});" value="삭제하기"></td>
+                    <br><div id="font">${likeproductList[rowNum-1].product_name}</div></td>
+                        <fmt:formatNumber value="${likeproductList[rowNum-1].product_price}" type="number" var="formatNumber"/>						
+						<td><span id="font2">${formatNumber}</span><span id="font3"> 원</span></td>
+                    <td >
+                        <input type="button" id="td_basket" value="장바구니">
+                        <input type="button" id="td_cancel" onclick="deletelikelist(${likeproductList[rowNum-1].like_idx});" value="삭제하기"></td>
                 </tr>
                         </c:if>
                                 </c:forEach>       

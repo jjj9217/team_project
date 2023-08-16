@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Header</title>
+<title>상품문의내역 | CrueltyFee</title>
 <style>
 *{margin: 0; padding: 0;}
     a{text-decoration: none;}
@@ -276,18 +276,27 @@
     .td_state{height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
     .top{border-top: 2px solid #4a4a4a}
     .bottom{border-bottom: 1px solid #a4a4a4}
-    
+    #review_content_textarea{		
+    	padding-left:10px;
+		border-color:#7d99a4; 
+		border-style:solid; 
+		width:390px; 
+		height:150px; 
+		border-radius:5px;
+		border-width:2px;
+		padding-top:5px;
+	}
      .paging{
         width:820px;
-        height:150px;
+        height:200px;
         float:left;
         display: flex;
         justify-content: center;
         align-items: center;
-
     }
 
     #td_paging{
+    	margin-bottom:50px;
         height: 70px;
         font: 20px Arial, Sans-serif;
         text-align: center;
@@ -305,7 +314,7 @@
         background-color: #fff;
         color:  #7d99a4;
         font-weight: bold;
-        margin-right: 40px;               
+        margin-right: 35px;               
     }
     .oneinqModifyup{
     	width: 100px;
