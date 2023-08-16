@@ -170,41 +170,54 @@
     
     /* Modal */
 
-    #modal{
-    	width:100%;
-        height:100%;
-        display: none;
-        justify-content: center;
-    }  
-    #modal .modal-window {
-        background: rgba( 69, 139, 197, 0.70 );
-        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-        backdrop-filter: blur( 13.5px );
-        -webkit-backdrop-filter: blur( 13.5px );
-        border-radius: 10px;
-        border: 1px solid rgba( 255, 255, 255, 0.18 );
-        width: 560px;
-        height: 700px;
-        position: relative;
-        top: -100px;
-        padding: 10px;
-        position: fixed;
-        top: 5%;
-        justify-content: center;
-         
+        .modal{
+	 	width: 100%;
+	 	height: 100%;
+	 	position: fixed;
+	 	top: 0;
+	 	left: 0;
+	 	display: flex;
+	 	justify-content: center;
+	 	align-items: center;
+	 	background: rgba(0, 0, 0, 0.5);
+        }  
+        .modal-window {
+            background-color: #ffffff;
+            border-radius: 5px;
+            width: 560px;
+            height: 700px;
+            position: absolute;
+            padding: 10px;
+            top: 100px;
+            left: 400px;
+             
+        }
+    .title {
+        	width: 540px;
+            padding-left: 10px;
+            padding-right: 10px;
+            display: block;
+            color: #7d99a4;
+            font-weight:bold;
+            font-size: 20px;
+            margin-bottom: 20px;
     }
-    #modal .title {
-        padding-left: 10px;
+            .hr_space{
+        	margin: 10px 0;
+        	width: 560px;
+        	height: 5px;
+        	background-color: #7d99a4;
+        }
+            .close_modal, .close_modalmodify{
+        	float: right;
+        	display: block;
+        	font-size: 36px;
+        	cursor: pointer;
+        }
+    .title h2 {
         display: inline;
-        text-shadow: 1px 1px 2px gray;
-        color: white;
-        font-size: 20px;
-        
     }
-    #modal .title h2 {
-        display: inline;
-    }
-    #modal .close-area {
+    .close-area {
         display: inline;
         float: right;
         padding-right: 10px;
@@ -213,16 +226,47 @@
         color: white;
     }
     
-    #modal .content {
+    .content {
         margin-top: 20px;
         padding: 0px 10px;
         text-shadow: 1px 1px 2px gray;
         color: white;
     }
 
-
-
-
+		.hidden {
+	 	display: none;
+	 	}
+        .txt_info{
+        	width: 420px;
+        	margin-left: 130px;
+        }
+	 	.text_gray{
+	 	display: block;
+	 	width: 420px;
+	 	color:#4a4a4a; 
+	 	font-weight: bold;
+		  overflow: hidden;
+		  text-overflow: ellipsis;
+		  white-space: nowrap;
+	 	}
+		.review_star_box{
+		margin-left: 150px;
+		padding-top: 20px;
+		padding-bottom: 30px;
+		
+		}
+		.txtAr1{
+		resize: none;
+		padding: 10px;
+		border: 1px solid #7d99a4;
+		outline:none;
+		}
+		.txtAr2{
+		resize: none;
+		padding: 10px;
+		border: 1px solid #7d99a4;
+		outline-color:#7d99a4;
+		}
 
 
 
@@ -234,28 +278,12 @@
     justify-content: center;
     align-items : center;
     }
-    
-    
-    #review_ok{
-        width: 200px;
-        height: 50px;
-        
-        color: white;
-        margin-left: 20px;                  
-    }
 
-    #review_cancel{
-        width: 200px;
-        height: 50px;
-        
-        color: white;
-        margin-left: 20px;                  
-    }
 
     .item_info{
+    	display: block;
         width: 100%;
-        height: 85px;
-
+        height: 165px;
     }
 
     .item_info .a{
@@ -302,10 +330,16 @@
 
     .review_content{
         height: auto;
-    
+    	margin-top: 10px;
+    	padding: 10px;
         float: right;
     }
-    
+     .review_content2{
+        height: auto;
+    	margin-top: 10px;
+    	padding: 10px;
+        float: left;
+    }   
     #review_content_textarea{
         width: 475px;
         height: 155px;
@@ -324,9 +358,11 @@
 
     .step_cont{
         height: 160px;          
-        
     }
-
+    .step_cont1{
+    	display: block;
+        height: auto;          
+    }
     .photo-list-info{
         margin-bottom: 12px;
         line-height: 40px;
@@ -468,6 +504,38 @@
     	background-color: #7d99a4;
     	border-radius: 5px;
     	font-weight: bold;
+    }
+    .rvContentTitle{
+    	color: #7d99a4;
+    	font-weight: bold;
+    }
+    .grayText{
+    color:#4a4a4a;
+    font-size:10px;
+    font-weight: bold;
+    }
+    .btnLookup{
+        width: 200px;
+        height: 50px;
+        color: #7d99a4;
+        margin-left: 20px;       
+    	font-weight: bold;
+    	border-radius: 5px;
+    	border: 1px solid #7d99a4;
+    	background-color: #fff;
+    }
+    .reviewModifyup{
+        width: 200px;
+        height: 50px;
+        color: #fff;
+        margin-left: 20px; 
+        font-weight: bold;
+    	border-radius: 5px;
+    	border: 1px solid #7d99a4;
+    	background-color: #7d99a4;     
+    }
+    .edit_star{
+    	cursor: pointer;
     }
 </style>
 </head>
@@ -619,52 +687,71 @@
          </tr>
 
 
-<div id="modal" class="modal">    
+<div id="modal" class="modal_modify0 modal hidden">    
     <div class="modal-window">
         <div class="title">
-            <h2>리뷰보기</h2>
-            <span class="close_modal">&times;</span>
-        <p>${rowNum}번째 Modal</p>
+            <h2>리뷰 보기</h2>
+            <span class="close_modal">X</span>
         </div>
+        <div class="hr_space"></div>
         <div class="item_info">            
                 <c:if test="${!empty reviewproductList[rowNum-1].product_name}">
                     <span class="thum"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${reviewfileList[rowNum-1].saveFile}"></span>
-                    <dl class="txt_info">
-                        <dt>상품이름: ${reviewproductList[rowNum-1].product_name}
-                            <input type="hidden" name="product_idx" value="${reviewproductList[rowNum-1].product_idx}">
-                        </dt>                                         
-                    </dl>
-                </c:if>
-        </div>
-        <ul class="write_step">
-            <li class="review_rating"><span class="review_tit">상품은 어떠셨나요? :별점은 숫자로나와야함 ${reviewproductList[rowNum-1].review_score}</span>
-                <ul class="star_inner">
-                    <input type="hidden" name="review_score" value="3">
-                    <li>★</li>
-                    <li>★</li>
-                    <li>★</li>
-                    <li>★</li>
-                    <li>★</li>
-                </ul>
-            </li>                     
-            <li id="review_content_back">
-                <span class="tit">솔직한 상품 리뷰</span>
-                <div class="review_content">
-                    <textarea id="review_content_textarea" name="review_content" disabled>${reviewproductList[rowNum-1].review_content}</textarea>
-                    <div class="review_content_bottom">
-                        <div class="count fix_txtNum" style="color:red"><!-- 25자 이하 입력 시 error class 추가 -->
-                            <b class="txt_en" style="color:red">0</b>
-                            <span>/</span> 1,000
-                        </div>
+                    <div class="txt_info">
+                        <span class="text_gray">${reviewproductList[rowNum-1].product_name}</span>
+                        <input type="hidden" name="product_idx" value="${reviewproductList[rowNum-1].product_idx}">
                     </div>
-                </div>          
-            </li>                        
+                </c:if>
+        <div class="review_star_box">
+          	<c:choose>
+          	<c:when test="${reviewproductList[rowNum-1].review_score == 1}">
+          	<img src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img src="../resources/img/star_empty.png" width="50px" height="50px">
+          	<img src="../resources/img/star_empty.png" width="50px" height="50px">
+          	<img src="../resources/img/star_empty.png" width="50px" height="50px">
+          	<img src="../resources/img/star_empty.png" width="50px" height="50px">
+          	</c:when>
+          	<c:when test="${reviewproductList[rowNum-1].review_score == 2}">
+          	<img src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img src="../resources/img/star_empty.png" width="50px" height="50px">
+          	<img src="../resources/img/star_empty.png" width="50px" height="50px">
+          	<img src="../resources/img/star_empty.png" width="50px" height="50px">
+          	</c:when>
+          	<c:when test="${reviewproductList[rowNum-1].review_score == 3}">
+          	<img src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img src="../resources/img/star_empty.png" width="50px" height="50px">
+          	<img src="../resources/img/star_empty.png" width="50px" height="50px">
+          	</c:when>
+          	<c:when test="${reviewproductList[rowNum-1].review_score == 4}">
+          	<img src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img src="../resources/img/star_empty.png" width="50px" height="50px">
+          	</c:when>
+          	<c:otherwise>
+          	<img src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img src="../resources/img/star_full.png" width="50px" height="50px">  
+          	</c:otherwise>
+          	</c:choose>         
+        </div>        
+        </div>
+        <div class="review_content">
+        	<span class="rvContentTitle">리뷰내용</span>
+            <textarea id="review_content_textarea" class="txtAr1" name="review_content" readonly>${reviewproductList[rowNum-1].review_content}</textarea>
+        </div>          
+        <ul class="write_step">
             <li class="photo-update"><!-- 리뷰 고도화 : class 추가 -->
                 <div class="step_cont">
                     <!-- 리뷰 고도화 : 추가 -->
                     <div class="photo-list-info">
-                        <strong>포토</strong>
-                        번호:
+                        <strong>리뷰 포토</strong>
                     </div>
                     <div class="rw-photo-list">
                         <c:forEach var="fileVoList" items="${reviewRegList}">
@@ -693,71 +780,81 @@
 
                                         <!-- 아래는 Modal -->
 <form name="caq" class="test01" enctype="multipart/form-data" action="${pageContext.request.contextPath}/mypage/mypage_reviewModifyReg_process.do" method="post">
-<div id="modal" class="modal_modify">    
+<div id="modal" class="modal_modify1 modal hidden">    
     <div class="modal-window">
         <div class="title">
-            <h2>리뷰작성</h2>
-            <span class="close_modalmodify">&times;</span>
-        <p>${rowNum}번째 Modal </p>
-        
+            <h2>리뷰 수정</h2>
+            <span class="close_modalmodify">X</span>
         </div>
         <div class="item_info">            
                 <c:if test="${!empty reviewproductList[rowNum-1].product_name}">
                     <span class="thum"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${reviewfileList[rowNum-1].saveFile}"></span>
-                    <dl class="txt_info">
-                        <dt>상품이름: ${reviewproductList[rowNum-1].product_name}
-                            <input type="hidden" name="product_idx" value="${reviewproductList[rowNum-1].product_idx}">
-                        </dt>                                         
-                    </dl>
+                    <div class="txt_info">
+                        <span class="text_gray">${reviewproductList[rowNum-1].product_name}</span>
+                        <input type="hidden" name="product_idx" value="${reviewproductList[rowNum-1].product_idx}">
+                    </div>
                 </c:if>
+        <input type="hidden" class="review_score_input" name="review_score" value="${reviewproductList[rowNum-1].review_score}">        
+        <div class="review_star_box edit_star">
+          	<c:choose>
+          	<c:when test="${reviewproductList[rowNum-1].review_score == 1}">
+          	<img class="review_star" src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_empty.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_empty.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_empty.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_empty.png" width="50px" height="50px">
+          	</c:when>
+          	<c:when test="${reviewproductList[rowNum-1].review_score == 2}">
+          	<img class="review_star" src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_empty.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_empty.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_empty.png" width="50px" height="50px">
+          	</c:when>
+          	<c:when test="${reviewproductList[rowNum-1].review_score == 3}">
+          	<img class="review_star" src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_empty.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_empty.png" width="50px" height="50px">
+          	</c:when>
+          	<c:when test="${reviewproductList[rowNum-1].review_score == 4}">
+          	<img class="review_star" src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_empty.png" width="50px" height="50px">
+          	</c:when>
+          	<c:otherwise>
+          	<img class="review_star" src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_full.png" width="50px" height="50px">
+          	<img class="review_star" src="../resources/img/star_full.png" width="50px" height="50px">  
+          	</c:otherwise>
+          	</c:choose>         
+        </div>                
         </div>
-        <ul class="write_step">
-            <li class="review_rating"><span class="review_tit">상품은 어떠셨나요? :별점은 숫자로나와야함 ${reviewproductList[rowNum-1].review_score}</span>
-                <ul class="star_inner">
-                    <input type="hidden" name="review_score" value="3">
-                    <input type="hidden" name="review_idx" value="${reviewproductList[rowNum-1].review_idx}">
-                    <li>★</li>
-                    <li>★</li>
-                    <li>★</li>
-                    <li>★</li>
-                    <li>★</li>
-                </ul>
-            </li>                     
-            <li id="review_content_back">
-                <span class="tit">솔직한 상품 리뷰를 남겨주세요</span>
-                <div class="review_content">
-                    <textarea id="review_content_textarea" name="review_content" placeholder="꿀팁 가득, 상세한 리뷰를 작성해보세요!&#10;도움수가 올라가면 포인트도 받고,&#10;탑리뷰어가 될 확률도 높아져요!&#10;반품, 환불 관련 내용은 고객센터로 별도 문의해주세요.">${reviewproductList[rowNum-1].review_content}</textarea>
-                    <div class="review_content_bottom">
-                        <div class="count fix_txtNum" style="color:red"><!-- 25자 이하 입력 시 error class 추가 -->
-                            <b class="txt_en" style="color:red">0</b>
-                            <span>/</span> 1,000
-                        </div>
-                    </div>
-                </div>          
-            </li>                        
-            <li class="photo-update"><!-- 리뷰 고도화 : class 추가 -->
-                <div class="step_cont">
-                    <!-- 리뷰 고도화 : 추가 -->
-                    <div class="photo-list-info">
-                        <strong>포토</strong>
-                    </div>
-                    <div class="rw-photo-list">                            
-                        <input type="file" class="CattachedFile" name="attachedFile">
-                        <input type="file" class="CattachedFile" name="attachedFile">
-                        <input type="file" class="CattachedFile" name="attachedFile">
-                        <input type="file" class="CattachedFile" name="attachedFile">
-                        <input type="file" class="CattachedFile" name="attachedFile">                                                                
-                        <p>                     
-                                사진은 10MB이하의 PNG, GIF, JPG 파일만 등록 가능합니다.                                             
-                        </p>
-                    </div>
-                </div>
-            </li>       
-        </ul>
-        <div class="review_reg_background">                                                                     
-            <button type="button" class="btnLookup" id="review_ok">닫기</button>
-            <button type="button" class="reviewModifyup" id="review_cancel" >리뷰 수정하기</button>                                  
-        </div>
+        <div class="review_content2">
+            <textarea id="review_content_textarea"  class="txtAr2" name="review_content" placeholder="꿀팁 가득, 상세한 리뷰를 작성해보세요!&#10;도움수가 올라가면 포인트도 받고,&#10;탑리뷰어가 될 확률도 높아져요!&#10;반품, 환불 관련 내용은 고객센터로 별도 문의해주세요.">${reviewproductList[rowNum-1].review_content}</textarea>
+	        <div class="step_cont1">
+	            <div class="photo-list-info">
+	                <strong>포토</strong>
+	            </div>
+	            <div class="rw-photo-list2">                            
+	                <input type="file" class="CattachedFile" name="attachedFile"><br>
+	                <input type="file" class="CattachedFile" name="attachedFile"><br>
+	                <input type="file" class="CattachedFile" name="attachedFile"><br>
+	                <input type="file" class="CattachedFile" name="attachedFile"><br>
+	                <input type="file" class="CattachedFile" name="attachedFile"><br>                                                            
+	                <span class="grayText">사진은 8MB이하의 PNG, JPG 파일만 등록 가능합니다.</span>
+	            </div>
+	        </div>            
+	        <div class="review_reg_background">                                                                     
+	            <button type="button" class="btnLookup" id="review_ok">닫기</button>
+	            <button type="button" class="reviewModifyup" id="review_cancel" >리뷰 수정하기</button>                                  
+	        </div>
+        </div>          
     </div>    
 </div>
 </form>
@@ -816,14 +913,14 @@ $(function(){
     $(".reviewView").click(function(){ 
         var index = $(".reviewView").index(this);
         
-        $(".modal").eq(index).css("display", "block");      
+        $(".modal_modify0").eq(index).removeClass("hidden");      
     });
 
         
     $(".close_modal").click(function(){
         var index2 = $(".close_modal").index(this);
         
-        $(".modal").eq(index2).css("display", "none");
+        $(".modal_modify0").eq(index2).addClass("hidden");
     });
     
     
@@ -834,14 +931,14 @@ $(function(){
     $(".reviewmodify").click(function(){ 
         var index = $(".reviewmodify").index(this);
         
-        $(".modal_modify").eq(index).css("display", "block");      
+        $(".modal_modify1").eq(index).removeClass("hidden");      
     });
 
         
     $(".close_modalmodify").click(function(){
         var index2 = $(".close_modalmodify").index(this);
         
-        $(".modal_modify").eq(index2).css("display", "none");
+        $(".modal_modify1").eq(index2).addClass("hidden");
     });
     
     
@@ -855,7 +952,35 @@ $(function(){
     });
 });
 </script>
+<script>
+$(function() {    
+    const stars = $('.review_star');
+    const starGroups = Math.ceil(stars.length / 5);
 
+    stars.on('click', function() {
+        const index = stars.index(this);
+        const groupIndex = Math.floor(index / 5);
+        let filledCount = 0;
+        const startIndex = groupIndex * 5;
+        const endIndex = startIndex + 4;
+
+        stars.each(function(i) {
+            if (i >= startIndex && i <= endIndex) {
+                if (i <= index) {
+                    $(this).attr('src', '${pageContext.request.contextPath}/resources/img/star_full.png');
+                    filledCount++;
+                } else {
+                    $(this).attr('src', '${pageContext.request.contextPath}/resources/img/star_empty.png');
+                }
+            }
+        });
+        
+        $(".review_score_input").eq(groupIndex).val(filledCount);
+    });
+    
+    
+});
+</script>
 <!-- footer -->
  <footer>
         <jsp:include page="../main/footer.jsp"/>        
