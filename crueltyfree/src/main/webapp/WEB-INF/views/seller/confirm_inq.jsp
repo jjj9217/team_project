@@ -119,46 +119,88 @@
 	
 	#history_tb {
 		width: 700px;
+		border-collapse: collapse;
 	}
 	
 	#clear{clear: both;}
 	
 	
-	#modal{
-        display: none;
-        justify-content: center;
-        width:100%;
-        height:100%;
-    }  
-    #modal .modal-window {
-        background: rgba( 69, 139, 197, 0.70 );
-        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-        backdrop-filter: blur( 13.5px );
-        -webkit-backdrop-filter: blur( 13.5px );
-        border-radius: 10px;
-        border: 1px solid rgba( 255, 255, 255, 0.18 );
-        width: 560px;
-        height: 700px;
-        position: relative;
-        top: -100px;
-        padding: 10px;
-        position: fixed;
-        top: 5%;
-        justify-content: center;
-         
+        .modal{
+	 	width: 100%;
+	 	height: 100%;
+	 	position: fixed;
+	 	top: 0;
+	 	left: 0;
+	 	display: flex;
+	 	justify-content: center;
+	 	align-items: center;
+	 	background: rgba(0, 0, 0, 0.5);
+        }  
+        .modal-window {
+            background-color: #ffffff;
+            border-radius: 5px;
+            width: 560px;
+            height: 700px;
+            position: absolute;
+            padding: 10px;
+            top: 100px;
+            left: 400px;
+             
+        }
+        .title {
+        	width: 540px;
+            padding-left: 10px;
+            padding-right: 10px;
+            display: block;
+            color: #7d99a4;
+            font-weight:bold;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+                .hr_space{
+        	margin: 10px 0;
+        	width: 560px;
+        	height: 5px;
+        	background-color: #7d99a4;
+        }
+        .inq_user, .inq_user_content{
+        	padding: 10px;
+        	font-size: 16px;
+        	font-weight: normal;
+        }
+        .inq_user_title{
+        	display: block;
+        	color: #7d99a4;
+        	font-size: 20px;
+        	font-weight: bold;
+        }
+        .review_reg_background{
+        	margin-top: 30px;
+        	text-align: center;
+        }
+        .reviewModifyup, reviewModifyup2{
+        	width: 100px;
+        	height: 40px;
+        	border: 1px solid #7d99a4;
+        	border-radius: 5px;
+        	color:  #fff;
+        	background-color: #7d99a4;
+        	font-weight: bold;
+        }
+		.txtAr{
+		width: 540px;
+		height: 300px;
+		resize: none;
+		padding: 10px;
+		outline-color:#7d99a4;
+		}
+    .close_modalmodify, .close_modalmodify2{
+            	float: right;
+        	display: block;
+        	font-size: 36px;
+        	cursor: pointer;
     }
-    #modal .title {
-        padding-left: 10px;
-        display: inline;
-        text-shadow: 1px 1px 2px gray;
-        color: white;
-        font-size: 20px;
-        
-    }
-    #modal .title h2 {
-        display: inline;
-    }
-    #modal .close-area {
+    .modal .close-area {
         display: inline;
         float: right;
         padding-right: 10px;
@@ -166,13 +208,76 @@
         text-shadow: 1px 1px 2px gray;
         color: white;
     }
-    
-    #modal .content {
+    .title h2 {
+            display: inline;
+        }
+    .modal .content {
         margin-top: 20px;
         padding: 0px 10px;
         text-shadow: 1px 1px 2px gray;
         color: white;
     }
+    		.hidden {
+	 	display: none;
+	 	}
+    #history_tb td{
+    	border-bottom: 1px solid #a4a4a4;
+    	padding: 2px 0;
+    }
+    #history_tb th{
+    	border-top: 2px solid #a4a4a4;
+    	border-bottom: 2px solid #a4a4a4;
+    }
+    #history_tb .content_text{
+    	text-align: left;
+    	padding: 15px;
+    	background-color: #eef3f5;
+    }
+    #history_tb .content_bgblue{
+    background-color: #eef3f5;
+    }
+    #history_tb #history_paging{
+    	padding: 10px 0;
+    	border-bottom: 0px solid #a4a4a4;
+    }
+    
+    .answer_wait{
+    	margin-left: 5px;
+    	display: block;
+    	width: 80px; height: 20px;
+    	border-radius: 5px;
+    	color: #7d99a4;
+    	background-color: #fff;
+    	border: 1px solid #7d99a4;
+    	font-weight: bold;
+    	font-size: 12px;
+    }
+    .answer_wait2{
+    	margin-left: 5px;
+    	display: block;
+    	width: 80px; height: 20px;
+    	border-radius: 5px;
+    	color: #7d99a4;
+    	background-color: #fff;
+    	border: 1px solid #7d99a4;
+    	font-weight: bold;
+    	font-size: 12px;
+    }
+    .answer_comp{
+    	margin-left: 5px;
+    	display: block;
+    	width: 80px; height: 20px;
+    	border-radius: 5px;
+    	color: #fff;
+    	background-color: #7d99a4;
+    	border: 1px solid #7d99a4;
+    	font-weight: bold;
+    	font-size: 12px;
+    }
+    .blueText{
+    	color: #7d99a4;
+    	font-weight: bold;
+    }    
 </style>
 </head>
 <body>
@@ -230,10 +335,10 @@
 							<td>
 		                        <c:choose>
 		                            <c:when test="${empty confirmproductList[rowNum-1].product_inq_answer}">
-		                                답변대기
+		                                <span class="answer_wait">답변대기</span>
 		                            </c:when>
 		                            <c:when test="${!empty confirmproductList[rowNum-1].product_inq_answer}">
-		                                답변완료
+		                                <span class="answer_comp">답변완료</span>
 		                            </c:when>
 		                            <c:otherwise>
 		                            </c:otherwise>
@@ -244,26 +349,30 @@
 					
 <tbody class="inqView" style="display:none;">
            <tr>
-           <td colspan='2'>
+           <td class="content_text" colspan='3'>
            
            
            	                	
-           	문의내용 : ${confirmproductList[rowNum-1].product_inq_content}<br>
+           	<span class="blueText">문의내용 :</span><br>
+           	${confirmproductList[rowNum-1].product_inq_content}<br>
            	
            	<c:if test="${!empty confirmproductList[rowNum-1].product_inq_answer}">
-           	답변내용 : ${confirmproductList[rowNum-1].product_inq_answer} 
+           	<br><span class="blueText">답변내용 :</span><br> 
+           	${confirmproductList[rowNum-1].product_inq_answer}<br> 
            	</c:if>
             
                 
             </td>
-            <td>
+            <td class="content_bgblue">
 <form class="inqdelform" action="${pageContext.request.contextPath}/one_inq/one_ifdfds.do" method="post">
            <input type="hidden" name="one_inq_idx" value="${confirmproductList[rowNum-1].product_inq_idx}">
            <c:if test="${empty confirmproductList[rowNum-1].product_inq_answer}">
-           <button type="button" class="oneinqModifyup">답변하기</button>
+           <button type="button" class="oneinqModifyup answer_wait2">답변하기</button>
+           <input type="hidden" class="oneinqModifyup2">
            </c:if>
            <c:if test="${!empty confirmproductList[rowNum-1].product_inq_answer}">
-           <button type="button" class="oneinqModifyup2">수정하기</button>
+           <button type="button" class="oneinqModifyup2 answer_comp">수정하기</button>
+           <input type="hidden" class="oneinqModifyup">
            </c:if>                
            </form>
            
@@ -276,28 +385,32 @@
 
 <!-- 상품문의 답변하기 Modal -->
 <form name="caq" class="oneModifyModal" action="${pageContext.request.contextPath}/seller/confirm_process.do" method="post">
-<div id="modal" class="modal_modify">    
+<div id="modal" class="modal_modify modal hidden">    
     <div class="modal-window">
         <div class="title">
-            <h2>상품문의 </h2>
-            <span class="close_modalmodify">&times;</span>
-            <br>
-            <h1>문의내용 : ${confirmproductList[rowNum-1].product_inq_content}</h1>                   
-            <h1>문의자닉네임 : ${confirmproductList[rowNum-1].member_nickname}</h1>
-        </div>        
+            <h2>상품문의 답변</h2>
+            <span class="close_modalmodify">X</span>
+        </div>
+        <div class="hr_space"></div>                
         <ul class="write_step">                           
             <li id="review_content_back">  				             	            
                 <div class="review_content">
-                    <br><textarea id="review_content_textarea" name="product_inq_answer" placeholder="답변을 입력해주세요."></textarea>                          
+		            <div class="inq_user">
+		            <span class="inq_user_title">문의자닉네임 :</span> <br>
+		            ${confirmproductList[rowNum-1].member_nickname}
+		            </div>
+		            <div class="inq_user_content">
+		            <span class="inq_user_title">문의내용 :</span> <br>
+		            ${confirmproductList[rowNum-1].product_inq_content}                   
+		            </div>
+                    <br><textarea id="review_content_textarea" class="txtAr" name="product_inq_answer" placeholder="답변을 입력해주세요."></textarea>                          
               			<input type="hidden" name="product_inq_idx" value="${confirmproductList[rowNum-1].product_inq_idx}">
                 </div>          
             </li>
         </ul>
         <div class="review_reg_background">                                                                     
 <!--             <button type="button" class="btnLookup" id="review_ok">닫기</button> -->
-
 					
-
             <button type="button" class="reviewModifyup" id="review_cancel" >답변하기</button>                                  
         </div>
     </div>    
@@ -307,19 +420,25 @@
 
 <!-- 상품문의 수정하기 Modal -->
 <form name="caq" class="oneModifyModal2" action="${pageContext.request.contextPath}/seller/confirmModify_process.do" method="post">
-<div id="modal" class="modal_modify2">    
+<div id="modal" class="modal_modify2 modal hidden">    
     <div class="modal-window">
         <div class="title">
-            <h2>상품문의 </h2>
-            <span class="close_modalmodify2">&times;</span>
-            <br>
-            <h1>문의내용 : ${confirmproductList[rowNum-1].product_inq_content}</h1>                   
-            <h1>문의자닉네임 : ${confirmproductList[rowNum-1].member_nickname}</h1>
-        </div>        
+            <h2>상품문의 답변</h2>
+            <span class="close_modalmodify2">X</span>
+        </div>
+        <div class="hr_space"></div>  
         <ul class="write_step">                           
             <li id="review_content_back">  				             	            
                 <div class="review_content">
-                    <br><textarea id="review_content_textarea" name="product_inq_answer" placeholder="답변을 입력해주세요.">${confirmproductList[rowNum-1].product_inq_answer}123123123</textarea>                          
+                	<div class="inq_user">
+		            <span class="inq_user_title">문의자닉네임 :</span> <br>
+		            ${confirmproductList[rowNum-1].member_nickname}
+		            </div>
+		            <div class="inq_user_content">
+		            <span class="inq_user_title">문의내용 :</span> <br>
+		            ${confirmproductList[rowNum-1].product_inq_content}                   
+		            </div>
+                    <br><textarea id="review_content_textarea" class="txtAr" name="product_inq_answer" placeholder="답변을 입력해주세요.">${confirmproductList[rowNum-1].product_inq_answer}123123123</textarea>                          
               			<input type="hidden" name="product_inq_idx" value="${confirmproductList[rowNum-1].product_inq_idx}">
                 </div>          
             </li>
@@ -361,29 +480,22 @@ $(function(){
    	$(".viewinq").click(function(){ 
         var index = $(".viewinq").index(this);
         
-        $(".inqView").eq(index).css("display", "block");      
+        $(".inqView").eq(index).toggle();      
     });
-
-        
-//     $(".viewinq").click(function(){
-//         var index2 = $(".viewinq").index(this);
-        
-//         $(".inqView").eq(index2).css("display", "none");
-//     });
     
     
     //답변하기 버튼 클릭시 모달 띄우기
     $(".oneinqModifyup").click(function(){
         var index = $(".oneinqModifyup").index(this);
         
-        $(".modal_modify").eq(index).css("display", "block");      
+        $(".modal_modify").eq(index).removeClass("hidden");      
     });
     
     //수정하기 버튼 클릭시 모달 띄우기
     $(".oneinqModifyup2").click(function(){
-        var index = $(".oneinqModifyup2").index(this);
+        var index = $(".oneinqModifyup").index(this);
         
-        $(".modal_modify2").eq(index).css("display", "block");      
+        $(".modal_modify2").eq(index).removeClass("hidden");      
     });
 
     //답변하기 폼 전달
@@ -405,14 +517,14 @@ $(function(){
     $(".close_modalmodify").click(function(){
         var index2 = $(".close_modalmodify").index(this);
         
-        $(".modal_modify").eq(index2).css("display", "none");
+        $(".modal_modify").eq(index2).addClass("hidden");
     });
         
     //수정 띄운 모달의 x버튼 클릭시 모달 닫기    
     $(".close_modalmodify2").click(function(){
         var index2 = $(".close_modalmodify2").index(this);
         
-        $(".modal_modify2").eq(index2).css("display", "none");
+        $(".modal_modify2").eq(index2).addClass("hidden");
     });
 });
 </script>

@@ -307,7 +307,6 @@
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
-  		background-color:pink
 	}
 	.ellipsis2 {
 		width:130px;
@@ -315,7 +314,6 @@
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
-   		background-color:pink
 	}
     input[type="checkbox"]{
 		accent-color:#7d99a4;
@@ -515,7 +513,7 @@ $(function(){
 			&nbsp;&nbsp;<a>닉네임</a>
 		</article>
 		<article class="regi_right">
-			<input type="text" name="member_nickname" class="regi_box" value="${rvSelectList[rowNum-1].member_nickname}" disabled/>
+			<input type="text" name="member_nickname" class="regi_box" value="${rvSelectList[rowNum-1].member_nickname}" readonly/>
 		</article>
 	</div>
 	
@@ -524,7 +522,7 @@ $(function(){
 			&nbsp;&nbsp;<a>평점</a>
 		</article>
 		<article class="regi_right">
-			<input type="text" name="review_score" class="regi_box" value="${rvSelectList[rowNum-1].review_score}" disabled/>
+			<input type="text" name="review_score" class="regi_box" value="${rvSelectList[rowNum-1].review_score}" readonly/>
 		</article>
 	</div>
 	
@@ -533,7 +531,7 @@ $(function(){
 			&nbsp;&nbsp;<a>추천수</a>
 		</article>
 		<article class="regi_right">
-			<input type="text" name="review_recom_count" class="regi_box" value="${rvSelectList[rowNum-1].review_recom_count}" disabled/>
+			<input type="text" name="review_recom_count" class="regi_box" value="${rvSelectList[rowNum-1].review_recom_count}" readonly/>
 		</article>
 	</div>
 
