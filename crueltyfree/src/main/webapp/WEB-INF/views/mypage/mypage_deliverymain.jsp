@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Header</title>
+<title>배송지 | CrueltyFree</title>
 <style>
     *{margin: 0; padding: 0;}
     a{text-decoration: none;}
@@ -73,22 +73,6 @@
         
     }
 
-    .tit_area{
-        overflow: hidden;
-        margin-top: 30px;
-        position: relative;
-        width: 100%;
-        font-size: 0;
-        line-height: 0;
-    
-    }
-
-    .tit_area .tit{
-        float: left;
-        color: #333;
-        font-size: 20px;
-        line-height: 30px;
-    }
 
     .address_or_refund{
         width: 100%;
@@ -148,6 +132,7 @@
     	margin-top:10px;
         text-align: center;
     }
+    .buy_list td{font: bold 15px Arial, sans-serif;}
 
   
     .addrees_reg_background{
@@ -230,17 +215,10 @@ function deletedeliveryPost(delivery_idx) {
 
 function vieweditdeliveryPost(delivery_idx) {
     
-    var confirmAns = confirm();
-    
-    if (confirmAns) {
-    	alert('성공');
         frm_view.method = "post"; // 전송 방식 
         frm_view.action = "edit_deliveryreg.do?no="+delivery_idx; // 전송 경로
         frm_view.submit(); // 폼값 전송
         
-    }else{
-        alert('불가');
-    }
     
 }
 	
@@ -252,18 +230,10 @@ function vieweditdeliveryPost(delivery_idx) {
 	
 function updatedeliveryPostdefault(delivery_idx) {
     
-    var confirmAns 
-    
-    if (confirmAns) {
-
-        frm_view.method = "post"; // 전송 방식 
+        frm_view.method = "post"; // 전송 방식
         frm_view.action = "delete_process_comment2.do?no="+delivery_idx; // 전송 경로
         frm_view.submit(); // 폼값 전송
         
-    }else{
-
-    }
-    
 }
 
 

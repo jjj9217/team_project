@@ -77,13 +77,13 @@ public class OneInqDao{
 	}
 	
 	//1:1문의 리스트
-	public List<OneInqVo> oneinqList() {
-	return sqlSession.selectList(MAPPER+".oneinqList");
+	public List<OneInqVo> oneinqList(OneInqVo vo) {
+	return sqlSession.selectList(MAPPER+".oneinqList", vo);
 	}
 			
 	//1:1문의 개수
-	public int oneinqListCount() {
-	return sqlSession.selectOne(MAPPER+".oneinqListCount");
+	public int oneinqListCount(OneInqVo vo) {
+	return sqlSession.selectOne(MAPPER+".oneinqListCount", vo);
 	}
 	
 	//1:1문의 삭제하기

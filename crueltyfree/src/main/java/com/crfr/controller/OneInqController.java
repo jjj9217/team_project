@@ -139,12 +139,16 @@ public class OneInqController {
 	
 	//1:1문의 리스트 페이지
 	@GetMapping("/one_inq_list.do")
-	public String one_inq_list(OneInqVo vo, String pageNum, String pageBlock, Model model) {		
+	public String one_inq_list(OneInqVo vo, String pageNum, String pageBlock, Model model, HttpServletRequest request) {		
+		HttpSession session = request.getSession();		
+		//로그인된 회원의 member_idx 얻기
+		MemberVo mVo = (MemberVo)session.getAttribute("member");
+		vo.setMember_idx(mVo.getMember_idx());
 		
-		List<OneInqVo> oneinqList = mListNotice.oneinqList();
+		List<OneInqVo> oneinqList = mListNotice.oneinqList(vo);
 		model.addAttribute("oneinqList", oneinqList);
 		
-		int searchTotal = cNoticeCount.oneinqListCount();
+		int searchTotal = cNoticeCount.oneinqListCount(vo);
 		pageNav2.setTotalRows(searchTotal);
 		pageNav2 = noticePage2.setPageNav2(pageNav, pageNum, pageBlock, vo);
 		model.addAttribute("pageNav", pageNav2);		

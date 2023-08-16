@@ -190,7 +190,7 @@ public class ManagerController {
 
 	
 	@GetMapping("/manager_1main.do")
-	public String manager_1main(Model model) {		
+	public String manager_1main(Model model, String searchField, String searchWord, String pageNum, String pageBlock) {		
 		List<OneInqVo> oneinqList = oneList.getList();
 		
 		if(oneinqList != null) {
@@ -208,6 +208,11 @@ public class ManagerController {
 		if(productinqList != null) {
 			model.addAttribute("productinqList", productinqList);
 		}
+		int totRows = proinqCount.proinqselectCount(searchField,searchWord);
+		pageNav.setTotalRows(totRows);
+		pageNav=mPage.setPageNav(pageNav, pageNum, pageBlock);
+		model.addAttribute("pageNav",pageNav);
+		
 		return "manager/manager_1main";
 	}
 	
