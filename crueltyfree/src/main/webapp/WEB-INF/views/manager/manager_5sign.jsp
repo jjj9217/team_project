@@ -258,7 +258,6 @@
 		border-color:#7d99a4; 
 		border-style:solid; 
 		width:375px; 
-		height:35px; 
 		border-radius:5px;
 		border-width:2px;
 		height:100px;
@@ -306,7 +305,6 @@
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
-  		background-color:pink;
 	}
 	.ellipsis2 {
 		width:200px;
@@ -314,7 +312,6 @@
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
-  		background-color:pink;
 	}
     input[type="checkbox"]{
 		accent-color:#7d99a4;
@@ -515,7 +512,7 @@ $(function(){
 			&nbsp;&nbsp;<a>닉네임</a>
 		</article>
 		<article class="regi_right">
-			<input type="text" name="" class="regi_box" value="${selSelectList[rowNum-1].member_nickname}" disabled/>
+			<input type="text" name="" class="regi_box" value="${selSelectList[rowNum-1].member_nickname}" readonly/>
 		</article>
 	</div>
 	
@@ -524,7 +521,7 @@ $(function(){
 			&nbsp;&nbsp;<a>문의내용</a>
 		</article>
 		<article class="regi_right">
-			<textarea name="one_inq_content" class="text_regi_box" disabled>${selSelectList[rowNum-1].one_inq_content}</textarea>
+			<textarea name="one_inq_content" class="text_regi_box" readonly>${selSelectList[rowNum-1].one_inq_content}</textarea>
 		</article>
 	</div>
 	

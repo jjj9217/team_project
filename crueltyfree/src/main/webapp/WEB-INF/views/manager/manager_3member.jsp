@@ -293,7 +293,6 @@
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
-   		background-color:pink;
 	}
     input[type="checkbox"]{
 		accent-color:#7d99a4;
@@ -518,7 +517,7 @@ $(function(){
 			<a>아이디</a>
 		</article>
 		<article class="regi_right">
-			<input type="text" name="member_id" class="regi_box" value="${memSelectList[rowNum-1].member_id}" disabled/>
+			<input type="text" name="member_id" class="regi_box" value="${memSelectList[rowNum-1].member_id}" readonly/>
 		</article>
 	</div>
 	

@@ -307,7 +307,6 @@
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
-   		background-color:pink
 	}
 	.ellipsis2 {
 		width:130px;
@@ -315,7 +314,6 @@
   		overflow: hidden;
   		text-overflow: ellipsis;
   		white-space:nowrap;
-  		background-color:pink
 	}
     input[type="checkbox"]{
 		accent-color:#7d99a4;
@@ -522,7 +520,7 @@ $(function(){
 			&nbsp;&nbsp;<a>닉네임</a>
 		</article>
 		<article class="regi_right">
-			<input type="text" name="member_nickname" class="regi_box" value="${proinqSelectList[rowNum-1].member_nickname}" disabled/>
+			<input type="text" name="member_nickname" class="regi_box" value="${proinqSelectList[rowNum-1].member_nickname}" readonly/>
 		</article>
 	</div>
 	
@@ -531,7 +529,7 @@ $(function(){
 			&nbsp;&nbsp;<a>문의내용</a>
 		</article>
 		<article class="regi_right">
-			<textarea name="product_inq_content" class="text_regi_box" disabled>${proinqSelectList[rowNum-1].product_inq_content}</textarea>
+			<textarea name="product_inq_content" class="text_regi_box" readonly>${proinqSelectList[rowNum-1].product_inq_content}</textarea>
 		</article>
 	</div>
 	
@@ -540,7 +538,7 @@ $(function(){
 			&nbsp;&nbsp;<a>답변</a>
 		</article>
 		<article class="regi_right">
-			<textarea name="product_inq_answer" class="text_regi_box" disabled>${proinqSelectList[rowNum-1].product_inq_answer}</textarea>
+			<textarea name="product_inq_answer" class="text_regi_box" readonly>${proinqSelectList[rowNum-1].product_inq_answer}</textarea>
 		</article>
 	</div>
 
