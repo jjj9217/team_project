@@ -38,7 +38,7 @@
     /* 바디 CSS */
 
     #Container{
-        overflow: hidden;
+        overflow: hidden
         width: 1020px; 
         margin: 0 auto;
         height: auto;
@@ -46,10 +46,12 @@
 
     #list_tit{
         width: 1020px;
-        margin-top:70px;
-        height: 70px;
-        text-align:center;
+        margin-top: 50px;
+        margin-bottom: 10px;
+        height: 40px;
+        text-align: center;
         font: bold 25px Arial, sans-serif;
+        color: #4a4a4a;
     }
 
     .detailSearch{
@@ -60,22 +62,13 @@
         align-items: center;
     }
 
-    
-
-
     .cate_info_tx {
-        margin: 20px 0 20px;
-        font-size: 20px;
-        color: #222;
+        margin: 60px 0 30px 0;
+        font-size: 19px;
+        color: #222222;
         text-align: center;
-    
+        letter-spacing: -1px;
     }
-
-    ul li{      
-        list-style:none;
-        float: left;
-    }   
-
 
     .price_input{
         width: 78px;
@@ -86,115 +79,148 @@
         margin: 0;
     }
 
-    .cate_sort_box{
+    .cate_sort_box {
         width: 1020px;
-        height: 49px;
-    
+        height: 50px; 
+        border-top: 4px solid #ededed;
+        border-bottom: 1px solid #ededed;
+        margin-bottom: 30px;
     }
 
-    .cate_sort{
+    .cate_sort {
         float: left;
-        width: 839px;
+        width: 840px;
         height: 35px;
-        padding-top: 10px;
+        padding-top: 15px;
+    }
     
+	.cate_sort a {
+        color: #4a4a4a;
+        font-weight: bold;
     }
 
-    .cate_view{
-        float: left;
-        width: 181px;
-        height: 35px;
-        padding-top: 10px;  
-        
+    .cate_view {
+        width: 179px;
+        height: 50px;
+        text-align: center;
+        border-left: 1px solid #ededed;
+        display: inline-block;
     }
-
+    
+    .cate_view ul {
+    	display: inline-block;
+    	padding-top: 15px;
+    	list-style: none;
+    }
+    
+    .cate_view li {
+    	width: 30px;
+    	font-size: 14px;
+    	list-style: none;
+    	float: left;
+    }
+    
     .cate_view a {
-        text-decoration: none;
-        color: black;
+    	color: #4a4a4a;
+        font-weight: bold;
     }
 
-    .cate_sort_tit{
+    .cate_sort_tit {
         float: left;
-        width: 595px;
+        width: 460px;
         height: 30px;
-        
+
         padding: 0;
         margin: 0;
+        text-align: center;
+        color: #000000;
+		list-style:none;
     }
 
-    .cate_sort_tit li{
-        width: 103px;
+    .cate_sort_tit li {
+        width: 90px;
         height: 20px;
-        padding-left: 1px;
+        font-size: 14px;
+        color: #000000;
+        border-right: 1px solid #ededed;
+        list-style:none;
+        float: left;
     }
-
-
-
 
     /* 상품목록복붙 */
 
-    .product_list_background{
-        width: 100%;
-        height: 301px;
-        
+    .product_list_background {
+        width: 1020px;
+        height: auto;
+        background-color: #eef3f5;
     }
 
-
-
-
-    .product_list{
-            width: 300px;
-            height: 301px;
+    .product_list {
+		width: 340px;
+		height: 360px;
             
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .prd_info{
-            width: 180px;
-            height: 290px;
-            
-        }
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		float: left;
+		list-style:none;
+	}
+	
+	.prd_info {
+		width: 180px;
+		height: 290px;
+		text-align: center;
+	}
 
-    .prd_price{
-            width: 180px;
-            height: 25px;
-            
-            text-align: center;
-            font-size: 14px;
-            line-height: 25px;
-    }
+    .prd_price {
+		width: 180px;
+		height: 25px;
 
+		text-align: center;
+		font-size: 20px;
+		font-weight: bold;
+		line-height: 25px;
+		color: #7d99a4;
+	}
+	
+    .prd_price a {
+		color: #7d99a4;
+	}
 
+	.prd_nickname {
+		text-align: center;
+		color: #4a4a4a;
+		font-size: 13px;
+		font-weight: bold;
+		margin-bottom: 5px;
+	}
 
-    .prd_name{
-            width: 180px;
-            height: 55px;
-
-    }
-
-    .prd_title{     
-            text-align: center;
-            font-size: 14px;
-            line-height: 55px;
-    }
-
-
-    .goodlist_thumb_background{
-            width: 180px;
-            height: 180px;
-            
-        
+	.prd_name {
+		width: 180px;
+		height: 55px;
+		font-size: 15px;
     }
     
-    .goodlist_thumb{
-            width: 180px;
-            height: 180px;
-            
-    }
+	.prd_name a {
+		color: #000000;
+	}
 
+    .prd_title {     
+		text-align: center;
+		font-size: 14px;
+		line-height: 55px;
+	}
 
-
+	.goodlist_thumb_background {
+		width: 190px;
+		height: 190px;
+		margin-bottom: 10px;
+	}
+    
+	.goodlist_thumb{
+		width: 180px;
+		height: 180px;       
+	}
 
     #imgArea{
             width: 100%;
@@ -211,6 +237,7 @@
             width: 120px;
             height: 80px;
             float: left;
+			list-style:none;
         }
 
         .btn_img_add{
@@ -249,10 +276,15 @@
     }
     
     .smallimg{
-        width:75px;
-        height:75px;
+        width: 100px;
+        height: 100px;
     }
-	#banner_name{font: bold 11px Arial, sans-serif;}
+    
+	#banner_name{font: bold 12px Arial, sans-serif;}
+	#clear{clear: both;}
+	
+	
+	
 </style>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -369,8 +401,7 @@ function ProductDetail(category_code, category_code_small,
 	<c:choose>
 		<c:when test="${!empty exploreVo.category_code and empty exploreVo.category_code_small}">
 			<!--     큰 카테고리로 진입시 -->
-		    <div id="list_tit" style="background-color:red">
-		       
+		    <div id="list_tit">
 		          <c:choose>
 		              <c:when test="${exploreVo.category_code eq 'skin'}">
 		              스킨케어
@@ -397,7 +428,6 @@ function ProductDetail(category_code, category_code_small,
 		<c:when test="${!empty exploreVo.category_code_small}">
 			<!--     작은 카테고리로 진입시 -->
 		    <div id="list_tit">
-		        작은카테고리명 : 
 		          <c:choose>
                       <c:when test="${exploreVo.category_code_small eq 'skin_1'}">
                       토너/로션/올인원
@@ -580,7 +610,7 @@ function ProductDetail(category_code, category_code_small,
     
        
         <p class="cate_info_tx">
-            전체<span>${pageNav.totalRows}</span>개의 상품이 등록되어 있습니다.
+            전체<span style="color: #7d99a4; font-weight: bold;"> ${pageNav.totalRows} </span>개의 상품이 등록되어 있습니다.
         </p>
         <div class="cate_sort_box">
             <div class="cate_sort">
@@ -612,9 +642,8 @@ function ProductDetail(category_code, category_code_small,
                 </ul>
             </div>
             <div class="cate_view">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View&nbsp;
-                
                 <ul>
+                	<li style="width:40px;"><a>View</a></li>
 	                <li>
 	                   <a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.sort_salecount}', '15', '${pageNav.pageNum}', '${pageNav.pageBlock}')">15</a>&nbsp;
 	                </li>    
@@ -639,9 +668,12 @@ function ProductDetail(category_code, category_code_small,
 		                        <div class="goodlist_thumb_background">
 		                            <a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[rowNum-1].product_idx}"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${fileList[rowNum-1].saveFile}"></a>
 		                        </div>
+		                        <div class="prd_nickname">
+		                        	<a>${productList[rowNum-1].member_nickname}</a>
+		                        </div>
 		                        <div class="prd_name">                        
 		                            <a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[rowNum-1].product_idx}" class="goodlist">
-		                                <p class="prd_title">${productList[rowNum-1].product_name}</p>
+		                                ${productList[rowNum-1].product_name}
 		                            </a>
 		                        </div>
 		                        <p class="prd_price">${productList[rowNum-1].product_price}원</p>     
@@ -688,30 +720,7 @@ function ProductDetail(category_code, category_code_small,
             <a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageBlock*pageNav.pages_per_block+1}', '${pageNav.pageBlock+1}')">다음페이지&gt;</a>&nbsp;
             <a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.totalPageNum}', '${pageNav.lastPageBlock}')">&gt;&gt;</a>
         </c:if>
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			                
-			                
-			                
-			                
+			           
 			                <!-- 페이지 네비게이션 구현 -->
 			                <%-- <%@ include file="paging.jsp" %> --%>
 			            </td>
@@ -720,15 +729,11 @@ function ProductDetail(category_code, category_code_small,
            </div>           
     </div>
 </div>
-</div>
-
-
-
-
+<div id="clear"></div>
+</body>
 <!-- footer -->
 <footer>
         <jsp:include page="../main/footer.jsp"/>        
-    </footer>
-</body>
+</footer>
 </body>
 </html>
