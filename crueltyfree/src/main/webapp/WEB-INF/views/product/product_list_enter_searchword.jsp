@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Header</title>
+<title>${exploreVo.searchWord} 검색 | CrueltyFree </title>
 <style>
 
     *{margin: 0; padding: 0;}
@@ -72,7 +72,7 @@
         height: 55px;
     }
     
-    .inner{
+    .inner {
         width: 1020px;
         height: 50px;
         border-bottom: 1px solid #cfcfcf;
@@ -137,10 +137,11 @@
     }
 
     .cate_info_tx {
-        margin: 60px 0 20px;
-        font-size: 20px;
-        color: #222;
+        margin: 60px 0 30px 0;
+        font-size: 19px;
+        color: #222222;
         text-align: center;
+        letter-spacing: -1px;
     }
     
     .price_set_btn {
@@ -166,68 +167,81 @@
         margin-left: 10px;
         margin-right: 10px;
     }
-    
-    #x_btn {
-    	width: 15px;
-    	height: 15px;
-    	background-color: #ffffff;
-    	font-color: #7d99a4
-    }
 
-    .cate_sort_box{
+    .cate_sort_box {
         width: 1020px;
-        height: 49px; 
+        height: 50px; 
+        border-top: 4px solid #ededed;
+        border-bottom: 1px solid #ededed;
+        margin-bottom: 30px;
     }
 
-    .cate_sort{
+    .cate_sort {
         float: left;
-        width: 839px;
+        width: 840px;
         height: 35px;
-        padding-top: 10px;
-        
+        padding-top: 15px;
+    }
+    
+	.cate_sort a {
+        color: #4a4a4a;
+        font-weight: bold;
     }
 
-    .cate_view{
+    .cate_view {
         float: left;
-        width: 181px;
-        height: 35px;
-        padding-top: 10px;  
-        
+        width: 179px;
+        height: 50px;
+        text-align: center;
+        border-left: 1px solid #ededed;
     }
-
+    
+    .cate_view ul {
+    	display: inline-block;
+    	padding-top: 15px;
+    }
+    
+    .cate_view li {
+    	width: 30px;
+    	font-size: 14px;
+    }
+    
     .cate_view a {
-        /* text-decoration: none; */
-        color: black;
+    	color: #4a4a4a;
+        font-weight: bold;
     }
 
-    .cate_sort_tit{
+    .cate_sort_tit {
         float: left;
-        width: 595px;
+        width: 460px;
         height: 30px;
-        
+
         padding: 0;
         margin: 0;
+        text-align: center;
+        color: #000000;
     }
 
-    .cate_sort_tit li{
-        width: 103px;
+    .cate_sort_tit li {
+        width: 90px;
         height: 20px;
-        padding-left: 1px;
+        font-size: 14px;
+        color: #000000;
+        border-right: 1px solid #ededed;
     }
-
-
 
 
     /* 상품목록복붙 */
 
-    .product_list_background{
-        width: 100%;
-        height: 1950px;     
+    .product_list_background {
+        width: 1020px;
+        height: auto;
+        background-color: #eef3f5;
     }
     
-    .product_list{
-		width: 300px;
-		height: 301px;
+    .product_list {
+		width: 340px;
+		height: 360px;
             
 		display: flex;
 		justify-content: center;
@@ -248,20 +262,27 @@
 		line-height: 25px;
 	}
 
-	.prd_name{
+	.prd_nickname {
+		text-align: center;
+		color: #4a4a4a;
+		font-size: 13px;
+	}
+
+	.prd_name {
 		width: 180px;
 		height: 55px;   
     }
 
-    .prd_title{     
+    .prd_title {     
 		text-align: center;
 		font-size: 14px;
 		line-height: 55px;
 	}
 
-	.goodlist_thumb_background{
-		width: 180px;
-		height: 180px;
+	.goodlist_thumb_background {
+		width: 190px;
+		height: 190px;
+		margin-bottom: 10px;
 	}
     
 	.goodlist_thumb{
@@ -347,8 +368,6 @@ function getParameterValue(parameterName) {
 function ProductDetail(searchWord, category_code, category_code_small, 
 		product_price_min, product_price_max, sort_salecount, sort_view, 
 		pageNum, pageBlock) {
-    
-    alert('페이지넘'+pageNum);
 	
 	let min = document.getElementById("product_price_min");
     let max = document.getElementById("product_price_max");
@@ -726,10 +745,10 @@ function ProductDel(searchWord, category_code, category_code_small,
 		</c:if>
 		<div class="search_price">
             <div class="inner" style="border: none;">
-                <div class="category_left">                    
+                <div class="category_left" style="bolder-bottom: none; height:40px;">                    
                     <a>가격대</a>
 				</div>
-                <div class="category_right">
+                <div class="category_right" style="bolder-bottom: none;">
                 	<input type="text" name="product_price_min" id="product_price_min" class="price_input" placeholder="최저가" /> ~ <input type="text" name="product_price_max" id="product_price_max" class="price_input" placeholder="최고가" />
 					<button id="price_" class="price_set_btn" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', 1, 1);">가격대 적용</button>
 				</div>
@@ -740,16 +759,16 @@ function ProductDel(searchWord, category_code, category_code_small,
 		<div class="select_filter">
 			<c:choose>
 				<c:when test="${exploreVo.product_price_min ne 0 and exploreVo.product_price_max eq 10000000}">
-					<a>${exploreVo.product_price_min}원 ~</a><button class="x_btn" onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">x</button>
+					<a>${exploreVo.product_price_min}원 ~</a><button style="width: 20px; height: 20px; background-color: #ffffff; color: #7d99a4; border: none; font-size: 17px;" onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">x</button>
 				</c:when>
 
 				<c:when test="${exploreVo.product_price_max ne 0 and exploreVo.product_price_min eq 0}">
 					<c:if test="${exploreVo.product_price_max ne 10000000 and exploreVo.product_price_min eq 0}">
-						<a>~${exploreVo.product_price_max}원</a><button class="x_btn" onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">x</button>
+						<a>~${exploreVo.product_price_max}원</a><button style="width: 20px; height: 20px; background-color: #ffffff; color: #7d99a4; border: none; font-size: 17px;" onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">x</button>
 					</c:if>
 				</c:when>
 				<c:when test="${exploreVo.product_price_min ne 0 and exploreVo.product_price_max ne 0}">
-					<a>${exploreVo.product_price_min}원 ~ ${exploreVo.product_price_max}원</a><button class="x_btn" onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">x</button>
+					<a>${exploreVo.product_price_min}원 ~ ${exploreVo.product_price_max}원</a><button style="width: 20px; height: 20px; background-color: #ffffff; color: #7d99a4; border: none; font-size: 17px;" onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', 'x', 'x', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">x</button>
 				</c:when>
 				<c:otherwise>
                         
@@ -778,7 +797,7 @@ function ProductDel(searchWord, category_code, category_code_small,
 	                     </c:when>
 	                     <c:otherwise></c:otherwise>
 	                 </c:choose>
-                     <button class="x_btn" onclick="ProductDel('${ExploreVo.searchWord}', 'x', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">x</button>
+                     <button style="width: 20px; height: 20px; background-color: #ffffff; color: #7d99a4; border: none; font-size: 17px;" onclick="ProductDel('${ExploreVo.searchWord}', 'x', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">x</button>
 	                    <c:if test="${!empty exploreVo.category_code_small}">
 	                       <c:choose>
 		                      <c:when test="${exploreVo.category_code_small eq 'skin_1'}">
@@ -819,45 +838,39 @@ function ProductDel(searchWord, category_code, category_code_small,
 		                      </c:when>
 		                      <c:otherwise></c:otherwise>
 		                  </c:choose>
-	                      <button class="x_btn" onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'x', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">x</button>
+	                      <button style="width: 20px; height: 20px; background-color: #ffffff; color: #7d99a4; border: none; font-size: 17px;" onclick="ProductDel('${ExploreVo.searchWord}', '${ExploreVo.category_code}', 'x', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">x</button>
 	                    </c:if>
                 </c:if>
             </div>                              
         <p class="cate_info_tx">
-            전체<span>${pageNav.totalRows}</span>개의 상품이 등록되어 있습니다.
+            전체<span style="color: #7d99a4; font-weight: bold;">${pageNav.totalRows}</span>개의 상품이 등록되어 있습니다.
         </p>
         <div class="cate_sort_box">
             <div class="cate_sort">
                 <ul class="cate_sort_tit">
-                  <li>                    
-                    <form name="sort_salecount" action="product_list_enter_searchword.do" method="get">
-                        <input type="hidden" name="sort_salecount" value="1">
-                    </form>
-                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '1', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">판매수량순</a>                
-                    </li>
-                                        
+					<li>
+	                    <form name="sort_salecount" action="product_list_enter_searchword.do" method="get">
+	                        <input type="hidden" name="sort_salecount" value="1">
+	                    </form>
+                    	<a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '1', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">판매수량순</a>                
+					</li>                 
                     <li>                                       
-                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '2', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">최근등록순</a>                  
-                    </li>                    
-                    
-                    <li>                                        
-                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '3', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">평점순</a>                    
+                    	<a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '2', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">최근등록순</a>                  
                     </li>
-                    
                     <li>                                        
-                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '4', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">높은가격순</a>                    
+                    	<a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '3', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">평점순</a>                    
                     </li>
-                    
                     <li>                                        
-                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '5', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">낮은가격순</a>                   
+                    	<a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '4', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">높은가격순</a>                    
                     </li>
-                    
+                    <li style="border-right: none;">                                        
+                    	<a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '5', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">낮은가격순</a>                   
+                    </li>
                 </ul>
             </div>
             <div class="cate_view">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View&nbsp;
-                
                 <ul>
+                	<li style="width:40px;"><a>View</a></li>
 	                <li>
 	                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '15', '${pageNav.pageNum}', '${pageNav.pageBlock}')">15</a>&nbsp;
 	                </li>    
@@ -868,17 +881,10 @@ function ProductDel(searchWord, category_code, category_code_small,
 	                    <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '45', '${pageNav.pageNum}', '${pageNav.pageBlock}')">45</a>	                    
 	                </li>           
                 </ul>
-                
-                
-                
-                
-                
-                
-                
             </div>
         </div>
         <div class="product_list_background">               
-            <ul>                
+            <ul>
                 <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
 	               <c:if test="${!empty productList[rowNum-1].product_name}">
 		                <li class="product_list">
@@ -886,9 +892,12 @@ function ProductDel(searchWord, category_code, category_code_small,
 		                        <div class="goodlist_thumb_background">
 		                            <a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[rowNum-1].product_idx}"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${fileList[rowNum-1].saveFile}"></a>
 		                        </div>
-		                        <div class="prd_name">                        
+		                        <div class="prd_nickname">
+		                        	<a>${productList[rowNum-1].member_nickname}</a>
+		                        </div>
+		                        <div class="prd_name">
 		                            <a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${productList[rowNum-1].product_idx}" class="goodlist">
-		                                <p class="prd_title">${productList[rowNum-1].product_name}</p>
+		                                ${productList[rowNum-1].product_name}
 		                            </a>
 		                        </div>
 		                        <p class="prd_price">${productList[rowNum-1].product_price}원</p>     
@@ -902,12 +911,7 @@ function ProductDel(searchWord, category_code, category_code_small,
 		            <tr>
 			            <td id="td_paging" colspan="6">
 			            
-			            
-			            
-			            
-			            
-			            
-			            
+
 			            <c:if test="${pageNav.pageNum > pageNav.pages_per_block}">
 			<a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">			            
     		&lt;&lt;</a>&nbsp;
@@ -935,29 +939,7 @@ function ProductDel(searchWord, category_code, category_code_small,
             <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageBlock*pageNav.pages_per_block+1}', '${pageNav.pageBlock+1}')">다음페이지&gt;</a>&nbsp;
             <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.totalPageNum}', '${pageNav.lastPageBlock}')">&gt;&gt;</a>
         </c:if>
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			            
-			                
-			                
-			                
+
 			                
 			                <!-- 페이지 네비게이션 구현 -->
 			                <%-- <%@ include file="paging.jsp" %> --%>
