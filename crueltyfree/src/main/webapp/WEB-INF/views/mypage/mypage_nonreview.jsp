@@ -11,12 +11,32 @@
 <title>Header</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-$(function(){	
-	$(".review_star").click(function(){
-		
-	});
-	
-	
+$(function() {    
+    const stars = $('.review_star');
+    const starGroups = Math.ceil(stars.length / 5);
+
+    stars.on('click', function() {
+        const index = stars.index(this);
+        const groupIndex = Math.floor(index / 5);
+        let filledCount = 0;
+        const startIndex = groupIndex * 5;
+        const endIndex = startIndex + 4;
+
+        stars.each(function(i) {
+            if (i >= startIndex && i <= endIndex) {
+                if (i <= index) {
+                    $(this).attr('src', '${pageContext.request.contextPath}/resources/img/star_full.png');
+                    filledCount++;
+                } else {
+                    $(this).attr('src', '${pageContext.request.contextPath}/resources/img/star_empty.png');
+                }
+            }
+        });
+        
+        $(".review_score_input").eq(groupIndex).val(filledCount);
+    });
+    
+    
 });
 </script>
 <style>
@@ -336,7 +356,7 @@ $(function(){
         }
         
         #review_content_textarea{
-            width: 475px;
+            width: 500px;
             height: 155px;
             font-size: 15px;
         }
@@ -726,7 +746,7 @@ function setThumbnail5(event) {
         <img class="review_star" src="${pageContext.request.contextPath}/resources/img/star_empty.png" width="50px" height="50px">
         </div>
         </div>
-        <input type="hidden" name="review_score" value="">
+        <input type="hidden" class="review_score_input" name="review_score" value="">
         <input type="hidden" name="order_product_idx" value="${nonreviewproductList[rowNum-1].order_product_idx}">
         <ul class="write_step">
             <li id="review_content_back">
@@ -776,7 +796,7 @@ function setThumbnail5(event) {
             </li>       
         </ul>
         <div class="review_reg_background">                                                                     
-            <button type="button" class="btnLookup" id="review_ok">닫기</button>
+            <button type="button" class="btnLookup closeBtnBottom" id="review_ok">닫기</button>
             <button type="button" class="reviewLookup" id="review_cancel" >리뷰 등록하기</button>                                  
         </div>
     </div>    
@@ -833,26 +853,37 @@ $(function(){
 	//jQuery
 	$(".btn").click(function(){ 
 		var index = $(".btn").index(this);
-		
-		$(".modal").eq(index).css("display", "block");		
-	});
-
-		
-	$(".close_modal").click(function(){
-		var index2 = $(".close_modal").index(this);
-	    
-		$(".modal").eq(index2).css("display", "none");
+	    $(".modal").eq(index).removeClass("hidden");
 	});
 	
+		
+	$(".close_modal").click(function(){
+		var index = $(".close_modal").index(this);
+	    $(".modal").eq(index).addClass("hidden");
+	});
+	
+	$(".closeBtnBottom").click(function(){
+		var index = $(".closeBtnBottom").index(this);
+	    $(".modal").eq(index).addClass("hidden");
+	});
     
 	$(".reviewLookup").click(function(){
-        var index2 = $(".reviewLookup").index(this);
-        alert("작성이 완료되었습니다.");
-        $(".test01").eq(index2).submit();                   
+        var index = $(".reviewLookup").index(this);
+        if($(".review_score_input").eq(index).val().length == 0){
+	        alert("별점을 입력해주세요.");
+			return false;        	
+        }else if($(".txtAr").eq(index).val().trim().length == 0){
+        	alert("리뷰내용을 입력해주세요.");
+        	$(".txtAr").eq(index).focus();
+			return false;  
+        }else{
+        	alert("리뷰작성이 완료 되었습니다.");
+	        $(".test01").eq(index).submit();                 
+        }
     });
 
             
-
+	
         
 });
 

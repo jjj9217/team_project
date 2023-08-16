@@ -119,15 +119,19 @@
 	}
 	
 	#history_tb {
+		border-collapse: collapse;
 		width: 700px;
 		border-top: 2px solid #a4a4a4;
-		border-bottom: 2px solid #a4a4a4;
 	}
 	
 	#history_tb td {
 		border-top: 1px solid #a4a4a4;
+		padding: 2px 0;
 	}
-	
+	#history_tb #history_paging {
+    	padding: 10px 0;
+    	border-bottom: 0px solid #a4a4a4;
+	}	
 	#clear{clear: both;}
 </style>
 
