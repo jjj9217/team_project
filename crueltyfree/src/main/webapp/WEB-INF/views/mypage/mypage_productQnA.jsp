@@ -203,16 +203,23 @@
         position: fixed;
         top: 5%;
         justify-content: center;
+        background-color:white;
          
     }
     #modal .title {
         padding-left: 10px;
         display: inline;
         text-shadow: 1px 1px 2px gray;
-        color: white;
+        color: black;
         font-size: 20px;
         
     }
+	#hr{
+		margin-top:10px; 
+		height:5px; 
+		background-color:#7d99a4;
+		border:0;
+	}
     #modal .title h2 {
         display: inline;
     }
@@ -231,7 +238,15 @@
         text-shadow: 1px 1px 2px gray;
         color: white;
     }
-	
+	#review_cancel{
+		background-color:#7d99a4; 
+		color:white; 
+		border:0; 
+		border-radius:3px; 
+		width:170px; 
+		height:38px; 
+		font: bold 13px Arial, Sans-serif;
+	}	
 	
 	#review_content_back{
         height: 210px;
@@ -263,13 +278,13 @@
     .bottom{border-bottom: 1px solid #a4a4a4}
     
      .paging{
-        width:1020px;
+        width:820px;
         height:150px;
         float:left;
         display: flex;
         justify-content: center;
         align-items: center;
-        
+
     }
 
     #td_paging{
@@ -301,6 +316,8 @@
         color:  #fff;
         font-weight: bold;
     }
+#font{font: bold 13px Arial, sans-serif;}
+#font2{font: bold 13px Arial, sans-serif; color:gray;}
 </style>
 </head>
 <script>
@@ -388,10 +405,11 @@ submit();
 				
                 <tr style="cursor:pointer;" class="viewinq">     	                
                     <td><img class="goodlist_thumb" style="width:150px;height:150px;" src="${pageContext.request.contextPath}/resources/uploads/${inqfileList[rowNum-1].saveFile}">
-                       <br>${inqproductList[rowNum-1].product_name}
+                       <br><div id="font">${inqproductList[rowNum-1].product_name}</div>
                     </td>                                        
-                    <td>${inqproductList[rowNum-1].product_inq_content}<br>
-                    	${inqproductList[rowNum-1].product_inq_regDate}
+                    <td><div id="font">${inqproductList[rowNum-1].product_inq_content}</div><br>
+                         <fmt:formatDate value="${inqproductList[rowNum-1].product_inq_regDate}" type="date" pattern="yyyy-MM-dd HH:mm" var="formatDate"/>						
+						<div id="font2">${formatDate}</div>
                     </td>
                     <td>
                         <c:choose>
@@ -420,17 +438,15 @@ submit();
                 
                     
                 </td>
-                <td style="background-color:#eef3f5; width:300px;">
+                <td style="background-color:#eef3f5;">
 				<form class="inqdelform" action="${pageContext.request.contextPath}/mypage/mypage_inqdel_process.do" method="post">
                 <input type="hidden" name="product_inq_idx" value="${inqproductList[rowNum-1].product_inq_idx}">
                 <c:if test="${empty inqproductList[rowNum-1].product_inq_answer}">
-                <button type="button" class="oneinqModifyup">수정하기</button>
+                <div><button type="button" class="oneinqModifyup" style="margin-right:35px;">수정하기</button></div>
                 </c:if>
-                <button type="button" class="oneinqdel">삭제하기</button>                
+                <div><button type="button" class="oneinqdel" style="margin-top:10px;">삭제하기</button></div>               
                 </form>
-                
                 </td>
-                
                 </tr>
                 </tbody>
 			                   
@@ -447,11 +463,13 @@ submit();
     <div class="modal-window">
         <div class="title">
             <h2>상품문의수정</h2>
-            <span class="close_modalmodify">&times;</span>        
+            <span class="close_modalmodify" style="float:right; cursor:pointer;">&times;</span>  
+            <hr id="hr">
+      
         </div>
         <div class="item_info">            
                 <c:if test="${!empty inqproductList[rowNum-1].product_inq_idx}">
-                    <span class="thum"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${inqfileList[rowNum-1].saveFile}"></span>
+                    <span class="thum"><img class="goodlist_thumb" style="width:200px; height:200px;"src="${pageContext.request.contextPath}/resources/uploads/${inqfileList[rowNum-1].saveFile}"></span>
                     <dl class="txt_info">
                         <dt>상품이름: ${inqproductList[rowNum-1].product_name}                            
                         </dt>                                         
@@ -462,7 +480,7 @@ submit();
             <li id="review_content_back">
                 <span class="tit">문의내용<br></span>
                 <div class="review_content">
-                    <br><textarea id="review_content_textarea" name="product_inq_content" placeholder="문의내용을 입력해주세요.">${inqproductList[rowNum-1].product_inq_content}</textarea>                          
+                    <textarea id="review_content_textarea" name="product_inq_content" placeholder="문의내용을 입력해주세요.">${inqproductList[rowNum-1].product_inq_content}</textarea>                          
               			<input type="hidden" name="product_inq_idx" value="${inqproductList[rowNum-1].product_inq_idx}">
                 </div>          
             </li>
@@ -479,12 +497,13 @@ submit();
                 
                             </c:if>
             </c:forEach>
-            
-                        <tr><td>
+                             <tr><td style="border-bottom:0px;">
                         <c:if test="${empty inqproductList[0].product_inq_content}">
                                <tr><td id="no_coupon" colspan="3">문의한 상품내역이 없습니다.</td></tr>
                             </c:if>
-                        </td></tr>                            
+                        </td></tr>   
+
+                         
             </tbody>
 
 
@@ -492,11 +511,7 @@ submit();
     
     
     <!--페이징처리 -->
-        <div class="paging">
-            <table>
-                <tr>
-                    <td id="td_paging" colspan="6">
-                    
+        <div class="paging">         
                         <c:if test="${pageNav.pageNum > pageNav.pages_per_block}">
                             <a href="mypage_productQnA.do?pageNum=1&pageBlock=1">&lt;&lt;</a>&nbsp;
                             <a href="mypage_productQnA.do?pageNum=${(pageNav.pageBlock - 2)*pageNav.pages_per_block + 1}&pageBlock=${pageNav.pageBlock-1}">
@@ -521,9 +536,6 @@ submit();
                             <a href="mypage_productQnA.do?pageNum=${pageNav.pageBlock*pageNav.pages_per_block+1}&pageBlock=${pageNav.pageBlock+1}">다음페이지&gt;</a>&nbsp;
                             <a href="mypage_productQnA.do?pageNum=${pageNav.totalPageNum}&pageBlock=${pageNav.lastPageBlock}">&gt;&gt;</a>
                         </c:if>                                                          
-                    </td>
-                </tr>
-            </table>
         </div>
 
 
