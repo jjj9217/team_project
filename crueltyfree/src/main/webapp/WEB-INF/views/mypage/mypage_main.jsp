@@ -189,12 +189,14 @@
         text-align: center;     
         padding-inline-start: 0px;
     }
+    .likenodata{text-align: center; padding: 60px 0; color: #4a4a4a; font-weight: bold;}
 
     li.nodata{
         width:100%;
         height: 100%;
-    
         line-height: 175px;
+        font-weight: bold;
+        color: #4a4a4a;
     }
     
     ul{
@@ -255,10 +257,15 @@
 		font: bold 17px Arial, sans-serif;
 		color:#000000;
    }
-	.oneinq_title{
+	.inq_title{
         line-height: 55px;
 		font: bold 17px Arial, sans-serif;
 		color:#000000;
+		width:280px;
+	  	height: auto;
+  		overflow: hidden;
+  		text-overflow: ellipsis;
+  		white-space:nowrap;
 	}   
    .goodlist_thumb_background{
         width: 180px;
@@ -279,7 +286,7 @@
 		border:0; 
 		border-radius:3px; 
 		width:90px; 
-		height:30px; 
+		height:27px; 
 		text-align:center;
 		float:right;
 		font: bold 18px Arial, Sans-serif;
@@ -385,7 +392,7 @@
 		              </div>
 	               </c:when>
 	               <c:when test="${empty likeproductList[0].like_idx}">
-		               <h1>좋아요한 상품 목록이 없습니다!</h1>
+		               <p class="likenodata">좋아요한 상품 목록이 없습니다.</p>
 		           </c:when>
 		           <c:otherwise></c:otherwise>    
                 </c:choose>                   	               
@@ -401,11 +408,11 @@
                 <div class="list-customer">
                     <c:choose>
                         <c:when test="${!empty oneinqList[0].one_inq_idx}">
-                            <table style="background-color:red; width:380px;">
+                            <table style="width:380px; margin-top:5px;">
                                 <c:forEach var="rowNum" begin="0" end="4">
                                     <c:if test="${!empty oneinqList[rowNum].one_inq_idx}">
                                     <tr style="cursor:pointer;" onclick="location.href='${pageContext.request.contextPath}/one_inq/one_inq_list.do?=${oneinqList[rowNum].one_inq_idx}'">
-                                        <td><p class="oneinq_title">${oneinqList[rowNum].one_inq_content}</p></td>                                        
+                                        <td><p class="inq_title">${oneinqList[rowNum].one_inq_content}</p></td>                                        
                                         <td >
                                             <c:if test="${!empty oneinqList[rowNum].one_inq_idx and !empty oneinqList[rowNum].one_inq_answer}">
                                                 <p class="state">답변완료</p>
@@ -436,19 +443,18 @@
                 </div>
                 <div class="list-customer">
                     <c:choose>
-                        <c:when test="${!empty oneinqList[0].one_inq_idx}">
-                            <table>
+                        <c:when test="${!empty inqproductList[0].product_inq_idx}">
+                            <table style="width:380px; margin-top:5px;">
                                 <c:forEach var="rowNum" begin="0" end="4">
                                     <c:if test="${!empty inqproductList[rowNum].product_inq_idx}">
-                                    <tr style="cursor:pointer" onclick="location.href='${pageContext.request.contextPath}/mypage/mypage_productQnA.do?'">
-                                        <td>문의번호 : ${inqproductList[rowNum].product_inq_idx}</td>
-                                        <td>문의내역 : ${inqproductList[rowNum].product_inq_content}</td>                                        
+                                    <tr style="cursor:pointer;" onclick="location.href='${pageContext.request.contextPath}/mypage/mypage_productQnA.do?'">
+                                        <td><p class="inq_title">${inqproductList[rowNum].product_inq_content}</p></td>                                        
                                         <td>
                                             <c:if test="${!empty inqproductList[rowNum].product_inq_idx and !empty inqproductList[rowNum].product_inq_answer}">
-                                                답변완료
+                                                <p class="state">답변완료</p>
                                             </c:if>
                                             <c:if test="${empty inqproductList[rowNum].product_inq_answer}">
-                                                답변대기
+                                                <p class="state">답변대기</p>
                                             </c:if>
                                         </td>
                                     </tr>
@@ -456,7 +462,7 @@
                                 </c:forEach>    
                             </table>
                         </c:when>
-                        <c:when test="${empty oneinqList[0].one_inq_idx}">
+                        <c:when test="${empty inqproductList[0].product_inq_idx}">
                             <ul class="nodata_ul">                        
                                 <li class="nodata">최근 1개월간 문의하신 내용이 없습니다.</li>                                              
                             </ul>

@@ -231,6 +231,7 @@
         width:150px;
         height:150px;    
     }
+    .goodlist{color:black;}
     .buy_list_container{display: block; width: 790px; height: auto; margin: 0 auto; padding: 10px; margin-top: 50px;}
     .buy_list, .order_list{border-collapse: collapse;}
     .th_product{width: 135px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
@@ -282,6 +283,7 @@
         text-align: center;
         border-color: white;
     }
+    #no_coupon{border-bottom:0px;text-align: center; padding: 60px 0; color: #4a4a4a; font-weight: bold;}
 </style>
 </head>
 <script>
@@ -386,7 +388,8 @@ function deletelikelistall() {
                 </tr>
             </thead>
             <tbody>
-                                <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
+                          <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}"> 
+                          
                           <c:if test="${!empty likefileList[rowNum-1].saveFile}">
                 <tr>
                     <td>
@@ -400,7 +403,8 @@ function deletelikelistall() {
                         <input type="button" id="td_cancel" onclick="deletelikelist(${likeproductList[rowNum-1].like_idx});" value="삭제하기"></td>
                 </tr>
                         </c:if>
-                                </c:forEach>       
+                            </c:forEach>     
+	
             </tbody>
 
 

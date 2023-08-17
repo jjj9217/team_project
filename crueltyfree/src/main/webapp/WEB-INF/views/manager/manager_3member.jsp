@@ -536,8 +536,15 @@ $(function(){
 		</article>
 		<article class="regi_right">
 			<select class="regi_box2" name="member_gender" >
-				<option value="M">남자</option>
+			<c:if test="${memSelectList[rowNum-1].member_gender eq 'M'}">
+				<option value="M" selected>남자</option>
 				<option value="F">여자</option>
+			</c:if>
+			<c:if test="${memSelectList[rowNum-1].member_gender eq 'F'}">
+				<option value="M">남자</option>
+				<option value="F" selected>여자</option>
+			</c:if>
+				
 			</select>
 		</article>
 	</div>
