@@ -186,47 +186,57 @@ $(function(){
          background-color: white;
      }
     /* 바디 CSS */
-
     #Container{
-    	display: block;
-        width: 1020px; height: auto; margin: 0 auto;
+        overflow:hidden;
+        width: 1020px; margin: 0 auto;
     }
     
-    #mypage{
-    	margin-top:30px;
+    #mypage {
+    	margin-top: 30px;
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-       	font-size:15px;
+       	font-size: 15px;
         width: 199px;
-        height:500px;
-        float:left;
+        height: 500px;
+        float: left;
     }
-	#mypage a{color:black;}
+    #mypage th {
+    	height: 50px;
+    	vertical-align: super;
+    	color: #000000;
+    }
+    
+    #mypage td {
+    	height: 25px;
+    }
+    
+	#mypage a {color: #4a4a4a;}
 
-    #mypage-conts{ 
-    	display: block;       
+    #mypage-conts {
         width:810px;
-        height: auto;      
+        height: 950px;      
         float:left;
     }
 
     #mylink{
-        color: black;
-        font-size: 30px;
+        color: #000000;
+        font-size: 25px;
         text-decoration: none;
+        letter-spacing: -2px;
     }
 
-    .mypagetable{
-        font-size: 20px;
+    .mypagetable {
+    	height: 50px;
+        font-size: 18px;
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;      
-        color:#7d99a4;
+        color: #7d99a4;
     }
 
     #blank{
-        width:100%;
+        width: 100%;
         height: 35px;
-        
     }
+
 
     
     
@@ -471,7 +481,7 @@ $(function(){
             <tr><th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
             <tr><td class="mypagetable">마이 쇼핑</td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do"style="font-weight:bold; color:#7d99a4;">취소/반품내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>

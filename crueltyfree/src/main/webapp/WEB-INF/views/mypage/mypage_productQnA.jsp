@@ -33,51 +33,55 @@
      }
     /* 바디 CSS */
 
-     #Container{
+    #Container{
         overflow:hidden;
-
         width: 1020px; margin: 0 auto;
     }
     
-    #mypage{
-        
-        width: 199px;
-        height:500px;
-        float:left;     
-    }
-
-    #mypage-conts{
-        
-        width:810px;
-        height: auto;      
-        float:left;
-    }
-
-    #mypage{
-    	margin-top:30px;
+    #mypage {
+    	margin-top: 30px;
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-       	font-size:15px;
+       	font-size: 15px;
         width: 199px;
-        height:500px;
+        height: 500px;
+        float: left;
+    }
+    #mypage th {
+    	height: 50px;
+    	vertical-align: super;
+    	color: #000000;
+    }
+    
+    #mypage td {
+    	height: 25px;
+    }
+    
+	#mypage a {color: #4a4a4a;}
+
+    #mypage-conts {
+        width:810px;
+        height:auto; 
         float:left;
     }
-	#mypage a{color:black;}
 
-    .mypagetable{
-        font-size: 20px;
+    #mylink{
+        color: #000000;
+        font-size: 25px;
+        text-decoration: none;
+        letter-spacing: -2px;
+    }
+
+    .mypagetable {
+    	height: 50px;
+        font-size: 18px;
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;      
-        color:#7d99a4;
+        color: #7d99a4;
     }
-    #mylink{
-        color: black;
-        font-size: 30px;
-        text-decoration: none;
-    }
+
     #blank{
-        width:100%;
+        width: 100%;
         height: 35px;
-        
     }
 
     
@@ -191,16 +195,18 @@
         -webkit-backdrop-filter: blur( 13.5px );
         border-radius: 10px;
         border: 1px solid rgba( 255, 255, 255, 0.18 );
-        width: 560px;
-        height: 700px;
+        width: 450px;
+        height: 600px;
         position: relative;
         top: -100px;
+        top:5%;
         padding: 10px;
         position: fixed;
-        top: 5%;
         justify-content: center;
         background-color:white;
-         
+        top:50%;
+        left:50%;
+  		transform: translate(-50%, -50%);                 
     }
     #modal .title {
         padding-left: 10px;
@@ -325,6 +331,9 @@
 #font2{font: bold 13px Arial, sans-serif; color:gray;}
 #title_content{text-align:left; font: bold 13px Arial, Sans-serif; color:#7d99a4; float:left; margin-left:30px;}
 #sub_content{margin-left:10px; font: bold 13px Arial, Sans-serif; float:left;}
+.goodlist_thumb{margin-top:10px;}
+.txt_info{font: bold 13px Arial, Sans-serif;}
+
 </style>
 </head>
 <script>
@@ -369,7 +378,7 @@ submit();
             <tr><td class="mypagetable">마이활동</td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do" style="font-weight:bold; color:#7d99a4;">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>

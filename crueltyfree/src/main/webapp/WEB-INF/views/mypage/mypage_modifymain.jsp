@@ -208,7 +208,7 @@
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do" style="font-weight:bold; color:#7d99a4;">회원정보 수정</a></td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지</a></td></tr>
         </table>       
     </div>

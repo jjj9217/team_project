@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Header</title>
+<title>마이페이지 | CrueltyFree</title>
 <style>
 *{margin: 0; padding: 0;}
     a{text-decoration: none;}
@@ -35,43 +35,52 @@
 
     #Container{
         overflow:hidden;
-
         width: 1020px; margin: 0 auto;
     }
     
-    #mypage{
+    #mypage {
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-       	font-size:15px;
+       	font-size: 15px;
         width: 199px;
-        height:500px;
-        float:left;
+        height: 500px;
+        float: left;
     }
-	#mypage a{color:black;}
-
-    #mypage-conts{
+    #mypage th {
+    	height: 50px;
+    	vertical-align: super;
+    	color: #000000;
+    }
     
+    #mypage td {
+    	height: 25px;
+    }
+    
+	#mypage a {color: #4a4a4a;}
+
+    #mypage-conts {
         width:810px;
-        height: 950px;      
+        height: 1000px;;      
         float:left;
     }
 
     #mylink{
-        color: black;
-        font-size: 30px;
+        color: #000000;
+        font-size: 25px;
         text-decoration: none;
+        letter-spacing: -2px;
     }
 
-    .mypagetable{
-        font-size: 20px;
+    .mypagetable {
+    	height: 50px;
+        font-size: 18px;
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;      
-        color:#7d99a4;
+        color: #7d99a4;
     }
 
     #blank{
-        width:100%;
+        width: 100%;
         height: 35px;
-        
     }
 
     .tit_area {
@@ -222,11 +231,11 @@
    .prd_price{
         width: 180px;
         height: 25px;
-    
         text-align: center;
-        font-size: 14px;
+		font: bold 14px Arial, sans-serif;
         line-height: 25px;
    }
+   .prd_price1{color:#7d99a4;}
 
    .font_price{
         text-align: center;
@@ -242,26 +251,39 @@
 
    .prd_title{      
         text-align: center;
-        font-size: 14px;
         line-height: 55px;
+		font: bold 17px Arial, sans-serif;
+		color:#000000;
    }
-   
+	.oneinq_title{
+        line-height: 55px;
+		font: bold 17px Arial, sans-serif;
+		color:#000000;
+	}   
    .goodlist_thumb_background{
         width: 180px;
         height: 180px;
-        
     
    }
    
    .goodlist_thumb{
         width: 180px;
         height: 180px;
-        
    }
    table{margin-top:30px;}
    #hr{height:3px; background-color:#7d99a4; border:0;}
    .product_list_background{margin-top:30px;}
-
+   .state{		
+   		background-color:#7d99a4; 
+		color:white; 
+		border:0; 
+		border-radius:3px; 
+		width:90px; 
+		height:30px; 
+		text-align:center;
+		float:right;
+		font: bold 18px Arial, Sans-serif;
+		}
 </style>
 </head>
 
@@ -346,10 +368,12 @@
 			                            </div>
 			                            <div class="prd_name">
 			                                <a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${likeproductList[rowNum].product_idx}" class="goodlist">
-			                                    <p class="prd_title">상품제목: ${likeproductList[rowNum].product_name}</p>
+			                                    <p class="prd_title">${likeproductList[rowNum].product_name}</p>
 			                                </a>
 			                            </div>
-			                            <p class="prd_price">${likeproductList[rowNum].product_price} 원</p>
+			                       		 <fmt:formatNumber value="${likeproductList[rowNum].product_price}" type="number" var="formatNumber"/>						
+						                 <p class="prd_price"><span class="prd_price1">${formatNumber}</span><span class="prd_price2">원</span></p>
+			                       
 			                        </div>
 			                      </c:if> 
 			                    </c:forEach>    
@@ -377,18 +401,17 @@
                 <div class="list-customer">
                     <c:choose>
                         <c:when test="${!empty oneinqList[0].one_inq_idx}">
-                            <table>
+                            <table style="background-color:red; width:380px;">
                                 <c:forEach var="rowNum" begin="0" end="4">
                                     <c:if test="${!empty oneinqList[rowNum].one_inq_idx}">
-                                    <tr style="cursor:pointer" onclick="location.href='${pageContext.request.contextPath}/one_inq/one_inq_list.do?=${oneinqList[rowNum].one_inq_idx}'">
-                                        <td>문의번호 : ${oneinqList[rowNum].one_inq_idx}</td>
-                                        <td>문의내역 : ${oneinqList[rowNum].one_inq_content}</td>                                        
-                                        <td>
+                                    <tr style="cursor:pointer;" onclick="location.href='${pageContext.request.contextPath}/one_inq/one_inq_list.do?=${oneinqList[rowNum].one_inq_idx}'">
+                                        <td><p class="oneinq_title">${oneinqList[rowNum].one_inq_content}</p></td>                                        
+                                        <td >
                                             <c:if test="${!empty oneinqList[rowNum].one_inq_idx and !empty oneinqList[rowNum].one_inq_answer}">
-                                                답변완료
+                                                <p class="state">답변완료</p>
                                             </c:if>
                                             <c:if test="${empty oneinqList[rowNum].one_inq_answer}">
-                                                답변대기
+                                                <p class="state">답변대기</p>
                                             </c:if>
                                         </td>
                                     </tr>

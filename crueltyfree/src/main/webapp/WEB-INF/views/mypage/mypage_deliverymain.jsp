@@ -28,48 +28,61 @@
         background-color: #eef3f5;  
     }
      body{
-         width: 1020px; height: auto; margin: 0 auto;
-         background-color: white;
+         width: 1020px; height: auto; margin: 0 auto; 
+         background-color: white; 
      }
     
     /* 바디 CSS */
 
     #Container{
         overflow:hidden;
-
-        width: 1020px; margin: 0 auto;
+        width: 1020px; margin: 0 auto; height:auto;
     }
     
-    #mypage{
-    	margin-top:30px;
+    #mypage {
+    	margin-top: 30px;
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-       	font-size:15px;
+       	font-size: 15px;
         width: 199px;
-        height:500px;
-        float:left;
+        height: 500px;
+        float: left;
     }
-	#mypage a{color:black;}
-    .mypagetable{
-        font-size: 20px;
-        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        font-weight: bold;      
-        color:#7d99a4;
+    #mypage th {
+    	height: 50px;
+    	vertical-align: super;
+    	color: #000000;
     }
-    #mylink{
-        color: black;
-        font-size: 30px;
-        text-decoration: none;
+    
+    #mypage td {
+    	height: 25px;
     }
-    #mypage-conts{
+    
+	#mypage a {color: #4a4a4a;}
+
+    #mypage-conts {
         width:810px;
         height: auto;      
         float:left;
     }
 
+    #mylink{
+        color: #000000;
+        font-size: 25px;
+        text-decoration: none;
+        letter-spacing: -2px;
+    }
+
+    .mypagetable {
+    	height: 50px;
+        font-size: 18px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-weight: bold;      
+        color: #7d99a4;
+    }
+
     #blank{
-        width:100%;
+        width: 100%;
         height: 35px;
-        
     }
 
 
@@ -273,7 +286,7 @@ function updatedeliveryPostdefault(delivery_idx) {
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do" style="font-weight:bold; color:#7d99a4;">배송지</a></td></tr>
         </table>        
     </div>
     <div id="mypage-conts">
