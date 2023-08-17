@@ -152,15 +152,17 @@
 		cursor: pointer;
 		font-size: 12px;
 	}
+	.recent_container{
+	position: absolute;
+	}
 	.recent_box{
 		display: none;
-		position: absolute;
-		left: 180px;
-		top: 100px;
+		position: relative;
 		width:900px; height:480px;
 		border: 2px solid #7d99a4;
 		border-radius: 5px;
 		background-color: #eef3f5;
+		z-index: 50px;
 	}
 	.recent_title{
 		margin-top: 10px;
@@ -502,6 +504,7 @@ function HeaderBest(sort_salecount) {
 	<!-- 최근 본 상품 -->
 	<div class="recent_pro">
 		<span id="recentViewBtn">최근 본 상품 ▲</span>
+		<div class="recent_container">
 		<div class="recent_box">
 			<div class="recent_title">
 				<div class="recent_title_text">최근 본 상품</div>
@@ -551,7 +554,7 @@ function HeaderBest(sort_salecount) {
 			</c:choose>			
 		</div>		
 	</div>
-
+	</div>
 </div>
 
 <div class="menu_box">

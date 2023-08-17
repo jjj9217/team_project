@@ -238,8 +238,6 @@ $(function(){
         height: 35px;
     }
 
-    
-    
     .mypage-step {
     overflow: hidden;
     width: 100%;
@@ -261,7 +259,6 @@ $(function(){
 
     .mypage-step li em, .mypage-step li span {
     display: block;
-    position: absolute;
     left: 0;
     width: 100%;
     text-align: center; 
@@ -270,10 +267,9 @@ $(function(){
     .mypage-step li {
 
     float: left;
-    position: relative;
     width: 20%;
     height: 117px;
-    
+    padding-top: 20px;
     font-size: 0;
     line-height: 0;
     
@@ -502,7 +498,7 @@ $(function(){
         <div id="blank">            
         </div>
         <div class="tit_area">
-            <h2 class="tit">주문/배송조회</h2>
+            <h2 class="tit">주문/배송 조회</h2>
         </div>
         <div class="search_box">
             <ul class="mypage-step">
@@ -582,7 +578,7 @@ $(function(){
         <c:if test="${orderRow == 1}">
         <tr>
         <td class="td_empty" colspan="5">
-        	취소/반품 내역이 없습니다.
+        	주문/배송 내역이 없습니다.
         </td>
         </tr>
         </c:if>

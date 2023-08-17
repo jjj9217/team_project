@@ -684,8 +684,8 @@ $(function(){
 		var review_idx = $(".recom_review_idx").eq(index).val();
 		var recom_idx = $(".recom_recom_idx").eq(index).val();
 		var recom_recom_count = $(".recom_recom_count").eq(index).val();
-		var recom_plus = parseInt($(".recom_recom_count").eq(index).val()) + 1;
-			
+		var recom_plus = parseInt(recom_recom_count) + 1;
+		var recom_minus = parseInt(recom_recom_count) - 1;	
 		
 		if(${empty member}){//비회원의 경우 로그인 페이지로 이동
 			alert("로그인한 회원만 추천을 할 수 있습니다.");
@@ -728,7 +728,7 @@ $(function(){
 				        		$(".recom_change").eq(index).css("color", "#4a4a4a");
 				        		$(".recom_change").eq(index).css("background-color", "#fff");
 				        		$(".recom_change").eq(index).css("font-weight", "normal");
-				        		$(".recom_target").eq(index).text(recom_recom_count);
+				        		$(".recom_target").eq(index).text(recom_minus);
 				        		recomValues[index] = 'T';				        	
 				        	}else{
 				        		alert("리뷰 추천 삭제에 실패하였습니다.");
@@ -1004,7 +1004,7 @@ $(function(){
 	 .cancelButton, .edit_cancelButton{width:130px; height:40px; margin-right: 10px; border-radius: 2px; background-color: #fff; color:#7d99a4; font-weight: bold; border: 1px solid #7d99a4}
 	 .writeButton, .edit_updateButton{width:130px; height:40px; margin-left: 10px; border-radius: 2px; background-color: #7d99a4; color:#fff; font-weight: bold; border: 1px solid #7d99a4}
 	 .sortClass{color:black}
-	 
+	 #soldOutNotice{color:rgb(216, 98, 98); font-size: 24px;}
 </style>
 </head>
 <body>
@@ -1021,7 +1021,54 @@ $(function(){
             </div>
             
             <div class="prd_review_score_avg">
-                <b>고객리뷰 <span class="txt_blue">${reviewScoreAvg}</span></b> (${productReviewRows}건)
+                <b>고객리뷰 <span class="txt_blue">${reviewScoreAvg}</span></b>&nbsp;&nbsp; 
+                <span class="review_score">
+               	<c:choose>
+               	<c:when test="${reviewScoreAvg < 1}">
+               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	</c:when>
+               	<c:when test="${reviewScoreAvg < 2}">
+               	<img src="../resources/img/star_full.png" width="20px" height="20px">
+               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	</c:when>
+               	<c:when test="${reviewScoreAvg < 3}">
+               	<img src="../resources/img/star_full.png" width="20px" height="20px">
+               	<img src="../resources/img/star_full.png" width="20px" height="20px">
+               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	</c:when>
+               	<c:when test="${reviewScoreAvg < 4}">
+               	<img src="../resources/img/star_full.png" width="20px" height="20px">
+               	<img src="../resources/img/star_full.png" width="20px" height="20px">
+               	<img src="../resources/img/star_full.png" width="20px" height="20px">
+               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	</c:when>
+               	<c:when test="${reviewScoreAvg > 4 && reviewScoreAvg < 5}">
+               	<img src="../resources/img/star_full.png" width="20px" height="20px">
+               	<img src="../resources/img/star_full.png" width="20px" height="20px">
+               	<img src="../resources/img/star_full.png" width="20px" height="20px">
+               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	</c:when>               	
+               	<c:otherwise>
+               	<img src="../resources/img/star_full.png" width="20px" height="20px">
+               	<img src="../resources/img/star_full.png" width="20px" height="20px">
+               	<img src="../resources/img/star_full.png" width="20px" height="20px">
+               	<img src="../resources/img/star_full.png" width="20px" height="20px">
+               	<img src="../resources/img/star_full.png" width="20px" height="20px">  
+               	</c:otherwise>
+               	</c:choose>                                        	                                          
+               </span>
+                (${productReviewRows}건)
             </div>
         </div>
         <div class="right_area">
@@ -1031,7 +1078,15 @@ $(function(){
                 <p class="prd_price">
                 <input type="hidden" class="product_price" value="${productVo.product_price}"></input>
                 <span class="prdPrice">
-                <fmt:formatNumber value="${productVo.product_price}" pattern="###,###" /></span>원</p>
+                <c:choose>
+                <c:when test="${productVo.product_capa == 0}">
+                <span id="soldOutNotice">현재 상품이 일시 품절 되었습니다!</span>
+                </c:when>
+                <c:otherwise>
+                <fmt:formatNumber value="${productVo.product_price}" pattern="###,###" /></span>원
+                </c:otherwise>
+                </c:choose>          
+                </p>      
                 <div class="prd_delivery_info">
                     <p class="prd_delivery_title">배송정보</p>
                     <div class="prd_delivery_box">
@@ -1042,7 +1097,7 @@ $(function(){
                         		배송비 무료
                         	</c:when>
                         	<c:otherwise>
-                        		${productVo.delivery_company}원                        		
+                        		<fmt:formatNumber value="${productVo.delivery_company}" pattern="###,###" />원                        		
                         	</c:otherwise>
                         </c:choose>                        
                         <br>평균 3일 이내 배송</span>                        
@@ -1335,7 +1390,7 @@ $(function(){
                                             <c:choose>
                                             <c:when test="${reviewList[productReviewRows-1].review_recom_idx != 0}">
                                             <span class="recom_num_o recom_change">
-                                                <img src="../resources/img/icon_recom_off.png" width="15px" height="15px">
+                                                <img src="../resources/img/recom_up.png" width="15px" height="15px">
                                                 <span class=" recom_target">${reviewList[productReviewRows-1].review_recom_count}</span>
                                             </span>                                            
                                             </c:when>
