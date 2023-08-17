@@ -68,7 +68,8 @@
 		    <mapping path="/**/mypage_orderinq.do"/>
        <!-- <mapping path="mypage_orderinq_view.do"/> -->		    
 		    <mapping path="/**/mypage_productQnA.do"/>
-		    <mapping path="/**/mypage_review.do"/>			
+		    <mapping path="/**/mypage_review.do"/>
+		    <mapping path="/**/one_inq_write.do"/>			
 			<!-- 로그인 체크를 하지 않아도 들어갈 수 있는 주소 / 
 			예제와 거꾸로 할 거기 때문에 로그인 체크만 막아주면 예외는 필요없음-->
 			<!-- <exclude-mapping path="/index.do"/> -->						

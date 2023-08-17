@@ -143,7 +143,10 @@ public class OneInqController {
 		HttpSession session = request.getSession();		
 		//로그인된 회원의 member_idx 얻기
 		MemberVo mVo = (MemberVo)session.getAttribute("member");
-		vo.setMember_idx(mVo.getMember_idx());
+		
+		if(mVo != null) {
+			vo.setMember_idx(mVo.getMember_idx());			
+		}
 		
 		List<OneInqVo> oneinqList = mListNotice.oneinqList(vo);
 		model.addAttribute("oneinqList", oneinqList);
