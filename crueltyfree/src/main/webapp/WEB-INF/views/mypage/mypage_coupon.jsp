@@ -291,12 +291,14 @@
             <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
             <c:choose>
                 <c:when test="${!empty couponList[rowNum-1].coupon_idx}">
-                                    <tr>
-                    <td>${couponList[rowNum-1].coupon_discount} %</td>
-                    <td>${untitled}쿠폰명</td>
-                    <td>${couponList[rowNum-1].coupon_limit} 원 이상</td>
-                    <td>${couponList[rowNum-1].coupon_expDate} 까지</td>
-                </tr>
+					<tr>
+	                    <td>
+	                    	<fmt:formatNumber value="${couponList[rowNum-1].coupon_discount}" type="percent"/>
+	                    </td>
+	                    <td>${couponList[rowNum-1].coupon_name}</td>
+	                    <td>${couponList[rowNum-1].coupon_limit} 원 이상</td>
+	                    <td>${couponList[rowNum-1].coupon_expDate} 까지</td>
+	                </tr>
                 </c:when>                
                 <c:otherwise>
                 </c:otherwise>                

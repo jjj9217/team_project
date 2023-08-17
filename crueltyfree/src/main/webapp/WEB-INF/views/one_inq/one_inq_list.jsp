@@ -87,6 +87,7 @@
 		text-align: center;
 		margin-bottom: 50px;
 		color: #4a4a4a;
+		border-collapse: collapse;
 	}
 	
 	#one_inq_list a {
@@ -438,7 +439,7 @@ $(function(){
     //삭제하기버튼
     $(".oneinqdel").click(function(){
         var index2 = $(".oneinqdel").index(this);
-        alert("작성이 완료되었습니다.");
+        alert("삭제가 완료되었습니다.");
         $(".inqdelform").eq(index2).submit();        
     });
 });

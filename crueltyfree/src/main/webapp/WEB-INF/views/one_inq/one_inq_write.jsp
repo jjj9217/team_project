@@ -91,7 +91,6 @@
 		height: 300px;
 		padding: 20px 0 30px 0;
 		border-bottom: 1px solid #a4a4a4;
-		margin-bottom: 50px;
 	}
 	
 	.oneinq_left {
@@ -232,11 +231,11 @@
 		</article>
 	</div>
 	
-	<div class="one_inq_type">
-		<article class="one_left">
+	<div class="one_inq_type" style="border-top: none; margin-bottom: 50px;">
+		<article class="oneinq_left">
 			&nbsp;&nbsp;<a>파일 첨부</a>
 		</article>
-		<article class="one_right">
+		<article class="oneinq_right">
 			<input type="file" name="attachedFile" id="thumFile" class="regi_box">
 		</article>
 	</div>

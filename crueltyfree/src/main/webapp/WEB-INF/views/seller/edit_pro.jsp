@@ -162,6 +162,9 @@
 		line-height: 20px;
 		background-color: #eef3f5;	
 	}
+	#att_01, #att_02, #att_03{
+		display: none;
+	}
 </style>
 
 <script>
@@ -330,9 +333,34 @@ function validateForm(){
 			&nbsp;&nbsp;<a>상품설명</a>
 		</article>
 		<article class="regi_right">
-			<input type="file" name="attachedFile1" class="regi_box" style="width: 200px;">
-			<input type="file" name="attachedFile2" class="regi_box" style="width: 200px;">
-			<input type="file" name="attachedFile3" class="regi_box" style="width: 200px;">
+			<c:forEach var="rowNum" begin="1" end="3">
+				<c:choose>
+					<c:when test="${rowNum == 1}">
+						<c:if test="${empty fileList[1]}">
+							<input type="file" id="att_01" name="attachedFile1" class="regi_box" style="width: 200px;">
+						</c:if>
+						<c:if test="${!empty fileList[1]}">
+							<input type="file" name="attachedFile1" class="regi_box" style="width: 200px;">
+						</c:if>
+					</c:when>
+					<c:when test="${rowNum == 2}">
+						<c:if test="${empty fileList[2]}">
+							<input type="file" id="att_02" name="attachedFile2" class="regi_box" style="width: 200px;">
+						</c:if>
+						<c:if test="${!empty fileList[2]}">
+							<input type="file" name="attachedFile2" class="regi_box" style="width: 200px;">
+						</c:if>
+					</c:when>
+					<c:otherwise>
+						<c:if test="${empty fileList[3]}">
+							<input type="file" id="att_03" name="attachedFile3" class="regi_box" style="width: 200px;">
+						</c:if>
+						<c:if test="${!empty fileList[3]}">
+							<input type="file" name="attachedFile3" class="regi_box" style="width: 200px;">
+						</c:if>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
 			<span class="file_msg"><br>새로운 파일을 선택하면 이전 파일이 교체됩니다.</span>
 		</article>
 	</div>
