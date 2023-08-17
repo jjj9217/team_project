@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Header</title>
+<title>쿠폰 | CrueltyFree</title>
 <style>
 *{margin: 0; padding: 0;}
     a{text-decoration: none;}
@@ -35,44 +35,53 @@
 
     #Container{
         overflow:hidden;
-
         width: 1020px; margin: 0 auto;
     }
     
-    #mypage{
-    	margin-top:30px;
+    #mypage {
+    	margin-top: 30px;
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-       	font-size:15px;
+       	font-size: 15px;
         width: 199px;
-        height:500px;
-        float:left;
+        height: 500px;
+        float: left;
     }
-	#mypage a{color:black;}
+    #mypage th {
+    	height: 50px;
+    	vertical-align: super;
+    	color: #000000;
+    }
+    
+    #mypage td {
+    	height: 25px;
+    }
+    
+	#mypage a {color: #4a4a4a;}
 
-    #mypage-conts{
-        
+    #mypage-conts {
         width:810px;
         height: auto;      
         float:left;
     }
 
     #mylink{
-        color: black;
-        font-size: 30px;
+        color: #000000;
+        font-size: 25px;
         text-decoration: none;
+        letter-spacing: -2px;
     }
 
-    .mypagetable{
-        font-size: 20px;
+    .mypagetable {
+    	height: 50px;
+        font-size: 18px;
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;      
-        color:#7d99a4;
+        color: #7d99a4;
     }
 
     #blank{
-        width:100%;
+        width: 100%;
         height: 35px;
-        
     }
 
     
@@ -205,7 +214,6 @@
         font: 20px Arial, Sans-serif;
         text-align: center;
         border-color: white;
-        background-color: orange;
     }
     .buy_list_container{display: block; width: 790px; height: auto; margin: 0 auto; padding: 10px; margin-top: 50px;}
     .buy_list, .order_list{border-collapse: collapse;}
@@ -240,7 +248,7 @@
             <tr><td><hr width=100%></td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_coupon.do" style="font-weight:bold; color:#7d99a4;">쿠폰</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이활동</td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>

@@ -35,44 +35,53 @@
 
     #Container{
         overflow:hidden;
-
         width: 1020px; margin: 0 auto;
     }
     
-    #mypage{
-    	margin-top:30px;
+    #mypage {
+    	margin-top: 30px;
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-       	font-size:15px;
+       	font-size: 15px;
         width: 199px;
-        height:500px;
-        float:left;
+        height: 500px;
+        float: left;
     }
-	#mypage a{color:black;}
+    #mypage th {
+    	height: 50px;
+    	vertical-align: super;
+    	color: #000000;
+    }
+    
+    #mypage td {
+    	height: 25px;
+    }
+    
+	#mypage a {color: #4a4a4a;}
 
-    #mypage-conts{
-        
+    #mypage-conts {
         width:810px;
-        height: 950px;      
+        height:auto;     
         float:left;
-    }
-
-    .mypagetable{
-        font-size: 20px;
-        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        font-weight: bold;      
-        color:#7d99a4;
     }
 
     #mylink{
-        color: black;
-        font-size: 30px;
+        color: #000000;
+        font-size: 25px;
         text-decoration: none;
+        letter-spacing: -2px;
+    }
+
+    .mypagetable {
+    	height: 50px;
+        font-size: 18px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-weight: bold;      
+        color: #7d99a4;
     }
 
     #blank{
-        width:100%;
+        width: 100%;
         height: 35px;
-        
     }
 
     
@@ -124,7 +133,6 @@
     	padding-top: 30px;
         width: 100%;
         height: 250px;
-        
         line-height: 50px;
 
     }
@@ -258,7 +266,7 @@ $(function(){
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
+            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do" style="font-weight:bold; color:#7d99a4;">회원정보 수정</a></td></tr>
             <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지</a></td></tr>
         </table>         
     </div>
