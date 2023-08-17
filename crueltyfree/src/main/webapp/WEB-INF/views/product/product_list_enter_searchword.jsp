@@ -179,7 +179,7 @@
 
     .cate_sort {
         float: left;
-        width: 840px;
+        width: 838px;
         height: 35px;
         padding-top: 15px;
     }
@@ -190,7 +190,7 @@
     }
 
     .cate_view {
-        float: left;
+    	float: right;
         width: 179px;
         height: 50px;
         text-align: center;
@@ -334,7 +334,9 @@
 	}
 
 	#clear{clear: both;}
-	
+	.soldOutNotice{
+	color:rgb(216, 98, 98); font-size:16px;
+	}
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
@@ -919,7 +921,16 @@ function ProductDel(searchWord, category_code, category_code_small,
 		                                ${productList[rowNum-1].product_name}
 		                            </a>
 		                        </div>
-		                        <p class="prd_price">${productList[rowNum-1].product_price}원</p>     
+		                        <p class="prd_price">
+		                        <c:choose>
+								<c:when test="${productList[rowNum-1].product_capa == 0}">
+								<span class="soldOutNotice">[SOLD OUT] 일시품절</span>
+								</c:when>
+								<c:otherwise>
+								<fmt:formatNumber value="${productList[rowNum-1].product_price}" pattern="###,###" />원
+								</c:otherwise>
+								</c:choose>
+		                        </p>     
 		                   </div>
 		                </li>
                    </c:if>		                

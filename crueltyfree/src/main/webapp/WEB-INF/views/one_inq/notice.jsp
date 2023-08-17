@@ -82,6 +82,7 @@
 	}
 	
 	#notice_list {
+		border-collapse: collapse;
 		font-size: 14px;
 		border-top: 2px solid #a4a4a4;
 		border-bottom: 2px solid #a4a4a4;

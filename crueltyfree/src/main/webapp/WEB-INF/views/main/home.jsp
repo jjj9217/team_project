@@ -170,6 +170,7 @@ const guestId = getGuestId();
 	.clear{
 		clear:both;
 	}
+	.soldOutNotice{color:rgb(216, 98, 98); font-size:18px;}
 </style>
 
 
@@ -241,7 +242,14 @@ function HeaderBest(sort_salecount) {
 								</a>
 							</div>
 							<span class="pro_price">
+								<c:choose>
+								<c:when test="${productList[0].product_capa == 0}">
+								<span class="soldOutNotice">[SOLD OUT] 일시품절</span>
+								</c:when>
+								<c:otherwise>
 								<fmt:formatNumber value="${productList[0].product_price}" pattern="###,###" />원
+								</c:otherwise>
+								</c:choose>
 							</span>
 						</div>					 
 					</li>
@@ -261,7 +269,14 @@ function HeaderBest(sort_salecount) {
 								</a>
 							</div>
 							<span class="pro_price">
+								<c:choose>
+								<c:when test="${productList[1].product_capa == 0}">
+								<span class="soldOutNotice">[SOLD OUT] 일시품절</span>
+								</c:when>
+								<c:otherwise>
 								<fmt:formatNumber value="${productList[1].product_price}" pattern="###,###" />원
+								</c:otherwise>
+								</c:choose>
 							</span>
 						</div>
 					</li>
@@ -281,7 +296,14 @@ function HeaderBest(sort_salecount) {
 								</a>
 							</div>
 							<span class="pro_price">
+								<c:choose>
+								<c:when test="${productList[2].product_capa == 0}">
+								<span class="soldOutNotice">[SOLD OUT] 일시품절</span>
+								</c:when>
+								<c:otherwise>
 								<fmt:formatNumber value="${productList[2].product_price}" pattern="###,###" />원
+								</c:otherwise>
+								</c:choose>
 							</span>
 						</div>
 					</li>
@@ -306,7 +328,14 @@ function HeaderBest(sort_salecount) {
 								</a>
 							</div>
 							<span class="pro_price">
+								<c:choose>
+								<c:when test="${productList[3].product_capa == 0}">
+								<span class="soldOutNotice">[SOLD OUT] 일시품절</span>
+								</c:when>
+								<c:otherwise>
 								<fmt:formatNumber value="${productList[3].product_price}" pattern="###,###" />원
+								</c:otherwise>
+								</c:choose>
 							</span>
 						</div>
 					</li>
@@ -326,7 +355,14 @@ function HeaderBest(sort_salecount) {
 								</a>
 							</div>
 							<span class="pro_price">
+								<c:choose>
+								<c:when test="${productList[4].product_capa == 0}">
+								<span class="soldOutNotice">[SOLD OUT] 일시품절</span>
+								</c:when>
+								<c:otherwise>
 								<fmt:formatNumber value="${productList[4].product_price}" pattern="###,###" />원
+								</c:otherwise>
+								</c:choose>
 							</span>
 						</div>
 					</li>
@@ -346,7 +382,14 @@ function HeaderBest(sort_salecount) {
 								</a>
 							</div>
 							<span class="pro_price">
+								<c:choose>
+								<c:when test="${productList[5].product_capa == 0}">
+								<span class="soldOutNotice">[SOLD OUT] 일시품절</span>
+								</c:when>
+								<c:otherwise>
 								<fmt:formatNumber value="${productList[5].product_price}" pattern="###,###" />원
+								</c:otherwise>
+								</c:choose>
 							</span>
 						</div>
 					</li>
@@ -371,7 +414,14 @@ function HeaderBest(sort_salecount) {
 								</a>
 							</div>
 							<span class="pro_price">
+								<c:choose>
+								<c:when test="${productList[6].product_capa == 0}">
+								<span class="soldOutNotice">[SOLD OUT] 일시품절</span>
+								</c:when>
+								<c:otherwise>
 								<fmt:formatNumber value="${productList[6].product_price}" pattern="###,###" />원
+								</c:otherwise>
+								</c:choose>
 							</span>
 						</div>
 					</li>
@@ -391,7 +441,14 @@ function HeaderBest(sort_salecount) {
 								</a>
 							</div>
 							<span class="pro_price">
+								<c:choose>
+								<c:when test="${productList[7].product_capa == 0}">
+								<span class="soldOutNotice">[SOLD OUT] 일시품절</span>
+								</c:when>
+								<c:otherwise>
 								<fmt:formatNumber value="${productList[7].product_price}" pattern="###,###" />원
+								</c:otherwise>
+								</c:choose>
 							</span>
 						</div>
 					</li>
@@ -411,7 +468,14 @@ function HeaderBest(sort_salecount) {
 								</a>
 							</div>
 							<span class="pro_price">
+								<c:choose>
+								<c:when test="${productList[8].product_capa == 0}">
+								<span class="soldOutNotice">[SOLD OUT] 일시품절</span>
+								</c:when>
+								<c:otherwise>
 								<fmt:formatNumber value="${productList[8].product_price}" pattern="###,###" />원
+								</c:otherwise>
+								</c:choose>
 							</span>
 						</div>
 					</li>

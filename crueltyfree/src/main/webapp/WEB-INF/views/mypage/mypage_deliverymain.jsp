@@ -293,9 +293,10 @@ function updatedeliveryPostdefault(delivery_idx) {
         <div id="blank">            
         </div>
         <div class="tit_area">
-            <h2 class="tit">배송지</h2>           
+            <h2 class="tit">배송지</h2>  
+            <br>         
         </div>
-        <p class="notice-text">배송지는 최대 <strong class="colorGreen">${untitled}</strong>까지 등록 가능합니다.</p>
+        
 		<form name="frm_view">        
         <table class="buy_list">
             <colgroup>
@@ -326,9 +327,6 @@ function updatedeliveryPostdefault(delivery_idx) {
 				                        ${deliveryList[rowNum-1].delivery_postNum}
 				                        ${deliveryList[rowNum-1].delivery_address}
 				                        ${deliveryList[rowNum-1].delivery_address2}    
-				                        <c:if test="${!empty deliveryList[rowNum-1].delivery_pass_content}">
-				                        ${deliveryList[rowNum-1].delivery_pass_content}
-				                        </c:if>
 				                    <td>${deliveryList[rowNum-1].delivery_handphone}</td>
 				                    <td>
 				                        <input type="button" onclick="vieweditdeliveryPost(${deliveryList[rowNum-1].delivery_idx});" id="editbutton" value="수정"></td>
@@ -344,9 +342,6 @@ function updatedeliveryPostdefault(delivery_idx) {
 	                                <td>${deliveryList[rowNum-1].delivery_postNum}
 	                                    ${deliveryList[rowNum-1].delivery_address}
 	                                    ${deliveryList[rowNum-1].delivery_address2}    
-	                                    <c:if test="${!empty deliveryList[rowNum-1].delivery_pass_content}">
-	                                    ${deliveryList[rowNum-1].delivery_pass_content}
-	                                    </c:if>
 	                                <td>${deliveryList[rowNum-1].delivery_handphone}</td>
 	                                <td>
 	                                    

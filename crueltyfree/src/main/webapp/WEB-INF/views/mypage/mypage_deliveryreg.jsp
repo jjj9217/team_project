@@ -232,14 +232,17 @@
         font-size:20px;  
     }
  	#defaultpostcheck{margin-left:10px;}
+ 	#delivery_message_text{margin-top:5px; width: 290px; height: 10px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none;}
 </style>
 </head>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 function kakaopost(){
-    var width=500;
-    var height = 600; //팝업의 높이
+    var width = 500; // 팝업의 너비
+    var height = 600; // 팝업의 높이
+   
+    var top = (window.screen.height / 2) - (height / 2);
     
     new daum.Postcode({     
         oncomplete: function(data) {
@@ -247,7 +250,10 @@ function kakaopost(){
             document.querySelector("#member_address").value=data.address;
         }
 
-    }).open({left:10,top:200});
+    }).open({
+        left: 1700,
+        top: top
+    });
 }
 
 $(function(){

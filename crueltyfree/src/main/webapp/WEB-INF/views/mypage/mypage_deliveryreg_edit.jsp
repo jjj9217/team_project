@@ -232,14 +232,17 @@
         font-size:20px;  
     }
  	#defaultpostcheck{margin-left:10px;}
+ 	#delivery_message_text{margin-top:5px; width: 290px; height: 10px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none;}
 </style>
 </head>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 function kakaopost(){
-    var width=500;
-    var height = 600; //팝업의 높이
+    var width = 500; // 팝업의 너비
+    var height = 600; // 팝업의 높이
+   
+    var top = (window.screen.height / 2) - (height / 2);
     
     new daum.Postcode({     
         oncomplete: function(data) {
@@ -247,7 +250,10 @@ function kakaopost(){
             document.querySelector("#member_address").value=data.address;
         }
 
-    }).open({left:10,top:200});
+    }).open({
+        left: 1700,
+        top: top
+    });
 }
 
 $(function(){		
@@ -268,7 +274,7 @@ $(function(){
 	    } else if(selectedOptionValue == "1"){
 	        deliveryInputMethod.show();
 	        deliveryTitle.text("경비실 호출 방법");
-	    } else if(selectedOptionValue == "2){
+	    } else if(selectedOptionValue == "2"){
 	        deliveryInputMethod.hide();
 	    } else{
 	        deliveryInputMethod.show();
@@ -276,6 +282,9 @@ $(function(){
 	    }
 	});
 	
+	if(${DeliveryVo.delivery_pass == 2}){
+		$("#delivery_input_method").eq(0).hide();
+	}
 	
 	//배송메시지 옵션변경
     $("#delivery_message").change(function() {
@@ -352,7 +361,17 @@ $(function(){
             <tbody>
                 <tr>
                     <th>배송지명</th>
-                    <td><input type="text" name="delivery_address_name" placeholder="최대 10자" id="input" value="${DeliveryVo.delivery_address_name}"><input type="checkbox" id="defaultpostcheck" name="defaultpost" value="1"><input type="hidden" name="defaultpost" value="0" id="defaultpostcheck_hidden"/><label for="base-dlvp-yn-check">기본 배송지 설정</label>
+                    <td><input type="text" name="delivery_address_name" placeholder="최대 10자" id="input" value="${DeliveryVo.delivery_address_name}">
+                    <c:choose>
+                    <c:when test="${DeliveryVo.defaultpost == 1}">
+                    <input type="checkbox" checked id="defaultpostcheck" name="defaultpost" value="1">
+                    </c:when>
+                    <c:otherwise>
+                    <input type="checkbox" id="defaultpostcheck" name="defaultpost" value="1">
+                    </c:otherwise>
+                    </c:choose>
+                    <input type="hidden" name="defaultpost" value="0" id="defaultpostcheck_hidden"/>
+                    <label for="base-dlvp-yn-check">기본 배송지 설정</label>
                     </td>
                 </tr>           
                 <tr>
@@ -366,16 +385,16 @@ $(function(){
                 <tr>
                  <th><label>주소<br>                   
                  </label></th>                  
-                    <td><input type="text" name="delivery_postNum" id="member_postNum" placeholder="우편번호" readonly >
+                    <td><input type="text" name="delivery_postNum" id="member_postNum" placeholder="우편번호" readonly value="${DeliveryVo.delivery_postNum}">
                     <input type="button" name="select_postNum" id="select_postNum" value="우편번호 검색&nbsp;&nbsp;" onclick="kakaopost()" ></td>
                 </tr>
                 <tr>
                 	<th></th>
-                	<td><input type="text" name="delivery_address" id="member_address" placeholder="주소" readonly></td>
+                	<td><input type="text" name="delivery_address" id="member_address" placeholder="주소" readonly value="${DeliveryVo.delivery_address}"></td>
                 </tr>
                 <tr>
                 	<th></th>
-                    <td><input type="text" name="delivery_address2" id="member_address2" placeholder="상세 주소"></td>
+                    <td><input type="text" name="delivery_address2" id="member_address2" placeholder="상세 주소" value="${DeliveryVo.delivery_address2}"></td>
         		</tr>
         </table>
         <h3 class="sub-title">배송지 요청사항</h3>
@@ -390,11 +409,10 @@ $(function(){
 	                <th class="row">배송 메시지</th>
 	                <td class="td_delivery_content top bottom">
 	                    <c:choose>
-	                       <c:when test="${!empty DeliveryVo.delivery_message}">
+	                       <c:when test="${DeliveryVo.delivery_message == '그냥 문 앞에 놓아주시면 돼요.'}">
 	                           <select name="delivery_message" id="delivery_message" >                                
-                                <option value="">${DeliveryVo.delivery_message}</option>
                                 <option value="">배송메시지를 선택해주세요</option>
-                                <option value="그냥 문 앞에 놓아주시면 돼요.">그냥 문 앞에 놓아주시면 돼요.</option>
+                                <option value="그냥 문 앞에 놓아주시면 돼요." selected>그냥 문 앞에 놓아주시면 돼요.</option>
                                 <option value="직접 받을게요.(부재시 문앞)">직접 받을게요.(부재시 문앞)</option>
                                 <option value="벨을 누르지 말아주세요.">벨을 누르지 말아주세요.</option>
                                 <option value="도착 후 전화주시면 직접 받으러 갈게요.">도착 후 전화주시면 직접 받으러 갈게요.</option>
@@ -402,7 +420,43 @@ $(function(){
                                </select>
                                 <br>
                                 <input id="delivery_message_text" type="hidden">
-	                       </c:when>   
+	                       </c:when>
+	                       <c:when test="${DeliveryVo.delivery_message == '직접 받을게요.(부재시 문앞)'}">
+	                           <select name="delivery_message" id="delivery_message" >                                
+                                <option value="">배송메시지를 선택해주세요</option>
+                                <option value="그냥 문 앞에 놓아주시면 돼요.">그냥 문 앞에 놓아주시면 돼요.</option>
+                                <option value="직접 받을게요.(부재시 문앞)" selected>직접 받을게요.(부재시 문앞)</option>
+                                <option value="벨을 누르지 말아주세요.">벨을 누르지 말아주세요.</option>
+                                <option value="도착 후 전화주시면 직접 받으러 갈게요.">도착 후 전화주시면 직접 받으러 갈게요.</option>
+                                <option id="delivery_message_option" value="">직접 입력하기</option>
+                               </select>
+                                <br>
+                                <input id="delivery_message_text" type="hidden">
+	                       </c:when> 
+	                       <c:when test="${DeliveryVo.delivery_message == '벨을 누르지 말아주세요.'}">
+	                           <select name="delivery_message" id="delivery_message" >                                
+                                <option value="">배송메시지를 선택해주세요</option>
+                                <option value="그냥 문 앞에 놓아주시면 돼요." >그냥 문 앞에 놓아주시면 돼요.</option>
+                                <option value="직접 받을게요.(부재시 문앞)">직접 받을게요.(부재시 문앞)</option>
+                                <option value="벨을 누르지 말아주세요." selected>벨을 누르지 말아주세요.</option>
+                                <option value="도착 후 전화주시면 직접 받으러 갈게요.">도착 후 전화주시면 직접 받으러 갈게요.</option>
+                                <option id="delivery_message_option" value="">직접 입력하기</option>
+                               </select>
+                                <br>
+                                <input id="delivery_message_text" type="hidden">
+	                       </c:when> 
+	                       <c:when test="${DeliveryVo.delivery_message == '도착 후 전화주시면 직접 받으러 갈게요.'}">
+	                           <select name="delivery_message" id="delivery_message" >                                
+                                <option value="">배송메시지를 선택해주세요</option>
+                                <option value="그냥 문 앞에 놓아주시면 돼요.">그냥 문 앞에 놓아주시면 돼요.</option>
+                                <option value="직접 받을게요.(부재시 문앞)">직접 받을게요.(부재시 문앞)</option>
+                                <option value="벨을 누르지 말아주세요.">벨을 누르지 말아주세요.</option>
+                                <option value="도착 후 전화주시면 직접 받으러 갈게요." selected>도착 후 전화주시면 직접 받으러 갈게요.</option>
+                                <option id="delivery_message_option" value="">직접 입력하기</option>
+                               </select>
+                                <br>
+                                <input id="delivery_message_text" type="hidden">
+	                       </c:when>    
 	                       <c:otherwise>
 		                        <select name="delivery_message" id="delivery_message" >
 	                            <option value="">배송메시지를 선택해주세요</option>
@@ -410,10 +464,10 @@ $(function(){
 	                            <option value="직접 받을게요.(부재시 문앞)">직접 받을게요.(부재시 문앞)</option>
 	                            <option value="벨을 누르지 말아주세요.">벨을 누르지 말아주세요.</option>
 	                            <option value="도착 후 전화주시면 직접 받으러 갈게요.">도착 후 전화주시면 직접 받으러 갈게요.</option>
-	                            <option id="delivery_message_option" value="">직접 입력하기</option>
+	                            <option id="delivery_message_option" value="" selected>직접 입력하기</option>
 	                           </select>
 		                        <br>
-		                        <input id="delivery_message_text" type="hidden">
+		                        <input id="delivery_message_text" type="text" value="${DeliveryVo.delivery_message}">
 	                       </c:otherwise>
 	                    </c:choose>	                    	                   
 	                </td>
@@ -422,46 +476,67 @@ $(function(){
                     <th scope="row">공동현관 출입방법</th>
                     <td class="imp_data">
                         <c:choose>
-                        <c:when test="${DeliveryVo.delivery_pass eq 1}">
+                        <c:when test="${DeliveryVo.delivery_pass eq 0}">
                             <span class="dv_input"><input type="radio" checked="checked" name="delivery_pass" id="dv_input_1" value="0" ><label for="dv_input_1" >비밀번호</label></span>
                         <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_2" value="1" ><label for="dv_input_2" >경비실 호출</label></span>
                         <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_3" value="2" ><label for="dv_input_3" >자유출입가능</label></span>
                         <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_4" value="3" ><label for="dv_input_4" >기타사항</label></span>
                         </c:when>
-                        <c:when test="${DeliveryVo.delivery_pass eq 2}">
+                        <c:when test="${DeliveryVo.delivery_pass eq 1}">
                             <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_1" value="0" ><label for="dv_input_1" >비밀번호</label></span>
                         <span class="dv_input"><input type="radio" checked="checked" name="delivery_pass" id="dv_input_2" value="1" ><label for="dv_input_2" >경비실 호출</label></span>
                         <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_3" value="2" ><label for="dv_input_3" >자유출입가능</label></span>
                         <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_4" value="3" ><label for="dv_input_4" >기타사항</label></span>
                         </c:when>
-                        <c:when test="${DeliveryVo.delivery_pass eq 3}">
+                        <c:when test="${DeliveryVo.delivery_pass eq 2}">
                             <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_1" value="0" ><label for="dv_input_1" >비밀번호</label></span>
                         <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_2" value="1" ><label for="dv_input_2" >경비실 호출</label></span>
                         <span class="dv_input"><input type="radio" checked="checked" name="delivery_pass" id="dv_input_3" value="2" ><label for="dv_input_3" >자유출입가능</label></span>
                         <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_4" value="3" ><label for="dv_input_4" >기타사항</label></span>
                         </c:when>
-                        <c:when test="${DeliveryVo.delivery_pass eq 4}">
+                        <c:when test="${DeliveryVo.delivery_pass eq 3}">
                         <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_1" value="0" ><label for="dv_input_1" >비밀번호</label></span>
                         <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_2" value="1" ><label for="dv_input_2" >경비실 호출</label></span>
                         <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_3" value="2" ><label for="dv_input_3" >자유출입가능</label></span>
                         <span class="dv_input"><input type="radio" checked="checked" name="delivery_pass" id="dv_input_4" value="3" ><label for="dv_input_4" >기타사항</label></span>                        
                         </c:when>
                         <c:otherwise>
-                        <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_1" value="1" ><label for="dv_input_1" >비밀번호</label></span>
-                        <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_2" value="2" ><label for="dv_input_2" >경비실 호출</label></span>
-                        <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_3" value="3" ><label for="dv_input_3" >자유출입가능</label></span>
-                        <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_4" value="4" ><label for="dv_input_4" >기타사항</label></span>
+                        <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_1" value="0" ><label for="dv_input_1" >비밀번호</label></span>
+                        <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_2" value="1" ><label for="dv_input_2" >경비실 호출</label></span>
+                        <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_3" value="2" ><label for="dv_input_3" >자유출입가능</label></span>
+                        <span class="dv_input"><input type="radio" name="delivery_pass" id="dv_input_4" value="3" ><label for="dv_input_4" >기타사항</label></span>
                         </c:otherwise>                        
                         </c:choose>
                         <!-- <input type="button" id="test111" value="test"> -->
                     </td>
                 </tr>
                 <tr id="delivery_input_method">
+                	<c:choose>
+                    <c:when test="${DeliveryVo.delivery_pass eq 0}">
                     <th class="td_delivery_title">공동현관 비밀번호</th>
-                    
+                    <td class="td_delivery_content bottom">
+                        <input class="input_focus" type="text" name="delivery_pass_content" id="delivery_get_method" value="${DeliveryVo.delivery_pass_content}">
+                    </td>                                        
+                    </c:when>
+                    <c:when test="${DeliveryVo.delivery_pass eq 1}">
+                    <th class="td_delivery_title">경비실 호출 방법</th>
+                    <td class="td_delivery_content bottom">
+                        <input class="input_focus" type="text" name="delivery_pass_content" id="delivery_get_method" value="${DeliveryVo.delivery_pass_content}">
+                    </td>                                        
+                    </c:when>
+                    <c:when test="${DeliveryVo.delivery_pass eq 3}">
+                    <th class="td_delivery_title">기타사항</th>
                     <td class="td_delivery_content bottom">
                         <input class="input_focus" type="text" name="delivery_pass_content" id="delivery_get_method" value="${DeliveryVo.delivery_pass_content}">
                     </td>                    
+                    </c:when>
+                    <c:otherwise>
+                    <th class="td_delivery_title"></th>
+                    <td class="td_delivery_content bottom">
+                        <input class="input_focus" type="text" name="delivery_pass_content" id="delivery_get_method" value="${DeliveryVo.delivery_pass_content}">
+                    </td>                           
+                    </c:otherwise>                        
+                    </c:choose>
                 </tr>
                 <!--
                 <tr type="exist" class="quick_area">
