@@ -661,9 +661,13 @@ $(function(){
 	});//end of #like_btn 클릭
 	
 	//바로구매 클릭시
-	$("#order_btn").click(function(){		
+	$("#order_btn").click(function(){
+		if(${productVo.product_capa == 0}){
+			alert("현재 일시품절된 상품입니다!");
+		}else{
 	 	// 폼 제출 (submit)
         document.basket_order_form.submit();
+		}
 	});
 	
 	//추천 초기세팅

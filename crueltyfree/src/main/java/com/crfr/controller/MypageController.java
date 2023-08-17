@@ -1,5 +1,8 @@
 package com.crfr.controller;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.crfr.service.mypage.MypageService;
 import com.crfr.service.oneInq.OneInqService;
+import com.crfr.service.orderDelivery.OrderDeliveryService;
 import com.crfr.vo.CouponVo;
 import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.FileVo;
@@ -41,7 +45,10 @@ public class MypageController {
 	
 	@Setter(onMethod_={ @Autowired })
 	OneInqService mListNotice;
-
+	
+	@Setter(onMethod_={ @Autowired })
+	OrderDeliveryService mSelectCountPayEd, mSelectCountDlvIng, mSelectCountDlvEd;
+	
 	@Autowired
 	public void setMpList(@Qualifier("mpList") MypageService mpList) {
 		this.mpList = mpList;
@@ -104,7 +111,31 @@ public class MypageController {
 		// 내가 구매한 목록 중 리뷰를 작성한 목록을 가져오는 요청에 대한 처리를 위한 MypageListService 클래스 이용
 		List<ProductInqVo> inqproductList = mpList.selectproductinqList(member_idx);
 		model.addAttribute("inqproductList", inqproductList);
-						
+			
+		Timestamp timestamp_begin = null;
+		Timestamp timestamp_end = null;
+		
+	    LocalDate today = LocalDate.now();
+
+	    // 오늘 날짜에 1개월을 빼서 설정
+	    LocalDate oneMonthAgo = today.minusMonths(1);
+	    LocalDateTime localDateTime = oneMonthAgo.atStartOfDay();
+
+	    // LocalDateTime을 java.sql.Timestamp로 변환하여 timestamp_begin 설정
+	    timestamp_begin = Timestamp.valueOf(localDateTime);
+
+	    // 오늘 날짜에 1일을 더해서 timestamp_end 설정
+	    timestamp_end = Timestamp.valueOf(today.plusDays(1).atStartOfDay());
+		
+		//주문배송조회 정보제공용 카운트 수
+		int payEd = mSelectCountPayEd.selectCountPayEd(member_idx, timestamp_begin, timestamp_end);
+		int dlvIng = mSelectCountDlvIng.selectCountDlvIng(member_idx, timestamp_begin, timestamp_end);
+		int dlvEd = mSelectCountDlvEd.selectCountDlvEd(member_idx, timestamp_begin, timestamp_end);
+		//모델에 세팅
+		model.addAttribute("payEd", payEd);
+		model.addAttribute("dlvIng", dlvIng);
+		model.addAttribute("dlvEd", dlvEd);		
+		
 		return "mypage/mypage_main";
 	}
 	
@@ -179,9 +210,7 @@ public class MypageController {
 		pageNav.setTotalRows(searchTotal);
 		// 페이지네비게이션을 위해 MypagePageService클래스를 이용
 		pageNav = mpPage.setPageNav(pageNav, pageNum, pageBlock, member_idx);
-		
-		
-		
+
 		// html에서 사용하기 위해 세팅
 		model.addAttribute("pageNav", pageNav);
 		return "mypage/mypage_review";

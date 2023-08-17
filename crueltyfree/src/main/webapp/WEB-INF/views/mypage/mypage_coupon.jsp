@@ -296,8 +296,11 @@
 	                    	<fmt:formatNumber value="${couponList[rowNum-1].coupon_discount}" type="percent"/>
 	                    </td>
 	                    <td>${couponList[rowNum-1].coupon_name}</td>
-	                    <td>${couponList[rowNum-1].coupon_limit} 원 이상</td>
-	                    <td>${couponList[rowNum-1].coupon_expDate} 까지</td>
+	                    <td>
+	                    <fmt:formatNumber value="${couponList[rowNum-1].coupon_limit}" pattern="###,###" />원 이상</td>
+	                    <td>
+	                    <fmt:formatDate value="${couponList[rowNum-1].coupon_expDate}" type="date" pattern="yyyy.MM.dd" />까지
+	                    </td>
 	                </tr>
                 </c:when>                
                 <c:otherwise>

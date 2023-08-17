@@ -85,8 +85,7 @@
 
     .tit_area {
         overflow: hidden;
-        margin-top: 30px;
-        position: relative;
+        margin-top: 30px;        
         width: 100%;
         font-size: 0;
         line-height: 0;
@@ -110,10 +109,9 @@
     }
 
     .tit_area .btnMore{
-    position: absolute;
-    top: 5px;
-    right: 0;
-    padding: 0 15px 0 0;
+    float:right;
+    
+    padding: 5px 15px 0 0;
     
     font-size: 14px;
     line-height: 20px;
@@ -141,7 +139,6 @@
 
     .mypage-step li em, .mypage-step li span {
     display: block;
-    position: absolute;
     left: 0;
     width: 100%;
     text-align: center; 
@@ -150,10 +147,9 @@
     .mypage-step li {
 
     float: left;
-    position: relative;
     width: 20%;
     height: 117px;
-   
+   	padding-top: 20px;
     font-size: 0;
     line-height: 0;
     
@@ -292,6 +288,7 @@
 		float:right;
 		font: bold 18px Arial, Sans-serif;
 		}
+	#strong{color:#7d99a4; font-weight:bold;}
 </style>
 </head>
 
@@ -338,25 +335,50 @@
             <h2 class="tit">주문/배송조회<em>(최근 1개월)</em></h2>
            <a class="btnMore" id="orderListMore" href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">더보기〉</a>
         </div>
-        <a class="order_view" href="#">
             <ul class="mypage-step">
-                <li><em>0$</em>
+                <li><em>0</em>
                 <span>주문접수</span>
                 </li>
-                <li><em>0$</em>
+                <c:choose>
+                <c:when test="${payEd != 0}">
+                <li><em id="strong">${payEd}</em>
                 <span>결제완료</span>
                 </li>
-                <li><em>0$</em>
+                </c:when>
+                <c:otherwise>
+                <li><em>${payEd}</em>
+                <span>결제완료</span>
+                </li>
+                </c:otherwise>
+                </c:choose>
+                <c:choose>
+                <c:when test="${dlvIng != 0}">
+                <li><em  id="strong">${dlvIng}</em>
                 <span>배송준비중</span>
                 </li>
-                <li><em>0$</em>
+                </c:when>
+                <c:otherwise>
+                <li><em>${dlvIng}</em>
+                <span>배송준비중</span>
+                </li>
+                </c:otherwise>
+                </c:choose>
+                <c:choose>
+                <c:when test="${dlvEd != 0}">
+                <li><em  id="strong">${dlvEd}</em>
                 <span>배송중</span>
                 </li>
-                <li><em>0$</em>
+                </c:when>
+                <c:otherwise>
+                <li><em>${dlvEd}</em>
+                <span>배송중</span>
+                </li>
+                </c:otherwise>
+                </c:choose>
+                <li><em>0</em>
                 <span>배송완료</span>
                 </li>
             </ul>
-        </a>
         <div class="tit_area">
             <h2 class="tit">좋아요</h2>
             <a class="btnMore" id="wishListMore" href="${pageContext.request.contextPath}/mypage/mypage_like.do">더보기〉</a>      
