@@ -213,23 +213,30 @@
         width: 810px;
         height: 301px;
     }
-
     .product_list {
-        width: 180px;
+        width: 810px;
         height: 300px;
-    
-        display: flex;
+		display: flex;
         justify-content: center;
         align-items: center;
         margin: 0 auto;
+        margin-left:13px;
+    }
+    
+    .product_list ul {
+    	list-style: none;
+    }
+    
+    .product_list li {
+    	width: 180px;
+    	display: inline-block;
+    	float: left;
     }
     
     .prd_info{
-        width: 180px;
+        width: 500px;
         height: 290px;
-    
     }
-
    .prd_price{
         width: 180px;
         height: 25px;
@@ -241,16 +248,12 @@
 
    .font_price{
         text-align: center;
-        font-size: 14px;
-        
+        font-size: 14px;    
    }
-
    .prd_name{
         width: 180px;
         height: 55px;
-    
    }
-
    .prd_title{      
         text-align: center;
         line-height: 55px;
@@ -270,9 +273,7 @@
    .goodlist_thumb_background{
         width: 180px;
         height: 180px;
-    
    }
-   
    .goodlist_thumb{
         width: 180px;
         height: 180px;
@@ -369,7 +370,7 @@
 		                    <li class="product_list">
 		                        <c:forEach var="rowNum" begin="0" end="3">
 		                          <c:if test="${!empty likeproductList[rowNum].like_idx}">
-			                        <div class="prd_info">
+			                        <div class="prd_info" style="width:500x;">
 			                            <div class="goodlist_thumb_background">
 			                                <a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${likeproductList[rowNum].product_idx}"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${likefileList[rowNum].saveFile}"></a>
 			                            </div>
@@ -428,7 +429,7 @@
                         </c:when>
                         <c:when test="${empty oneinqList[0].one_inq_idx}">
                             <ul class="nodata_ul">                        
-		                        <li class="nodata">최근 1개월간 문의하신 내용이 없습니다.</li>                                              
+		                        <li class="nodata">문의하신 내용이 없습니다.</li>                                              
 		                    </ul>
                         </c:when>
                         <c:otherwise></c:otherwise>
@@ -464,7 +465,7 @@
                         </c:when>
                         <c:when test="${empty inqproductList[0].product_inq_idx}">
                             <ul class="nodata_ul">                        
-                                <li class="nodata">최근 1개월간 문의하신 내용이 없습니다.</li>                                              
+                                <li class="nodata">문의하신 내용이 없습니다.</li>                                              
                             </ul>
                         </c:when>
                         <c:otherwise></c:otherwise>
