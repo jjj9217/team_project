@@ -244,7 +244,8 @@ public class SellerController {
 		model.addAttribute("ProductVo", vo1);
 		ProductInfoVo vo2 = pfineProductInfoPost.findProductInfoPost(product_idx);
 		model.addAttribute("ProductInfoVo", vo2);
-		
+		List<FileVo> fileList = pfineProductFilePost.findProductFilePost(product_idx);
+		model.addAttribute("fileList", fileList);
 		return "seller/edit_pro";
 	}
 	
@@ -287,38 +288,22 @@ public class SellerController {
 			String file_Idx = Integer.toString(fileVo.getFile_idx());
 			if(i == 0) {
 				int file_result0 = pUpdateProductFile0.productUpdateFile0(attachedFile0, file_Idx, request);
-				if(attachedFile0.isEmpty()) {
-					System.out.println("ㅠㅏ일널");
-				}else {
-					System.out.println("ㅇㅇㅇ");
-				}
+
 				System.out.println(file_Idx);
 				System.out.println(file_result0);
 			}else if(i == 1) {
 				int file_result1 = pUpdateProductFile1.productUpdateFile1(attachedFile1, file_Idx, request);
-				if(attachedFile1.isEmpty()) {
-					System.out.println("ㅠㅏ일널");
-				}else {
-					System.out.println("ㅇㅇㅇ");
-				}
+
 				System.out.println(file_Idx);
 				System.out.println(file_result1);
 			}else if(i == 2) {
 				int file_result2 = pUpdateProductFile2.productUpdateFile2(attachedFile2, file_Idx, request);
-				if(attachedFile2.isEmpty()) {
-					System.out.println("ㅠㅏ일널");
-				}else {
-					System.out.println("ㅇㅇㅇ");
-				}
+
 				System.out.println(file_Idx);
 				System.out.println(file_result2);
 			}else {
 				int file_result3 = pUpdateProductFile3.productUpdateFile3(attachedFile3, file_Idx, request);
-				if(attachedFile3.isEmpty()) {
-					System.out.println("ㅠㅏ일널");
-				}else {
-					System.out.println("ㅇㅇㅇ");
-				}
+
 				System.out.println(file_Idx);
 				System.out.println(file_result3);
 			}
@@ -326,8 +311,6 @@ public class SellerController {
 		}
 
 		if(result1 == 1 && result2 == 1) { //글 수정 성공시 보여지는 페이지
-			System.out.println("테스트");
-			System.out.println("파일번호 : ");
 			viewPage = "redirect:/seller/check_pro.do";	
 		}
 

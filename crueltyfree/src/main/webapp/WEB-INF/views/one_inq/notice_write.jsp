@@ -29,7 +29,7 @@
 		text-align: left;
 		background-color: #eef3f5;
 		padding: 30px 0 0 0;
-		border-bottom: 2px solid #a4a4a4;
+		margin-bottom: 20px;
 	}
 	
 	#title a {
@@ -84,6 +84,7 @@
 	}
 	
 	.notice_type {
+		border-top: 2px solid #a4a4a4;
 		border-bottom: 1px solid #a4a4a4;
 	}
 	
@@ -234,7 +235,7 @@ function validateForm(){
 		</article>
 	</div>
 	
-	<div class="notice_type">
+	<div class="notice_type" style="border-top: none;">
 		<article class="notice_left">
 			&nbsp;&nbsp;<a>파일 첨부</a>
 		</article>

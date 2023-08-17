@@ -209,9 +209,9 @@
 		</c:if>
 		<article class="notice_content">
 			<pre><a>${noticeView.notice_content}</a></pre>
-			<a>
+			<c:if test="${noticeView.notice_saveFile != NULL}">
 				<img src="${pageContext.request.contextPath}/resources/uploads/${noticeView.notice_saveFile}">
-			</a>
+			</c:if>
 		</article>
 	</div>
     

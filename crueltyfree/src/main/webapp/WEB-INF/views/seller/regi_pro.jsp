@@ -221,12 +221,20 @@ function validateForm(){
         }
 	
 		
-	var fileCk = $("#thumFile").val();	
-	if (!fileCk) {
+	var fileCk1 = $("#thumFile").val();	
+	if (!fileCk1) {
 		alert("썸네일을 등록해 주세요.")
 		document.form_insert.thumFile.focus();
 		return false;
-		}		
+		}
+	
+	var fileCk2 = $("#contFile").val();	
+	if (!fileCk2) {
+		alert("사진을 한 개 이상 등록해 주세요.")
+		document.form_insert.thumFile.focus();
+		return false;
+		}
+	
 	
 	if (form_insert.product_name.value.length==0) {
 		alert("상품명을 입력하세요.");
@@ -355,7 +363,7 @@ function validateForm(){
 			&nbsp;&nbsp;<a>상품설명</a>
 		</article>
 		<article class="regi_right">
-			<input type="file" name="attachedFile" class="regi_box" style="width: 200px;">
+			<input type="file" name="attachedFile" id="contFile" class="regi_box" style="width: 200px;">
 			<input type="file" name="attachedFile" class="regi_box" style="width: 200px;">
 			<input type="file" name="attachedFile" class="regi_box" style="width: 200px;">
 		</article>

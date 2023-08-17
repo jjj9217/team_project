@@ -128,11 +128,14 @@ const guestId = getGuestId();
 	.goodlist_thumb_background {
 		width: 190px;
 		height: 190px;
+		text-align: center;
 		margin-bottom: 10px;
 	}
 	
 	.pro_img {
-		width: 330px;
+		width: 180px;
+		height: 180px;
+		margin-left: 75px;
 	}
 	
 	.pro_name {
@@ -237,7 +240,9 @@ function HeaderBest(sort_salecount) {
 									<p class="goods_name">${productList[0].product_name}</p>
 								</a>
 							</div>
-							<span class="pro_price">${productList[0].product_price}원</span>
+							<span class="pro_price">
+								<fmt:formatNumber value="${productList[0].product_price}" pattern="###,###" />원
+							</span>
 						</div>					 
 					</li>
 				</c:if>	
@@ -255,7 +260,9 @@ function HeaderBest(sort_salecount) {
 									<p class="goods_name">${productList[1].product_name}</p>
 								</a>
 							</div>
-							<span class="pro_price">${productList[1].product_price}원</span>
+							<span class="pro_price">
+								<fmt:formatNumber value="${productList[1].product_price}" pattern="###,###" />원
+							</span>
 						</div>
 					</li>
 				</c:if>
@@ -273,7 +280,9 @@ function HeaderBest(sort_salecount) {
 									<p class="goods_name">${productList[2].product_name}</p>
 								</a>
 							</div>
-							<span class="pro_price">${productList[2].product_price}원</span>
+							<span class="pro_price">
+								<fmt:formatNumber value="${productList[2].product_price}" pattern="###,###" />원
+							</span>
 						</div>
 					</li>
 				</c:if>
@@ -296,7 +305,9 @@ function HeaderBest(sort_salecount) {
 									<p class="goods_name">${productList[3].product_name}</p>
 								</a>
 							</div>
-							<span class="pro_price">${productList[3].product_price}원</span>
+							<span class="pro_price">
+								<fmt:formatNumber value="${productList[3].product_price}" pattern="###,###" />원
+							</span>
 						</div>
 					</li>
 				</c:if>
@@ -314,7 +325,9 @@ function HeaderBest(sort_salecount) {
 									<p class="goods_name">${productList[4].product_name}</p>
 								</a>
 							</div>
-							<span class="pro_price">${productList[4].product_price}원</span>
+							<span class="pro_price">
+								<fmt:formatNumber value="${productList[4].product_price}" pattern="###,###" />원
+							</span>
 						</div>
 					</li>
 				</c:if>
@@ -332,7 +345,9 @@ function HeaderBest(sort_salecount) {
 									<p class="goods_name">${productList[5].product_name}</p>
 								</a>
 							</div>
-							<span class="pro_price">${productList[5].product_price}원</span>
+							<span class="pro_price">
+								<fmt:formatNumber value="${productList[5].product_price}" pattern="###,###" />원
+							</span>
 						</div>
 					</li>
 			    </c:if>
@@ -355,7 +370,9 @@ function HeaderBest(sort_salecount) {
 									<p class="goods_name">${productList[6].product_name}</p>
 								</a>
 							</div>
-							<span class="pro_price">${productList[6].product_price}원</span>
+							<span class="pro_price">
+								<fmt:formatNumber value="${productList[6].product_price}" pattern="###,###" />원
+							</span>
 						</div>
 					</li>
 				</c:if>
@@ -373,7 +390,9 @@ function HeaderBest(sort_salecount) {
 									<p class="goods_name">${productList[7].product_name}</p>
 								</a>
 							</div>
-							<span class="pro_price">${productList[7].product_price}원</span>
+							<span class="pro_price">
+								<fmt:formatNumber value="${productList[7].product_price}" pattern="###,###" />원
+							</span>
 						</div>
 					</li>
 				</c:if>
@@ -391,7 +410,9 @@ function HeaderBest(sort_salecount) {
 									<p class="goods_name">${productList[8].product_name}</p>
 								</a>
 							</div>
-							<span class="pro_price">${productList[8].product_price}원</span>
+							<span class="pro_price">
+								<fmt:formatNumber value="${productList[8].product_price}" pattern="###,###" />원
+							</span>
 						</div>
 					</li>
 			    </c:if>

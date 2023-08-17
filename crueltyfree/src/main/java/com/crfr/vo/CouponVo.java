@@ -13,4 +13,5 @@ public class CouponVo {
 	private int coupon_exp_or_not;	
 	private double coupon_discount;
 	private int coupon_limit;	
+	private String coupon_name;
 }
