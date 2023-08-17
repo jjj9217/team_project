@@ -683,9 +683,12 @@ $(function(){
 		var review_member_idx = $(".review_member_idx").eq(index).val();
 		var review_idx = $(".recom_review_idx").eq(index).val();
 		var recom_idx = $(".recom_recom_idx").eq(index).val();
-		var recom_recom_count = $(".recom_recom_count").eq(index).val();
-		var recom_plus = parseInt(recom_recom_count) + 1;
-		var recom_minus = parseInt(recom_recom_count) - 1;	
+		var recom_recom_count = parseInt($(".recom_recom_count").eq(index).val(), 10);
+		
+		var recom_plus = recom_recom_count + 1;
+		var recom_minus = recom_recom_count - 1;
+		
+		var recom_change_elements = $(".recom_change").eq(index).attr("class");
 		
 		if(${empty member}){//비회원의 경우 로그인 페이지로 이동
 			alert("로그인한 회원만 추천을 할 수 있습니다.");
@@ -706,7 +709,11 @@ $(function(){
 				        		$(".recom_change").eq(index).css("color", "#7d99a4");
 				        		$(".recom_change").eq(index).css("background-color", "#eef3f5");
 				        		$(".recom_change").eq(index).css("font-weight", "bold");
-				        		$(".recom_target").eq(index).text(recom_plus);
+				        		if(recom_change_elements === "recom_num_o recom_change"){
+				        			$(".recom_target").eq(index).text(recom_recom_count);
+				        		}else{
+				        			$(".recom_target").eq(index).text(recom_plus);
+				        		}
 				        		recomValues[index] = 'F';
 				        	}else{
 				        		alert("리뷰 추천 등록에 실패하였습니다.");
@@ -728,7 +735,11 @@ $(function(){
 				        		$(".recom_change").eq(index).css("color", "#4a4a4a");
 				        		$(".recom_change").eq(index).css("background-color", "#fff");
 				        		$(".recom_change").eq(index).css("font-weight", "normal");
-				        		$(".recom_target").eq(index).text(recom_minus);
+								if(recom_change_elements === "recom_num_o recom_change"){
+									$(".recom_target").eq(index).text(recom_minus);
+				        		}else{
+				        			$(".recom_target").eq(index).text(recom_recom_count);
+				        		}
 				        		recomValues[index] = 'T';				        	
 				        	}else{
 				        		alert("리뷰 추천 삭제에 실패하였습니다.");
@@ -1052,11 +1063,11 @@ $(function(){
                	<img src="../resources/img/star_empty.png" width="20px" height="20px">
                	<img src="../resources/img/star_empty.png" width="20px" height="20px">
                	</c:when>
-               	<c:when test="${reviewScoreAvg > 4 && reviewScoreAvg < 5}">
+               	<c:when test="${reviewScoreAvg >= 4 && reviewScoreAvg < 5}">
                	<img src="../resources/img/star_full.png" width="20px" height="20px">
                	<img src="../resources/img/star_full.png" width="20px" height="20px">
                	<img src="../resources/img/star_full.png" width="20px" height="20px">
-               	<img src="../resources/img/star_empty.png" width="20px" height="20px">
+               	<img src="../resources/img/star_full.png" width="20px" height="20px">
                	<img src="../resources/img/star_empty.png" width="20px" height="20px">
                	</c:when>               	
                	<c:otherwise>

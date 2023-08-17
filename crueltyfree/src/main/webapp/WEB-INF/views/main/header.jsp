@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -545,7 +545,7 @@ function HeaderBest(sort_salecount) {
 				${RecentViewList[itemRow-1].product_name}
 				</div>
 				<div class="item_price">
-				${RecentViewList[itemRow-1].product_price}원
+				<fmt:formatNumber value="${RecentViewList[itemRow-1].product_price}" pattern="###,###" />원
 				</div>								
 			</div>
 			</c:forEach>			
