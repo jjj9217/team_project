@@ -118,6 +118,23 @@
 		text-align: center;
 	}
 	
+	#checkPro_searchbar {
+		border: 1px solid #a4a4a4;
+	}
+	
+	#searchField {
+		
+	}
+	
+	#searchWord {
+		
+	}
+	
+	#search_btn {
+		
+	}
+	
+	
 	#history_tb {
 		border-collapse: collapse;
 		width: 700px;
@@ -192,7 +209,7 @@ $(function(){
 			                	총 주문 건수: ${pageNav.totalRows}
 			                </td>
 			                <td id="checkPro_searchbar">
-			                    <select name="searchField">
+			                    <select id="searchField" name="searchField">
 			                        <option value="order_name">주문자명</option>
 			                        <option value="order_num">주문번호</option>
 			                    </select>

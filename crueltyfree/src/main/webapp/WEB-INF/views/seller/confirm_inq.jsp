@@ -157,7 +157,7 @@
             font-size: 20px;
             margin-bottom: 20px;
         }
-                .hr_space{
+		.hr_space{
         	margin: 10px 0;
         	width: 560px;
         	height: 5px;
@@ -222,11 +222,10 @@
 	 	}
     #history_tb td{
     	border-bottom: 1px solid #a4a4a4;
-    	padding: 2px 0;
     }
     #history_tb th{
-    	border-top: 2px solid #a4a4a4;
-    	border-bottom: 2px solid #a4a4a4;
+    	border-top: 1px solid #a4a4a4;
+    	border-bottom: 1px solid #a4a4a4;
     }
     #history_tb .content_text{
     	text-align: left;
@@ -236,9 +235,8 @@
     #history_tb .content_bgblue{
     background-color: #eef3f5;
     }
-    #history_tb #history_paging{
-    	padding: 10px 0;
-    	border-bottom: 0px solid #a4a4a4;
+	#history_paging{
+    	padding-top: 10px;
     }
     
     .answer_wait{
@@ -316,7 +314,7 @@
 		<c:choose>
 			<c:when test="${empty confirmproductList[0].product_inq_idx}">
 				<tr>
-					<td colspan="3" style="height: 300px; color: #a4a4a4;"> 등록된 문의가 없습니다. </td>
+					<td colspan="4" style="height: 300px; color: #a4a4a4;"> 등록된 문의가 없습니다. </td>
 				</tr>
 			</c:when>
 			<c:otherwise>
@@ -462,8 +460,7 @@
 				
 		
 				<tr>
-					<td id="history_paging" colspan="6">
-						<!-- 추후 페이징 구현 -->
+					<td id="history_paging" colspan="4" style="border-bottom:none;">
 						<%@ include file="paging_confirm_inq.jsp" %>
 					</td>
 				</tr>

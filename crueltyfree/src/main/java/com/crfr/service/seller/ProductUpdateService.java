@@ -12,14 +12,11 @@ import lombok.RequiredArgsConstructor;
 public class ProductUpdateService implements ProductSellerService {
 	private final ProductSellerDao dao;
 	
-	public int productUpdate(String category_code, String category_code_small,
-			String product_name, String product_price, String product_capa,
+	public int productUpdate(String product_name, String product_price, String product_capa,
 			String delivery_company, String member_nickname, String member_idx,
 			String product_idx) {
 		
 		ProductVo vo = new ProductVo();
-		vo.setCategory_code(category_code);
-		vo.setCategory_code_small(category_code_small);
 		vo.setProduct_name(product_name);
 		vo.setProduct_price(Integer.parseInt(product_price));
 		vo.setProduct_capa(Integer.parseInt(product_capa));
