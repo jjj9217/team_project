@@ -143,11 +143,32 @@ function doPayment(){
 	        	    	//contentType: 사용자가 서버로 보내는 내용의 MIME타입
 	        	    	dataType: "json",
 	        	    	success: function(data) {
-	        	    		$("#name").val(data.name);
-        	    		    $("#birthday").val(data.birthday);
-        	    		    $("#phone").val(data.phone);
-        	    		    
-        	    		    $("#join_form").submit();
+        	    		    $.ajax({//회원정보 중복검증 ajax
+        	        	    	type: "post",
+        	        	    	url: "${pageContext.request.contextPath}/purchase/overlap_check.do",
+        	        	    	data: JSON.stringify({
+        	        	    		"name": data.name,
+        	        	    		"birthday": data.birthday,
+        	        	    		"phone": data.phone
+        	        	    	}), 
+        	        	    		//JSON.stringify(JSON타입 객체): JSON타입 객체를 String객체로 변환시킴
+        	        	    	contentType: "application/json;charset=utf-8;",
+        	        	    	//contentType: 사용자가 서버로 보내는 내용의 MIME타입
+        	        	    	success: function(data) {
+        	        	    		if(data == "success"){
+        	        	    			$("#name").val(data.name);
+        	        	    			$("#birthday").val(data.birthday);
+        	        	    			$("#phone").val(data.phone);
+	                	    		    $("#join_form").submit();
+        	        	    		}else{
+		        	        	    	alert("가입된 회원 정보가 있습니다!");
+		        	        	    	window.location.href = "${pageContext.request.contextPath}/member/login.do";
+        	        	    		}
+        	        	        },
+        	        	        error: function(error) {
+        	        	        	alert("ajax 에러 발생");
+        	        	        }
+        	        	    });//end of ajax
 	        	        },
 	        	        error: function(error) {
 	        	        	alert("ajax 에러 발생");

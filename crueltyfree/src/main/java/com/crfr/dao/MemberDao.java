@@ -1,5 +1,6 @@
 package com.crfr.dao;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,5 +67,25 @@ public class MemberDao{
 		return sqlSession.insert(MAPPER+".join", vo);
 	}
 	
+	public int selectMemberIdx(MemberVo memberVo) {
+		return sqlSession.selectOne(MAPPER+".selectMemberIdx", memberVo);
+	}	
+
+	public int selectCountMemberIdxReview(MemberVo memberVo) {
+		return sqlSession.selectOne(MAPPER+".selectCountMemberIdxReview", memberVo);
+	}	
 	
+	public int insertCouponReview(int member_idx, Date date) {
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("member_idx", member_idx);
+	    map.put("coupon_expDate", date);
+		return sqlSession.insert(MAPPER+".insertCouponReview", map);
+	}
+	
+	public int insertCouponJoin(int member_idx, Date date) {
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("member_idx", member_idx);
+	    map.put("coupon_expDate", date);
+		return sqlSession.insert(MAPPER+".insertCouponJoin", map);
+	}	
 }

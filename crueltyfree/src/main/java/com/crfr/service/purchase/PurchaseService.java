@@ -34,4 +34,5 @@ public interface PurchaseService {
 	default void updateOrder(String order_idx) {}
 	default void updatePay(String order_idx) {}
 	default Map<String, String> getInfo(String token, String mId) {return null;}
+	default int selectCountMember(Map<String, String> map) {return 0;}
 }

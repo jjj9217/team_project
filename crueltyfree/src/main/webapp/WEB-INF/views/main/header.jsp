@@ -464,19 +464,19 @@ function HeaderBest(sort_salecount) {
 		<c:when test="${!empty member and member.member_grade ==  2}">
 			<!-- 관리자용:회원등급2 -->			
 			<article class="small_menu">
-				<a>${member.member_name}님</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/manager/manager_1main.do">관리자페이지</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/mypage/mypage_main.do">마이페이지</a>&nbsp;&nbsp;<span class="basket_move">장바구니</span>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
+				<a>${member.member_nickname}님</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/manager/manager_1main.do">관리자페이지</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/mypage/mypage_main.do">마이페이지</a>&nbsp;&nbsp;<span class="basket_move">장바구니</span>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
 			</article>
 		</c:when>
 		<c:when test="${!empty member and member.member_grade ==  1}">			
 			<!-- 판매자용:회원등급1 -->			
 			<article class="small_menu">
-				<a>${member.member_name}님</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/seller/check_pro.do">판매자페이지</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/mypage/mypage_main.do">마이페이지</a>&nbsp;&nbsp;<span class="basket_move">장바구니</span>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
+				<a>${member.member_nickname}님</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/seller/check_pro.do">판매자페이지</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/mypage/mypage_main.do">마이페이지</a>&nbsp;&nbsp;<span class="basket_move">장바구니</span>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
 			</article>
 		</c:when>		
 		<c:when test="${!empty member}">
 			<!-- 회원용:로그인 -->
 			<article class="small_menu">
-				<a>${member.member_name}님</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/mypage/mypage_main.do">마이페이지</a>&nbsp;&nbsp;<span class="basket_move">장바구니</span>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
+				<a>${member.member_nickname}님</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/mypage/mypage_main.do">마이페이지</a>&nbsp;&nbsp;<span class="basket_move">장바구니</span>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문배송</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/one_inq/notice.do">고객센터</a>
 			</article>
 		</c:when>
 		<c:otherwise>

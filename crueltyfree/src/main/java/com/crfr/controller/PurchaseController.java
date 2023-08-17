@@ -45,7 +45,7 @@ public class PurchaseController {
 	PurchaseService bSelectCount, bSelectList, bPlusBasketCount, bMinusBasketCount, bUpdateBasketCount,
 	bBasketInsert, bBasketDeleteOne, oSelectBasket, oSelectDeliveryCount,oSelectDeliveryList,
 	oInsertDelivery, oSelectDeliveryVo, oInsertOrder, oSelectOrderIdx, oInsertPay, oDeleteBasket,
-	oImportService, oInsertOrderProduct, oUpdateOrder, oUpdatePay;
+	oImportService, oInsertOrderProduct, oUpdateOrder, oUpdatePay, mSelectCountMember;
 	
 	@Setter(onMethod_={ @Autowired })	
 	ProductViewService pSelectView, pSelectThumbnail;
@@ -609,5 +609,32 @@ public class PurchaseController {
 		}
 		
 		return viewPage;
+	}
+	
+	//회원정보 중복검사
+	@PostMapping("/overlap_check.do")
+	@ResponseBody
+	public Object overlap_check(@RequestBody Map<String, String> refundMap) {
+				
+		String name = refundMap.get("name");
+		String birthday = refundMap.get("birthday");
+		String phone = refundMap.get("phone");
+		
+		Map<String,String> map = new HashMap<String, String>();
+		map.put("member_name", name);
+		map.put("member_birthday", birthday);
+		map.put("member_handphone", phone);
+		
+		int searchMemberCount = mSelectCountMember.selectCountMember(map);
+		
+		String result = null;
+		
+		if(searchMemberCount > 0) {
+			result = "fail";
+		}else {
+			result = "success";
+		}
+		
+		return result;
 	}
 }

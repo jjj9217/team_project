@@ -145,4 +145,10 @@ public class ManagerDao{
 		int review_Idx = Integer.parseInt(review_idx);
 		return sqlSession.delete(MAPPER+".reviewDeleteOne",review_Idx);
 	}
+	public void updateMemberGrade(int member_idx) {
+		sqlSession.update(MAPPER+".updateMemberGrade", member_idx);
+	}
+	public int selDeleteFile(String one_inq_idx) {
+		return sqlSession.delete(MAPPER+".selDeleteFile",one_inq_idx);
+	}
 }

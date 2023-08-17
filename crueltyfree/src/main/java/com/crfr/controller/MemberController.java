@@ -1,5 +1,10 @@
 package com.crfr.controller;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -20,7 +25,8 @@ import com.crfr.vo.MemberVo;
 @RequestMapping("/member")
 public class MemberController {
 	
-	MemberService mCheckId, mCheckNickName, mJoin, mLogin, mFindId, mFindPw, mFind_pw_edit;
+	MemberService mCheckId, mCheckNickName, mJoin, mLogin, mFindId, mFindPw, mFind_pw_edit
+	,mSelectMemberIdx, mInsertCouponJoin, mInsertCouponReview;
 	
 	@Autowired
 	public void setMCheckId(@Qualifier("mCheckId") MemberService mCheckId) {
@@ -50,7 +56,18 @@ public class MemberController {
 	public void setMFind_pw_edit(@Qualifier("mFind_pw_edit") MemberService mFind_pw_edit) {
 		this.mFind_pw_edit = mFind_pw_edit;
 	}
-	
+	@Autowired
+	public void setMSelectMemberIdx(@Qualifier("mSelectMemberIdx") MemberService mSelectMemberIdx) {
+		this.mSelectMemberIdx = mSelectMemberIdx;
+	}	
+	@Autowired
+	public void setMInsertCouponJoin(@Qualifier("mInsertCouponJoin") MemberService mInsertCouponJoin) {
+		this.mInsertCouponJoin = mInsertCouponJoin;
+	}	
+	@Autowired
+	public void setMInsertCouponReview(@Qualifier("mInsertCouponReview") MemberService mInsertCouponReview) {
+		this.mInsertCouponReview = mInsertCouponReview;
+	}		
 	@GetMapping("/find_id.do")
 	public String find_id() {		
 		return "member/find_id";
@@ -167,7 +184,20 @@ public class MemberController {
 			session.setAttribute("msg_join","ok");	
 			viewPage = "redirect:/member/join_result.do";
 			//view이름으로 "redirect:요청정보"가 전달되면 요청정보로 재요청이 이루어짐
-		}		
+			
+			int member_idx = mSelectMemberIdx.selectMemberIdx(memberVo);
+			
+			// 현재 날짜 가져오기
+			LocalDate today = LocalDate.now();
+
+			// 90일 후의 날짜 계산
+			LocalDate dateAfter90Days = today.plus(90, ChronoUnit.DAYS);
+			
+			Date dateAfter90DaysAsDate = Date.from(dateAfter90Days.atStartOfDay(ZoneId.systemDefault()).toInstant());
+			
+			int couponInsertResult = mInsertCouponJoin.insertCouponJoin(member_idx, dateAfter90DaysAsDate);
+		}
+				
 		return viewPage;
 	}
 	

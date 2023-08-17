@@ -35,7 +35,8 @@ public class ManagerController {
 	
 	ManagerService oneList, proList, memList, selList, proinqList, rvList, mPage, rvCount, proCount, memCount, oneCount, selCount, proinqCount,
 	proSList, memSList, oneSList, selSList, proinqSList, rvSList, proDelete, memDelete, proinqDelete, oneDelete, selDelete, rvDelete, aUpdateProduct, pfineProductPost1
-	,memUpdate, oneUpdate, proinqUpdate, rvUpdate, procheckDelete, memcheckDelete, onecheckDelete, selcheckDelete, proinqcheckDelete, rvcheckDelete;
+	,memUpdate, oneUpdate, proinqUpdate, rvUpdate, procheckDelete, memcheckDelete, onecheckDelete, selcheckDelete, proinqcheckDelete, rvcheckDelete,
+	mUpdateMemberGrade, selDeleteFile;
 	PageNav1 pageNav;
 	
 	@Autowired
@@ -188,8 +189,14 @@ public class ManagerController {
 	public void setRvcheckDelete(@Qualifier("rvcheckDelete") ManagerService rvcheckDelete) {
 		this.rvcheckDelete = rvcheckDelete;
 	}
-
-	
+	@Autowired
+	public void setMUpdateMemberGrade(@Qualifier("mUpdateMemberGrade") ManagerService mUpdateMemberGrade) {
+		this.mUpdateMemberGrade = mUpdateMemberGrade;
+	}
+	@Autowired
+	public void setSelDeleteFile(@Qualifier("selDeleteFile") ManagerService selDeleteFile) {
+		this.selDeleteFile = selDeleteFile;
+	}	
 	@GetMapping("/manager_1main.do")
 	public String manager_1main(Model model, String searchField, String searchWord, String pageNum, String pageBlock) {		
 		List<OneInqVo> oneinqList = oneList.getList();
@@ -314,14 +321,15 @@ public class ManagerController {
 	}
 	@PostMapping("/edit_sel_process.do")
 	public String edit5_process(
-			String one_inq_answer, String one_inq_idx,
+			String one_inq_answer, String one_inq_idx, String member_idx,
 			HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
-		
+			
 		String viewPage = "manager/manager_5sign"; //글수정 실패시 보여지는 페이지
-		//첨부파일과 함께 글내용 수정을 BoardFileUpdateService클래스 이용
 		int result1 = oneUpdate.oneinqUpdate(one_inq_answer, one_inq_idx);
 
+		int memberIdx = Integer.parseInt(member_idx);		
+		mUpdateMemberGrade.updateMemberGrade(memberIdx);
 		if(result1 == 1) { //글 수정 성공시 보여지는 페이지
 
 			viewPage = "redirect:/manager/manager_5sign.do";	
@@ -585,6 +593,9 @@ public class ManagerController {
 	public String onedelete(String one_inq_idx) {
 		
 		String viewPage = "manager/manager_41d1.do";//삭제 실패시 뷰페이지
+		
+		int result0 = 0;
+		result0 = selDeleteFile.selDeleteFile(one_inq_idx);
 		int result = 0;
 		result = oneDelete.onedelete(one_inq_idx);
 		if(result == 1){//회원탈퇴 성공시
@@ -597,6 +608,9 @@ public class ManagerController {
 	public String seldelete(String one_inq_idx) {
 		
 		String viewPage = "manager/manager_5sign.do";//삭제 실패시 뷰페이지
+		
+		int result0 = 0;
+		result0 = selDeleteFile.selDeleteFile(one_inq_idx);
 		int result = 0;
 		result = selDelete.seldelete(one_inq_idx);
 		if(result == 1){//회원탈퇴 성공시
