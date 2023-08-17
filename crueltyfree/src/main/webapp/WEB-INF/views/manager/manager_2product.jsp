@@ -542,7 +542,41 @@ $(function(){
 		</article>
 		<article class="regi_right">
 			<select class="regi_box2" name="delivery_company1">
-				<option value="0">무료</option>
+			<c:if test="${proSelectList[rowNum-1].delivery_company eq '0'}">
+				<option value="0" selected>무료 (+0)</option>
+				<option value="2500">롯데택배 (+2500)</option>
+				<option value="3000">대한통운 (+3000)</option>
+				<option value="3500">한진택배 (+3500)</option>
+				<option value="4000">우체국 (+4000)</option>
+			</c:if>
+			<c:if test="${proSelectList[rowNum-1].delivery_company eq '2500'}">
+				<option value="0">무료 (+0)</option>
+				<option value="2500" selected>롯데택배 (+2500)</option>
+				<option value="3000">대한통운 (+3000)</option>
+				<option value="3500">한진택배 (+3500)</option>
+				<option value="4000">우체국 (+4000)</option>
+			</c:if>	
+			<c:if test="${proSelectList[rowNum-1].delivery_company eq '3000'}">
+				<option value="0">무료 (+0)</option>
+				<option value="2500">롯데택배 (+2500)</option>
+				<option value="3000" selected>대한통운 (+3000)</option>
+				<option value="3500">한진택배 (+3500)</option>
+				<option value="4000">우체국 (+4000)</option>
+			</c:if>		
+			<c:if test="${proSelectList[rowNum-1].delivery_company eq '3500'}">
+				<option value="0">무료 (+0)</option>
+				<option value="2500">롯데택배 (+2500)</option>
+				<option value="3000">대한통운 (+3000)</option>
+				<option value="3500" selected>한진택배 (+3500)</option>
+				<option value="4000">우체국 (+4000)</option>
+			</c:if>	
+			<c:if test="${proSelectList[rowNum-1].delivery_company eq '4000'}">
+				<option value="0">무료 (+0)</option>
+				<option value="2500">롯데택배 (+2500)</option>
+				<option value="3000">대한통운 (+3000)</option>
+				<option value="3500">한진택배 (+3500)</option>
+				<option value="4000" selected>우체국 (+4000)</option>
+			</c:if>		
 			</select>
 		</article>
 	</div>
