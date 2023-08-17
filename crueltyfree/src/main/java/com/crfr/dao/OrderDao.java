@@ -89,4 +89,9 @@ public class OrderDao {
 	public void updatePay(String order_idx) {		
 		sqlSession.update(MAPPER+".updatePay",order_idx);
 	}		
+	
+	//회원체크
+	public int selectCountMember(Map<String, String> map) {
+		return sqlSession.selectOne(MAPPER+".selectCountMember", map);
+	}
 }

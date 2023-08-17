@@ -102,4 +102,14 @@
 			set pay_refund = "-1"
 			where order_idx = #{order_idx}
 	</update>				
+	
+	<!-- 회원 체크 -->
+	<select id="selectCountMember" parameterType="map" resultType="_int">
+		select count(*) from `member` 
+		where member_name=#{member_name}
+		and member_birthday=#{member_birthday}
+		and member_handphone=#{member_handphone}
+	</select>	
+	
+		
 </mapper>

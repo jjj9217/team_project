@@ -330,14 +330,17 @@ $(function(){
 	    	return true;
 		}
     });
+    
     $(".edit").click(function(){
-    	let index = $(".edit").index(this);
-    	$(".modalContainer").eq(index).removeClass("hidden");
+    	let index = $(".editcount").index(this);
+    	let confirmAns = confirm("판매자 등록을 승인하시겠습니까?");
+		if(confirmAns){
+			$(".editClass").eq(index).submit();
+	    	return true;
+		}    	
+    	
     });
-        $(".modalCloseButton").click(function(){
-        	let index = $(".modalCloseButton").index(this);
-        	$(".modalContainer").eq(index).addClass("hidden");
-    });
+
 })
 
 
@@ -474,10 +477,10 @@ $(function(){
 						<td>${formatDate}</td>
 						<td>
 							<c:if test="${empty selSelectList[rowNum-1].one_inq_answer}">
-		                            <input type="button" id="edit" class="edit" value="답변">
+		                            <input type="button" id="edit" class="edit editcount" value="승인">
 		                    </c:if>
 		                     <c:if test="${!empty selSelectList[rowNum-1].one_inq_answer}">
-		                           <input type="button" id="edit" class="edit" value="완료" style="background-color:gray;">
+		                           <input type="button" id="edit" class="editcount" value="완료" style="background-color:gray;">
 		                    </c:if>
 						<input type="button" id="delete" class="delete" value="삭제">
 						</td>						
@@ -508,8 +511,7 @@ $(function(){
 	<span>판매자 등록문의</span> <span id="num">(문의번호:${selSelectList[rowNum-1].one_inq_idx})</span> 
 		<hr id="hr">
 
-	<form name="form_update" method="post" action="edit_sel_process.do" enctype="multipart/form-data" 
-          onsubmit="return validateForm()">
+	<form name="form_update" method="post" class="editClass" action="edit_sel_process.do">
           
 	<input type="hidden" name="one_inq_idx" value="${selSelectList[rowNum-1].one_inq_idx}" />
 	<div class="regi_line">
@@ -535,8 +537,9 @@ $(function(){
 			&nbsp;&nbsp;<a>답변</a>
 		</article>
 		<article class="regi_right">
-			<textarea name="one_inq_answer" class="text_regi_box" >${selSelectList[rowNum-1].one_inq_answer}</textarea>
+			<textarea name="one_inq_answer" class="text_regi_box" >승급처리</textarea>
 		</article>
+		<input type="hidden" name="member_idx" value="${selSelectList[rowNum-1].member_idx}">
 	</div>
 	
 

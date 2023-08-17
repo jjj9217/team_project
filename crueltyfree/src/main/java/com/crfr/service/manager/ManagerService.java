@@ -49,4 +49,6 @@ public interface ManagerService {
 	default int seloneinqDeleteOne(String one_inq_idx) {return 0;}
 	default int productinqDeleteOne(String product_inq_idx) {return 0;}
 	default int reviewDeleteOne(String review_idx) {return 0;}
+	default void updateMemberGrade(int member_idx) {}
+	default int selDeleteFile(String one_inq_idx) {return 0;}
 }

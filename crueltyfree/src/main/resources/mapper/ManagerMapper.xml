@@ -5,7 +5,9 @@
 <mapper namespace="ManagerMapper">
 	
 	<select id="getList" resultType="OneInqVo">
-		select * from one_inq where grade_up='0' order by one_inq_idx desc
+		select * from one_inq 
+		where NOT (one_inq_title ='판매자 등급 문의')
+		order by one_inq_idx desc
 	</select>
 	<select id="productList" resultType="ProductVo">
 		select * from product order by product_idx desc
@@ -20,7 +22,9 @@
 		select * from review order by review_idx desc
 	</select>
 	<select id="sellersignList" resultType="OneInqVo">
-		select * from one_inq where grade_up ='1' order by one_inq_idx desc
+		select * from one_inq 
+		where one_inq_title ='판매자 등급 문의' 
+		order by one_inq_idx desc
 	</select>
 
 	<select id="proselectCount" parameterType="map" resultType="_int">
@@ -93,7 +97,7 @@
 	</select>	
 	<select id="oneselectCount" parameterType="hashMap" resultType="_int">
 		select count(*) from one_inq
-		where grade_up='0'
+    	where NOT (one_inq_title ='판매자 등급 문의')
 			<if test="searchWord != null">
 		
 					<choose>
@@ -110,7 +114,7 @@
 	</select>
 	<select id="oneSelectList" parameterType="map" resultType="OneInqVo">
 		select * from one_inq
-		where grade_up ='0'
+    	where NOT (one_inq_title ='판매자 등급 문의')
 			<if test="searchWord != null">
 				
 					<choose>
@@ -127,7 +131,7 @@
 	</select>	
 	<select id="selselectCount" parameterType="hashMap" resultType="_int">
 		select count(*) from one_inq
-		where grade_up ='1'
+		where one_inq_title ='판매자 등급 문의'
 			<if test="searchWord != null">
 				
 					<choose>
@@ -144,7 +148,7 @@
 	</select>
 	<select id="selSelectList" parameterType="map" resultType="OneInqVo">
 		select * from one_inq
-		where grade_up ='1'
+		where one_inq_title ='판매자 등급 문의'
 			<if test="searchWord != null">
 				
 					<choose>
@@ -330,5 +334,15 @@
 	</delete>	
 	<delete id="reviewDeleteOne" parameterType="_int">
 		delete from review where review_idx = #{review_Idx}
+	</delete>		
+	
+	<update id="updateMemberGrade" parameterType="_int">
+		update member
+		set member_grade = '1'			
+		where member_idx = #{member_idx}
+	</update>
+	
+	<delete id="selDeleteFile" parameterType="string">
+		delete from `file` where one_inq_idx = #{one_inq_idx}
 	</delete>		
 </mapper>
