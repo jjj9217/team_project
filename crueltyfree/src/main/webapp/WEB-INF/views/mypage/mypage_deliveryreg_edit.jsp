@@ -191,20 +191,6 @@
         margin-left: 20px;                  
     }
 
-    #address_cancel{
-        width: 200px;
-        height: 50px;
-        
-        color: black;
-        margin-left: 20px;                  
-    }
-    #address_cancel{
-        width: 200px;
-        height: 50px;
-        
-        color: black;
-        margin-left: 20px;                  
-    }
     #input, #member_address, #member_address2,#delivery_get_method{width: 290px; height: 10px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none;}
 	#member_postNum{ width:180px; height: 10px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none;}
 	#select_postNum{ width:105px; height:38px; padding: 10px; border-radius: 37px; border: 1px solid #7d99a4; outline: none; background-color:#7d99a4; color:white;font-weight: bold;}
@@ -219,7 +205,8 @@
         font-weight: bold;   
         border-radius: 5px; 
         margin-right: 10px;   
-        font-size:20px;          
+        font-size:20px;  
+        margin-left: 20px;            
     }
     #address_ok{
     	width: 200px;

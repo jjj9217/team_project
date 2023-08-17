@@ -142,7 +142,7 @@
   	color: #000;
   	font-weight: bold;
   	font-size:17px;
-  	background-color:rgb(221, 219, 214);
+  	background-color: rgb(221, 219, 214);
   	width:170px;
 	} 	
 	.ellipsis {

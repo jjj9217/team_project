@@ -104,7 +104,7 @@
     }
     #reset_btn{
     	border-color:white;
-    	background-color:#a4a4a4;
+    	background-color:rgb(221, 219, 214);
     }
     #member_identity,#member_mail,#member_mail2{
     	background-color: #7d99a4;
@@ -120,9 +120,7 @@
     	cursor:pointer;
     	font: bold 13px Arial, sans-serif;
     }
-    #member_email,#member_email2{
-    	width:200px;
-    }
+
     #member_postNum{
     	width:200px;
     }
@@ -436,7 +434,6 @@ $(function(){
 <header>
 	<jsp:include page="../main/header.jsp" />
 </header>
-	<input type="reset" id="reset_btn" value="회원가입 결과창" onclick="location.href='join_result.do';">
 	<div id="joinbanner" style="text-align:center; margin: 0 auto; width:1000px; height:90px; margin-top:70px;"><img src="../resources/img/joinbanner2.JPG" style="width: 500px; height: 90px; text-align:center; margin:0 auto; "></div>
 	<div id="title">
 	<div id="mark"><img src="../resources/img/CrueltyFree_logo.png" style="width: 200px; height: 55px; margin-top:20px;"></div>
@@ -460,25 +457,25 @@ $(function(){
                     <div id="errmsg"></div>
             <p>
                 <label>이름<br>
-                    <input type="text" name="member_name" id="member_name" placeholder="본인 이름을 입력해 주세요." maxlength="20" nameonly="true" value="${name}"></label></p>
+                    <input type="text" name="member_name" id="member_name" placeholder="본인 이름을 입력해 주세요." maxlength="20" nameonly="true" value="${name}" readonly></label></p>
            	<p>
            		<label>전화번호<br>
-           			<input type="text" name="member_handphone" id="member_handphone" maxlength="11" placeholder="-없이 연락처를 입력해 주세요." numberonly="ture" value="${phone}"></label>
+           			<input type="text" name="member_handphone" id="member_handphone" maxlength="11" placeholder="-없이 연락처를 입력해 주세요." numberonly="ture" value="${phone}" readonly></label>
            			</p>  
             <p>
                 <label>생년월일<br>
-                    <input type="text" name="member_birthday" id="member_birthday" placeholder="생년월일을 입력해 주세요. ex)19980301" maxlength="8" numberonly="true" value="${birthday}"></label> </p>  
+                    <input type="text" name="member_birthday" id="member_birthday" placeholder="생년월일을 입력해 주세요. ex)19980301" maxlength="8" numberonly="true" value="${birthday}" readonly></label> </p>  
           			<div id="birthmsg"></div>
                <div class="mb-3">
 				  <label for="userSex" class="form-label">성별</label>
 				   	<div class="between" style="white-space:normal;" >
 						<div class="form_radio_btn" style="border-radius:20px 0px 0px 20px; width:163px; ">
 							<input id="radio-1" type="radio" name="member_gender" value="M" checked >
-							<label for="radio-1" style="border-radius:20px 0px 0px 20px; width:163px; ">남자</label>
+							<label for="radio-1" style="border-radius:20px 0px 0px 20px; width:163px;">남자</label>
 						</div>
 					     <div class="form_radio_btn" style="border-radius:0px 20px 20px 0px; width:163px; ">
 							<input id="radio-2" type="radio" name="member_gender" value="F">
-							<label for="radio-2" style="border-radius:0px 20px 20px 0px; width:163px; ">여자</label>
+							<label for="radio-2" style="border-radius:0px 20px 20px 0px; width:163px;">여자</label>
 						</div>
 					</div>
 			   </div>
@@ -488,9 +485,6 @@ $(function(){
            	<p>
            		<label>이메일<br>
            			<input type="text" name="member_email" id="member_email" placeholder="이메일을 입력해 주세요." ></label>
-           			<input type="button" name="member_mail" id="member_mail" value="메일인증&nbsp;&nbsp;">
-           			<input type="text" name="member_email2" id="member_email2" maxlength="11" placeholder="인증번호" maxlength="6"></label>
-           			<input type="button" name="member_mail2" id="member_mail2" value="확인&nbsp;&nbsp;">
            			<span id="mail-check-warn"></span>
            			</p>
             <p>

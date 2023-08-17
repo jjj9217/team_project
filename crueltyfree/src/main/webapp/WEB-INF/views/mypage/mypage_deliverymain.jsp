@@ -61,9 +61,8 @@
         text-decoration: none;
     }
     #mypage-conts{
-        
         width:810px;
-        height: 950px;      
+        height: auto;      
         float:left;
     }
 
@@ -131,14 +130,10 @@
         height:340px;
     	margin-top:10px;
         text-align: center;
-    }
-    .buy_list td{font: bold 15px Arial, sans-serif;}
-
-  
+    }  
     .addrees_reg_background{
         width: 100%;
-        height: 80px;
-    
+        height: 250px;
         display : flex;
         justify-content: center;
         align-items : center;
@@ -162,6 +157,17 @@
         color: white;
    		border-radius:3px;    	
     }
+	#editbutton{
+   		width:120px;
+   		height:30px;
+        margin-top: 3px;	
+        font: bold 15px Arial, sans-serif;	
+        border: 1px solid #7d99a4;
+        color: #7d99a4;
+        background-color: #fff;
+        font-weight: bold;   
+        border-radius: 3px;    
+	}
     #addrees_reg{
    		width:200px;
    		height:50px;
@@ -171,7 +177,7 @@
        	border:0;
         background-color:#7d99a4;
         color: white;
-   		border-radius:3px;        
+   		border-radius:3px;
     }
     .buy_list_container{display: block; width: 790px; height: auto; margin: 0 auto; padding: 10px; margin-top: 50px;}
     .buy_list, .order_list{border-collapse: collapse;}
@@ -188,7 +194,8 @@
     .top{border-top: 2px solid #4a4a4a}
     .bottom{border-bottom: 1px solid #a4a4a4}
     #basic{font: bold 15px Arial, sans-serif; color:red;}
-    .buy_list td{border-bottom: 1px solid gray; height:100px;}
+    .buy_list td{font: bold 15px Arial, sans-serif;
+    		border-bottom: 1px solid gray; height:150px;}
 </style>
 </head>
 <script>
@@ -311,7 +318,7 @@ function updatedeliveryPostdefault(delivery_idx) {
 				                        </c:if>
 				                    <td>${deliveryList[rowNum-1].delivery_handphone}</td>
 				                    <td>
-				                        <input type="button" onclick="vieweditdeliveryPost(${deliveryList[rowNum-1].delivery_idx});" id="adminbutton" value="수정"></td>
+				                        <input type="button" onclick="vieweditdeliveryPost(${deliveryList[rowNum-1].delivery_idx});" id="editbutton" value="수정"></td>
 				                </tr>
 			                </c:if>
 	                    </c:when>
@@ -332,7 +339,7 @@ function updatedeliveryPostdefault(delivery_idx) {
 	                                    
 				                        <input type="button" onclick="updatedeliveryPostdefault(${deliveryList[rowNum-1].delivery_idx});" id="adminbutton" value="기본배송지 설정"><br>
 
-				                      	<input type="button" onclick="vieweditdeliveryPost(${deliveryList[rowNum-1].delivery_idx});" id="adminbutton"  value="수정"><br>			                        
+				                      	<input type="button" onclick="vieweditdeliveryPost(${deliveryList[rowNum-1].delivery_idx});" id="editbutton"  value="수정"><br>			                        
 				                        
 				                        <input type="button" onclick="deletedeliveryPost(${deliveryList[rowNum-1].delivery_idx});" id="adminbutton"  value="삭제하기">
                                         
