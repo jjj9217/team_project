@@ -227,7 +227,7 @@
     .td_day{height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
     .top{border-top: 2px solid #4a4a4a}
     .bottom{border-bottom: 1px solid #a4a4a4}    
-	#no_coupon{text-align:center; }
+	#no_coupon{text-align: center; padding: 60px 0; color: #4a4a4a; font-weight: bold;}
 </style>
 </head>
 

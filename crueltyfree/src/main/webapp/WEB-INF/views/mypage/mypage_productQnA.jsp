@@ -304,7 +304,7 @@
         text-align: center;
         border-color: white;
     }
-	#no_coupon{text-align:center; }
+	#no_coupon{text-align:center; padding: 60px 0; color: #4a4a4a; font-weight: bold; border-bottom:0;}
     .buy_list td{border-bottom: 1px solid gray; height:100px;}
     #blue{font: bold 20px Arial, sans-serif; color:#7d99a4;}
     #red{font: bold 20px Arial, sans-serif; color:red;}
