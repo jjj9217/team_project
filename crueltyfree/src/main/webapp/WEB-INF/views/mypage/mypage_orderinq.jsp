@@ -420,6 +420,7 @@ $(function(){
     .td_amount{width: 45px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
     .td_price{width: 105px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px; color:#7d99a4; font-weight: bold;}
     .td_state{width: 105px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px; color:#4a4a4a; font-weight: bold;}
+    .td_empty{text-align: center; padding: 60px 0; color: #4a4a4a; font-weight: bold;}
     .top{border-top: 2px solid #4a4a4a}
     .bottom{border-bottom: 1px solid #a4a4a4}
     .basket_item{
@@ -566,6 +567,17 @@ $(function(){
             <th class="th_state top bottom">상태</th>
         </tr>
         <c:forEach var="orderRow" begin="${mPageNav.startNum}" end="${mPageNav.endNum}">
+        <c:choose>
+        <c:when test="${empty orderList}">
+        <c:if test="${orderRow == 1}">
+        <tr>
+        <td class="td_empty" colspan="5">
+        	취소/반품 내역이 없습니다.
+        </td>
+        </tr>
+        </c:if>
+        </c:when>
+        <c:otherwise>        
         <tr>
         <td>
         <c:forEach var="orderProduct" items="${orderList[orderRow-1]}" varStatus="loop">
@@ -641,6 +653,8 @@ $(function(){
         </c:forEach> 
         </td>        
         </tr>
+        </c:otherwise>
+        </c:choose>        
         </c:forEach>
         </table>         
 		</div>
