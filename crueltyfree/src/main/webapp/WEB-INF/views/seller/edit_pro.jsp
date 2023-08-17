@@ -166,46 +166,46 @@
 
 <script>
 
-function categoryLarge(cate_large) {
-	var categorySmall_a = ["토너/로션/올인원", "에센스/크림", "미스트/오일"];
-	var categorySmall_b = ["클렌징폼/젤", "오일/워터/리무버"];
-	var categorySmall_c = ["립메이크업", "베이스메이크업", "아이메이크업"];
-	var categorySmall_d = ["샤워/입욕", "로션/오일"];
-	var categorySmall_e = ["샴푸/린스/트리트먼트", "염색약/펌"];
-	var categorySmall_f = ["-"];
-	var target = document.getElementById("categorySmall");
+// function categoryLarge(cate_large) {
+// 	var categorySmall_a = ["토너/로션/올인원", "에센스/크림", "미스트/오일"];
+// 	var categorySmall_b = ["클렌징폼/젤", "오일/워터/리무버"];
+// 	var categorySmall_c = ["립메이크업", "베이스메이크업", "아이메이크업"];
+// 	var categorySmall_d = ["샤워/입욕", "로션/오일"];
+// 	var categorySmall_e = ["샴푸/린스/트리트먼트", "염색약/펌"];
+// 	var categorySmall_f = ["-"];
+// 	var target = document.getElementById("categorySmall");
 
-	if(cate_large.value == "skin") var cate_small = categorySmall_a;
-	else if(cate_large.value == "clensing") var cate_small = categorySmall_b;
-	else if(cate_large.value == "makeup") var cate_small = categorySmall_c;
-	else if(cate_large.value == "body") var cate_small = categorySmall_d;
-	else if(cate_large.value == "hair") var cate_small = categorySmall_e;
-	else var cate_small = categorySmall_f;
+// 	if(cate_large.value == "skin") var cate_small = categorySmall_a;
+// 	else if(cate_large.value == "clensing") var cate_small = categorySmall_b;
+// 	else if(cate_large.value == "makeup") var cate_small = categorySmall_c;
+// 	else if(cate_large.value == "body") var cate_small = categorySmall_d;
+// 	else if(cate_large.value == "hair") var cate_small = categorySmall_e;
+// 	else var cate_small = categorySmall_f;
 	
-	var categorySmall_a_val = ["skin_1", "skin_2", "skin_3"];
-    var categorySmall_b_val = ["clensing_1", "clensing_2"];
-    var categorySmall_c_val = ["makeup_1", "makeup_2", "makeup_3"];
-    var categorySmall_d_val = ["body_1", "body_2"];
-    var categorySmall_e_val = ["hair_1", "hair_2"];
-    var categorySmall_f_val = ["prop_1"];
-    var target = document.getElementById("categorySmall");
+// 	var categorySmall_a_val = ["skin_1", "skin_2", "skin_3"];
+//     var categorySmall_b_val = ["clensing_1", "clensing_2"];
+//     var categorySmall_c_val = ["makeup_1", "makeup_2", "makeup_3"];
+//     var categorySmall_d_val = ["body_1", "body_2"];
+//     var categorySmall_e_val = ["hair_1", "hair_2"];
+//     var categorySmall_f_val = ["prop_1"];
+//     var target = document.getElementById("categorySmall");
 	
-    if(cate_large.value == "skin") var cate_small_val = categorySmall_a_val;
-    else if(cate_large.value == "clensing") var cate_small_val = categorySmall_b_val;
-    else if(cate_large.value == "makeup") var cate_small_val = categorySmall_c_val;
-    else if(cate_large.value == "body") var cate_small_val = categorySmall_d_val;
-    else if(cate_large.value == "hair") var cate_small_val = categorySmall_e_val;
-    else var cate_small_val = categorySmall_f_val;
+//     if(cate_large.value == "skin") var cate_small_val = categorySmall_a_val;
+//     else if(cate_large.value == "clensing") var cate_small_val = categorySmall_b_val;
+//     else if(cate_large.value == "makeup") var cate_small_val = categorySmall_c_val;
+//     else if(cate_large.value == "body") var cate_small_val = categorySmall_d_val;
+//     else if(cate_large.value == "hair") var cate_small_val = categorySmall_e_val;
+//     else var cate_small_val = categorySmall_f_val;
 
-	target.options.length = 0;
+// 	target.options.length = 0;
 
-	for (x in cate_small) {
-		var opt = document.createElement("option");
-		opt.innerHTML = cate_small[x];
-		opt.value = cate_small_val[x];
-		target.appendChild(opt);
-	}
-}
+// 	for (x in cate_small) {
+// 		var opt = document.createElement("option");
+// 		opt.innerHTML = cate_small[x];
+// 		opt.value = cate_small_val[x];
+// 		target.appendChild(opt);
+// 	}
+// }
 
 //	$(function(){
 //	let category = '${category}';
@@ -270,25 +270,6 @@ function validateForm(){
 	<input type="hidden" name="member_idx" value="${MemberVo.member_idx}" />
 	<input type="hidden" name="member_nickname" value="${MemberVo.member_nickname}" />
 	<input type="hidden" name="file_idx" value="${FileVo.file_idx}" />
-	
-	<div class="regi_line">
-		<article class="regi_left" style="vertical-align: top;">
-			&nbsp;&nbsp;<a>카테고리</a>
-		</article>
-		<article class="regi_right">
-			<select id="category" name="category_code"  class="regi_box" onchange="categoryLarge(this)">
-				<option value="skin">스킨케어</option>
-				<option value="clensing">클렌징</option>
-				<option value="makeup">메이크업</option>
-				<option value="body">바디케어</option>
-				<option value="hair">헤어케어</option>
-				<option value="prop">미용소품</option>
-			</select>
-			<select id="categorySmall" name="category_code_small" class="regi_box" >
-				<option>소분류</option>
-			</select>
-		</article>
-	</div>
 	
 	<div class="regi_line">
 		<article class="regi_left" style="vertical-align: top;">

@@ -297,7 +297,7 @@
 								<c:if test="${empty oneinqList[rowNum-1].one_inq_answer}">
 									<button type="button" class="oneinqModifyup">수정하기</button>
 								</c:if>
-								<button type="button" class="oneinqdel">삭제하기</button>                
+								<button type="button" class="oneinqdel">삭제하기</button>
 							</form>
 						</td>
 					</tr>

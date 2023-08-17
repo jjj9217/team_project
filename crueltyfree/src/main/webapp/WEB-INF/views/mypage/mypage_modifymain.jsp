@@ -8,77 +8,81 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Header</title>
+<title>회원정보 수정 | CrueltyFree</title>
 <style>
 *{margin: 0; padding: 0;}
     a{text-decoration: none;}
     input[type="button"], input[type="submit"], input[type="checkbox"], select, input[type="radio"], label, button{cursor: pointer;}
-   	header{
-	top: 0px;
-	width: 100%;
-	height: 165px;
-	background-color: white;
+   	header {
+		top: 0px;
+		width: 100%;
+		height: 165px;
+		background-color: white;
 	}
 	
-	footer{
+	footer {
 		bottom: 0px;
 		width: 100%;
 		height: 250px;
 		line-height: 20px;
 		background-color: #eef3f5;	
 	}
-     body{
+     body {
          width: 1020px; height: auto; margin: 0 auto;
          background-color: white;
      }
-    /* 바디 CSS */
 
     /* 바디 CSS */
 
     #Container{
         overflow:hidden;
-
         width: 1020px; margin: 0 auto;
     }
     
-    #mypage{
-    	margin-top:30px;
+    #mypage {
+    	margin-top: 30px;
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-       	font-size:15px;
+       	font-size: 15px;
         width: 199px;
-        height:500px;
-        float:left;
+        height: 500px;
+        float: left;
     }
-	#mypage a{color:black;}
+    #mypage th {
+    	height: 50px;
+    	vertical-align: super;
+    	color: #000000;
+    }
+    
+    #mypage td {
+    	height: 25px;
+    }
+    
+	#mypage a {color: #4a4a4a;}
 
-    #mypage-conts{
-        
+    #mypage-conts {
         width:810px;
         height: 950px;      
         float:left;
     }
 
     #mylink{
-        color: black;
-        font-size: 30px;
+        color: #000000;
+        font-size: 25px;
         text-decoration: none;
+        letter-spacing: -2px;
     }
 
-    .mypagetable{
-        font-size: 20px;
+    .mypagetable {
+    	height: 50px;
+        font-size: 18px;
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;      
-        color:#7d99a4;
+        color: #7d99a4;
     }
-    #mylink{
-        color: black;
-        font-size: 30px;
-        text-decoration: none;
-    }
+
     #blank{
-        width:100%;
+        width: 100%;
         height: 35px;
-        
     }
 
     

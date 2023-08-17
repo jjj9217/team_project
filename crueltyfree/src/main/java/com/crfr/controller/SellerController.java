@@ -178,11 +178,6 @@ public class SellerController {
 		return viewPage;
 	}
 	
-	
-	
-	
-	
-	
 	// 등록 상품 목록 확인
 	@GetMapping("/check_pro.do")
 	public String check_pro(String searchField, String searchWord, 
@@ -260,8 +255,7 @@ public class SellerController {
 	
 	// 상품 수정 요청 처리
 	@PostMapping("/edit_pro_process.do")
-	public String edit_process(String category_code, String category_code_small, 
-			String product_name, String product_price,
+	public String edit_process(String product_name, String product_price,
 			String product_capa, String delivery_company, 
 			@RequestParam("member_nickname") String member_nickname,
 			@RequestParam("member_idx") String member_idx,
@@ -284,7 +278,7 @@ public class SellerController {
 		System.out.println("멤버번호:"+member_idx);
 		System.out.println("멤버닉네임:"+member_nickname);
 		//첨부파일과 함께 글내용 수정을 BoardFileUpdateService클래스 이용
-		int result1 = pUpdateProduct.productUpdate(category_code, category_code_small, product_name, 
+		int result1 = pUpdateProduct.productUpdate(product_name, 
 				product_price, product_capa, delivery_company, member_nickname, 
 				member_idx, product_idx);
 		int result2 = pUpdateProductInfo.updateProductInfo (product_info_amount,
