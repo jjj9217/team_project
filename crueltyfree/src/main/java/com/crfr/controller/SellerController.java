@@ -72,11 +72,6 @@ public class SellerController {
 	@Setter(onMethod_={ @Autowired })
 	PageNav pageNav2;
 	
-	@GetMapping("/sale_stats.do")
-	public String sale_stats() {		
-		return "seller/sale_stats";
-	}
-	
 	// 구매 내역 목록 확인
 	@GetMapping("/purchase_history.do")
 	public String purchase_history(String pageNum, String pageBlock, HttpServletRequest request, Model model) {

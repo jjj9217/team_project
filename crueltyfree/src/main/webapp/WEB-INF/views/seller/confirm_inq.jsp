@@ -107,12 +107,12 @@
 	}
 	
 	th {
-		font-size: 12px;
+		font-size: 13px;
 		font-weight: none;
 	}
 	
 	td {
-		font-size: 14px;
+		font-size: 12px;
 		font-weight: none;
 		text-align: center;
 	}
@@ -289,7 +289,6 @@
 	</div>
 	<div id="tap">
 		<ul class="list">
-			<li><a href="sale_stats.do">매출통계</a></li>
 			<li><a href="purchase_history.do">구매 내역</a></li>
 			<li><a href="confirm_inq.do" style="background-color: #7d99a4; color:#ffffff; font-weight: bold;">문의 확인</a></li>
 			<li><a href="check_pro.do">등록 상품 확인</a></li>

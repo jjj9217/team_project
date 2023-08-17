@@ -366,7 +366,7 @@ function validateForm(){
 	<!-- 등록 버튼 -->
 	<div class="div_write">
 		<input type="submit" id="edit_pro_btn" value="수정하기">
-		<input type="reset" id="edit_pro_cancel" value="취소하기">
+		<a href="check_pro.do"><input type="button" id="edit_pro_cancel" value="취소하기"></a>
 	</div>
 </form>
 
