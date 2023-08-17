@@ -390,7 +390,7 @@ function validateForm(){
 	<!-- 등록 버튼 -->
 	<div class="div_write">
 		<input type="submit" id="regi_pro_btn" value="등록하기">
-		<input type="reset" id="regi_pro_cancel" value="취소하기">
+		<a href="purchase_history.do"><input type="button" id="regi_pro_cancel" value="취소하기"></a>
 	</div>
 	
 </form>	

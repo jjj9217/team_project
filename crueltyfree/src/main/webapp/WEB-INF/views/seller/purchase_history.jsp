@@ -110,6 +110,7 @@
 	th {
 		font-size: 13px;
 		font-weight: none;
+		height: 30px;
 	}
 	
 	td {
@@ -119,21 +120,32 @@
 	}
 	
 	#checkPro_searchbar {
+		width: 280px;
+		padding-right: -3px;
+	}
+	
+	.searchField {
+		height: 18px;
 		border: 1px solid #a4a4a4;
+		border-radius: 3px;
+		vertical-align: middle;
+		outline-color: #7d99a4;
+		font-size: 12px;
 	}
-	
-	#searchField {
-		
-	}
-	
-	#searchWord {
-		
-	}
-	
+
 	#search_btn {
-		
+		width: 50px;
+		height: 18px;
+		background-color: #7d99a4;
+		color: #ffffff;
+		vertical-align: middle;
+		font-size: 12px;
+		font-weight: bold;
 	}
 	
+	.history_list {
+		margin-top: 10px;
+	}
 	
 	#history_tb {
 		border-collapse: collapse;
@@ -189,7 +201,6 @@ $(function(){
 	</div>
 	<div id="tap">
 		<ul class="list">
-			<li><a href="sale_stats.do">매출통계</a></li>
 			<li><a href="purchase_history.do" style="background-color: #7d99a4; color:#ffffff; font-weight: bold;">구매 내역</a></li>
 			<li><a href="confirm_inq.do">문의 확인</a></li>
 			<li><a href="check_pro.do">등록 상품 확인</a></li>
@@ -209,12 +220,12 @@ $(function(){
 			                	총 주문 건수: ${pageNav.totalRows}
 			                </td>
 			                <td id="checkPro_searchbar">
-			                    <select id="searchField" name="searchField">
+			                    <select id="searchField" name="searchField" class="searchField">
 			                        <option value="order_name">주문자명</option>
 			                        <option value="order_num">주문번호</option>
 			                    </select>
-			                    <input type="text" name="searchWord" id="searchWord">
-			                    <input type="submit" id="search_btn" value="검색">
+			                    <input type="text" name="searchWord" id="searchWord" class="searchField">
+			                    <input type="submit" id="search_btn" class="searchField" value="검색">
 			                </td>
 			            </tr>
 			        </table>
@@ -222,7 +233,7 @@ $(function(){
 		
 		<article class="history_list">
 			<table id="history_tb">
-		        <tr height="30px;">
+		        <tr>
 		            <th width="100px;">주문번호</th>
 		            <th width="50px;">주문자명</th>
 		            <th width="250px;">상품명</th>

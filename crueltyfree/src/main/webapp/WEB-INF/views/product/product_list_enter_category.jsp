@@ -8,9 +8,71 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Header</title>
+<title>
+
+<c:choose>
+	<c:when test="${exploreVo.category_code eq 'skin'}">
+		스킨케어 | CrueltyFree
+	</c:when>
+	<c:when test="${exploreVo.category_code eq 'clensing'}">
+		클렌징 | CrueltyFree
+	</c:when>
+	<c:when test="${exploreVo.category_code eq 'makeup'}">
+		메이크업 | CrueltyFree
+	</c:when>
+	<c:when test="${exploreVo.category_code eq 'body'}">
+		바디케어 | CrueltyFree
+	</c:when>
+	<c:when test="${exploreVo.category_code eq 'hair'}">
+		헤어케어 | CrueltyFree
+	</c:when>
+	<c:when test="${exploreVo.category_code eq 'prop'}">
+		미용소품 | CrueltyFree
+	</c:when>
+	<c:when test="${exploreVo.category_code_small eq 'skin_1'}">
+		토너/로션/올인원 | CrueltyFree
+  	</c:when>
+	<c:when test="${exploreVo.category_code_small eq 'skin_2'}">
+		에센스/크림 | CrueltyFree
+	</c:when>
+	<c:when test="${exploreVo.category_code_small eq 'skin_3'}">
+		미스트/오일 | CrueltyFree
+	</c:when>
+	<c:when test="${exploreVo.category_code_small eq 'clensing_1'}">
+		클렌징폼/젤 | CrueltyFree
+	</c:when>
+	<c:when test="${exploreVo.category_code_small eq 'clensing_2'}">
+		오일/워터/리무버 | CrueltyFree
+	</c:when>
+	<c:when test="${exploreVo.category_code_small eq 'makeup_1'}">
+ 		립메이크업 | CrueltyFree
+	</c:when>
+	<c:when test="${exploreVo.category_code_small eq 'makeup_2'}">
+		베이스메이크업 | CrueltyFree
+	</c:when>
+	<c:when test="${exploreVo.category_code_small eq 'makeup_3'}">
+		아이메이크업 | CrueltyFree
+	</c:when>
+	<c:when test="${exploreVo.category_code_small eq 'body_1'}">
+  		샤워/입욕 | CrueltyFree
+	</c:when>
+	<c:when test="${exploreVo.category_code_small eq 'body_2'}">
+		로션/오일 | CrueltyFree
+	</c:when>
+	<c:when test="${exploreVo.category_code_small eq 'hair_1'}">
+		샴푸/린스/트리트먼트 | CrueltyFree
+	</c:when>
+	<c:when test="${exploreVo.category_code_small eq 'hair_2'}">
+		염색약/펌 | CrueltyFree
+	</c:when>
+	<c:otherwise>
+		베스트 | CrueltyFree
+	</c:otherwise>
+</c:choose>
+
+</title>
 <style>
-	*{margin: 0; padding: 0;}
+	* {margin: 0; padding: 0;}
     a{text-decoration: none;}
     input[type="button"], input[type="submit"], input[type="checkbox"], select, input[type="radio"], label, button{cursor: pointer;}
     header{
@@ -271,7 +333,6 @@
         font: 20px Arial, Sans-serif;
         text-align: center;
         border-color: white;
-        background-color: orange;
         
     }
     
@@ -693,36 +754,35 @@ function ProductDetail(category_code, category_code_small,
 			            
 			            
 			            
-			            <c:if test="${pageNav.pageNum > pageNav.pages_per_block}">
-			<a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">			            
-    		&lt;&lt;</a>&nbsp;
-    		<a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${(pageNav.pageBlock - 2)*pageNav.pages_per_block + 1}', '${pageNav.pageBlock-1}')">
-    			&lt;이전페이지
-    		</a>   	
-    	</c:if>
-			            
-			            <c:forEach var="i" begin="${(pageNav.pageBlock-1)*pageNav.pages_per_block + 1}" end="${pageNav.pageBlock*pageNav.pages_per_block}">
-            <c:if test="${i le pageNav.totalPageNum}">
-                <c:choose>
-                    <c:when test = "${pageNav.pageNum eq i}">
-                        <a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">
-                            <span style="color:red">${i}&nbsp;</span>
-                        </a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${i}', '${pageNav.pageBlock}')">${i}&nbsp;</a>
-                    </c:otherwise>
-            </c:choose>
-            </c:if>
-        </c:forEach>
-    
-        <c:if test="${((pageNav.rows_per_page*pageNav.pages_per_block) lt pageNav.totalRows) and (pageNav.pageBlock ne pageNav.lastPageBlock) }">
-            <a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageBlock*pageNav.pages_per_block+1}', '${pageNav.pageBlock+1}')">다음페이지&gt;</a>&nbsp;
-            <a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.totalPageNum}', '${pageNav.lastPageBlock}')">&gt;&gt;</a>
-        </c:if>
+		<c:if test="${pageNav.pageNum > pageNav.pages_per_block}">
+	    	<a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '1', '1')">
+	    		<input type="button" id="end" value="처음"></a>&nbsp;
+	    	<a href="#"onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${(pageNav.pageBlock - 2)*pageNav.pages_per_block + 1}', '${pageNav.pageBlock-1}')">
+	    		<input type="button" id="next" value="이전">
+	    	</a>   	
+	    </c:if>
+	    	
+	    <c:forEach var="i" begin="${(pageNav.pageBlock-1)*pageNav.pages_per_block + 1}" end="${pageNav.pageBlock*pageNav.pages_per_block}">
+	    	<c:if test="${i le pageNav.totalPageNum}">
+	    		<c:choose>
+	    			<c:when test = "${pageNav.pageNum eq i}">
+	    				<a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageNum}', '${pageNav.pageBlock}')">
+	    					<span style="color:#7d99a4">${i}&nbsp;</span>
+	    				</a>
+	    			</c:when>
+	    			<c:otherwise>
+	    				<a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${i}', '${pageNav.pageBlock}')">${i}&nbsp;</a>
+	    			</c:otherwise>
+	   		</c:choose>
+	    	</c:if>
+	    </c:forEach>
+	    
+	    <c:if test="${((pageNav.rows_per_page*pageNav.pages_per_block) lt pageNav.totalRows) and (pageNav.pageBlock ne pageNav.lastPageBlock) }">
+	    	<a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.pageBlock*pageNav.pages_per_block+1}', '${pageNav.pageBlock+1}')"><input type="button" id="next" value="다음"></a>&nbsp;
+	    	<a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${pageNav.totalPageNum}', '${pageNav.lastPageBlock}')"><input type="button" id="end" value="마지막"></a>
+	    </c:if>
 			           
-			                <!-- 페이지 네비게이션 구현 -->
-			                <%-- <%@ include file="paging.jsp" %> --%>
+			           
 			            </td>
 		           </tr>
 		        </table>   

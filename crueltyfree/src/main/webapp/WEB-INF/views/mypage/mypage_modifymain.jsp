@@ -47,6 +47,7 @@
         height: 500px;
         float: left;
     }
+    
     #mypage th {
     	height: 50px;
     	vertical-align: super;
