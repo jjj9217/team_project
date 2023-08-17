@@ -8,7 +8,6 @@
 	<select id="selectOrderVo" parameterType="map" resultType="OrderVo">
 		select * from `order` where client_num=#{member_idx} 
 	    and order_date &gt;= #{timestamp_begin}
-	    and order_date &lt;= #{timestamp_end}
 		order by `order_date` desc;
 	</select>
 	
@@ -20,36 +19,31 @@
 	<!-- 주문 리스트 수 -->
 	<select id="selectOrderCount" parameterType="map" resultType="_int">
 		select count(*) from `order` where client_num=#{member_idx}
-	    and order_date &gt;= #{timestamp_begin}
-	    and order_date &lt;= #{timestamp_end}		
+	    and order_date &gt;= #{timestamp_begin}	
 	</select>
 	
 	<!-- 결제완료 수 -->
 	<select id="selectCountPayEd" parameterType="map" resultType="_int">
 		select count(*) from `order` where client_num=#{member_idx} and order_ing='0'
 	    and order_date &gt;= #{timestamp_begin}
-	    and order_date &lt;= #{timestamp_end}
 	</select>
 	
 	<!-- 배송준비중 수 -->
 	<select id="selectCountDlvIng" parameterType="map" resultType="_int">
 		select count(*) from `order` where client_num=#{member_idx} and order_ing='1'
 	    and order_date &gt;= #{timestamp_begin}
-	    and order_date &lt;= #{timestamp_end}
 	</select>
 	
 	<!-- 배송중 수 -->
 	<select id="selectCountDlvEd" parameterType="map" resultType="_int">
 		select count(*) from `order` where client_num=#{member_idx} and order_ing='2'
 	    and order_date &gt;= #{timestamp_begin}
-	    and order_date &lt;= #{timestamp_end}
 	</select>	
 	
 	<!-- 취소 리스트 -->
 	<select id="selectRefund" parameterType="map" resultType="OrderVo">
 		select * from `order` where client_num=#{member_idx} 
 	    and order_date &gt;= #{timestamp_begin}
-	    and order_date &lt;= #{timestamp_end}
 	    and order_ing != 0
 		order by `order_date` desc;
 	</select>
@@ -58,7 +52,6 @@
 	<select id="selectRefundCount" parameterType="map" resultType="_int">
 		select count(*) from `order` where client_num=#{member_idx}
 	    and order_date &gt;= #{timestamp_begin}
-	    and order_date &lt;= #{timestamp_end}
 	    and order_ing != 0		
 	</select>	
 

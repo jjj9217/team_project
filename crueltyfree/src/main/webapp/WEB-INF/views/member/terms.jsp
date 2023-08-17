@@ -154,8 +154,8 @@ function doPayment(){
         	        	    		//JSON.stringify(JSON타입 객체): JSON타입 객체를 String객체로 변환시킴
         	        	    	contentType: "application/json;charset=utf-8;",
         	        	    	//contentType: 사용자가 서버로 보내는 내용의 MIME타입
-        	        	    	success: function(data) {
-        	        	    		if(data == "success"){
+        	        	    	success: function(responseData) {
+        	        	    		if(responseData == "success"){
         	        	    			$("#name").val(data.name);
         	        	    			$("#birthday").val(data.birthday);
         	        	    			$("#phone").val(data.phone);

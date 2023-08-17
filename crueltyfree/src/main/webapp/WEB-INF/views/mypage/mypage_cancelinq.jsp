@@ -47,7 +47,7 @@ function pageNav(pageNum, pageBlock, month) {
 	var scrollY = window.scrollY || window.pageYOffset;
     
 	// 새 URL 구성
-    var newURL = "mypage_orderinq.do?" + 
+    var newURL = "mypage_cancelinq.do?" + 
             "pageNum=" + pageNum +
             "&pageBlock=" + pageBlock +
             "&scrollY=" + scrollY +
@@ -502,7 +502,7 @@ $(function(){
         <div id="blank">            
         </div>
         <div class="tit_area">
-            <h2 class="tit">주문/배송조회</h2>
+            <h2 class="tit">취소/반품 내역</h2>
         </div>
         <div class="search_box">        
         <fieldset class="serach-period">
