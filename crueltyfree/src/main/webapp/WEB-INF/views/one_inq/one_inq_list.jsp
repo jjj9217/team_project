@@ -146,21 +146,23 @@
         -webkit-backdrop-filter: blur( 13.5px );
         border-radius: 10px;
         border: 1px solid rgba( 255, 255, 255, 0.18 );
-        width: 560px;
-        height: 700px;
+        width: 450px;
+        height: 600px;
         position: relative;
         top: -100px;
+        top:5%;
         padding: 10px;
         position: fixed;
-        top: 5%;
         justify-content: center;
-         
+        background-color:white;
+        top:50%;
+        left:50%;
+	    transform: translate(-50%, -50%);        
     }
     #modal .title {
         padding-left: 10px;
         display: inline;
-        text-shadow: 1px 1px 2px gray;
-        color: white;
+        color: black;
         font-size: 20px;
         
     }
@@ -173,14 +175,13 @@
         padding-right: 10px;
         cursor: pointer;
         text-shadow: 1px 1px 2px gray;
-        color: white;
+        color: black;
     }
-    
+    .close_modalmodify{float:right; cursor:pointer;}
     #modal .content {
         margin-top: 20px;
         padding: 0px 10px;
         text-shadow: 1px 1px 2px gray;
-        color: white;
     }
     .inqView {
     	line-height: 80px;
@@ -213,7 +214,41 @@
         font-size: 12px;
         font-weight: bold;
     }
-    
+	#hr{
+		margin-top:10px; 
+		height:5px; 
+		background-color:#7d99a4;
+		border:0;
+	}    
+	.inq_type{
+		padding-left:10px;
+		border-color:#7d99a4; 
+		border-style:solid; 
+		width:375px; 
+		height:35px; 
+		border-radius:5px;
+	}
+	#review_content_textarea{
+		margin-top:10px;
+		padding-left:10px;
+		border-color:#7d99a4; 
+		border-style:solid; 
+		width:360px; 
+		border-radius:5px;
+		border-width:2px;
+		height:300px;
+		padding-top:5px;
+	}
+	#review_cancel{
+		margin-top:10px;
+		background-color:#7d99a4; 
+		color:white; 
+		border:0; 
+		border-radius:3px; 
+		width:170px; 
+		height:38px; 
+		font: bold 13px Arial, Sans-serif;
+	}
 </style>
 
 </head>
@@ -307,10 +342,11 @@
 					<div id="modal" class="modal_modify">    
 					    <div class="modal-window">
 					        <div class="title">
-					            <h2>1:1문의수정 </h2>
+					            <span><h2>1:1문의수정 </h2></span><span>문의내용 : ${oneinqList[rowNum-1].one_inq_title}</span>
 					            <span class="close_modalmodify">&times;</span>
+					            <hr id="hr">
 					            <br>
-					            <h1>문의내용 : ${oneinqList[rowNum-1].one_inq_title}</h1>                   
+					                               
 					        </div>        
 					        <ul class="write_step">                           
 					            <li id="review_content_back">  				             
