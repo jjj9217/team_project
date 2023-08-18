@@ -55,8 +55,6 @@
     #mypage td {
     	height: 25px;
     }
-    
-	#mypage a {color: #4a4a4a;}
 
     #mypage-conts {
         width:810px;
@@ -242,7 +240,7 @@
     .td_admin{width: 45px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
     .top{border-top: 2px solid #4a4a4a}
     .bottom{border-bottom: 1px solid #a4a4a4}
-    .buy_list td{border-bottom: 1px solid gray; height:100px;}    
+    .buy_list td{border-bottom: 1px solid gray; padding: 10px 0;}    
 	#font{font: bold 13px Arial, sans-serif;}    
 	#font2{font: bold 15px Arial, sans-serif; color:#7d99a4;}
 	#font3{font: bold 15px Arial, sans-serif;} 
@@ -284,6 +282,25 @@
         border-color: white;
     }
     #no_coupon{border-bottom:0px;text-align: center; padding: 60px 0; color: #4a4a4a; font-weight: bold;}
+	.hoverClass{color: #4a4a4a;}
+    .hoverClass:hover{color: #7d99a4;}
+	#next{
+		background-color:#7d99a4;
+		border :0;
+		color:white;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
+	#end{
+		background-color:rgb(221, 219, 214);
+		border :0;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
 </style>
 </head>
 <script>
@@ -332,23 +349,23 @@ function deletelikelistall() {
 <div id="Container">
     <div id="mypage">       
         <table>
-            <tr><th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
+            <tr><th><h3><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
             <tr><td class="mypagetable">마이 쇼핑</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do" style="font-weight:bold; color:#7d99a4;">좋아요</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_like.do" style="font-weight:bold; color:#7d99a4;">좋아요</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이활동</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지</a></td></tr>
         </table>       
     </div>
     
@@ -419,9 +436,9 @@ function deletelikelistall() {
                     <td id="td_paging" colspan="6">
                     
                         <c:if test="${pageNav.pageNum > pageNav.pages_per_block}">
-				            <a href="mypage_like.do?pageNum=1&pageBlock=1">&lt;&lt;</a>&nbsp;
+				            <a href="mypage_like.do?pageNum=1&pageBlock=1"><input type="button" id="end" value="처음"></a>&nbsp;
 				            <a href="mypage_like.do?pageNum=${(pageNav.pageBlock - 2)*pageNav.pages_per_block + 1}&pageBlock=${pageNav.pageBlock-1}">
-				                &lt;이전페이지
+				                <input type="button" id="next" value="이전">
 				            </a>    
 				        </c:if>				        
 				        <c:forEach var="i" begin="${(pageNav.pageBlock-1)*pageNav.pages_per_block + 1}" end="${pageNav.pageBlock*pageNav.pages_per_block}">
@@ -429,7 +446,7 @@ function deletelikelistall() {
 				                <c:choose>
 				                    <c:when test = "${pageNav.pageNum eq i}">
 				                        <a href="mypage_like.do?pageNum=${i}&pageBlock=${pageNav.pageBlock}">
-				                            <span style="color:red">${i}&nbsp;</span>
+				                            <span style="color:#7d99a4;">${i}&nbsp;</span>
 				                        </a>
 				                    </c:when>
 				                    <c:otherwise>
@@ -439,8 +456,8 @@ function deletelikelistall() {
 				            </c:if>
 				        </c:forEach>				    
 				        <c:if test="${((pageNav.rows_per_page*pageNav.pages_per_block) lt pageNav.totalRows) and (pageNav.pageBlock ne pageNav.lastPageBlock) }">
-				            <a href="mypage_like.do?pageNum=${pageNav.pageBlock*pageNav.pages_per_block+1}&pageBlock=${pageNav.pageBlock+1}">다음페이지&gt;</a>&nbsp;
-				            <a href="mypage_like.do?pageNum=${pageNav.totalPageNum}&pageBlock=${pageNav.lastPageBlock}">&gt;&gt;</a>
+				            <a href="mypage_like.do?pageNum=${pageNav.pageBlock*pageNav.pages_per_block+1}&pageBlock=${pageNav.pageBlock+1}"><input type="button" id="next" value="다음"></a>&nbsp;
+				            <a href="mypage_like.do?pageNum=${pageNav.totalPageNum}&pageBlock=${pageNav.lastPageBlock}"><input type="button" id="end" value="마지막"></a>
 				        </c:if>                                                          
                     </td>
                 </tr>

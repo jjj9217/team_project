@@ -209,8 +209,6 @@ $(function(){
     #mypage td {
     	height: 25px;
     }
-    
-	#mypage a {color: #4a4a4a;}
 
     #mypage-conts {
         width:810px;
@@ -461,6 +459,25 @@ $(function(){
      .gray_text{color:#a4a4a4; font-weight:bold; text-decoration: underline;}
     .clear{clear:both;}
     #strong{color:#7d99a4; font-weight:bold;}
+    .hoverClass{color: #4a4a4a;}
+    .hoverClass:hover{color: #7d99a4;}
+	#next{
+		background-color:#7d99a4;
+		border :0;
+		color:white;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
+	#end{
+		background-color:rgb(221, 219, 214);
+		border :0;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
 </style>
 </head>
 
@@ -473,24 +490,24 @@ $(function(){
 
 <div id="Container">
     <div id="mypage">       
-        <table>
-            <tr><th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
+        <table id="tb_mypageMenu">
+            <tr><th><h3><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
             <tr><td class="mypagetable">마이 쇼핑</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do" style="font-weight:bold; color:#7d99a4;">주문/배송조회</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do" style="font-weight:bold; color:#7d99a4;">주문/배송조회</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이활동</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지</a></td></tr>
         </table>        
     </div>
     
@@ -618,7 +635,7 @@ $(function(){
         </c:when>
         <c:when test="${orderProduct.order_ing == 1}">
         <!-- 출고준비중 상태일때 -->
-        상품준비중
+        상품준비중<br><br>
         <button class="refund_btn">환불신청</button>
         </c:when>
         <c:when test="${orderProduct.order_ing == 2}">
@@ -667,9 +684,9 @@ $(function(){
 	<!-- 페이지 네비게이션 -->
 	<div class="pageing">
 	<c:if test="${mPageNav.pageNum > mPageNav.pages_per_block}">
-	<a href="#" onclick="pageNav(1,1, 'empty')">&lt;&lt;</a>&nbsp;
+	<a href="#" onclick="pageNav(1,1, 'empty')"><input type="button" id="end" value="처음"></a>&nbsp;
 	<a href="#" onclick="pageNav(${(mPageNav.pageBlock - 2)*mPageNav.pages_per_block + 1},${mPageNav.pageBlock-1}, 'empty')">
-		&lt;이전페이지
+		<input type="button" id="next" value="이전">
 	</a>   	
 	</c:if>
 	
@@ -678,7 +695,7 @@ $(function(){
 	<c:choose>
 	<c:when test = "${mPageNav.pageNum eq i}">
 	<a href="#" onclick="pageNav(${i},${mPageNav.pageBlock}, 'empty')">
-	<span style="color:red">${i}&nbsp;</span>
+	<span style="color:#7d99a4;">${i}&nbsp;</span>
 	</a>
 	</c:when>
 	<c:otherwise>
@@ -689,8 +706,8 @@ $(function(){
 	</c:forEach>
 	
 	<c:if test="${((mPageNav.rows_per_page*mPageNav.pages_per_block) lt mPageNav.totalRows) and (mPageNav.pageBlock ne mPageNav.lastPageBlock) }">
-	<a href="#" onclick="pageNav(${mPageNav.pageBlock*mPageNav.pages_per_block+1},${mPageNav.pageBlock+1}, 'empty')">다음페이지&gt;</a>&nbsp;
-	<a href="#" onclick="pageNav(${mPageNav.totalPageNum},${mPageNav.lastPageBlock}, 'empty')">&gt;&gt;</a>
+	<a href="#" onclick="pageNav(${mPageNav.pageBlock*mPageNav.pages_per_block+1},${mPageNav.pageBlock+1}, 'empty')"><input type="button" id="next" value="다음"></a>&nbsp;
+	<a href="#" onclick="pageNav(${mPageNav.totalPageNum},${mPageNav.lastPageBlock}, 'empty')"><input type="button" id="end" value="마지막"></a>
 	</c:if>
 	</div>  
     <div class="clear"></div>

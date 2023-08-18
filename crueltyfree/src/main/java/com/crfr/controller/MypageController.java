@@ -764,12 +764,12 @@ public class MypageController {
 		
 		int result=0; 
 		if(vo.getLike_idx() != 0) {
-			mpDelete.deletelike(vo);}
-		else {mpDelete.deletelikeall(vo);}
+			result = mpDelete.deletelike(vo);
+		}
 		System.out.println("삭제됨?"+result);
 		String viewPage = "boast/view";
 		if(result==1) {//글삭제 성공시
-			viewPage = "redirect:/mypage/mypage_like.do?";
+			viewPage = "redirect:/mypage/mypage_like.do";
 		}
 		return viewPage;			
 	}

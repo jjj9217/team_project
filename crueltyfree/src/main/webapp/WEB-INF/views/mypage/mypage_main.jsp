@@ -55,8 +55,6 @@
     	height: 25px;
     }
     
-	#mypage a {color: #4a4a4a;}
-
     #mypage-conts {
         width:810px;
         height: 1000px;;      
@@ -218,7 +216,6 @@
         margin: 0 auto;
         margin-left:13px;
     }
-    
     .product_list ul {
     	list-style: none;
     }
@@ -230,9 +227,13 @@
     }
     
     .prd_info{
-        width: 500px;
+    	float:left;
+    	margin-right:20px;
+        width: 180px;
         height: 290px;
+        float:left;
     }
+
    .prd_price{
         width: 180px;
         height: 25px;
@@ -253,12 +254,12 @@
    .prd_title{      
         text-align: center;
         line-height: 55px;
-		font: bold 17px Arial, sans-serif;
+		font: bold 13px Arial, sans-serif;
 		color:#000000;
    }
 	.inq_title{
         line-height: 55px;
-		font: bold 17px Arial, sans-serif;
+		font: bold 15px Arial, sans-serif;
 		color:#000000;
 		width:280px;
 	  	height: auto;
@@ -289,6 +290,8 @@
 		font: bold 18px Arial, Sans-serif;
 		}
 	#strong{color:#7d99a4; font-weight:bold;}
+	.hoverClass{color: #4a4a4a;}
+    .hoverClass:hover{color: #7d99a4;}
 </style>
 </head>
 
@@ -302,29 +305,29 @@
 <div id="Container">
     <div id="mypage">       
         <table>
-            <th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th>         
+            <th><h3><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th>         
             <tr><td class="mypagetable">마이 쇼핑</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이활동</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
             <tr><td>
 <%--             <form name="caa" action="${pageContext.request.contextPath}/mypage/mypage_nonreview.do" method="get">
                         <input type="hidden" name="member_idx" value="1">
                     </form>
                     <a href="#" onclick="document.forms['caa'].submit();">리뷰</a></td></tr> --%>
-                    <a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a>
+                    <a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a>
                     
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
+            <tr><td><a class="hoverClass"  href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do">배송지</a></td></tr>
         </table>        
     </div>
     
@@ -392,7 +395,8 @@
 		                    <li class="product_list">
 		                        <c:forEach var="rowNum" begin="0" end="3">
 		                          <c:if test="${!empty likeproductList[rowNum].like_idx}">
-			                        <div class="prd_info" style="width:500x;">
+			                        <div class="prd_info" style="width:500x; ">
+			                        <div class="mmm">
 			                            <div class="goodlist_thumb_background">
 			                                <a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${likeproductList[rowNum].product_idx}"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${likefileList[rowNum].saveFile}"></a>
 			                            </div>
@@ -403,7 +407,7 @@
 			                            </div>
 			                       		 <fmt:formatNumber value="${likeproductList[rowNum].product_price}" type="number" var="formatNumber"/>						
 						                 <p class="prd_price"><span class="prd_price1">${formatNumber}</span><span class="prd_price2">원</span></p>
-			                       
+			                       </div>
 			                        </div>
 			                      </c:if> 
 			                    </c:forEach>    

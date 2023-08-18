@@ -44,7 +44,7 @@
 	<select id="selectRefund" parameterType="map" resultType="OrderVo">
 		select * from `order` where client_num=#{member_idx} 
 	    and order_date &gt;= #{timestamp_begin}
-	    and order_ing != 0
+	    and order_ing = 4
 		order by `order_date` desc;
 	</select>
 	
@@ -52,7 +52,7 @@
 	<select id="selectRefundCount" parameterType="map" resultType="_int">
 		select count(*) from `order` where client_num=#{member_idx}
 	    and order_date &gt;= #{timestamp_begin}
-	    and order_ing != 0		
+	    and order_ing = 4		
 	</select>	
 
 	<!-- 주문번호 단건에 대한 Vo -->

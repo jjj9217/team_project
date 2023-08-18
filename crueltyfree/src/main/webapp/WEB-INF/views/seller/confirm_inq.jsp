@@ -189,7 +189,7 @@
         }
 		.txtAr{
 		width: 540px;
-		height: 300px;
+		height: 240px;
 		resize: none;
 		padding: 10px;
 		outline-color:#7d99a4;
@@ -394,7 +394,9 @@
                 <div class="review_content">
 		            <div class="inq_user">
 		            <span class="inq_user_title">문의자닉네임 :</span> <br>
-		            ${confirmproductList[rowNum-1].member_nickname}
+		            ${confirmproductList[rowNum-1].member_nickname} <br><br>
+		            <span class="inq_user_title">문의상품 :</span> <br>
+		            ${confirmproductList[rowNum-1].product_name}
 		            </div>
 		            <div class="inq_user_content">
 		            <span class="inq_user_title">문의내용 :</span> <br>
