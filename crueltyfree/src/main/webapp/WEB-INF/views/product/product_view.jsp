@@ -1020,6 +1020,24 @@ $(function(){
 	 .writeButton, .edit_updateButton{width:130px; height:40px; margin-left: 10px; border-radius: 2px; background-color: #7d99a4; color:#fff; font-weight: bold; border: 1px solid #7d99a4}
 	 .sortClass{color:black}
 	 #soldOutNotice{color:rgb(216, 98, 98); font-size: 24px;}
+	#next{
+		background-color:#7d99a4;
+		border :0;
+		color:white;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
+	#end{
+		background-color:rgb(221, 219, 214);
+		border :0;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}	
+	.other{color:#4a4a4a;}
 </style>
 </head>
 <body>
@@ -1429,9 +1447,9 @@ $(function(){
                 <!-- 페이지 네비게이션 -->
                 <div class="pageing">
 		    		<c:if test="${pvrPageNav.pageNum > pvrPageNav.pages_per_block}">
-				    	<a href="#" onclick="pageNav(${productVo.product_idx},1,1,'empty','empty','empty')">&lt;&lt;</a>&nbsp;
+				    	<a href="#" onclick="pageNav(${productVo.product_idx},1,1,'empty','empty','empty')"><input type="button" id="end" value="처음"></a>&nbsp;</a>&nbsp;
 			    		<a href="#"onclick="pageNav(${productVo.product_idx},${(pvrPageNav.pageBlock - 2)*pvrPageNav.pages_per_block + 1},${pvrPageNav.pageBlock-1},'empty','empty','empty')">
-			    			&lt;이전페이지
+			    			<input type="button" id="next" value="이전">
 			    		</a>   	
 			    	</c:if>
 			    	
@@ -1440,19 +1458,21 @@ $(function(){
 			    			<c:choose>
 			    				<c:when test = "${pvrPageNav.pageNum eq i}">
 			    					<a href="#" onclick="pageNav(${productVo.product_idx},${i},${pvrPageNav.pageBlock},'empty','empty','empty')">
-			    						<span style="color:red">${i}&nbsp;</span>
+			    						<span style="color:#7d99a4">${i}&nbsp;</span>
 			    					</a>
 			    				</c:when>
 			    				<c:otherwise>
-			    					<a href="#" onclick="pageNav(${productVo.product_idx},${i},${pvrPageNav.pageBlock},'empty','empty','empty')">${i}&nbsp;</a>
+	    					<a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${i}', '${pageNav.pageBlock}')">
+	    						<span class="other">${i}&nbsp;</span>
+	    					</a>
 			    				</c:otherwise>
 			   			</c:choose>
 			    		</c:if>
 			    	</c:forEach>
 			    
 			    	<c:if test="${((pvrPageNav.rows_per_page*pvrPageNav.pages_per_block) lt pvrPageNav.totalRows) and (pvrPageNav.pageBlock ne pvrPageNav.lastPageBlock) }">
-			    		<a href="#" onclick="pageNav(${productVo.product_idx},${pvrPageNav.pageBlock*pvrPageNav.pages_per_block+1},${pvrPageNav.pageBlock+1},'empty','empty','empty')">다음페이지&gt;</a>&nbsp;
-			    		<a href="#" onclick="pageNav(${productVo.product_idx},${pvrPageNav.totalPageNum},${pvrPageNav.lastPageBlock},'empty','empty','empty')">&gt;&gt;</a>
+			    		<a href="#" onclick="pageNav(${productVo.product_idx},${pvrPageNav.pageBlock*pvrPageNav.pages_per_block+1},${pvrPageNav.pageBlock+1},'empty','empty','empty')"><input type="button" id="next" value="다음"></a>&nbsp;
+			    		<a href="#" onclick="pageNav(${productVo.product_idx},${pvrPageNav.totalPageNum},${pvrPageNav.lastPageBlock},'empty','empty','empty')"><input type="button" id="end" value="마지막"></a>
 			    	</c:if>
                 </div>
             </section>

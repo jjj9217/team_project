@@ -364,7 +364,7 @@
 		width:50px;
 		height:25px;
 	}	
-	
+	.other{color:#4a4a4a;}
 </style>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -662,7 +662,7 @@ function ProductDetail(category_code, category_code_small,
 		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=hair_2">
                              <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/hair_2.png" class="head_logo">
                         </a>
-                        <p id="banner_name">클렌징폼/젤</p>
+                        <p id="banner_name">염색약/펌</p>
 		            </li>
 		        </ul>
 		    </div>
@@ -799,7 +799,9 @@ function ProductDetail(category_code, category_code_small,
 	    				</a>
 	    			</c:when>
 	    			<c:otherwise>
-	    				<a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${i}', '${pageNav.pageBlock}')">${i}&nbsp;</a>
+	    				<a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${i}', '${pageNav.pageBlock}')">
+	    					<span class="other">${i}&nbsp;</span>
+	    				</a>
 	    			</c:otherwise>
 	   		</c:choose>
 	    	</c:if>
