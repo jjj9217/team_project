@@ -665,6 +665,7 @@
 		width:50px;
 		height:25px;
 	}
+	.other{color:#4a4a4a;}
 </style>
 </head>
 <script>
@@ -1352,7 +1353,9 @@ function uploadimgdel5(){
                                         </a>
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="mypage_review.do?pageNum=${i}&pageBlock=${pageNav.pageBlock}">${i}&nbsp;</a>
+										<a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${i}', '${pageNav.pageBlock}')">
+	    									<span class="other">${i}&nbsp;</span>
+	    								</a>
                                     </c:otherwise>
                             </c:choose>
                             </c:if>
