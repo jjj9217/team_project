@@ -143,6 +143,13 @@ const guestId = getGuestId();
 		margin: 20px 15px 20px 15px;
 		width: 300px;
 		height: 100px;
+		display:-webkit-box; 
+	    word-wrap: break-word; 
+	    -webkit-line-clamp:2; 
+	    -webkit-box-orient: vertical; 
+	    overflow: hidden; 
+	    text-overflow: ellipsis;
+	    line-height: 50px;
 	}
 	
 	.pro_name a {
