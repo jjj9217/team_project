@@ -84,4 +84,7 @@ public interface ProductSellerService {
 	
 	
 	default PageNav setSellerPageNav2(PageNav pageNav, String pageNum, String pageBlock, int member_idx) {return null;}
+	
+	// 상품 재등록 서비스
+	default int reInsertProduct(String product_idx, HttpServletRequest request) {return 0;}
 }

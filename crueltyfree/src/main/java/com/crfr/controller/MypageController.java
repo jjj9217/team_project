@@ -3,7 +3,10 @@ package com.crfr.controller;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.crfr.service.member.MemberService;
 import com.crfr.service.mypage.MypageService;
 import com.crfr.service.oneInq.OneInqService;
 import com.crfr.service.orderDelivery.OrderDeliveryService;
@@ -49,6 +53,8 @@ public class MypageController {
 	@Setter(onMethod_={ @Autowired })
 	OrderDeliveryService mSelectCountPayEd, mSelectCountDlvIng, mSelectCountDlvEd;
 	
+	@Setter(onMethod_={ @Autowired })
+	MemberService mSelectCountMemberIdxReview, mInsertCouponReview;
 	@Autowired
 	public void setMpList(@Qualifier("mpList") MypageService mpList) {
 		this.mpList = mpList;
@@ -274,6 +280,25 @@ public class MypageController {
 //			insertreviewimg =1;
 //		}
 //		}
+		
+		// 현재 날짜 가져오기
+		LocalDate today = LocalDate.now();
+
+		// 90일 후의 날짜 계산
+		LocalDate dateAfter90Days = today.plus(90, ChronoUnit.DAYS);
+		
+		Date dateAfter90DaysAsDate = Date.from(dateAfter90Days.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		
+		//리뷰테이블 검색결과 1이면 쿠폰 발급하기
+		if(mVo != null) {
+			int reviewCountResult = mSelectCountMemberIdxReview.selectCountMemberIdxReview(mVo);
+			if(reviewCountResult == 1){
+				int reviewCouponResult = mInsertCouponReview.insertCouponReview(member_idx, dateAfter90DaysAsDate);
+			}
+		}
+		
+		
+			
 		if(insertreviewimg != 1) {
 			insertreviewimg = 1;
 		}
@@ -282,6 +307,8 @@ public class MypageController {
 		if (insertreview == 1 && insertreviewimg == 1) {
 			viewpage = "redirect:/mypage/mypage_nonreview.do";
 		}
+		
+		
 		return viewpage;
 	}
 

@@ -123,5 +123,10 @@ public class ProductSellerDao{
 	public List<OrderProductVo> checkOrderProductList2(int order_idx) {		
 		return sqlSession.selectList(MAPPER+".checkOrderProductList2", order_idx);
 	}
+
+	// product_saleCount 업데이트
+	public int reInsertProduct(String product_idx) {
+		return sqlSession.update(MAPPER+".reInsertProduct", product_idx);
+	}
 	
 }

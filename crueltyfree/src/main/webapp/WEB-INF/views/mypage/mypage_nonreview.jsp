@@ -965,7 +965,7 @@ function uploadimgdel5(){
         <c:if test="${rowNum == 1}">
         	<tr>
            <td class="td_empty bottom" colspan="2">
-           구매하신 상품이 없습니다!
+           리뷰를 작성할 수 있는 상품이 없습니다!
            </td>
            </tr>
         </c:if>

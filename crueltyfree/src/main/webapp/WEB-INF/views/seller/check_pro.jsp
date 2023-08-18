@@ -182,6 +182,15 @@ $(function(){
 	    	return true;
 		}
     });
+    
+    $(".pro_reInsert").click(function(){
+    	let index = $(".pro_reInsert").index(this);    	
+    	let confirmAns = confirm("상품을 재등록 하시겠습니까?");
+		if(confirmAns){
+			$(".form_update").eq(index).submit();
+	    	return true;
+		}
+    });
 })
 
 </script>
@@ -262,7 +271,17 @@ $(function(){
 										</c:otherwise>
 									</c:choose>
 									<td>
-										<div style="margin-top: 2px; width:50px; height:18px; background-color:#7d99a4; color:#ffffff; border-radius:3px; display: inline-block;" onclick="location.href='edit_pro.do?no=${checkProList[rowNum-1].product_idx}'">수정</div>  <div style="width:50px; height:18px; background-color:#a4a4a4; color:#ffffff; border-radius:3px; display: inline-block;" id="pro_delete" class="pro_delete">삭제</div>
+									<c:choose>
+									<c:when test="${checkProList[rowNum-1].product_del_or_not == -1}">
+									<div style="margin-top: 2px; width:104px; height:18px; background-color:#7d99a4; color:#ffffff; border-radius:3px; display: inline-block; cursor: pointer;" class="pro_reInsert">상품 재등록</div>
+									<input type="hidden" class="pro_delete">
+									</c:when>
+									<c:otherwise>
+										<input type="hidden" class="pro_reInsert">
+										<div style="margin-top: 2px; width:50px; height:18px; background-color:#7d99a4; color:#ffffff; border-radius:3px; display: inline-block; cursor: pointer;" onclick="location.href='edit_pro.do?no=${checkProList[rowNum-1].product_idx}'">수정</div>
+										<div style="width:50px; height:18px; background-color:#a4a4a4; color:#ffffff; border-radius:3px; display: inline-block; cursor: pointer;" id="pro_delete" class="pro_delete">삭제</div>
+									</c:otherwise>
+									</c:choose>						
 									</td>
 								</tr>
 							</c:if>
@@ -270,7 +289,9 @@ $(function(){
 							<form action="delete_pro_process.do" class="form_delete" method="post">
 								<input type="hidden" name="product_idx" value="${checkProList[rowNum-1].product_idx}">
 							</form>
-							
+							<form action="update_pro_process.do" class="form_update" method="post">
+								<input type="hidden" name="product_idx" value="${checkProList[rowNum-1].product_idx}">
+							</form>							
 						</c:forEach>
 						
 					</c:otherwise>
