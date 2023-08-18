@@ -204,14 +204,14 @@ function HeaderBest(sort_salecount) {
 </header>
 <div class="clear"></div>
 <nav id="ad">
-	<a href="#">
+	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=49">
 		<img src="${pageContext.request.contextPath}/resources/img/home_ad1.png" class="home_ad1" style="width: 1020px;" />
 	</a>
 </nav>
 
 <section id="content">
 	<article id="s_ad1" class="s_ad">
-		<a href="#">
+		<a href="${pageContext.request.contextPath}/one_inq/notice_view.do?prdNum=1">
 			<img src="${pageContext.request.contextPath}/resources/img/home_s_ad1.png" style="width: 500px;" />
 		</a>
 	</article>
