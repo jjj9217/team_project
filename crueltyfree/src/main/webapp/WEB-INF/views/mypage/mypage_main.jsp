@@ -218,7 +218,6 @@
         margin: 0 auto;
         margin-left:13px;
     }
-    
     .product_list ul {
     	list-style: none;
     }
@@ -230,9 +229,13 @@
     }
     
     .prd_info{
-        width: 500px;
+    	float:left;
+    	margin-right:20px;
+        width: 180px;
         height: 290px;
+        float:left;
     }
+
    .prd_price{
         width: 180px;
         height: 25px;
@@ -253,12 +256,12 @@
    .prd_title{      
         text-align: center;
         line-height: 55px;
-		font: bold 17px Arial, sans-serif;
+		font: bold 13px Arial, sans-serif;
 		color:#000000;
    }
 	.inq_title{
         line-height: 55px;
-		font: bold 17px Arial, sans-serif;
+		font: bold 15px Arial, sans-serif;
 		color:#000000;
 		width:280px;
 	  	height: auto;
@@ -392,7 +395,8 @@
 		                    <li class="product_list">
 		                        <c:forEach var="rowNum" begin="0" end="3">
 		                          <c:if test="${!empty likeproductList[rowNum].like_idx}">
-			                        <div class="prd_info" style="width:500x;">
+			                        <div class="prd_info" style="width:500x; ">
+			                        <div class="mmm">
 			                            <div class="goodlist_thumb_background">
 			                                <a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=${likeproductList[rowNum].product_idx}"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${likefileList[rowNum].saveFile}"></a>
 			                            </div>
@@ -403,7 +407,7 @@
 			                            </div>
 			                       		 <fmt:formatNumber value="${likeproductList[rowNum].product_price}" type="number" var="formatNumber"/>						
 						                 <p class="prd_price"><span class="prd_price1">${formatNumber}</span><span class="prd_price2">원</span></p>
-			                       
+			                       </div>
 			                        </div>
 			                      </c:if> 
 			                    </c:forEach>    

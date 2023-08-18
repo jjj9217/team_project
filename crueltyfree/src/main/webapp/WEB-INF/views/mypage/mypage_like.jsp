@@ -242,7 +242,7 @@
     .td_admin{width: 45px; height: auto; padding: 30px 5px; text-align: center; border-left: 1px solid #a4a4a4; font-size:14px;}
     .top{border-top: 2px solid #4a4a4a}
     .bottom{border-bottom: 1px solid #a4a4a4}
-    .buy_list td{border-bottom: 1px solid gray; height:100px;}    
+    .buy_list td{border-bottom: 1px solid gray; padding: 10px 0;}    
 	#font{font: bold 13px Arial, sans-serif;}    
 	#font2{font: bold 15px Arial, sans-serif; color:#7d99a4;}
 	#font3{font: bold 15px Arial, sans-serif;} 

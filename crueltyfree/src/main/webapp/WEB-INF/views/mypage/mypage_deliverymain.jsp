@@ -209,6 +209,7 @@
     #basic{font: bold 15px Arial, sans-serif; color:red;}
     .buy_list td{font: bold 15px Arial, sans-serif;
     		border-bottom: 1px solid gray; height:150px;}
+    #no_delivery{text-align: center; padding: 60px 0; color: #4a4a4a; font-weight: bold; border-bottom:0;}
 </style>
 </head>
 <script>
@@ -358,7 +359,8 @@ function updatedeliveryPostdefault(delivery_idx) {
 			                </c:if>
 	                    </c:otherwise>
 		            </c:choose>
-		        </c:forEach>                   
+		        </c:forEach>  
+		        
             </tbody>        
         </table>
 </form>        
