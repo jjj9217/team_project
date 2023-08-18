@@ -228,7 +228,7 @@
     
     .prd_info{
     	float:left;
-    	margin-right:20px;
+    	margin-right:25px;
         width: 180px;
         height: 290px;
         float:left;

@@ -344,6 +344,23 @@
 	.soldOutNotice{
 	color:rgb(216, 98, 98); font-size:16px;
 	}
+	#next{
+		background-color:#7d99a4;
+		border :0;
+		color:white;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
+	#end{
+		background-color:rgb(221, 219, 214);
+		border :0;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
