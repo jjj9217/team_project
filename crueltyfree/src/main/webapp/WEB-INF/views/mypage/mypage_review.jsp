@@ -163,7 +163,7 @@
     	margin-left: 10px;
         width: 790px;
         height:340px;
-    
+    	margin-top:30px;
         text-align: center;
     }
 
@@ -648,6 +648,23 @@
 }
 .hoverClass{color: #4a4a4a;}
 .hoverClass:hover{color: #7d99a4;}
+	#next{
+		background-color:#7d99a4;
+		border :0;
+		color:white;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
+	#end{
+		background-color:rgb(221, 219, 214);
+		border :0;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
 </style>
 </head>
 <script>
@@ -992,7 +1009,7 @@ function uploadimgdel5(){
                     <a href="#" id="refund_atag" onclick="document.forms['caf'].submit();">
             나의 리뷰</a></li>
         </ul>
-        <table class="buy_list" style="margin-top:20px;">        
+        <table class="buy_list">        
          <tr>
              <th class="th_product top bottom" scope="col">상품</th>
              <th class="th_review top bottom" scope="col">리뷰</th>                 
@@ -1007,7 +1024,7 @@ function uploadimgdel5(){
 	        <c:if test="${rowNum == 1}">
 	        	<tr>
 	           <td class="td_empty bottom" colspan="2">
-	           작성하신 리뷰가 없습니다!
+	           작성하신 리뷰가 없습니다.
 	           </td>
 	           </tr>
 	        </c:if>
@@ -1321,9 +1338,9 @@ function uploadimgdel5(){
                     <td id="td_paging" colspan="6">
                     
                         <c:if test="${pageNav.pageNum > pageNav.pages_per_block}">
-                            <a href="mypage_review.do?pageNum=1&pageBlock=1">&lt;&lt;</a>&nbsp;
+                            <a href="mypage_review.do?pageNum=1&pageBlock=1"><input type="button" id="end" value="처음"></a>&nbsp;
                             <a href="mypage_review.do?pageNum=${(pageNav.pageBlock - 2)*pageNav.pages_per_block + 1}&pageBlock=${pageNav.pageBlock-1}">
-                                &lt;이전페이지
+                                <input type="button" id="next" value="이전">
                             </a>    
                         </c:if>                     
                         <c:forEach var="i" begin="${(pageNav.pageBlock-1)*pageNav.pages_per_block + 1}" end="${pageNav.pageBlock*pageNav.pages_per_block}">
@@ -1331,7 +1348,7 @@ function uploadimgdel5(){
                                 <c:choose>
                                     <c:when test = "${pageNav.pageNum eq i}">
                                         <a href="mypage_review.do?pageNum=${i}&pageBlock=${pageNav.pageBlock}">
-                                            <span style="color:red">${i}&nbsp;</span>
+                                            <span style="color:#7d99a4;">${i}&nbsp;</span>
                                         </a>
                                     </c:when>
                                     <c:otherwise>
@@ -1341,8 +1358,8 @@ function uploadimgdel5(){
                             </c:if>
                         </c:forEach>                    
                         <c:if test="${((pageNav.rows_per_page*pageNav.pages_per_block) lt pageNav.totalRows) and (pageNav.pageBlock ne pageNav.lastPageBlock) }">
-                            <a href="mypage_review.do?pageNum=${pageNav.pageBlock*pageNav.pages_per_block+1}&pageBlock=${pageNav.pageBlock+1}">다음페이지&gt;</a>&nbsp;
-                            <a href="mypage_review.do?pageNum=${pageNav.totalPageNum}&pageBlock=${pageNav.lastPageBlock}">&gt;&gt;</a>
+                            <a href="mypage_review.do?pageNum=${pageNav.pageBlock*pageNav.pages_per_block+1}&pageBlock=${pageNav.pageBlock+1}"><input type="button" id="next" value="다음"></a>&nbsp;
+                            <a href="mypage_review.do?pageNum=${pageNav.totalPageNum}&pageBlock=${pageNav.lastPageBlock}"><input type="button" id="end" value="마지막"></a>
                         </c:if>                                                          
                     </td>
                 </tr>

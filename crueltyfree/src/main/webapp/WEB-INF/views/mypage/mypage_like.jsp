@@ -284,6 +284,23 @@
     #no_coupon{border-bottom:0px;text-align: center; padding: 60px 0; color: #4a4a4a; font-weight: bold;}
 	.hoverClass{color: #4a4a4a;}
     .hoverClass:hover{color: #7d99a4;}
+	#next{
+		background-color:#7d99a4;
+		border :0;
+		color:white;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
+	#end{
+		background-color:rgb(221, 219, 214);
+		border :0;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
 </style>
 </head>
 <script>
@@ -419,9 +436,9 @@ function deletelikelistall() {
                     <td id="td_paging" colspan="6">
                     
                         <c:if test="${pageNav.pageNum > pageNav.pages_per_block}">
-				            <a href="mypage_like.do?pageNum=1&pageBlock=1">&lt;&lt;</a>&nbsp;
+				            <a href="mypage_like.do?pageNum=1&pageBlock=1"><input type="button" id="end" value="처음"></a>&nbsp;
 				            <a href="mypage_like.do?pageNum=${(pageNav.pageBlock - 2)*pageNav.pages_per_block + 1}&pageBlock=${pageNav.pageBlock-1}">
-				                &lt;이전페이지
+				                <input type="button" id="next" value="이전">
 				            </a>    
 				        </c:if>				        
 				        <c:forEach var="i" begin="${(pageNav.pageBlock-1)*pageNav.pages_per_block + 1}" end="${pageNav.pageBlock*pageNav.pages_per_block}">
@@ -429,7 +446,7 @@ function deletelikelistall() {
 				                <c:choose>
 				                    <c:when test = "${pageNav.pageNum eq i}">
 				                        <a href="mypage_like.do?pageNum=${i}&pageBlock=${pageNav.pageBlock}">
-				                            <span style="color:red">${i}&nbsp;</span>
+				                            <span style="color:#7d99a4;">${i}&nbsp;</span>
 				                        </a>
 				                    </c:when>
 				                    <c:otherwise>
@@ -439,8 +456,8 @@ function deletelikelistall() {
 				            </c:if>
 				        </c:forEach>				    
 				        <c:if test="${((pageNav.rows_per_page*pageNav.pages_per_block) lt pageNav.totalRows) and (pageNav.pageBlock ne pageNav.lastPageBlock) }">
-				            <a href="mypage_like.do?pageNum=${pageNav.pageBlock*pageNav.pages_per_block+1}&pageBlock=${pageNav.pageBlock+1}">다음페이지&gt;</a>&nbsp;
-				            <a href="mypage_like.do?pageNum=${pageNav.totalPageNum}&pageBlock=${pageNav.lastPageBlock}">&gt;&gt;</a>
+				            <a href="mypage_like.do?pageNum=${pageNav.pageBlock*pageNav.pages_per_block+1}&pageBlock=${pageNav.pageBlock+1}"><input type="button" id="next" value="다음"></a>&nbsp;
+				            <a href="mypage_like.do?pageNum=${pageNav.totalPageNum}&pageBlock=${pageNav.lastPageBlock}"><input type="button" id="end" value="마지막"></a>
 				        </c:if>                                                          
                     </td>
                 </tr>
