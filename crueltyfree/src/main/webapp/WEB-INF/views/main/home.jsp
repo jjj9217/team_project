@@ -224,7 +224,7 @@ function HeaderBest(sort_salecount) {
 		</a>
 	</article>
 	<article id="s_ad2" class="s_ad">
-		<a href="#">
+		<a href="${pageContext.request.contextPath}/one_inq/notice_view.do?prdNum=2">
 			<img src="${pageContext.request.contextPath}/resources/img/home_s_ad2.png" style="width: 500px;" />
 		</a>
 	</article>
