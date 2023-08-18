@@ -465,6 +465,23 @@ $(function(){
     #strong{color:#7d99a4; font-weight:bold;}  
 	.hoverClass{color: #4a4a4a;}
     .hoverClass:hover{color: #7d99a4;}
+	#next{
+		background-color:#7d99a4;
+		border :0;
+		color:white;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
+	#end{
+		background-color:rgb(221, 219, 214);
+		border :0;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
 </style>
 </head>
 
@@ -626,9 +643,9 @@ $(function(){
 	<!-- 페이지 네비게이션 -->
 	<div class="pageing">
 	<c:if test="${mPageNav.pageNum > mPageNav.pages_per_block}">
-	<a href="#" onclick="pageNav(1,1, 'empty')">&lt;&lt;</a>&nbsp;
+	<a href="#" onclick="pageNav(1,1, 'empty')"><input type="button" id="end" value="처음"></a>&nbsp;
 	<a href="#" onclick="pageNav(${(mPageNav.pageBlock - 2)*mPageNav.pages_per_block + 1},${mPageNav.pageBlock-1}, 'empty')">
-		&lt;이전페이지
+		<input type="button" id="next" value="이전">
 	</a>   	
 	</c:if>
 	
@@ -637,7 +654,7 @@ $(function(){
 	<c:choose>
 	<c:when test = "${mPageNav.pageNum eq i}">
 	<a href="#" onclick="pageNav(${i},${mPageNav.pageBlock}, 'empty')">
-	<span style="color:red">${i}&nbsp;</span>
+	<span style="color:#7d99a4;">${i}&nbsp;</span>
 	</a>
 	</c:when>
 	<c:otherwise>
@@ -648,8 +665,8 @@ $(function(){
 	</c:forEach>
 	
 	<c:if test="${((mPageNav.rows_per_page*mPageNav.pages_per_block) lt mPageNav.totalRows) and (mPageNav.pageBlock ne mPageNav.lastPageBlock) }">
-	<a href="#" onclick="pageNav(${mPageNav.pageBlock*mPageNav.pages_per_block+1},${mPageNav.pageBlock+1}, 'empty')">다음페이지&gt;</a>&nbsp;
-	<a href="#" onclick="pageNav(${mPageNav.totalPageNum},${mPageNav.lastPageBlock}, 'empty')">&gt;&gt;</a>
+	<a href="#" onclick="pageNav(${mPageNav.pageBlock*mPageNav.pages_per_block+1},${mPageNav.pageBlock+1}, 'empty')"><input type="button" id="next" value="다음"></a>&nbsp;
+	<a href="#" onclick="pageNav(${mPageNav.totalPageNum},${mPageNav.lastPageBlock}, 'empty')"><input type="button" id="end" value="마지막"></a>
 	</c:if>
 	</div>  
     <div class="clear"></div>
