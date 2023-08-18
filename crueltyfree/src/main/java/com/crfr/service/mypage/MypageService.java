@@ -112,4 +112,41 @@ public interface MypageService {
 	default List<ReviewVo> reviewRegList2(ReviewVo vo) {return null;}
 	
 	default MemberVo updateMemberInfo(MemberVo memberVo) {return null;}
+	
+	default int deletereviewimg0(FileVo vo) {return 0;}
+	
+	default int deletereviewimg1(FileVo vo) {return 0;}
+	
+	default int deletereviewimg2(FileVo vo) {return 0;}
+	
+	default int deletereviewimg3(FileVo vo) {return 0;}
+	
+	default int deletereviewimg4(FileVo vo) {return 0;}
+	
+	default int checkreviewimg0(FileVo vo) {return 0;}
+	
+	default int checkreviewimg1(FileVo vo) {return 0;}
+	
+	default int checkreviewimg2(FileVo vo) {return 0;}
+	
+	default int checkreviewimg3(FileVo vo) {return 0;}
+	
+	default int checkreviewimg4(FileVo vo) {return 0;}
+	
+	default int upinsertreviewimg0(MultipartFile[] attachedFile,
+			   HttpServletRequest request, int searchReview_idx) {return 0;}
+	
+	default int upinsertreviewimg1(MultipartFile[] attachedFile,
+			   HttpServletRequest request, int searchReview_idx) {return 0;}
+	
+	default int upinsertreviewimg2(MultipartFile[] attachedFile,
+			   HttpServletRequest request, int searchReview_idx) {return 0;}
+	
+	default int upinsertreviewimg3(MultipartFile[] attachedFile,
+			   HttpServletRequest request, int searchReview_idx) {return 0;}
+	
+	default int upinsertreviewimg4(MultipartFile[] attachedFile,
+			   HttpServletRequest request, int searchReview_idx) {return 0;}
+	
+	
 }

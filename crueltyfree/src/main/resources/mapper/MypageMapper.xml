@@ -212,11 +212,69 @@
                 where review_idx=#{review_idx}
                   and member_idx=#{member_idx}   
     </update>
+            
+    <!-- 리뷰 수정에서 사진파일이 변경될 경우 삭제 -->    
     
+    <!--  리뷰 수정에서 사진파일이 새로 삽입될 경우 사진 삽입 0번방~4번방까지 -->
+    <insert id="upinsertreviewimg0" parameterType="FileVo">
+        insert into file  (review_idx, 
+                           originFile, 
+                           saveFile)
+                    values                            
+                          (                          
+                            #{review_idx},               
+                            #{originFile},
+                            #{saveFile}                           
+                           ) 
+    </insert>
     
+    <insert id="upinsertreviewimg1" parameterType="FileVo">
+        insert into file  (review_idx, 
+                           originFile, 
+                           saveFile)
+                    values                            
+                          (                          
+                            #{review_idx},               
+                            #{originFile},
+                            #{saveFile}                           
+                           ) 
+    </insert>
     
+    <insert id="upinsertreviewimg2" parameterType="FileVo">
+        insert into file  (review_idx, 
+                           originFile, 
+                           saveFile)
+                    values                            
+                          (                          
+                            #{review_idx},               
+                            #{originFile},
+                            #{saveFile}                           
+                           ) 
+    </insert>
     
-    <!-- 리뷰 수정에서 사진파일이 변경될 경우 삭제 -->
+    <insert id="upinsertreviewimg3" parameterType="FileVo">
+        insert into file  (review_idx, 
+                           originFile, 
+                           saveFile)
+                    values                            
+                          (                          
+                            #{review_idx},               
+                            #{originFile},
+                            #{saveFile}                           
+                           ) 
+    </insert>
+    
+    <insert id="upinsertreviewimg4" parameterType="FileVo">
+        insert into file  (review_idx, 
+                           originFile, 
+                           saveFile)
+                    values                            
+                          (                          
+                            #{review_idx},               
+                            #{originFile},
+                            #{saveFile}                           
+                           ) 
+    </insert>
       
     <!--  리뷰 수정에서 사진파일이 변경될 경우 사진 업데이트 0번방~4번방까지 -->
     
@@ -256,9 +314,52 @@
     </update>
     
     
+    <!--  리뷰 수정에서 사진파일 삭제될경우 사진 삭제 0번방~4번방까지 -->   
+    <delete id="deletereviewimg0" parameterType="FileVo">
+        delete from File                
+                where file_idx = #{file_idx}
+    </delete>
     
+    <delete id="deletereviewimg1" parameterType="FileVo">
+        delete from File                
+                where file_idx = #{file_idx}
+    </delete>
     
+    <delete id="deletereviewimg2" parameterType="FileVo">
+        delete from File                
+                where file_idx = #{file_idx}
+    </delete>
     
+    <delete id="deletereviewimg3" parameterType="FileVo">
+        delete from File                
+                where file_idx = #{file_idx}
+    </delete>
+    
+    <delete id="deletereviewimg4" parameterType="FileVo">
+        delete from File                
+                where file_idx = #{file_idx}
+    </delete>
+    
+    <!--  리뷰 수정에서 사진파일 삭제될경우 사진이 있는지 체크한 뒤 삭제하게 0번방~4번방까지 -->
+    <select id="checkreviewimg0" parameterType="FileVo" resultType="_int">        
+        select count(*) from file where file_idx =#{file_idx}
+    </select>
+    
+    <select id="checkreviewimg1" parameterType="FileVo" resultType="_int">        
+        select count(*) from file where file_idx =#{file_idx}
+    </select>
+    
+    <select id="checkreviewimg2" parameterType="FileVo" resultType="_int">        
+        select count(*) from file where file_idx =#{file_idx}
+    </select>
+    
+    <select id="checkreviewimg3" parameterType="FileVo" resultType="_int">        
+        select count(*) from file where file_idx =#{file_idx}
+    </select>
+    
+    <select id="checkreviewimg4" parameterType="FileVo" resultType="_int">        
+        select count(*) from file where file_idx =#{file_idx}
+    </select>
     
     
     
