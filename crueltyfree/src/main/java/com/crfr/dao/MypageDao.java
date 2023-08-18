@@ -245,5 +245,72 @@ public class MypageDao {
 			 vo = sqlSession.selectOne(MAPPER+".selectMemberInfo", memberVo);
 		 }
 		 return vo;
-	}	
+	}
+	
+	
+	
+	//리뷰번호 삭제하기
+	public int deletereviewimg0(FileVo vo) {
+		return sqlSession.delete(MAPPER+".deletereviewimg0", vo);
+	}
+	
+	public int deletereviewimg1(FileVo vo) {
+		return sqlSession.delete(MAPPER+".deletereviewimg1", vo);
+	}
+	
+	public int deletereviewimg2(FileVo vo) {
+		return sqlSession.delete(MAPPER+".deletereviewimg2", vo);
+	}
+	
+	public int deletereviewimg3(FileVo vo) {
+		return sqlSession.delete(MAPPER+".deletereviewimg3", vo);
+	}
+	
+	public int deletereviewimg4(FileVo vo) {
+		return sqlSession.delete(MAPPER+".deletereviewimg4", vo);
+	}
+	
+	public int checkreviewimg0(FileVo vo) {
+		return sqlSession.selectOne(MAPPER+".checkreviewimg0", vo);
+	}
+	
+	public int checkreviewimg1(FileVo vo) {
+		return sqlSession.selectOne(MAPPER+".checkreviewimg1", vo);
+	}
+	
+	public int checkreviewimg2(FileVo vo) {
+		return sqlSession.selectOne(MAPPER+".checkreviewimg2", vo);
+	}
+	
+	public int checkreviewimg3(FileVo vo) {
+		return sqlSession.selectOne(MAPPER+".checkreviewimg3", vo);
+	}
+	
+	public int checkreviewimg4(FileVo vo) {
+		return sqlSession.selectOne(MAPPER+".checkreviewimg4", vo);
+	}
+	
+	
+	
+	public int upinsertreviewimg0(FileVo vo) {
+		return sqlSession.insert(MAPPER+".upinsertreviewimg0", vo);
+	}
+	
+	public int upinsertreviewimg1(FileVo vo) {
+		return sqlSession.insert(MAPPER+".upinsertreviewimg1", vo);
+	}
+	
+	public int upinsertreviewimg2(FileVo vo) {
+		return sqlSession.insert(MAPPER+".upinsertreviewimg2", vo);
+	}
+	
+	public int upinsertreviewimg3(FileVo vo) {
+		return sqlSession.insert(MAPPER+".upinsertreviewimg3", vo);
+	}
+	
+	public int upinsertreviewimg4(FileVo vo) {
+		return sqlSession.insert(MAPPER+".upinsertreviewimg4", vo);
+	}
+	
+	
 }

@@ -340,14 +340,20 @@ public class MypageController {
 		int member_idx = mVo.getMember_idx();
 		vo.setMember_nickname(member_nickname);
 		vo.setMember_idx(member_idx);
+		vo.getReview_idx();
 		
-		
-		System.out.println("멤버번호:"+vo.getMember_idx());
-		System.out.println("상품번호:"+vo.getProduct_idx());
-		System.out.println("리뷰스코어:"+vo.getReview_score());
-		System.out.println("리뷰내용:"+vo.getReview_content());
-		System.out.println("멤버닉네임:"+vo.getMember_nickname());
-		
+//		String originFileName0 = attachedFile[0].getOriginalFilename();
+//		String originFileName1 = attachedFile[1].getOriginalFilename();
+//		String originFileName2 = attachedFile[2].getOriginalFilename();
+//		System.out.println("리뷰번호:"+vo.getReview_idx());
+//		System.out.println("멤버번호:"+vo.getMember_idx());
+//		System.out.println("상품번호:"+vo.getProduct_idx());
+//		System.out.println("리뷰스코어:"+vo.getReview_score());
+//		System.out.println("리뷰내용:"+vo.getReview_content());
+//		System.out.println("멤버닉네임:"+vo.getMember_nickname());
+//		System.out.println("0번째방: "+originFileName0+"\n");		
+//		System.out.println("1번째방: "+originFileName1+"\n");
+//		System.out.println("2번째방: "+originFileName2+"\n");
 		// 아래 내용이 성공적으로 이루어지지 않으면 실패페이지 주소 반환
 		String viewpage = "mypage_review_err";
 		
@@ -364,48 +370,166 @@ public class MypageController {
 		
 //		int searchReview_idx = vo.getFile_idx();
 		// 리뷰사진 작성 및 searchReview_idx에서 얻은값까지 같이 건네주기
-		System.out.println("파일번호idx:"+vo.getFile_idx());
+//		System.out.println("파일번호idx:"+vo.getFile_idx());
 //		for(int i = 0; i < attachedFile.length; i++) {
 //		if(!attachedFile[i].isEmpty()) {
 		
 		
 		
 		
-		List<ReviewVo> fileidx = mpList.reviewRegList2(vo);
+		List<ReviewVo> reviewVoList = mpList.reviewRegList2(vo);
 		
 		int i = 0;
-		for(ReviewVo reVo: fileidx) {
-					
+		for(ReviewVo reVo: reviewVoList) {
+			
 			int searchReview_idx = reVo.getFile_idx();
-			System.out.println("파일번호"+reVo.getFile_idx());
+			int searchRealReview_idx = reVo.getReview_idx();
+			FileVo vo2 = new FileVo();
+			vo2.setFile_idx(reVo.getFile_idx()); 
+			
+//			System.out.println("파일번호"+reVo.getFile_idx());
 			if(i==0){
-				
+//				String origin = attachedFile[0].getOriginalFilename();
+//				System.out.println("오리진파일:"+origin);
+				if(!attachedFile[0].isEmpty()) {
+					
+					if( mpDelete.checkreviewimg1(vo2) == 1) {
 				insertreviewimg = mpUpdate.updatereviewimg0(attachedFile,request, searchReview_idx);
 				System.out.println("insertreviewimg의 0번째 값"+insertreviewimg);
 				System.out.println("0번째방 파일번호"+reVo.getFile_idx());
+					}
+					else {//사진 새로 넣기
+						mpInsert.upinsertreviewimg0(attachedFile,request, searchRealReview_idx);
+					}
+				}else {
+					System.out.println("0번째방 사진 안올렸을 때 여기일테고 파일번회:"+vo2.getFile_idx());
+					if( mpDelete.checkreviewimg0(vo2) == 1) {
+						int checkehcek=1;
+						System.out.println("0번 쿼리조회결과:"+ mpDelete.checkreviewimg0(vo2));
+					}else {
+						System.out.println("0번의 제거가 실행되나?");
+						mpDelete.deletereviewimg0(vo2);
+					}
+				}
+				
 			}else if(i==1) {
+				
+				if(!attachedFile[1].isEmpty()) {
+					if( mpDelete.checkreviewimg1(vo2) == 1) {
 				insertreviewimg = mpUpdate.updatereviewimg1(attachedFile,request, searchReview_idx);
 				System.out.println("insertreviewimg의 1번째 값"+insertreviewimg);
 				System.out.println("1번째방 파일번호"+reVo.getFile_idx());
+					}else {//사진 새로 넣기
+						mpInsert.upinsertreviewimg1(attachedFile,request, searchRealReview_idx);
+					}
+				}else {
+					System.out.println("1번째방 사진 안올렸을 때 여기일테고 파일번회:"+vo2.getFile_idx());
+					if( mpDelete.checkreviewimg1(vo2) == 1) {
+						int checkehcek=1;
+						System.out.println("1번 쿼리조회결과:"+ mpDelete.checkreviewimg1(vo2));
+					}else {
+						System.out.println("1번의 제거가 실행되나?");
+					mpDelete.deletereviewimg1(vo2);
+					}
+				}
+				
 			}else if(i==2) {
+				if(!attachedFile[2].isEmpty()) {
+					
+					if( mpDelete.checkreviewimg2(vo2) == 1) {
 				insertreviewimg = mpUpdate.updatereviewimg2(attachedFile,request, searchReview_idx);
 				System.out.println("insertreviewimg의 2번째 값"+insertreviewimg);
+					}
+					else {//사진 새로 넣기
+						mpInsert.upinsertreviewimg2(attachedFile,request, searchRealReview_idx);
+					}
+				}else {
+					System.out.println("2번째방 사진 안올렸을 때 여기일테고 파일번회:"+vo2.getFile_idx());
+					if( mpDelete.checkreviewimg2(vo2) == 1) {
+						int checkehcek=1;
+						System.out.println("2번 쿼리조회결과:"+ mpDelete.checkreviewimg2(vo2));
+					}else {
+						System.out.println("2번의 제거가 실행되나?");
+					mpDelete.deletereviewimg2(vo2);
+					}
+				}
+				
 			}else if(i==3) {
+				if(!attachedFile[3].isEmpty()) {
+						System.out.println("여기가 맞지?");
+					if( mpDelete.checkreviewimg3(vo2) == 1) {
+						System.out.println("여기가 실행되는건가??");
 				insertreviewimg = mpUpdate.updatereviewimg3(attachedFile,request, searchReview_idx);
 				System.out.println("insertreviewimg의 3번째 값"+insertreviewimg);
+					}
+					else {//사진 새로 넣기
+						System.out.println("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆출력");
+						mpInsert.upinsertreviewimg3(attachedFile,request, searchRealReview_idx);
+					}
+				}else {
+					System.out.println("3번째방 사진 안올렸을 때 여기일테고 파일번회:"+vo2.getFile_idx());
+					if( mpDelete.checkreviewimg3(vo2) == 1) {
+						int checkehcek=1;
+						System.out.println("3번 쿼리조회결과:"+ mpDelete.checkreviewimg3(vo2));
+					}else {
+						System.out.println("3번의 제거가 실행되나?");
+					mpDelete.deletereviewimg3(vo2);
+					}
+				}
+				
 			}else{
+				if(!attachedFile[4].isEmpty()) {
+					if( mpDelete.checkreviewimg3(vo2) == 1) {
 				insertreviewimg = mpUpdate.updatereviewimg4(attachedFile,request, searchReview_idx);
 				System.out.println("insertreviewimg의 4번째 값"+insertreviewimg);
+					}
+					else {//사진 새로 넣기
+						mpInsert.upinsertreviewimg4(attachedFile,request, searchRealReview_idx);
+					}
+				}else {
+					System.out.println("4번째방 사진 안올렸을 때 여기일테고 파일번회:"+vo2.getFile_idx());
+					if( mpDelete.checkreviewimg4(vo2) == 1) {
+						int checkehcek=1;
+						System.out.println("4번 쿼리조회결과:"+ mpDelete.checkreviewimg4(vo2));
+					}else {
+						System.out.println("4번의 제거가 실행되나?");
+					mpDelete.deletereviewimg4(vo2);
+					}
+				}				
 			}			
 			i++;
+			//System.out.println("마지막for문 끝내기 전에 쿼리조회결과:"+ mpDelete.deletereviewimg1(vo2));
 		}
 		
+//		int searchRealReview_idx = vo.getReview_idx();
+//		
+//		if(!attachedFile[0].isEmpty()) {
+//			mpInsert.upinsertreviewimg0(attachedFile,request, searchRealReview_idx);			
+//		}
+//		if(!attachedFile[1].isEmpty()) {
+//			mpInsert.upinsertreviewimg1(attachedFile,request, searchRealReview_idx);			
+//		}
+//		if(!attachedFile[2].isEmpty()) {
+//			mpInsert.upinsertreviewimg2(attachedFile,request, searchRealReview_idx);			
+//		}
+//		if(!attachedFile[3].isEmpty()) {
+//			mpInsert.upinsertreviewimg3(attachedFile,request, searchRealReview_idx);			
+//		}
+//		if(!attachedFile[4].isEmpty()) {
+//			mpInsert.upinsertreviewimg4(attachedFile,request, searchRealReview_idx);			
+//		}
 		
+		
+		
+		
+//		System.out.println("insertreviewming=?"+insertreviewimg);
 			
 		if(insertreviewimg!=1){
 			insertreviewimg =1;
 		}
 		
+//		System.out.println("이후 insertreviewming=?"+insertreviewimg);
+//		System.out.println("insertreview=?"+insertreview);
 		// 리뷰내용과 리뷰사진이 둘 다 제대로 sql에 삽입되었다면 맨 처음 나의리뷰페이지 주소값을 반환
 		if (insertreview == 1 && insertreviewimg == 1) {
 			viewpage = "redirect:/mypage/mypage_review.do";
@@ -855,6 +979,13 @@ public class MypageController {
 		
 		// 내가 구매한 목록 중 리뷰를 작성한 목록을 가져오는 요청에 대한 처리를 위한 MypageListService 클래스 이용
 		List<ProductInqVo> inqproductList = mpList.selectproductinqList(member_idx);
+		for(ProductInqVo vo1 : inqproductList) {
+			if(vo1.getProduct_inq_regDate() != null) {
+				Date orderDate = vo1.getProduct_inq_regDate();
+				Date adjustedDate = new Date(orderDate.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초로 변환하여 뺌
+				vo1.setProduct_inq_regDate(adjustedDate);				
+			}
+		}		
 		model.addAttribute("inqproductList", inqproductList);
 							
 		// 총 레코드 수를 가져오기 위해 MypageCountService클래스 이용

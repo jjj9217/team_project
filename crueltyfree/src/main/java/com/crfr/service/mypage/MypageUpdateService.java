@@ -78,7 +78,8 @@ public class MypageUpdateService implements MypageService {
 				vo.setSaveFile(saveFileName);				
 				vo.setFile_idx(searchReview_idx);
 				result = dao.updatereviewimg0(vo);
-				}			
+				}
+			
 		return result;}
 	
 	//1
