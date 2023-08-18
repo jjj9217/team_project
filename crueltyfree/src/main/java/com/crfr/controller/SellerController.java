@@ -47,7 +47,8 @@ public class SellerController {
 	pfindProductFileIdx,
 	pDeleteProduct,
 	pUpdateDeliveryState1, pUpdateDeliveryState2,
-	pUpdateProductCount, cOrderProductList2;
+	pUpdateProductCount, cOrderProductList2,
+	pReInsertProduct;
 	
 	MypageService mpList, mpCount, mpInsert;
 	
@@ -333,7 +334,23 @@ public class SellerController {
 			
 		return viewPage;
 	}
-	
+
+	// 상품 재등록 요청 처리
+	@PostMapping("/update_pro_process.do")
+	public String update_pro_process(@RequestParam("product_idx") String product_idx, HttpServletRequest request) {
+		//request객체는 세션에 저장된 회원번호를 알아내기 위해 필요함
+
+		//글삭제 요청 처리를 위해 BoardFileDeleteService 클래스 이용
+		int result1 = pReInsertProduct.reInsertProduct(product_idx, request);
+
+		String viewPage = "seller/check_pro";
+		
+		if(result1 == 1) {//요청 성공 시
+			viewPage = "redirect:/seller/check_pro.do";
+		}
+			
+		return viewPage;
+	}
 	
 	
 	

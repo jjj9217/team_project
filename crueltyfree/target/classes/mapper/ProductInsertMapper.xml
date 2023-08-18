@@ -253,5 +253,11 @@
 		update product set product_saleCount = product_saleCount + #{count}
 			where product_idx = #{product_idx}
 	</update>
+	
+	<!-- 상품 재등록 업데이트 구문 -->
+	<update id="reInsertProduct" parameterType="string">
+		update product set product_del_or_not = 1
+			where product_idx = #{product_idx}
+	</update>	
 
 </mapper>

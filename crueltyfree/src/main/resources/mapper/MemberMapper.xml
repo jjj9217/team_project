@@ -39,11 +39,11 @@
 	</select>
 		
 	<insert id="insertCouponJoin" parameterType="map">
-		insert into coupon (member_idx, coupon_expDate, coupon_discount, coupon_limit)
-		values (#{member_idx}, #{coupon_expDate},0.10,10000)
+		insert into coupon (member_idx, coupon_expDate, coupon_discount, coupon_limit, coupon_name)
+		values (#{member_idx}, #{coupon_expDate},0.10,10000,'신규가입 환영 10%할인 쿠폰')
 	</insert>
 	<insert id="insertCouponReview" parameterType="map">
-		insert into coupon (member_idx, coupon_expDate, coupon_discount, coupon_limit)
-		values (#{member_idx}, #{coupon_expDate},0.05,15000)
+		insert into coupon (member_idx, coupon_expDate, coupon_discount, coupon_limit, coupon_name)
+		values (#{member_idx}, #{coupon_expDate},0.05,15000,'첫 리뷰 작성 5%할인 쿠폰')
 	</insert>				
 </mapper>

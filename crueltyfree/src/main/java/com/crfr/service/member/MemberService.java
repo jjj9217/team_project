@@ -13,7 +13,7 @@ public interface MemberService {
 	default MemberVo findPw(String member_id, String member_name, String member_handphone) {return null;}
 	default MemberVo find_pw_edit(MemberVo memberVo) {return null;}
 	default int selectMemberIdx(MemberVo memberVo) {return 0;}
-	default int selectCountMemberIdx_review(MemberVo memberVo) {return 0;}
+	default int selectCountMemberIdxReview(MemberVo memberVo) {return 0;}
 	default int insertCouponJoin(int member_idx, Date date) {return 0;}
 	default int insertCouponReview(int member_idx, Date date) {return 0;}
 }
