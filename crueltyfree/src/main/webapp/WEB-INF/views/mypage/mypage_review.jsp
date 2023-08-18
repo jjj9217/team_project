@@ -86,7 +86,7 @@
 
     .tit_area{
         overflow: hidden;
-        margin-top: 30px;
+        margin-bottom: 30px;
         position: relative;
         width: 100%;
         font-size: 0;
@@ -96,8 +96,8 @@
 
     .tit_area .tit{
         float: left;
-        color: #333;
-        font-size: 20px;
+        color: black;
+        font-size: 24px;
         line-height: 30px;
     }
 

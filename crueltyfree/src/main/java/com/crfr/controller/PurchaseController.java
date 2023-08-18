@@ -25,7 +25,7 @@ import com.crfr.service.productView.ProductViewService;
 import com.crfr.service.purchase.PurchaseService;
 import com.crfr.vo.BasketListVo;
 import com.crfr.vo.BasketVo;
-import com.crfr.vo.CertificationsVo;
+import com.crfr.vo.CouponVo;
 import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.MemberVo;
@@ -371,6 +371,12 @@ public class PurchaseController {
 		    }//end of if - cookie null값 조건문
 		}			
 		model.addAttribute("client_num", client_num);
+		
+//		//쿠폰 목록 받아오기
+//		if(vo != null) {
+//			int member_idx = vo.getMember_idx();
+//			List<CouponVo> couponList = oSelectCouponList.selectCouponList(member_idx);
+//		}
 		
 		//배송지 목록 받아오기	
 		List<DeliveryVo> deliveryList = new ArrayList<>(); // 빈 리스트로 초기화
