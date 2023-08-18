@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>CrueltyFree</title>
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 $(function(){

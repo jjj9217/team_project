@@ -186,20 +186,49 @@
         padding-left: 15px;
     }
 
+	
+	
+	.coupon_border {
+		width: 122px;
+		height: 58px;
+		background-color: #7d99a4;
+		border-radius: 15px;
+		margin-left: 20px;
+		padding-top: 3px;
+	}
+	
+	.coupon_inside {
+		width: 100px;
+		height: 44px;
+		background-color: #ffffff;
+		border-radius: 12px;
+		margin-left: 3px;
+		padding-top: 10px;
+	}
+	
+	.coupon_inside a {
+		font-size: 20px;
+		font-weight: bold;
+		color: #000000;
+	}
 
-
-    
+   
 
     .buy_list{
         width: 100%;
-        height:340px;
+        height: 150px;
         text-align: center;
         margin-top:30px;
+        border-bottom: 1px solid #a4a4a4;
+    }
+    
+	.buy_list td {
+        font-size: 14px;
     }
 
 
      .paging{
-        width:1020px;
+        width: 820px;
         height:150px;
         float:left;
         display: flex;
@@ -267,17 +296,13 @@
         <div class="tit_area">
             <h2 class="tit">쿠폰</h2>
         </div>
-        
-        
 
-        
-        
         <table class="buy_list">
             <colgroup>
-                <col style="width: 25%;">
+                <col style="width: 20%;">
                 <col style="width: 45%;">
                 <col style="width: 15%;">
-                <col style="width: 15%;">
+                <col style="width: 20%;">
             </colgroup>     
             <thead>
                 <tr>
@@ -287,19 +312,25 @@
                     <th class="th_day top bottom" scope="col">사용기간</th>
                 </tr>
             </thead>
-            <tbody>            
+            <tbody>
             <c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
             <c:choose>
                 <c:when test="${!empty couponList[rowNum-1].coupon_idx}">
 					<tr>
 	                    <td>
-	                    	<fmt:formatNumber value="${couponList[rowNum-1].coupon_discount}" type="percent"/>
+	                    	<div class="coupon_border">
+	                    		<div class="coupon_inside">
+	                    			<a>
+	                    				<fmt:formatNumber value="${couponList[rowNum-1].coupon_discount}" type="percent"/>
+	                    			</a>
+	                    		</div>
+	                    	</div>
 	                    </td>
 	                    <td>${couponList[rowNum-1].coupon_name}</td>
-	                    <td>
-	                    <fmt:formatNumber value="${couponList[rowNum-1].coupon_limit}" pattern="###,###" />원 이상</td>
-	                    <td>
-	                    <fmt:formatDate value="${couponList[rowNum-1].coupon_expDate}" type="date" pattern="yyyy.MM.dd" />까지
+	                    <td style="color: #4a4a4a;">
+	                    	<fmt:formatNumber value="${couponList[rowNum-1].coupon_limit}" pattern="###,###" />원 이상</td>
+	                    <td style="color: #4a4a4a;">
+	                    	<fmt:formatDate value="${couponList[rowNum-1].coupon_expDate}" type="date" pattern="yyyy.MM.dd" />까지
 	                    </td>
 	                </tr>
                 </c:when>                
@@ -322,9 +353,9 @@
                     <td id="td_paging" colspan="6">
                     
                         <c:if test="${pageNav.pageNum > pageNav.pages_per_block}">
-                            <a href="mypage_coupon.do?pageNum=1&pageBlock=1">&lt;&lt;</a>&nbsp;
+                            <a href="mypage_coupon.do?pageNum=1&pageBlock=1"><input type="button" id="end" value="처음"></a>&nbsp;
                             <a href="mypage_coupon.do?pageNum=${(pageNav.pageBlock - 2)*pageNav.pages_per_block + 1}&pageBlock=${pageNav.pageBlock-1}">
-                                &lt;이전페이지
+                                <input type="button" id="next" value="이전">
                             </a>    
                         </c:if>                     
                         <c:forEach var="i" begin="${(pageNav.pageBlock-1)*pageNav.pages_per_block + 1}" end="${pageNav.pageBlock*pageNav.pages_per_block}">
@@ -332,7 +363,7 @@
                                 <c:choose>
                                     <c:when test = "${pageNav.pageNum eq i}">
                                         <a href="mypage_coupon.do?pageNum=${i}&pageBlock=${pageNav.pageBlock}">
-                                            <span style="color:red">${i}&nbsp;</span>
+                                            <span style="color:#7d99a4">${i}&nbsp;</span>
                                         </a>
                                     </c:when>
                                     <c:otherwise>
@@ -342,8 +373,8 @@
                             </c:if>
                         </c:forEach>                    
                         <c:if test="${((pageNav.rows_per_page*pageNav.pages_per_block) lt pageNav.totalRows) and (pageNav.pageBlock ne pageNav.lastPageBlock) }">
-                            <a href="mypage_coupon.do?pageNum=${pageNav.pageBlock*pageNav.pages_per_block+1}&pageBlock=${pageNav.pageBlock+1}">다음페이지&gt;</a>&nbsp;
-                            <a href="mypage_coupon.do?pageNum=${pageNav.totalPageNum}&pageBlock=${pageNav.lastPageBlock}">&gt;&gt;</a>
+                            <a href="mypage_coupon.do?pageNum=${pageNav.pageBlock*pageNav.pages_per_block+1}&pageBlock=${pageNav.pageBlock+1}"><input type="button" id="next" value="다음"></a>&nbsp;
+                            <a href="mypage_coupon.do?pageNum=${pageNav.totalPageNum}&pageBlock=${pageNav.lastPageBlock}"><input type="button" id="end" value="마지막"></a>
                         </c:if>                                                          
                     </td>
                 </tr>
