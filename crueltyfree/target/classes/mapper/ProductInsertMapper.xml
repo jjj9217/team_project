@@ -250,7 +250,8 @@
 	
 	<!-- 상품 총 수량 업데이트 구문 -->
 	<update id="updateProductCount" parameterType="map">
-		update product set product_saleCount = product_saleCount + #{count}
+		update product set product_saleCount = product_saleCount + #{count},
+			product_capa = product_capa - #{count}
 			where product_idx = #{product_idx}
 	</update>
 	

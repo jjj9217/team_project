@@ -252,7 +252,7 @@
 
 	.prd_nickname {
 		text-align: center;
-		color: #4a4a4a;
+		color: #6b6b6b;
 		font-size: 13px;
 		font-weight: bold;
 		margin-bottom: 5px;
@@ -260,12 +260,19 @@
 
 	.prd_name {
 		width: 180px;
-		height: 55px;
-		font-size: 15px;
+		height: 50px;
+		display:-webkit-box; 
+	    word-wrap: break-word; 
+	    -webkit-line-clamp:2; 
+	    -webkit-box-orient: vertical; 
+	    overflow: hidden; 
+	    text-overflow: ellipsis;
+	    line-height: 25px;
+	    font-size: 14.5px;
     }
     
 	.prd_name a {
-		color: #000000;
+		color: #4a4a4a;
 	}
 
     .prd_title {     
@@ -741,14 +748,14 @@ function ProductDetail(category_code, category_code_small,
 		                            </a>
 		                        </div>
 		                        <p class="prd_price">
-		                        <c:choose>
-								<c:when test="${productList[rowNum-1].product_capa == 0}">
-								<span class="soldOutNotice">[SOLD OUT] 일시품절</span>
-								</c:when>
-								<c:otherwise>
-								<fmt:formatNumber value="${productList[rowNum-1].product_price}" pattern="###,###" />원
-								</c:otherwise>
-								</c:choose>
+			                        <c:choose>
+										<c:when test="${productList[rowNum-1].product_capa == 0}">
+											<span class="soldOutNotice">[SOLD OUT] 일시품절</span>
+										</c:when>
+										<c:otherwise>
+											<fmt:formatNumber value="${productList[rowNum-1].product_price}" pattern="###,###" />원
+										</c:otherwise>
+									</c:choose>
 		                        </p>     
 		                   </div>
 		                </li>
