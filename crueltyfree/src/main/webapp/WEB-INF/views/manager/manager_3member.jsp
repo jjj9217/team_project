@@ -555,9 +555,21 @@ $(function(){
 		</article>
 		<article class="regi_right">
 			<select class="regi_box2" name="member_grade" >
-				<option value="0">회원</option>
+			<c:if test="${memSelectList[rowNum-1].member_grade eq '0'}">
+				<option value="0" selected>회원</option>
 				<option value="1">판매자</option>
 				<option value="2">관리자</option>
+			</c:if>
+			<c:if test="${memSelectList[rowNum-1].member_grade eq '1'}">
+				<option value="0">회원</option>
+				<option value="1" selected>판매자</option>
+				<option value="2">관리자</option>
+			</c:if>
+			<c:if test="${memSelectList[rowNum-1].member_grade eq '2'}">
+				<option value="0">회원</option>
+				<option value="1">판매자</option>
+				<option value="2" selected>관리자</option>
+			</c:if>
 			</select>
 		</article>
 	</div>
