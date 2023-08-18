@@ -277,7 +277,7 @@
 
 	.prd_nickname {
 		text-align: center;
-		color: #4a4a4a;
+		color: #6b6b6b;
 		font-size: 13px;
 		font-weight: bold;
 		margin-bottom: 5px;
@@ -285,12 +285,19 @@
 
 	.prd_name {
 		width: 180px;
-		height: 55px;
-		font-size: 15px;
+		height: 50px;
+		display:-webkit-box; 
+	    word-wrap: break-word; 
+	    -webkit-line-clamp:2; 
+	    -webkit-box-orient: vertical; 
+	    overflow: hidden; 
+	    text-overflow: ellipsis;
+	    line-height: 25px;
+	    font-size: 14.5px;
     }
     
 	.prd_name a {
-		color: #000000;
+		color: #4a4a4a;
 	}
 
     .prd_title {     
@@ -336,6 +343,23 @@
 	#clear{clear: both;}
 	.soldOutNotice{
 	color:rgb(216, 98, 98); font-size:16px;
+	}
+	#next{
+		background-color:#7d99a4;
+		border :0;
+		color:white;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
+	#end{
+		background-color:rgb(221, 219, 214);
+		border :0;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
 	}
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -959,7 +983,9 @@ function ProductDel(searchWord, category_code, category_code_small,
                         </a>
                     </c:when>
                     <c:otherwise>
-                        <a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}', '${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}', '${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${i}', '${pageNav.pageBlock}')">${i}&nbsp;</a>
+	    				<a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${i}', '${pageNav.pageBlock}')">
+	    					<span class="other">${i}&nbsp;</span>
+	    				</a>
                     </c:otherwise>
             </c:choose>
             </c:if>

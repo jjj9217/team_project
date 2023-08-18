@@ -1,5 +1,6 @@
 package com.crfr.dao;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.crfr.vo.BasketVo;
+import com.crfr.vo.CouponVo;
 import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.OrderVo;
 import com.crfr.vo.PayVo;
@@ -94,4 +96,17 @@ public class OrderDao {
 	public int selectCountMember(Map<String, String> map) {
 		return sqlSession.selectOne(MAPPER+".selectCountMember", map);
 	}
+	
+	//쿠폰리스트 불러오기
+	public List<CouponVo> selectCouponList(int member_idx,Date today) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("member_idx", member_idx);
+		map.put("coupon_expDate", today);
+		return sqlSession.selectList(MAPPER+".selectCouponList", map);
+	}
+	
+	//사용한 쿠폰 삭제
+	public int deleteCoupon(String coupon_idx){
+		return sqlSession.delete(MAPPER+".deleteCoupon",coupon_idx);
+	}	
 }

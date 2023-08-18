@@ -111,5 +111,14 @@
 		and member_handphone=#{member_handphone}
 	</select>	
 	
-		
+	<!-- 쿠폰 불러오기 -->
+	<select id="selectCouponList" parameterType="map" resultType="CouponVo">
+		select * from `coupon` where member_idx=#{member_idx}
+		and coupon_expDate &gt; #{coupon_expDate} 
+	</select>	
+	
+	<!-- 사용 쿠폰 삭제 -->
+	<delete id="deleteCoupon" parameterType="string">
+		delete from `coupon` where coupon_idx = #{coupon_idx}
+	</delete>			
 </mapper>

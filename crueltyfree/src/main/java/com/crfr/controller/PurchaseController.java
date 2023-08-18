@@ -1,6 +1,7 @@
 package com.crfr.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,8 @@ public class PurchaseController {
 	PurchaseService bSelectCount, bSelectList, bPlusBasketCount, bMinusBasketCount, bUpdateBasketCount,
 	bBasketInsert, bBasketDeleteOne, oSelectBasket, oSelectDeliveryCount,oSelectDeliveryList,
 	oInsertDelivery, oSelectDeliveryVo, oInsertOrder, oSelectOrderIdx, oInsertPay, oDeleteBasket,
-	oImportService, oInsertOrderProduct, oUpdateOrder, oUpdatePay, mSelectCountMember;
+	oImportService, oInsertOrderProduct, oUpdateOrder, oUpdatePay, mSelectCountMember, oSelectCouponList,
+	oDeleteCoupon;
 	
 	@Setter(onMethod_={ @Autowired })	
 	ProductViewService pSelectView, pSelectThumbnail;
@@ -372,11 +374,21 @@ public class PurchaseController {
 		}			
 		model.addAttribute("client_num", client_num);
 		
-//		//쿠폰 목록 받아오기
-//		if(vo != null) {
-//			int member_idx = vo.getMember_idx();
-//			List<CouponVo> couponList = oSelectCouponList.selectCouponList(member_idx);
-//		}
+		//쿠폰 목록 받아오기
+		List<CouponVo> couponList = null;
+		int couponCouponCount = 0;
+		if(vo != null) {
+			int member_idx = vo.getMember_idx();
+			Date today = new Date();
+			System.out.println(today);
+			couponList = oSelectCouponList.selectCouponList(member_idx, today);
+			
+			for(CouponVo couponVo : couponList) {
+				couponCouponCount++;
+			}
+		}
+		model.addAttribute("couponCouponCount", couponCouponCount);
+		model.addAttribute("couponList", couponList);
 		
 		//배송지 목록 받아오기	
 		List<DeliveryVo> deliveryList = new ArrayList<>(); // 빈 리스트로 초기화
@@ -473,7 +485,7 @@ public class PurchaseController {
 		HttpSession session = request.getSession();
 		MemberVo memberVo = (MemberVo)session.getAttribute("member");		
 		
-		String[] orderForm = new String[19];
+		String[] orderForm = new String[20];
 		orderForm[0] = request.getParameter("client_num");
 		orderForm[1] = request.getParameter("order_num");
 		orderForm[2] = request.getParameter("order_name");
@@ -493,6 +505,7 @@ public class PurchaseController {
 		orderForm[16] = request.getParameter("delivery_address2");
 		orderForm[17] = request.getParameter("pay_uid");
 		orderForm[18] = request.getParameter("buyer_email");
+		orderForm[19] = request.getParameter("coupon_idx");
 		
 		for(String test : orderForm) {
 			System.out.println("테스트: "+test);
@@ -607,6 +620,10 @@ public class PurchaseController {
 				}				
 			}
 			
+			//사용한 쿠폰삭제
+			if(!orderForm[19].equals("0")) {
+				int deleteCouponResult = oDeleteCoupon.deleteCoupon(orderForm[19]);
+			}
 			
 			//모델에 추가
 			model.addAttribute("orderResult", orderVo); 

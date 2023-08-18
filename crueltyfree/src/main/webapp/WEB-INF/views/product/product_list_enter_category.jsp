@@ -252,7 +252,7 @@
 
 	.prd_nickname {
 		text-align: center;
-		color: #4a4a4a;
+		color: #6b6b6b;
 		font-size: 13px;
 		font-weight: bold;
 		margin-bottom: 5px;
@@ -260,12 +260,19 @@
 
 	.prd_name {
 		width: 180px;
-		height: 55px;
-		font-size: 15px;
+		height: 50px;
+		display:-webkit-box; 
+	    word-wrap: break-word; 
+	    -webkit-line-clamp:2; 
+	    -webkit-box-orient: vertical; 
+	    overflow: hidden; 
+	    text-overflow: ellipsis;
+	    line-height: 25px;
+	    font-size: 14.5px;
     }
     
 	.prd_name a {
-		color: #000000;
+		color: #4a4a4a;
 	}
 
     .prd_title {     
@@ -347,8 +354,24 @@
 	.soldOutNotice{
 	color:rgb(216, 98, 98); font-size:16px;
 	}
-	
-	
+	#next{
+		background-color:#7d99a4;
+		border :0;
+		color:white;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
+	#end{
+		background-color:rgb(221, 219, 214);
+		border :0;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}	
+	.other{color:#4a4a4a;}
 </style>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -646,7 +669,7 @@ function ProductDetail(category_code, category_code_small,
 		                <a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=hair_2">
                              <img class="smallimg" src="${pageContext.request.contextPath}/resources/img/hair_2.png" class="head_logo">
                         </a>
-                        <p id="banner_name">클렌징폼/젤</p>
+                        <p id="banner_name">염색약/펌</p>
 		            </li>
 		        </ul>
 		    </div>
@@ -741,14 +764,14 @@ function ProductDetail(category_code, category_code_small,
 		                            </a>
 		                        </div>
 		                        <p class="prd_price">
-		                        <c:choose>
-								<c:when test="${productList[rowNum-1].product_capa == 0}">
-								<span class="soldOutNotice">[SOLD OUT] 일시품절</span>
-								</c:when>
-								<c:otherwise>
-								<fmt:formatNumber value="${productList[rowNum-1].product_price}" pattern="###,###" />원
-								</c:otherwise>
-								</c:choose>
+			                        <c:choose>
+										<c:when test="${productList[rowNum-1].product_capa == 0}">
+											<span class="soldOutNotice">[SOLD OUT] 일시품절</span>
+										</c:when>
+										<c:otherwise>
+											<fmt:formatNumber value="${productList[rowNum-1].product_price}" pattern="###,###" />원
+										</c:otherwise>
+									</c:choose>
 		                        </p>     
 		                   </div>
 		                </li>
@@ -783,7 +806,9 @@ function ProductDetail(category_code, category_code_small,
 	    				</a>
 	    			</c:when>
 	    			<c:otherwise>
-	    				<a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${i}', '${pageNav.pageBlock}')">${i}&nbsp;</a>
+	    				<a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${i}', '${pageNav.pageBlock}')">
+	    					<span class="other">${i}&nbsp;</span>
+	    				</a>
 	    			</c:otherwise>
 	   		</c:choose>
 	    	</c:if>

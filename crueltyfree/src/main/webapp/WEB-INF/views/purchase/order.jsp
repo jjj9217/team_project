@@ -278,6 +278,39 @@ $(function(){
 		kakaopost();
 	});
 	
+	//쿠폰할인 옵션변경
+	$("#coupon").change(function() {
+	    var optionValue = parseFloat($("#coupon").val()); 
+	    var prdPrice = parseInt($("#val_prdPrice").val()); 
+	    var salePrice = prdPrice * optionValue;
+	    var resultPrice = prdPrice - salePrice;
+
+	    
+	    //할인금액을 세팅
+	    $("#val_salePrice").val(salePrice);
+	    //전체금액을 세팅
+	    $("#val_totalPrice").val(resultPrice);
+	    
+	    //할인금액 표시
+	    var formattedResult = salePrice.toLocaleString('en-US');
+	    $(".couponPrice").text(formattedResult);
+	    //전체금액표시
+	    var formattedResult2 = resultPrice.toLocaleString('en-US');
+	    $("#totalPrice").text(formattedResult2);
+	    
+	    //선택된 옵션의 순번
+	    var coupon_idx = ""
+	    var selectedIndex = $("#coupon")[0].selectedIndex - 1;
+	    if($("#coupon")[0].selectedIndex == 0){
+	    	coupon_idx = 0;
+	    	$("#order_form_coupon_idx").val(coupon_idx);
+	    }else{
+		    coupon_idx = $(".couponIdxClass").eq(selectedIndex).val();
+		    $("#order_form_coupon_idx").val(coupon_idx);
+	    }
+	});
+	
+	
 	//결제하기 버튼 클릭
 	$("#order_btn").click(function(){
 		//유효성 검사
@@ -355,7 +388,7 @@ $(function(){
 	    }
 	    
 	    //상품가격설정
-	    var amount = parseInt(${total_price + total_delivery});
+	    var amount = parseInt($("#val_totalPrice").val());
 	    
 	    //주문자이메일설정
 	    var buyer_email = "";
@@ -425,7 +458,7 @@ $(function(){
 	    $("#order_form_delivery_postNum").val($("#delivery_postNum").val());
 	    $("#order_form_delivery_address").val($("#delivery_address").val());
 	    $("#order_form_delivery_address2").val($("#delivery_address2").val());
-	    $("#order_form_buyer_email").val(buyer_email);
+	    $("#order_form_buyer_email").val(buyer_email);	    
 	    //결제번호는 함수쪽에서 생성
 	    
 	    doPayment(name, amount, buyer_email, buyer_name, buyer_tel, buyer_addr, buyer_postcode);
@@ -855,10 +888,33 @@ $(function(){
                         <td class="td_coupon_content top bottom">
                             <select name="coupon" id="coupon">
                                 <!-- 로그인되어있는 회원의 쿠폰 불러오기 -->
+                                <c:choose>
+                                <c:when test=" ${listCount == 0}">
                                 <option value="0">적용 안함</option>
+                                </c:when>
+                                <c:otherwise>
+                                <option value="0">적용 안함</option>
+                                <c:forEach var="rowNum" begin="1" end="${listCount+1}">
+                                	<c:choose>
+                                	<c:when test="${couponList[rowNum-1].coupon_limit > total_price}">
+                                	<!-- 쿠폰사용조건 미달 -->
+                                	<option value="${couponList[rowNum-1].coupon_discount}" disabled>${couponList[rowNum-1].coupon_name} : 상품금액 ${couponList[rowNum-1].coupon_limit}원 이상</option>
+                                	</c:when>
+                                	<c:otherwise>
+                                	<option value="${couponList[rowNum-1].coupon_discount}">${couponList[rowNum-1].coupon_name}</option>                                	
+                                	</c:otherwise>
+                                	</c:choose> 
+                                </c:forEach>
+                                </c:otherwise>
+                                </c:choose>
                             </select>
+                            
+                            <c:forEach var="rowNum" begin="1" end="${listCount+1}">
+                            <input type="hidden" class="couponIdxClass" value="${couponList[rowNum-1].coupon_idx}">
+                            </c:forEach>
+                                                           
                             <!-- 결제금액에 할인정보 계산한 결과 값 -->
-                            <p class="txt_right_discount"> - 0원</p>
+                            <p class="txt_right_discount"> - <span class="couponPrice">0</span>원</p>
                         </td>
                     </tr>                   
                 </table>
@@ -907,7 +963,7 @@ $(function(){
                     <tr>
                         <td class="td_pay_title bottom pay_bottom">쿠폰할인금액</td>
                         <td class="td_pay_content bottom discount">
-                            - 0원
+                            - <span class="couponPrice">0</span>원
                             <input type="hidden" id="val_salePrice" value="0">
                         </td>
                     </tr>
@@ -924,8 +980,9 @@ $(function(){
                         </td>
                         <td class="td_pay_content top discount middle">
                             <span class="total_pay_price">
-                            <fmt:formatNumber value="${total_price + total_delivery}" pattern="###,###" />
+                            <span id="totalPrice"><fmt:formatNumber value="${total_price + total_delivery}" pattern="###,###" /></span>
                             </span>원
+                            <input type="hidden" id="val_originTotalPrice" value="${total_price + total_delivery}">
                             <input type="hidden" id="val_totalPrice" value="${total_price + total_delivery}">
                         </td>
                     </tr>
@@ -964,7 +1021,8 @@ $(function(){
             <input type="hidden" id="order_form_basket_idx" name="basketIdxStr" value="">
             <input type="hidden" id="order_form_product_idx" name="buyPrdIdx" value="">
             <input type="hidden" id="order_form_buy_cnt" name="buyCnt" value="">
-            <input type="hidden" id="order_form_buyer_email" name="buyer_email" value="">              
+            <input type="hidden" id="order_form_buyer_email" name="buyer_email" value=""> 
+            <input type="hidden" id="order_form_coupon_idx" name="coupon_idx" value="">             
             </form>                       
         </div> <!-- end of right_area -->
     </div> <!-- end of order_payment_box -->
