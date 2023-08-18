@@ -165,6 +165,8 @@ public class SellerController {
 			int update_result = pUpdateProductCount.updateProductCount(Integer.toString(product_idx), count);
 		}
 		
+		
+		
 		String viewPage = "seller/purchase_history";
 		
 		if(result == 1) {//글삭제 성공 시
