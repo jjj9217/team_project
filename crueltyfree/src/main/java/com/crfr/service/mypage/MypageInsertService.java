@@ -63,6 +63,14 @@ public class MypageInsertService implements MypageService {
 				vo.setSaveFile(saveFileName);
 				vo.setReview_idx(searchReview_idx);					
 				result = dao.insertreviewimg(vo);
+				}else {
+					String originFileName = null;
+					String saveFileName = null;
+					FileVo vo = new FileVo();
+					vo.setOriginFile(originFileName);
+					vo.setSaveFile(saveFileName);
+					vo.setReview_idx(searchReview_idx);					
+					result = dao.insertreviewimg(vo);
 				}
 			}
 		return result;}

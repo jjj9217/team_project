@@ -393,6 +393,8 @@ public class MypageController {
 //				System.out.println("오리진파일:"+origin);
 				if(!attachedFile[0].isEmpty()) {
 					
+					//reVo.getOriginFile() != null => 이미등록된게 있음 = 업데이트
+					//reVo.getOriginFile() == null => 등록된게없음 = 업데이트 
 					if( mpDelete.checkreviewimg1(vo2) == 1) {
 				insertreviewimg = mpUpdate.updatereviewimg0(attachedFile,request, searchReview_idx);
 				System.out.println("insertreviewimg의 0번째 값"+insertreviewimg);
@@ -401,16 +403,63 @@ public class MypageController {
 					else {//사진 새로 넣기
 						mpInsert.upinsertreviewimg0(attachedFile,request, searchRealReview_idx);
 					}
-				}else {
-					System.out.println("0번째방 사진 안올렸을 때 여기일테고 파일번회:"+vo2.getFile_idx());
-					if( mpDelete.checkreviewimg0(vo2) == 1) {
-						int checkehcek=1;
-						System.out.println("0번 쿼리조회결과:"+ mpDelete.checkreviewimg0(vo2));
-					}else {
-						System.out.println("0번의 제거가 실행되나?");
-						mpDelete.deletereviewimg0(vo2);
-					}
 				}
+				//1.글등록시 등록하였던 기존의 사진 A.jpg를 B.jpg로 수정하여 올렸을 경우, 
+				//JS에서 전달하는 파일업로드의 데이터는 "B.jpg"이며,
+				//해당하는 방의 DB의 originFile의 값은 A.jpg -> B.jpg로 수정되어야한다.
+
+				//2.글등록시 등록하였던 기존의 사진 없고 사진을 업로드 하였을 경우,
+				//JS에서 전달하는 파일업로드의 데이터는 "B.jpg"이며,
+				//해당하는 방의 DB의 originFile의 값은 Null -> "B.jpg"로 수정되어야한다.
+																
+				//3.글등록시 등록하였던 기존의 사진이 없고 사진을 업로드 하지 않았을 경우,
+				//JS에서 전달하는 파일업로드의 데이터는 ""이며,
+				//해당하는 방의 DB의 originFile의 값은 Null -> Null로 수정되어야한다.
+				
+				//4.글등록시 등록하였던 기존의 사진 A.jpg 제거하고 수정하여 올렸을 경우, 
+				//JS에서 전달하는 파일업로드의 데이터는 ""이며, 
+				//해당하는 방의DB의 originFile의 값은 A.jpg -> Null로 수정되어야한다.
+								
+				//5.글등록시 등록하였던 기존의 사진 A.jpg를 유지한 채로 수정하여 올렸을 경우,
+				//JS에서 전달하는 파일업로드의 데이터는 ""이며,				
+				//해당하는 방의 DB의 originFile의 값은 A.jpg -> A.jpg로 유지되어야한다.
+					
+				else {//인풋파일타입 비어있을떄
+					System.out.println("0번째방 사진 안올렸을 때 여기일테고 파일번회:"+vo2.getFile_idx());
+					
+					//reVo.getOriginFile() != null => 이미등록된게 있음 =1.삭제 2.유지
+					
+					
+					if(reVo.getOriginFile() != null) {
+//						if(  ) {
+//							//리퀘스트 무언가 삭제버튼을 클릭하면 삭제
+//						}
+					}
+					
+				
+				
+				
+				//reVo.getOriginFile() == null => 등록된게없음 = 할거없음
+				
+//					if( mpDelete.checkreviewimg0(vo2) == 1) {
+//						int checkehcek=1;
+//						System.out.println("0번 쿼리조회결과:"+ mpDelete.checkreviewimg0(vo2));
+//					}else {
+//						System.out.println("0번의 제거가 실행되나?");
+//						mpDelete.deletereviewimg0(vo2);
+//					}
+					
+					
+					
+				}
+				
+				
+				
+				
+				
+				
+				
+				
 				
 			}else if(i==1) {
 				
