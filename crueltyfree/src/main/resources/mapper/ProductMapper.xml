@@ -41,10 +41,10 @@
      <!-- 검색조건에 맞는 게시물 목록 반환 구문 -->
     <select id="selectList" parameterType="ExploreVo" resultType="ProductVo">                
         <if test="sort_salecount ==1">                       
-            select * from (
+            select a.product_idx , a.member_idx, a.product_name, a.product_price, a.product_capa, a.product_saleCount, a.product_regDate, a.delivery_company, a.member_nickname, a.category_code, a.product_del_or_not, a.category_code_small, a.product_price_min, a.product_price_max, coalesce(review_avg, 0) as review_avg from (
 				(select * from product order by product_idx) a
-				inner join
-				(select review.product_idx, avg(review_score)  from review
+				left outer join
+				(select review.product_idx, avg(review_score) as review_avg  from review
 				    inner join product
 				    on product.product_idx = review.product_idx    
 				    group by product.product_idx
@@ -82,6 +82,7 @@
                 </if>
             and product_del_or_not=1
             </where>
+            order by review_avg desc
             	    
         </if>
         
@@ -139,18 +140,18 @@
     <!-- 상품리스트 상품목록별 사진 출력 -->
     <select id="selectListimg" parameterType="ExploreVo" resultType="FileVo">
         <if test="sort_salecount ==1">
-            select * from (
-                (select * from product order by product_idx) a
-                inner join
-                (select review.product_idx, avg(review_score)  from review
-                    inner join product
-                    on product.product_idx = review.product_idx    
-                    group by product.product_idx
-                    order by avg(review_score) desc)     
-                    b
-                    on a.product_idx = b.product_idx)
-                    inner join file
-                    on file.product_idx = a.product_idx
+            select a.product_idx , a.member_idx, a.product_name, a.product_price, a.product_capa, a.product_saleCount, a.product_regDate, a.delivery_company, a.member_nickname, a.category_code, a.product_del_or_not, a.category_code_small, a.product_price_min, a.product_price_max, coalesce(review_avg, 0) as review_avg from (
+				(select * from product order by product_idx) a
+				left outer join
+				(select review.product_idx, avg(review_score) as review_avg  from review
+				    inner join product
+				    on product.product_idx = review.product_idx    
+				    group by product.product_idx
+				    order by avg(review_score) desc)     
+				    b
+				    on a.product_idx = b.product_idx)
+				    inner join file
+				                                    on file.product_idx = a.product_idx
             <where>
                 <if test="searchWord !=null and !searchWord.equals('')">
                         and a.product_name like CONCAT('%',#{searchWord},'%')                                                                           
@@ -189,6 +190,7 @@
                        )
                 and a.product_del_or_not=1
             </where>
+            order by review_avg desc
         </if>
                 
         <if test="sort_salecount !=1">
