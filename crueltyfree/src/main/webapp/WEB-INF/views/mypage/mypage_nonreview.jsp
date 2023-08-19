@@ -512,9 +512,8 @@ height:96px;
 
 .rw-photo-list img{
 float:left;
-border: 1px solid black;
-margin-right: 1px;
-margin-left: 1px;
+border: 1px solid #7d99a4;
+border-radius:5px;
 }
 
 #ppp{font-size:12px; color:#a4a4a4; font-weight:bold; float:left;}
@@ -615,6 +614,8 @@ margin-left: 1px;
 	background-color: rgb(216, 98, 98);
 	color: #fff;
 	font-weight: bold;
+	margin-left:18px; margin-top: 10px;
+	width: 64px;
 	}
 	.hoverClass{color: #4a4a4a;}
     .hoverClass:hover{color: #7d99a4;}
@@ -639,10 +640,15 @@ margin-left: 1px;
 .other{color:#4a4a4a;}
 
 .onfile{
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
 	width: 96px;
-    font-size:25px;
-    cursor:pointer;    
-    border:1px solid black;
+    font-size:42px;
+    cursor:pointer;
+    color:#4a4a4a;
+    font-weight: bold;    
 }
 .file{
 display: none;
@@ -650,10 +656,8 @@ display: none;
 .rw-photo-list{
 	display: flex;
 	width: 520px; height: 130px;
-	border: 1px solid black;
 }
 .file_space{
-	border: 1px solid red;
 	width: 100px; height: 126px; padding: 2px;
 	display: flex;
 	justify-content: center;
@@ -971,7 +975,7 @@ document.querySelectorAll('.file').forEach((file) => {
            
            var button = document.createElement('input');
            button.type = 'button';
-           button.value = '1번째';                  
+           button.value = '선택삭제';                  
            button.className = 'fileclose';
            
            name[fileindex].appendChild(button); 

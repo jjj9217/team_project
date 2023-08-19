@@ -305,6 +305,16 @@
 	.other{color:#4a4a4a;}
 </style>
 </head>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(function(){
+	$(".basket_add_btn").click(function(){
+		var index = $(".basket_add_btn").index(this);
+		var product_idx = $(".prdIdx").eq(index).val();
+		alert(product_idx);
+	});
+});
+</script>
 <script>
 function deletelikelist(like_idx) {
     
@@ -418,7 +428,8 @@ function deletelikelistall() {
                         <fmt:formatNumber value="${likeproductList[rowNum-1].product_price}" type="number" var="formatNumber"/>						
 						<td><span id="font2">${formatNumber}</span><span id="font3"> 원</span></td>
                     <td >
-                        <input type="button" id="td_basket" value="장바구니">
+                    	<input type="hidden" class="prdIdx" value="${likeproductList[rowNum-1].product_idx}">
+                        <input type="button" id="td_basket" class="basket_add_btn" value="장바구니">
                         <input type="button" id="td_cancel" onclick="deletelikelist(${likeproductList[rowNum-1].like_idx});" value="삭제하기"></td>
                 </tr>
                         </c:if>

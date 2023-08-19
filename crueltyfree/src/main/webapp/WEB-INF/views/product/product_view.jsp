@@ -1086,6 +1086,10 @@ $(function(){
 	font-size: 12px;
 	cursor: pointer;
 	}
+	#cate_large_box a{color: #4a4a4a;}
+	#cate_small_box a{color: #4a4a4a;}
+	#cate_large_box a:hover{color: #7d99a4;}
+	#cate_small_box a:hover{color: #7d99a4;}
 </style>
 </head>
 <body>
@@ -1100,11 +1104,70 @@ $(function(){
 	</div>
 	<div class="cate_next_box">&gt;</div>
 	<div id="cate_large_box">
-	스킨케어
+	<c:choose>
+	<c:when test="${productVo.category_code == 'skin'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=skin" >스킨케어</a>
+	</c:when>
+	<c:when test="${productVo.category_code == 'clensing'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=clensing" >클렌징</a>
+	</c:when>
+	<c:when test="${productVo.category_code == 'makeup'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=makeup" >메이크업</a>
+	</c:when>
+	<c:when test="${productVo.category_code == 'body'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=body" >바디케어</a>
+	</c:when>				
+	<c:when test="${productVo.category_code == 'hair'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=hair" >헤어케어</a>
+	</c:when>
+	<c:otherwise>
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code=prop" >미용소품</a>
+	</c:otherwise>
+	</c:choose>
 	</div>
 	<div class="cate_next_box">&gt;</div>
 	<div id="cate_small_box">
-	샴푸/린스/트리트먼트
+	<c:choose>
+	<c:when test="${productVo.category_code_small == 'skin_1'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_1">토너/로션/올인원</a>
+	</c:when>
+	<c:when test="${productVo.category_code_small == 'skin_2'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_2">에센스/크림</a>
+	</c:when>
+	<c:when test="${productVo.category_code_small == 'skin_3'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=skin_3">미스트/오일</a>
+	</c:when>		
+	<c:when test="${productVo.category_code_small == 'clensing_1'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=clensing_1" >클렌징폼/젤</a>
+	</c:when>
+	<c:when test="${productVo.category_code_small == 'clensing_2'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=clensing_2" >오일/워터/리무버</a>
+	</c:when>	
+	<c:when test="${productVo.category_code_small == 'makeup_1'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_1" >립메이크업</a>
+	</c:when>
+	<c:when test="${productVo.category_code_small == 'makeup_2'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_2" >베이스메이크업</a>
+	</c:when>
+	<c:when test="${productVo.category_code_small == 'makeup_3'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=makeup_3" >아이메이크업</a>
+	</c:when>		
+	<c:when test="${productVo.category_code_small == 'body_1'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=body_1" >샤워/입욕</a>
+	</c:when>
+	<c:when test="${productVo.category_code_small == 'body_2'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=body_2" >로션/오일</a>
+	</c:when>									
+	<c:when test="${productVo.category_code_small == 'hair_1'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=hair_1" >샴푸/린스/트리트먼트</a>
+	</c:when>
+	<c:when test="${productVo.category_code_small == 'hair_2'}">
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=hair_2" >염색약/펌</a>
+	</c:when>	
+	<c:otherwise>
+	<a href="${pageContext.request.contextPath}/product/product_list_enter_category.do?category_code_small=prop_1" >미용소품</a>
+	</c:otherwise>
+	</c:choose>
 	</div>
 	</div>
     <!-- 상품 이미지 및 정보,장바구니,구매하기 창 -->
