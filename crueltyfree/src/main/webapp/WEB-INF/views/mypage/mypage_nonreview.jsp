@@ -504,8 +504,8 @@ $(function() {
 
 
 .fileimg{
-width:70px;
-height:70px;
+width:96px;
+height:96px;
 }
 
 
@@ -516,8 +516,7 @@ margin-right: 1px;
 margin-left: 1px;
 }
 
-#ppp{
-float:left;}
+#ppp{font-size:12px; color:#a4a4a4; font-weight:bold; float:left;}
     .buy_list_container{display: block; width: 790px; height: auto; margin: 0 auto; padding: 10px; margin-top: 50px;}
     .buy_list, .order_list{border-collapse: collapse;}
     .th_product{width: 690px; height: 20px; padding: 10px 0; background-color: rgb(224, 224, 224);}
@@ -609,6 +608,13 @@ float:left;}
 	float:left;
 	
 	}
+	.fileclose{
+	border: 1px solid #4a4a4a;
+	border-radius: 5px;
+	background-color: rgb(216, 98, 98);
+	color: #fff;
+	font-weight: bold;
+	}
 	.hoverClass{color: #4a4a4a;}
     .hoverClass:hover{color: #7d99a4;}
 	#next{
@@ -632,14 +638,26 @@ float:left;}
 .other{color:#4a4a4a;}
 
 .onfile{
+	width: 96px;
     font-size:25px;
-    cursor:pointer;
+    cursor:pointer;    
+    border:1px solid black;
 }
-
 .file{
 display: none;
 }
-	
+.rw-photo-list{
+	display: flex;
+	width: 520px; height: 130px;
+	border: 1px solid black;
+}
+.file_space{
+	border: 1px solid red;
+	width: 100px; height: 126px; padding: 2px;
+	display: flex;
+	justify-content: center;
+	width:center;
+}
 </style>
 </head>
 <body>
@@ -773,39 +791,38 @@ display: none;
                         <strong>포토</strong>
                     </div>
                     <div class="rw-photo-list">                            
-                    	<div>
+                    	<div class="file_space">
                         <input type="file" class="file" name="attachedFile" >
                              <span class="onfile">+</span>
 <!--                         <span class="file-button">+</span>                         -->
                         <div class="boxtest"></div>                        
                         </div>
-                        <div>
+                        <div class="file_space">
                         <input type="file" class="file" name="attachedFile">
                              <span class="onfile">+</span>                        
                         <div class="boxtest"></div>                        
                         </div>
-                        <div>
+                        <div class="file_space">
                         <input type="file" class="file" name="attachedFile">
                              <span class="onfile">+</span>                  
                         <div class="boxtest"></div>                        
                         </div>
-                        <div>
+                        <div class="file_space">
                         <input type="file" class="file" name="attachedFile">
                              <span class="onfile">+</span>                  
                         <div class="boxtest"></div>                        
                         </div>
-                        <div>
+                        <div class="file_space">
                         <input type="file" class="file" name="attachedFile">
                              <span class="onfile">+</span>                  
                         <div class="boxtest"></div>                        
                         </div>                                                              
-						
+                        
+                     </div>
                     	<p id="ppp">
                                 <br>사진은 8MB이하의 PNG, JPG 파일만 등록 가능합니다. 
                                                                             
                         </p>
-                        
-                        </div>
                 </div>
             </li>       
         </ul>
@@ -946,8 +963,6 @@ document.querySelectorAll('.file').forEach((file) => {
          reader.onload = function(event) {
            var img = document.createElement("img");
            img.setAttribute("src", event.target.result);
-           img.setAttribute("width", "75");
-           img.setAttribute("height", "75");
            img.setAttribute("class", "fileimg");
            
            var name = document.querySelectorAll(".boxtest"); 
