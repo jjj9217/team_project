@@ -783,7 +783,7 @@ $(function(){
          background-color: white;
      }
      .prd_detail_box{
-         display: block; width: 1020px; height: auto; margin-top: 40px; padding-top: 35px; border-top: 1px solid #4a4a4a;
+         display: block; width: 1020px; height: auto; padding-top: 35px; border-top: 1px solid #4a4a4a;
      }
      .left_area{
          display: block; float: left; width: 510px; height: auto;
@@ -1038,13 +1038,73 @@ $(function(){
 		height:25px;
 	}	
 	.other{color:#4a4a4a;}
+	#category_box{
+	display:flex;
+	margin: 10px 0;
+	height: 40px;
+	}
+	#cate_home_box{
+	display: flex;
+	width: 40px;
+	height: 40px;
+	align-items: center;
+	justify-content: center;
+	}
+	.cate_next_box{
+	display: flex;
+	width: 40px;
+	height: 40px;
+	align-items: center;
+	justify-content: center;
+	color: #4a4a4a;
+	font-weight: bold;
+	}
+	#cate_home_btn{
+	width: 25px; height: 25px;
+	}
+	#cate_large_box{
+	display: flex;
+	width: 100px;
+	height: 40px;
+	align-items: center;
+	justify-content: center;
+	color: #4a4a4a;
+	font-weight: bold;
+	font-size: 12px;
+	cursor: pointer;
+	}
+	#cate_small_box{
+	display: flex;
+	width: 150px;
+	height: 40px;
+	align-items: center;
+	justify-content: center;
+	color: #4a4a4a;
+	font-weight: bold;
+	font-size: 12px;
+	cursor: pointer;
+	}
 </style>
 </head>
 <body>
 	<header>	
 		<jsp:include page="../main/header.jsp"/>	
 	</header>
-	
+	<div id="category_box">
+	<div id="cate_home_box">
+    <a id="cate_home_link" href="${pageContext.request.contextPath}/main/home.do">
+        <img id="cate_home_btn" src="../resources/img/home.png">
+    </a>
+	</div>
+	<div class="cate_next_box">&gt;</div>
+	<div id="cate_large_box">
+	스킨케어
+	</div>
+	<div class="cate_next_box">&gt;</div>
+	<div id="cate_small_box">
+	샴푸/린스/트리트먼트
+	</div>
+	</div>
     <!-- 상품 이미지 및 정보,장바구니,구매하기 창 -->
     <div class="prd_detail_box">
         <div class="left_area">

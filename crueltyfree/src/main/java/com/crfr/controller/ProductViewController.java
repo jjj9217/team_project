@@ -288,13 +288,15 @@ public class ProductViewController {
 		
 		if(basket_count == 0) { //0일때: 장바구니에 상품이 없을때
 			int basketInsert = 0;
-			basketInsert = bBasketInsert.basketInsert(product_idx, prd_cart_cnt, client_num); //장바구니에 Insert
-			if(product_capa == 0) {//insert성공일때
+			if(product_capa == 0) { //재고수량 0일때
 				result = "soldout";
-			}else if(basketInsert == 1){ //재고수량 0일때
-				result="success";
-			}else {//insert실패일때
-				result="fail";
+			}else {
+				basketInsert = bBasketInsert.basketInsert(product_idx, prd_cart_cnt, client_num); //장바구니에 Insert
+				if(basketInsert == 1){//insert성공일때
+					result="success";
+				}else {//insert실패일때
+					result="fail";
+				}				
 			}
 		} else { //0이 아닐때: 장바구니에 상품이 있을때
 			if(product_capa != 0 && product_capa >= (basket_count + prd_cart_cnt)) {

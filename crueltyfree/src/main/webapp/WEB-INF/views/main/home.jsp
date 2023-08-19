@@ -42,6 +42,58 @@ function generateGuestId(length) {
 }	
 
 const guestId = getGuestId();
+
+
+var slideIndex = 0;
+var slides = $(".home_ad1");
+var totalSlides = slides.length;
+var intervalId;
+
+$("#totalPages").text(totalSlides);
+
+function showSlide(index) {
+    slides.hide();
+    slides.eq(index).show();
+    $("#currentPage").text(index + 1);
+}
+
+function nextSlide() {
+    slideIndex = (slideIndex + 1) % totalSlides;
+    showSlide(slideIndex);
+}
+
+function prevSlide() {
+    slideIndex = (slideIndex - 1 + totalSlides) % totalSlides;
+    showSlide(slideIndex);
+}
+
+function togglePlayStop() {
+    if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+        $("#playStopBtn").text("▶");
+    } else {
+        intervalId = setInterval(nextSlide, 4000); // 4초마다 이미지 전환
+        $("#playStopBtn").text("∥");
+    }
+}
+
+$("#prevBtn").click(function() {
+    prevSlide();
+});
+
+$("#nextBtn").click(function() {
+    nextSlide();
+});
+
+$("#playStopBtn").click(function() {
+    togglePlayStop();
+});
+
+// 초기 슬라이드 표시
+showSlide(slideIndex);
+intervalId = setInterval(nextSlide, 4000); // 4초마다 이미지 전환
+
 });
 </script>
 <style>
@@ -65,9 +117,6 @@ const guestId = getGuestId();
          width: 1020px; height: auto; margin: 0 auto;
          background-color: white;
     }	
-	#ad {
-		margin-bottom: 50px;
-	}
 	
 	#s_ad1 {
 		margin-left: 0;
@@ -179,6 +228,19 @@ const guestId = getGuestId();
 		clear:both;
 	}
 	.soldOutNotice{color:rgb(216, 98, 98); font-size:18px;}
+	.home_ad1{height: 400px;}
+	#ad_btn_box{display: flex; height: 80px;}
+	#ad_btn_box div{display: flex; align-items: center;}
+	#btn_text{padding-left:40px; width:40px; justify-content: center; color: #a4a4a4; font-weight: bold;}
+	#currentPage{color:#7d99a4;}
+	#totalPages{color:#a4a4a4;}
+	#prevBtn, #nextBtn, #playStopBtn{margin-left:40px; width:40px; height: 40px; border-radius: 50%;
+	border: 1px solid #7d99a4; color: #4a4a4a; font-weight: bold; font-size:24px; background-color: #eef3f5;
+	display: flex; align-items: center; justify-content: center;}
+	#prevBtn:hover, #nextBtn:hover, #playStopBtn:hover{
+		color:#7d99a4;
+	}
+	#prevBtn{margin-left:340px;}
 </style>
 
 
@@ -211,11 +273,46 @@ function HeaderBest(sort_salecount) {
 	<jsp:include page="../main/header.jsp" /><br><br>
 </header>
 <div class="clear"></div>
+<div id="ad_container">
 <nav id="ad">
 	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=49">
 		<img src="${pageContext.request.contextPath}/resources/img/home_ad1.png" class="home_ad1" style="width: 1020px;" />
 	</a>
+	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=49">
+		<img alt="1" src="${pageContext.request.contextPath}/resources/img/test02.jpg" class="home_ad1" style="width: 1020px;" />
+	</a>
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=49">
+		<img alt="2" src="${pageContext.request.contextPath}/resources/img/test03.png" class="home_ad1" style="width: 1020px;" />
+	</a>
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=49">
+		<img alt="3" src="${pageContext.request.contextPath}/resources/img/test04.jpg" class="home_ad1" style="width: 1020px;" />
+	</a>
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=49">
+		<img alt="4" src="${pageContext.request.contextPath}/resources/img/test05.jpg" class="home_ad1" style="width: 1020px;" />
+	</a>
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=49">
+		<img alt="5" src="${pageContext.request.contextPath}/resources/img/test06.jpg" class="home_ad1" style="width: 1020px;" />
+	</a>
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=49">
+		<img alt="6" src="${pageContext.request.contextPath}/resources/img/test02.jpg" class="home_ad1" style="width: 1020px;" />
+	</a>	
 </nav>
+<div id="ad_btn_box">
+    <div id="ad_left_btn">
+        <button id="prevBtn">&lt;</button>
+    </div>
+    <div id="btn_text">
+        <span id="currentPage">1</span>&nbsp;/&nbsp;<span id="totalPages">7</span>
+    </div>
+    <div id="ad_right_btn">
+        <button id="nextBtn">&gt;</button>
+    </div>
+    <div id="play_and_stop">
+        <button id="playStopBtn">∥</button>
+    </div>
+</div>
+</div>
+
 
 <section id="content">
 	<article id="s_ad1" class="s_ad">

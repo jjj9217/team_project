@@ -889,12 +889,12 @@ $(function(){
                             <select name="coupon" id="coupon">
                                 <!-- 로그인되어있는 회원의 쿠폰 불러오기 -->
                                 <c:choose>
-                                <c:when test=" ${listCount == 0}">
+                                <c:when test=" ${couponCount == 0}">
                                 <option value="0">적용 안함</option>
                                 </c:when>
                                 <c:otherwise>
                                 <option value="0">적용 안함</option>
-                                <c:forEach var="rowNum" begin="1" end="${listCount+1}">
+                                <c:forEach var="rowNum" begin="1" end="${couponCount}">
                                 	<c:choose>
                                 	<c:when test="${couponList[rowNum-1].coupon_limit > total_price}">
                                 	<!-- 쿠폰사용조건 미달 -->
@@ -909,7 +909,7 @@ $(function(){
                                 </c:choose>
                             </select>
                             
-                            <c:forEach var="rowNum" begin="1" end="${listCount+1}">
+                            <c:forEach var="rowNum" begin="1" end="${couponCount}">
                             <input type="hidden" class="couponIdxClass" value="${couponList[rowNum-1].coupon_idx}">
                             </c:forEach>
                                                            

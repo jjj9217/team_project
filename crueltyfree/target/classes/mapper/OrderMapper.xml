@@ -111,6 +111,12 @@
 		and member_handphone=#{member_handphone}
 	</select>	
 	
+	<!-- 쿠폰 수량 -->
+	<select id="selectCouponCount" parameterType="map" resultType="_int">
+		select count(*) from `coupon` where member_idx=#{member_idx}
+		and coupon_expDate &gt; #{coupon_expDate} 
+	</select>		
+	
 	<!-- 쿠폰 불러오기 -->
 	<select id="selectCouponList" parameterType="map" resultType="CouponVo">
 		select * from `coupon` where member_idx=#{member_idx}

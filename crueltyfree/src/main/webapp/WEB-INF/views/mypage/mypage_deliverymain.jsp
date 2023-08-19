@@ -56,8 +56,6 @@
     #mypage td {
     	height: 25px;
     }
-    
-	#mypage a {color: #4a4a4a;}
 
     #mypage-conts {
         width:810px;
@@ -210,6 +208,8 @@
     .buy_list td{font: bold 15px Arial, sans-serif;
     		border-bottom: 1px solid gray; height:150px;}
     #no_delivery{text-align: center; padding: 60px 0; color: #4a4a4a; font-weight: bold; border-bottom:0;}
+    .hoverClass{color: #4a4a4a;}
+    .hoverClass:hover{color: #7d99a4;}
 </style>
 </head>
 <script>
@@ -271,23 +271,23 @@ function updatedeliveryPostdefault(delivery_idx) {
 <div id="Container">
     <div id="mypage">       
         <table>
-            <tr><th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
+            <tr><th><h3><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
             <tr><td class="mypagetable">마이 쇼핑</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이활동</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do" style="font-weight:bold; color:#7d99a4;">배송지</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do" style="font-weight:bold; color:#7d99a4;">배송지</a></td></tr>
         </table>        
     </div>
     <div id="mypage-conts">

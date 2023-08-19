@@ -36,6 +36,7 @@ public interface PurchaseService {
 	default void updatePay(String order_idx) {}
 	default Map<String, String> getInfo(String token, String mId) {return null;}
 	default int selectCountMember(Map<String, String> map) {return 0;}
+	default int selectCouponCount(int member_idx,Date today) {return 0;}
 	default List<CouponVo> selectCouponList(int member_idx,Date today) {return null;}
 	default int deleteCoupon(String coupon_idx) {return 0;}
 }

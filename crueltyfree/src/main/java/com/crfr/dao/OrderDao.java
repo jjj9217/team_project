@@ -97,6 +97,15 @@ public class OrderDao {
 		return sqlSession.selectOne(MAPPER+".selectCountMember", map);
 	}
 	
+	//쿠폰리스트 수량
+	public int selectCouponCount(int member_idx,Date today) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("member_idx", member_idx);
+		map.put("coupon_expDate", today);
+		return sqlSession.selectOne(MAPPER+".selectCouponCount", map);
+	}
+	
+	
 	//쿠폰리스트 불러오기
 	public List<CouponVo> selectCouponList(int member_idx,Date today) {
 		Map<String, Object> map = new HashMap<>();
