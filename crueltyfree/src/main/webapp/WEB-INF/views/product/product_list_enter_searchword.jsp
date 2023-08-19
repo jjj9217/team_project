@@ -361,6 +361,7 @@
 		width:50px;
 		height:25px;
 	}
+	.other{color:#4a4a4a;}
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
