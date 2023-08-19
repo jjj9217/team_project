@@ -904,7 +904,9 @@
                         <c:forEach var="fileVoList" items="${reviewRegList}">										
                             <c:forEach var="fileVo" items="${fileVoList}">                            		                            	
                                 <c:if test="${reviewproductList[rowNum-1].review_idx eq fileVo.review_idx}">
+                                        <c:if test ="${fileVo.saveFile ne null}">
                                        <span class="thum"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}"></span>
+                                        </c:if>
                                 </c:if>                                
                             </c:forEach>
                         </c:forEach>
@@ -986,15 +988,17 @@
             <textarea id="review_content_textarea"  class="txtAr2" name="review_content" placeholder="꿀팁 가득, 상세한 리뷰를 작성해보세요!&#10;도움수가 올라가면 포인트도 받고,&#10;탑리뷰어가 될 확률도 높아져요!&#10;반품, 환불 관련 내용은 고객센터로 별도 문의해주세요.">${reviewproductList[rowNum-1].review_content}</textarea>
 	        <div class="step_cont1">
 	            <div class="photo-list-info">
-	                <strong>포토</strong>
+	                <strong>포토</strong>	                
 	            </div>
 	            <div class="rw-photo-list2">                            	                                                                          	            
 	             
 		             <div>
 	           <c:forEach var="fileVoList" items="${reviewRegList}" >                                     
 	                  <c:forEach var="fileVo" items="${fileVoList}" varStatus="status">	                        
-	                        <c:if test="${(reviewproductList[rowNum-1].review_idx eq fileVo.review_idx) and (status.index eq 0)}">		                        
-		                             <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}">		                             		                        	                                                	                                             
+	                        <c:if test="${(reviewproductList[rowNum-1].review_idx eq fileVo.review_idx) and (status.index eq 0)}">
+	                                   <c:if test ="${fileVo.saveFile ne null}">		                        
+		                             <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}">
+		                               </c:if>		                             		                        	                                                	                                             
 	                        </c:if>                                                                               
 	               </c:forEach>
 	           </c:forEach>
@@ -1006,8 +1010,10 @@
 	                 <div>
                <c:forEach var="fileVoList" items="${reviewRegList}" >                                     
                       <c:forEach var="fileVo" items="${fileVoList}" varStatus="status">                         
-                            <c:if test="${(reviewproductList[rowNum-1].review_idx eq fileVo.review_idx) and (status.index eq 1)}">                              
-                                     <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}">                                                                                                                                      
+                            <c:if test="${(reviewproductList[rowNum-1].review_idx eq fileVo.review_idx) and (status.index eq 1)}">
+                                        <c:if test ="${fileVo.saveFile ne null}">                              
+                                     <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}">
+                                        </c:if>                                                                                                                                      
                             </c:if>                                                                               
                    </c:forEach>
                </c:forEach>
@@ -1020,7 +1026,9 @@
                <c:forEach var="fileVoList" items="${reviewRegList}" >                                     
                       <c:forEach var="fileVo" items="${fileVoList}" varStatus="status">                         
                             <c:if test="${(reviewproductList[rowNum-1].review_idx eq fileVo.review_idx) and (status.index eq 2)}">                              
-                                     <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}">                                                                                                                                      
+                                        <c:if test ="${fileVo.saveFile ne null}">
+                                     <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}">
+                                        </c:if>                                                                                                                                      
                             </c:if>                                                                               
                    </c:forEach>
                </c:forEach>
@@ -1032,8 +1040,10 @@
 	                 <div>
                <c:forEach var="fileVoList" items="${reviewRegList}" >                                     
                       <c:forEach var="fileVo" items="${fileVoList}" varStatus="status">                         
-                            <c:if test="${(reviewproductList[rowNum-1].review_idx eq fileVo.review_idx) and (status.index eq 3)}">                              
-                                     <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}">                                                                                                                                      
+                            <c:if test="${(reviewproductList[rowNum-1].review_idx eq fileVo.review_idx) and (status.index eq 3)}">
+                                        <c:if test ="${fileVo.saveFile ne null}">                              
+                                     <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}">
+                                        </c:if>                                                                                                                                      
                             </c:if>                                                                               
                    </c:forEach>
                </c:forEach>
@@ -1045,8 +1055,10 @@
 	                 <div>
                <c:forEach var="fileVoList" items="${reviewRegList}" >                                     
                       <c:forEach var="fileVo" items="${fileVoList}" varStatus="status">                         
-                            <c:if test="${(reviewproductList[rowNum-1].review_idx eq fileVo.review_idx) and (status.index eq 4)}">                              
-                                     <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}">                                                                                                                                      
+                            <c:if test="${(reviewproductList[rowNum-1].review_idx eq fileVo.review_idx) and (status.index eq 4)}">
+                                        <c:if test ="${fileVo.saveFile ne null}">                              
+                                     <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}">
+                                        </c:if>                                                                                                                                      
                             </c:if>                                                                               
                    </c:forEach>
                </c:forEach>
