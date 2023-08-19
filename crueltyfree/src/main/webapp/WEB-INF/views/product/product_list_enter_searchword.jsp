@@ -985,7 +985,7 @@ function ProductDel(searchWord, category_code, category_code_small,
                         </a>
                     </c:when>
                     <c:otherwise>
-	    				<a href="#" onclick="ProductDetail('${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${i}', '${pageNav.pageBlock}')">
+	    				<a href="#" onclick="ProductDetail('${ExploreVo.searchWord}', '${ExploreVo.category_code}', '${ExploreVo.category_code_small}','${ExploreVo.product_price_min}', '${ExploreVo.product_price_max}','${ExploreVo.sort_salecount}', '${ExploreVo.sort_view}', '${i}', '${pageNav.pageBlock}')">
 	    					<span class="other">${i}&nbsp;</span>
 	    				</a>
                     </c:otherwise>

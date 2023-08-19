@@ -228,7 +228,6 @@ intervalId = setInterval(nextSlide, 4000); // 4초마다 이미지 전환
 		clear:both;
 	}
 	.soldOutNotice{color:rgb(216, 98, 98); font-size:18px;}
-	.home_ad1{height: 400px;}
 	#ad_btn_box{display: flex; height: 80px;}
 	#ad_btn_box div{display: flex; align-items: center;}
 	#btn_text{padding-left:40px; width:40px; justify-content: center; color: #a4a4a4; font-weight: bold;}
@@ -278,31 +277,34 @@ function HeaderBest(sort_salecount) {
 	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=49">
 		<img src="${pageContext.request.contextPath}/resources/img/home_ad1.png" class="home_ad1" style="width: 1020px;" />
 	</a>
-	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=49">
-		<img alt="1" src="${pageContext.request.contextPath}/resources/img/test02.jpg" class="home_ad1" style="width: 1020px;" />
+	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=58">
+		<img src="${pageContext.request.contextPath}/resources/img/home_ad2.png" class="home_ad1" style="width: 1020px;" />
 	</a>
-		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=49">
-		<img alt="2" src="${pageContext.request.contextPath}/resources/img/test03.png" class="home_ad1" style="width: 1020px;" />
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=30">
+		<img src="${pageContext.request.contextPath}/resources/img/home_ad3.png" class="home_ad1" style="width: 1020px;" />
 	</a>
-		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=49">
-		<img alt="3" src="${pageContext.request.contextPath}/resources/img/test04.jpg" class="home_ad1" style="width: 1020px;" />
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=188">
+		<img src="${pageContext.request.contextPath}/resources/img/home_ad4.png" class="home_ad1" style="width: 1020px;" />
 	</a>
-		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=49">
-		<img alt="4" src="${pageContext.request.contextPath}/resources/img/test05.jpg" class="home_ad1" style="width: 1020px;" />
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=36">
+		<img src="${pageContext.request.contextPath}/resources/img/home_ad5.png" class="home_ad1" style="width: 1020px;" />
 	</a>
-		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=49">
-		<img alt="5" src="${pageContext.request.contextPath}/resources/img/test06.jpg" class="home_ad1" style="width: 1020px;" />
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=120">
+		<img src="${pageContext.request.contextPath}/resources/img/home_ad6.png" class="home_ad1" style="width: 1020px;" />
 	</a>
-		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=49">
-		<img alt="6" src="${pageContext.request.contextPath}/resources/img/test02.jpg" class="home_ad1" style="width: 1020px;" />
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=121">
+		<img src="${pageContext.request.contextPath}/resources/img/home_ad7.png" class="home_ad1" style="width: 1020px;" />
 	</a>	
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=262">
+		<img src="${pageContext.request.contextPath}/resources/img/home_ad8.png" class="home_ad1" style="width: 1020px;" />
+	</a>		
 </nav>
 <div id="ad_btn_box">
     <div id="ad_left_btn">
         <button id="prevBtn">&lt;</button>
     </div>
     <div id="btn_text">
-        <span id="currentPage">1</span>&nbsp;/&nbsp;<span id="totalPages">7</span>
+        <span id="currentPage">1</span>&nbsp;/&nbsp;<span id="totalPages">8</span>
     </div>
     <div id="ad_right_btn">
         <button id="nextBtn">&gt;</button>
