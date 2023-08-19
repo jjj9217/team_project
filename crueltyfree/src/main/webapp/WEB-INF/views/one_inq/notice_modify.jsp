@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항 작성 | CrueltyFree</title>
+<title>공지사항 수정 | CrueltyFree</title>
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
 
 <style>
 	* {margin:0; padding:0;}

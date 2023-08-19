@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 페이지 | CrueltyFree</title>
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
 <style>
 	.modalContainer {
 	 	width: 100%;

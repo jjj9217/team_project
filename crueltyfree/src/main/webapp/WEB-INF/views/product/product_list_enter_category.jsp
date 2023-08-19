@@ -71,6 +71,8 @@
 </c:choose>
 
 </title>
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
+
 <style>
 	* {margin: 0; padding: 0;}
     a{text-decoration: none;}

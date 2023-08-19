@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>주문/결제 | CrueltyFree</title>
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- 우편번호 -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

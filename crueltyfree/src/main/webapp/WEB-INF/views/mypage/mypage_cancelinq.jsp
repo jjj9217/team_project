@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>취소/반품 내역 | CrueltyFree</title>
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script> 
 <script>

@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원정보 수정 | CrueltyFree</title>
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
