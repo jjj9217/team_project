@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.crfr.service.mypage.MypageService;
@@ -203,6 +204,26 @@ public class SellerController {
 	@GetMapping("/regi_pro.do")
 	public String regi_pro() {		
 		return "seller/regi_pro";
+	}
+	
+	//상품 등록전 중복검사
+	@PostMapping("/regi_pro_before_process.do")
+	@ResponseBody
+	public String regi_pro_before_process(@RequestParam("member_nickname") String member_nickname, 
+			@RequestParam("product_name") String product_name, HttpServletRequest request) {
+		
+		
+		int productIdx = pfindProductIdx.findProductIdx(product_name, member_nickname);
+		
+		String result = "";
+		
+		if(productIdx != 0) {
+			result = "fail";
+		}else{
+			result = "success";
+		}
+		
+		return result;
 	}
 	
 	// 상품 등록 처리

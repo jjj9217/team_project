@@ -158,7 +158,7 @@
 		background-color: #eef3f5;	
 	}
 </style>
-
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 
 function categoryLarge(cate_large) {
@@ -205,17 +205,17 @@ function categoryLarge(cate_large) {
 function validateForm(){
 //	if (form_insert.category_code.value == NULL) {
 //		alert("카테고리를 선택하세요."); }
-	
+
 	var cateCk = $("#categoryid").val();
 	if (cateCk=='대분류') {
-        alert("대분류를 등록해주세요 주세요.")
+        alert("대분류를 등록해주세요")
         document.form_insert.categoryid.focus();
         return false;
         }
 		
 	var catesmallCk = $("#categorySmall").val();
     if (catesmallCk=='소분류') {
-        alert("소분류를 등록해주세요 주세요.")
+        alert("소분류를 등록해주세요")
         document.form_insert.categorySmall.focus();
         return false;
         }
@@ -264,9 +264,45 @@ function validateForm(){
 		alert("구매 정보를 모두 입력하세요.");
 		form_insert.product_info_handphone.focus();
 		return false;
+	}else{
+		alert("상품이 등록되었습니다.");
+		$("#form_insert").submit();
 	}
 }
 
+$(function(){
+	$("#regi_pro_btn").click(function(event) {        
+		if (form_insert.product_name.value.length==0){
+			alert("상품명을 입력하세요.");
+			form_insert.product_name.focus();
+			return false;
+		}else{
+		 var member_nickname = $("#memberNick").val();
+		 var product_name = $("#prdName").val();
+		 
+		 $.ajax({
+		     type: "post",
+		     url: "regi_pro_before_process.do",
+		     data: {
+		         "member_nickname": member_nickname,
+		         "product_name": product_name
+		     },
+		     success: function(data) {
+		         if (data == "success") {
+		        	 validateForm();
+		         } else {
+		             alert("중복된 이름의 상품이 있습니다.");
+		         }
+		     },
+		     error: function(error) {
+		         alert("ajax 에러 발생");
+		     }
+		 });
+		}
+			
+
+    });
+});
 </script>
 
 </head>
@@ -281,11 +317,10 @@ function validateForm(){
 </nav>
 
 <section id="content">
-<form name="form_insert" method="post" action="regi_pro_process.do" enctype="multipart/form-data" 
-          onsubmit="return validateForm()">
+<form name="form_insert" id="form_insert" method="post" action="regi_pro_process.do" enctype="multipart/form-data" >
           
 
-	<input type="hidden" name="member_nickname" value="${member.member_nickname}">
+	<input type="hidden" name="member_nickname" id="memberNick" value="${member.member_nickname}">
 	<input type="hidden" name="member_idx" value="${member.member_idx}">
 	<div class="regi_line">
 		<article class="regi_left" style="vertical-align: top;">
@@ -321,7 +356,7 @@ function validateForm(){
 			&nbsp;&nbsp;<a>상품명</a>
 		</article>
 		<article class="regi_right">
-			<input type="text" name="product_name" class="regi_box">
+			<input type="text" name="product_name" id="prdName" class="regi_box">
 		</article>
 	</div>
 	
@@ -397,7 +432,7 @@ function validateForm(){
 	
 	<!-- 등록 버튼 -->
 	<div class="div_write">
-		<input type="submit" id="regi_pro_btn" value="등록하기">
+		<input type="button" id="regi_pro_btn" value="등록하기">
 		<a href="purchase_history.do"><input type="button" id="regi_pro_cancel" value="취소하기"></a>
 	</div>
 	

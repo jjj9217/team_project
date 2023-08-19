@@ -52,7 +52,7 @@
 	
 	<!-- 상품의 이름, 판매자의 닉네임을 가져와 그에 해당되는 상품 번호를 불러오는 구문 -->
 	<select id="findProductIdx" parameterType="map" resultType="_int">
-		select product_idx from `product` where product_name = #{product_name} AND member_nickname = #{member_nickname}
+		SELECT COALESCE((SELECT product_idx FROM `product` WHERE product_name = #{product_name} AND member_nickname = #{member_nickname}), 0) AS product_idx
 	</select>
 	
 	<!-- 검색조건에 맞는 게시물 목록 반환 구문 -->

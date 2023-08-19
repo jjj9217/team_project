@@ -268,12 +268,49 @@
 		color: #a4a4a4;
 		font-weight: bold;
 		font-size:11px;
-	}	
+	}
+	#topBtn {
+	    width: 50px;
+	    height: 50px;
+	    background-color: #eef3f5;
+	    border: 1px solid #a4a4a4;
+	    border-radius: 10px;
+	    position: fixed;
+	    bottom: 30px;
+	    right: 30px;
+	    color: #7d99a4;
+	    font-weight: bold;
+	    display: flex;
+	    text-align: center;
+	    align-items: center;
+	    align-content: center;
+	    justify-content: center;
+	    cursor: pointer;
+	    opacity: 0; /* 처음에는 숨김 */
+   		transition: opacity 0.3s ease-in-out; /* 부드러운 페이드 효과 */
+	}
 </style>
 </head>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 $(function(){
+    var topBtn = $("#topBtn");
+    var scrollThreshold = 300;
+
+    $(window).scroll(function() {
+        if ($(this).scrollTop() >= scrollThreshold) {
+            topBtn.css("opacity", "1");
+        } else {
+            topBtn.css("opacity", "0");
+        }
+    });
+
+    topBtn.click(function() {
+        $("html, body").animate({
+            scrollTop: 0
+        }, "slow");
+    });		
+	
 //장바구니 스크립트
 // 비회원 식별값을 가져오는 함수
 function getGuestId() {
@@ -613,6 +650,9 @@ function HeaderBest(sort_salecount) {
 		</li>
 	</ul>
 </div>
-
+<div id="topBtn">
+▲
+TOP
+</div>
 </body>
 </html>

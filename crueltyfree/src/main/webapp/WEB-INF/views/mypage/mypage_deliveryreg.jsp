@@ -57,8 +57,6 @@
     #mypage td {
     	height: 25px;
     }
-    
-	#mypage a {color: #4a4a4a;}
 
     #mypage-conts {
         width:810px;
@@ -233,6 +231,8 @@
     }
  	#defaultpostcheck{margin-left:10px;}
  	#delivery_message_text{margin-top:5px; width: 290px; height: 10px; padding: 10px; border-radius: 5px; border: 1px solid #7d99a4; outline: none;}
+	.hoverClass{color: #4a4a4a;}
+    .hoverClass:hover{color: #7d99a4;}
 </style>
 </head>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -347,23 +347,23 @@ $(function(){
 <div id="Container">
     <div id="mypage">       
         <table>
-            <tr><th><h3><a href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
+            <tr><th><h3><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_main.do" id="mylink">마이페이지</a></h3></th></tr>         
             <tr><td class="mypagetable">마이 쇼핑</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_orderinq.do">주문/배송조회</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_cancelinq.do">취소/반품내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/purchase/basket.do">장바구니</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_like.do">좋아요</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_coupon.do">쿠폰</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이활동</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/one_inq/one_inq_list.do">1:1문의내역</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_nonreview.do">리뷰</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_productQnA.do">상품문의내역</a></td></tr>
             <tr><td><hr width=100%></td></tr>
             <tr><td class="mypagetable">마이 정보</td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
-            <tr><td><a href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do" style="font-weight:bold; color:#7d99a4;">배송지</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_modifymain.do">회원정보 수정</a></td></tr>
+            <tr><td><a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_deliverymain.do" style="font-weight:bold; color:#7d99a4;">배송지</a></td></tr>
         </table>        
     </div>
     <div id="mypage-conts">
@@ -382,7 +382,7 @@ $(function(){
             <tbody>
                 <tr>
                     <th>배송지명</th>
-                    <td><input type="text" name="delivery_address_name" id="input" placeholder="최대 10자"><input type="checkbox" id="defaultpostcheck" value="1" name="defaultpost"><input type="hidden" name="defaultpost" value="0" id="defaultpostcheck_hidden"/><label for="base-dlvp-yn-check"> 기본 배송지 설정</label>
+                    <td><input type="text" name="delivery_address_name" id="input" placeholder="최대 10자"><input type="checkbox" id="defaultpostcheck" value="1" name="defaultpost"><input type="hidden" name="defaultpost" value="0" id="defaultpostcheck_hidden"/><label for="defaultpostcheck"> 기본 배송지 설정</label>
                     </td>
                 </tr>           
                 <tr>

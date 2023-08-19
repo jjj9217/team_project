@@ -207,6 +207,7 @@ $(function(){
 				
 	    var confirmAns = confirm("상품을 장바구니에서 삭제하시겠습니까?");
 	    if (confirmAns) {
+	    	
 		    // 현재 인덱스에 해당하는 폼 엘리먼트 가져오기
 		    var form = $(".basket_delete_one_form_class").eq(index);
 		    
@@ -305,11 +306,27 @@ $(function(){
 	$(".all_order_btn").click(function(){
 		//체크박스 담을 변수 설정
 		var selectedValues = [];
+		var hasZeroValue = false; // 0인 값이 있는지 확인하기 위한 변수
 		
 		//모든 체크박스의 value를 넣음
 		$(".checkboxes").each(function() {
             selectedValues.push($(this).val());
         });
+		
+		// basket_item_product_capa 클래스를 가진 요소 중에서 0인 값을 확인
+	    $(".basket_item_product_capa").each(function() {
+	        if ($(this).val() === "0") {
+	            hasZeroValue = true;
+	            // 작업 후 반복문을 종료
+	            return false;
+	        }
+	    });
+		
+	    if (hasZeroValue) {
+	        // 0인 값이 하나라도 있을 때의 작업 수행
+	        alert("품절된 상품이 포함되어 구매할 수 없습니다!");
+	        return; // 함수 종료
+	    }
 		
 		//상품 정보를 문자열로 변환
         var selectedValuesStr = JSON.stringify(selectedValues);
@@ -318,7 +335,9 @@ $(function(){
 	    $("#basket_order").val(selectedValuesStr);
 	    
 	 	// 폼 제출 (submit)
-        document.basket_order_form.submit();
+        document.basket_order_form.submit();    		
+
+		
 	});
 	
 	//바로구매 버튼 클릭시
@@ -327,17 +346,23 @@ $(function(){
 		var selectedValues = [];
 		var index = $(".select_item_buy").index(this); // 클릭한 요소의 인덱스 가져오기
 		
-		 var basketIdxValue = $(".basket_item_basket_idx").eq(index).val(); // 해당 인덱스의 값 가져오기
-		selectedValues.push(basketIdxValue);
+
+    	if($(".basket_item_product_capa").eq(index).val() == 0){
+    		alert("현재 상품이 일시품절되어 구매할 수 없습니다!");
+    	}else{
+			var basketIdxValue = $(".basket_item_basket_idx").eq(index).val(); // 해당 인덱스의 값 가져오기
+			selectedValues.push(basketIdxValue);
+			
+			//상품 정보를 문자열로 변환
+	        var selectedValuesStr = JSON.stringify(selectedValues);
+			
+		    //값 넣기
+		    $("#basket_order").val(selectedValuesStr);
+		    
+		 	// 폼 제출 (submit)
+	        document.basket_order_form.submit();    		
+    	}
 		
-		//상품 정보를 문자열로 변환
-        var selectedValuesStr = JSON.stringify(selectedValues);
-		
-	    //값 넣기
-	    $("#basket_order").val(selectedValuesStr);
-	    
-	 	// 폼 제출 (submit)
-        document.basket_order_form.submit();
 	});
 })
 </script>

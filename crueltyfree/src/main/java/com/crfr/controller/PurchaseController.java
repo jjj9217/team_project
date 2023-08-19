@@ -47,7 +47,7 @@ public class PurchaseController {
 	bBasketInsert, bBasketDeleteOne, oSelectBasket, oSelectDeliveryCount,oSelectDeliveryList,
 	oInsertDelivery, oSelectDeliveryVo, oInsertOrder, oSelectOrderIdx, oInsertPay, oDeleteBasket,
 	oImportService, oInsertOrderProduct, oUpdateOrder, oUpdatePay, mSelectCountMember, oSelectCouponList,
-	oDeleteCoupon;
+	oDeleteCoupon, oSelectCouponCount;
 	
 	@Setter(onMethod_={ @Autowired })	
 	ProductViewService pSelectView, pSelectThumbnail;
@@ -376,18 +376,15 @@ public class PurchaseController {
 		
 		//쿠폰 목록 받아오기
 		List<CouponVo> couponList = null;
-		int couponCouponCount = 0;
+		int couponCount = 0;
 		if(vo != null) {
 			int member_idx = vo.getMember_idx();
 			Date today = new Date();
 			System.out.println(today);
 			couponList = oSelectCouponList.selectCouponList(member_idx, today);
-			
-			for(CouponVo couponVo : couponList) {
-				couponCouponCount++;
-			}
+			couponCount = oSelectCouponCount.selectCouponCount(member_idx, today);
 		}
-		model.addAttribute("couponCouponCount", couponCouponCount);
+		model.addAttribute("couponCount", couponCount);
 		model.addAttribute("couponList", couponList);
 		
 		//배송지 목록 받아오기	
