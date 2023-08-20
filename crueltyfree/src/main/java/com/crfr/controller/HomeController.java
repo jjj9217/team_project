@@ -47,49 +47,49 @@ public class HomeController {
 		model.addAttribute("fileList", fileList);
 		
 		HttpSession session = request.getSession();
-//		//최근본상품추가
-//		String client_num = null;
-//		Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
-//	    if (cookies != null) {
-//	        for (Cookie cookie : cookies) {
-//	            if ("guestId".equals(cookie.getName())) { //이름이 "guestId"인 쿠키의 value를
-//	            	client_num  = cookie.getValue();	//client_num에 넣음
-//	                break;
-//	            }//end of if - cookie 이름 조건문
-//	        }//end of for
-//	    }//end of if - cookie null값 조건문
-//	    
-//	    
-//		//최근본상품 리스트
-//	    List<RecentViewVo> RecentViewVoList = pSelectRecentViewList.selectRecentViewList(client_num);
-//	    int RecentViewListCount = 0;
-//	    
-//	    List<BasketListVo> RecentViewList = new ArrayList<>(); // 빈 리스트로 초기화
-//	    
-//	    for(RecentViewVo recentView : RecentViewVoList) {
-//	    	BasketListVo basketListVo = new BasketListVo(); // 객체 생성
-//	    	
-//	    	int recentPrdIdx = recentView.getProduct_idx();//최근본 상품의 상품번호 
-//			ProductVo recentProduct = pSelectView.selectView(recentPrdIdx);//상품번호의 상품Vo
-//			FileVo recentFile = pSelectThumbnail.selectThumbnail(recentPrdIdx); //상품번호의 파일Vo중 1번째
-//			
-//			basketListVo.setProduct_idx(recentPrdIdx);
-//		    basketListVo.setOriginFile(recentFile.getOriginFile());
-//		    basketListVo.setSaveFile(recentFile.getSaveFile());
-//		    basketListVo.setMember_nickname(recentProduct.getMember_nickname());
-//		    basketListVo.setProduct_name(recentProduct.getProduct_name());
-//		    basketListVo.setProduct_price(recentProduct.getProduct_price());	
-//		    
-//		    RecentViewList.add(basketListVo); // RecentViewList에 추가
-//	    	RecentViewListCount++;
-//	    }
-//	    if(RecentViewListCount > 3) {
-//	    	RecentViewListCount = 3;
-//	    }
-//	    session.removeAttribute("RecentViewListCount");
-//	    session.setAttribute("RecentViewListCount", RecentViewListCount);
-//	    session.removeAttribute("RecentViewList");
-//	    session.setAttribute("RecentViewList", RecentViewList);
+		//최근본상품추가
+		String client_num = null;
+		Cookie[] cookies = request.getCookies(); //쿠키를 불러와서
+	    if (cookies != null) {
+	        for (Cookie cookie : cookies) {
+	            if ("guestId".equals(cookie.getName())) { //이름이 "guestId"인 쿠키의 value를
+	            	client_num  = cookie.getValue();	//client_num에 넣음
+	                break;
+	            }//end of if - cookie 이름 조건문
+	        }//end of for
+	    }//end of if - cookie null값 조건문
+	    
+	    
+		//최근본상품 리스트
+	    List<RecentViewVo> RecentViewVoList = pSelectRecentViewList.selectRecentViewList(client_num);
+	    int RecentViewListCount = 0;
+	    
+	    List<BasketListVo> RecentViewList = new ArrayList<>(); // 빈 리스트로 초기화
+	    
+	    for(RecentViewVo recentView : RecentViewVoList) {
+	    	BasketListVo basketListVo = new BasketListVo(); // 객체 생성
+	    	
+	    	int recentPrdIdx = recentView.getProduct_idx();//최근본 상품의 상품번호 
+			ProductVo recentProduct = pSelectView.selectView(recentPrdIdx);//상품번호의 상품Vo
+			FileVo recentFile = pSelectThumbnail.selectThumbnail(recentPrdIdx); //상품번호의 파일Vo중 1번째
+			
+			basketListVo.setProduct_idx(recentPrdIdx);
+		    basketListVo.setOriginFile(recentFile.getOriginFile());
+		    basketListVo.setSaveFile(recentFile.getSaveFile());
+		    basketListVo.setMember_nickname(recentProduct.getMember_nickname());
+		    basketListVo.setProduct_name(recentProduct.getProduct_name());
+		    basketListVo.setProduct_price(recentProduct.getProduct_price());	
+		    
+		    RecentViewList.add(basketListVo); // RecentViewList에 추가
+	    	RecentViewListCount++;
+	    }
+	    if(RecentViewListCount > 3) {
+	    	RecentViewListCount = 3;
+	    }
+	    session.removeAttribute("RecentViewListCount");
+	    session.setAttribute("RecentViewListCount", RecentViewListCount);
+	    session.removeAttribute("RecentViewList");
+	    session.setAttribute("RecentViewList", RecentViewList);
 		
 		return "main/home";
 	}

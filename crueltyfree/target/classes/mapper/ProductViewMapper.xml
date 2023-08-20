@@ -81,7 +81,7 @@
 			AND review_idx IN (SELECT review_idx FROM `file` WHERE originFile != "")
 		</if>
 		<if test="textReview == 'ok' and photoReview == 'fail'">
-			AND review_idx IN (SELECT review_idx FROM `file` WHERE originFile = "")
+			AND NOT EXISTS (SELECT review_idx FROM `file` WHERE originFile IS NOT NULL AND review.review_idx = file.review_idx)
 		</if> 
 		<if test="textReview == 'fail' and photoReview == 'fail'">
 			AND member_idx="0"
@@ -114,7 +114,7 @@
 			AND review_idx IN (SELECT review_idx FROM `file` WHERE originFile != "")
 		</if>
 		<if test="textReview == 'ok' and photoReview == 'fail'">
-			AND review_idx IN (SELECT review_idx FROM `file` WHERE originFile = "")
+			AND NOT EXISTS (SELECT review_idx FROM `file` WHERE originFile IS NOT NULL AND review.review_idx = file.review_idx)
 		</if> 
 		<if test="textReview == 'fail' and photoReview == 'fail'">
 			AND member_idx="0"

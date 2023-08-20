@@ -529,7 +529,8 @@ border-radius:5px;
     
     
      .paging{
-        width:1020px;
+     	margin-left: 10px;
+        width:790px;
         height:150px;
         float:left;
         display: flex;
@@ -541,8 +542,6 @@ border-radius:5px;
         height: 70px;
         font: 20px Arial, Sans-serif;
         text-align: center;
-        border-color: white;
-        background-color: orange;
     }
     .prd_box{
     	display:flex;

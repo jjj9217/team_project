@@ -524,8 +524,11 @@ function deletelikelistall() {
                         </td>
                 </tr>
                         </c:if>
-                            </c:forEach>     
-	
+                            </c:forEach> 
+                        <c:if test="${empty likefileList[0].saveFile}">
+                       	<tr><td colspan="3">좋아요 상품이 없습니다.</td></tr>
+                        </c:if>    
+							
             </tbody>
 
 
