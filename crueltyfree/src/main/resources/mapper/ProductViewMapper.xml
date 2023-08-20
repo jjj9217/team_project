@@ -78,10 +78,10 @@
 		select count(*) from review
 		where product_idx=#{product_idx} 
 		<if test="textReview == 'fail' and photoReview == 'ok'">
-			AND review_idx IN (SELECT review_idx FROM `file`)
+			AND review_idx IN (SELECT review_idx FROM `file` WHERE originFile != "")
 		</if>
 		<if test="textReview == 'ok' and photoReview == 'fail'">
-			AND review_idx NOT IN (SELECT review_idx FROM `file` WHERE review_idx IS NOT NULL)
+			AND NOT EXISTS (SELECT review_idx FROM `file` WHERE originFile IS NOT NULL AND review.review_idx = file.review_idx)
 		</if> 
 		<if test="textReview == 'fail' and photoReview == 'fail'">
 			AND member_idx="0"
@@ -111,10 +111,10 @@
 		select * from review
 		where product_idx=#{product_idx} 
 		<if test="textReview == 'fail' and photoReview == 'ok'">
-			AND review_idx IN (SELECT review_idx FROM `file`)
+			AND review_idx IN (SELECT review_idx FROM `file` WHERE originFile != "")
 		</if>
 		<if test="textReview == 'ok' and photoReview == 'fail'">
-			AND review_idx NOT IN (SELECT review_idx FROM `file` WHERE review_idx IS NOT NULL)
+			AND NOT EXISTS (SELECT review_idx FROM `file` WHERE originFile IS NOT NULL AND review.review_idx = file.review_idx)
 		</if> 
 		<if test="textReview == 'fail' and photoReview == 'fail'">
 			AND member_idx="0"

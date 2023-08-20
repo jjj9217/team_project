@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 페이지 | CrueltyFree</title>
-<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon1.png">
 <style>
 	.modalContainer {
 	 	width: 100%;
@@ -263,6 +263,7 @@
 		border-width:2px;
 		height:100px;
 		padding-top:5px;
+		resize:none;
 	}
 	.regi_box2{
 		border-color:#7d99a4; 
@@ -377,7 +378,10 @@ $(function(){
 			alert("선택한 등록문의가 없습니다.");
 			return;
 		}
-		
+	    var confirmation = confirm("선택한 문의를 삭제하시겠습니까?");
+	    if (!confirmation) {
+	        return; // 사용자가 취소를 선택한 경우
+	    }	
 		$.ajax({
 			type:"post",
 			url:"sel_one_inq_delete_multiple.do",

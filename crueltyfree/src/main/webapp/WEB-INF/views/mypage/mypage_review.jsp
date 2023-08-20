@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>리뷰 | CreultyFree</title>
-<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon1.png">
 
 <style>
     *{margin: 0; padding: 0;}
@@ -423,7 +423,7 @@
     .top{border-top: 2px solid #4a4a4a}
     .bottom{border-bottom: 1px solid #a4a4a4}
     
-     .paging{
+     .paging{ 
         width:1020px;
         height:150px;
         float:left;
@@ -436,8 +436,6 @@
         height: 70px;
         font: 20px Arial, Sans-serif;
         text-align: center;
-        border-color: white;
-        background-color: orange;
     }
     
     .prd_box,.review_box{
@@ -685,6 +683,24 @@ display: none; }
         width:120px;
         height:120px;
     }
+    .rw-photo-list {
+    	width: 500px;
+    	height: 120px;
+    	margin-left: 10px;
+    	display: flex;
+    	justify-content: center;
+    	align-items: center;
+    }
+    .imgSpan{
+    	width: 96px; height: 116px;
+    	padding: 2px;
+    	border-radius:5px;
+    	border:1px solid #7d99a4;
+    }
+    .reviewViewImg{
+    width:96px;
+	height:116px;
+    }
 </style>
 </head>
 
@@ -906,7 +922,7 @@ display: none; }
                             <c:forEach var="fileVo" items="${fileVoList}">                            		                            	
                                 <c:if test="${reviewproductList[rowNum-1].review_idx eq fileVo.review_idx}">
                                         <c:if test ="${fileVo.saveFile ne null}">
-                                       <span class="thum"><img class="goodlist_thumb" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}"></span>
+                                       <span class="thum imgSpan"><img class="goodlist_thumb reviewViewImg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}"></span>
                                         </c:if>
                                 </c:if>                                
                             </c:forEach>
@@ -1188,6 +1204,26 @@ $(function(){//jQuery
     $(".close_modalmodify").click(function(){
         var index2 = $(".close_modalmodify").index(this);        
         $(".modal_modify1").eq(index2).addClass("hidden");
+    });
+  
+    $(".btnLookup").click(function(){
+		var index = $(".btnLookup").index(this);
+	    $(".modal_modify1").eq(index).addClass("hidden");
+	});
+    
+   
+    $(".prd_item_box").click(function(){
+		var index = $(".prd_item_box").index(this);
+	    var prdNum = $(".prdIdxClass").eq(index).val();
+	    
+	    window.location.href = "${pageContext.request.contextPath}/product/product_view.do?prdNum=" + prdNum;
+	});
+    
+    
+    $(".reviewModifyup").click(function(){
+        var index2 = $(".reviewModifyup").index(this);
+        alert("작성이 완료되었습니다.");
+        $(".test01").eq(index2).submit();                   
     });
 });
 

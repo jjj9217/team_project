@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>${productVo.product_name} | CrueltyFree</title>
-<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon1.png">
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
@@ -1090,6 +1090,24 @@ $(function(){
 	#cate_small_box a{color: #4a4a4a;}
 	#cate_large_box a:hover{color: #7d99a4;}
 	#cate_small_box a:hover{color: #7d99a4;}
+	#next{
+		background-color:#7d99a4;
+		border :0;
+		color:white;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
+	#end{
+		background-color:rgb(221, 219, 214);
+		border :0;
+		font: bold 15px Arial, Sans-serif;
+		border-radius:3px;
+		width:50px;
+		height:25px;
+	}
+	.other{color:#4a4a4a;}
 </style>
 </head>
 <body>
@@ -1572,7 +1590,7 @@ $(function(){
                 <!-- 페이지 네비게이션 -->
                 <div class="pageing">
 		    		<c:if test="${pvrPageNav.pageNum > pvrPageNav.pages_per_block}">
-				    	<a href="#" onclick="pageNav(${productVo.product_idx},1,1,'empty','empty','empty')"><input type="button" id="end" value="처음"></a>&nbsp;</a>&nbsp;
+				    	<a href="#" onclick="pageNav(${productVo.product_idx},1,1,'empty','empty','empty')"><input type="button" id="end" value="처음"></a>&nbsp;
 			    		<a href="#"onclick="pageNav(${productVo.product_idx},${(pvrPageNav.pageBlock - 2)*pvrPageNav.pages_per_block + 1},${pvrPageNav.pageBlock-1},'empty','empty','empty')">
 			    			<input type="button" id="next" value="이전">
 			    		</a>   	
@@ -1766,9 +1784,9 @@ $(function(){
                 <!-- 페이지 네비게이션 -->
                 <div class="pageing">
 		    		<c:if test="${pviPageNav.pageNum > pviPageNav.pages_per_block}">
-				    	<a href="#" onclick="pageNav(${productVo.product_idx},1,1,'empty','empty','empty')">&lt;&lt;</a>&nbsp;
+				    	<a href="#" onclick="pageNav(${productVo.product_idx},1,1,'empty','empty','empty')"><input type="button" id="end" value="처음"></a>&nbsp;
 			    		<a href="#"onclick="pageNav(${productVo.product_idx},${(pviPageNav.pageBlock - 2)*pviPageNav.pages_per_block + 1},${pviPageNav.pageBlock-1},'empty','empty','empty')">
-			    			&lt;이전페이지
+			    			<input type="button" id="next" value="이전">
 			    		</a>   	
 			    	</c:if>
 			    	
@@ -1777,19 +1795,21 @@ $(function(){
 			    			<c:choose>
 			    				<c:when test = "${pviPageNav.pageNum eq i}">
 			    					<a href="#" onclick="pageNav(${productVo.product_idx},${i},${pviPageNav.pageBlock},'empty','empty','empty')">
-			    						<span style="color:red">${i}&nbsp;</span>
+			    						<span style="color:#7d99a4;">${i}&nbsp;</span>
 			    					</a>
 			    				</c:when>
 			    				<c:otherwise>
-			    					<a href="#" onclick="pageNav(${productVo.product_idx},${i},${pviPageNav.pageBlock},'empty','empty','empty')">${i}&nbsp;</a>
+			    					<a href="#" onclick="pageNav(${productVo.product_idx},${i},${pviPageNav.pageBlock},'empty','empty','empty')">
+			    						<span class="other">${i}&nbsp;</span>
+			    					</a>
 			    				</c:otherwise>
 			   			</c:choose>
 			    		</c:if>
 			    	</c:forEach>
 			    
 			    	<c:if test="${((pviPageNav.rows_per_page*pviPageNav.pages_per_block) lt pviPageNav.totalRows) and (pviPageNav.pageBlock ne pviPageNav.lastPageBlock) }">
-			    		<a href="#" onclick="pageNav(${productVo.product_idx},${pviPageNav.pageBlock*pviPageNav.pages_per_block+1},${pviPageNav.pageBlock+1},'empty','empty','empty')">다음페이지&gt;</a>&nbsp;
-			    		<a href="#" onclick="pageNav(${productVo.product_idx},${pviPageNav.totalPageNum},${pviPageNav.lastPageBlock},'empty','empty','empty')">&gt;&gt;</a>
+			    		<a href="#" onclick="pageNav(${productVo.product_idx},${pviPageNav.pageBlock*pviPageNav.pages_per_block+1},${pviPageNav.pageBlock+1},'empty','empty','empty')"><input type="button" id="next" value="다음"></a>&nbsp;
+			    		<a href="#" onclick="pageNav(${productVo.product_idx},${pviPageNav.totalPageNum},${pviPageNav.lastPageBlock},'empty','empty','empty')"><input type="button" id="end" value="마지막"></a>
 			    	</c:if>
                 </div>
             </section>

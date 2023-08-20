@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>페이지네비게이션</title>
-<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon1.png">
 <style>
 	#next{
 		background-color:#7d99a4;
