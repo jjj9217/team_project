@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 페이지 | CrueltyFree</title>
-<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon1.png">
 <style>
 	 .modalContainer {
 	 	width: 100%;
@@ -352,7 +352,10 @@ $(function(){
 			alert("체크된 회원이 없습니다.");
 			return;
 		}
-		
+	    var confirmation = confirm("선택한 회원을 탈퇴하시겠습니까?");
+	    if (!confirmation) {
+	        return; // 사용자가 취소를 선택한 경우
+	    }	
 		$.ajax({
 			type:"post",
 			url:"member_delete_multiple.do",

@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인 | CrueltyFree</title>
-<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon1.png">
 <style>
 	* {margin:0; padding:0;}
 	a{text-decoration: none;}

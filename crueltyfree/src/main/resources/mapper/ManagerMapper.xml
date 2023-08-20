@@ -317,9 +317,9 @@
 		select * from Product where product_idx = #{product_idx}
 	</select>
 
-	<delete id="productDeleteOne" parameterType="_int">
-		delete from product where product_idx = #{productIdx}
-	</delete>	
+	<update id="productDeleteOne" parameterType="_int">
+		update product set product_del_or_not="-1" where product_idx=#{product_idx}
+	</update>	
 	<delete id="memberDeleteOne" parameterType="_int">
 		delete from member where member_idx = #{memberIdx}
 	</delete>	

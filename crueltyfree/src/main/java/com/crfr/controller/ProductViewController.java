@@ -111,7 +111,6 @@ public class ProductViewController {
 	    	int recentPrdIdx = recentView.getProduct_idx();//최근본 상품의 상품번호 
 			ProductVo recentProduct = pSelectView.selectView(recentPrdIdx);//상품번호의 상품Vo
 			FileVo recentFile = pSelectThumbnail.selectThumbnail(recentPrdIdx); //상품번호의 파일Vo중 1번째
-			
 			basketListVo.setProduct_idx(recentPrdIdx);
 		    basketListVo.setOriginFile(recentFile.getOriginFile());
 		    basketListVo.setSaveFile(recentFile.getSaveFile());

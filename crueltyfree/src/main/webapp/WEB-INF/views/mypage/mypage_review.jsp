@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>리뷰 | CreultyFree</title>
-<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon1.png">
 
 <style>
     *{margin: 0; padding: 0;}

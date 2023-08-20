@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>좋아요내역 | CrueltyFree</title>
-<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon1.png">
 <style>
 *{margin: 0; padding: 0;}
     a{text-decoration: none;}
@@ -303,16 +303,87 @@
 		height:25px;
 	}
 	.other{color:#4a4a4a;}
+	.modalContainer {
+	 	width: 100%;
+	 	height: 100%;
+	 	position: fixed;
+	 	top: 0;
+	 	left: 0;
+	 	display: flex;
+	 	justify-content: center;
+	 	align-items: center;
+	 	background: rgba(0, 0, 0, 0.5);
+	 }
+		
+	 .modalContent {
+		position: absolute;
+	 	background-color: #ffffff;
+	 	border-radius: 5px;
+	 	width: 450px;
+	 	height: 250px;
+	 	padding: 15px;
+	 }
+ 	 .hidden {
+ 		display: none;
+	 }
+	.modal_title{width:450px; font-size: 24px; font-weight: bold; margin-bottom: 10px;}
+	.modal_content{width:450px; height:130px; line-height:130px; color:#a4a4a4; font-weight: bold; text-align: center;}
+	.modal_hr{width:450px; height: 5px; background-color: #7d99a4; margin-bottom: 10px;}
+	.modal_btn{width:450px; display: flex; justify-content: center;}
+	.modal_title_text{display:inline-block;}
+	.modal_title_right{float:right;}
+	.close{border:0;color:#4a4a4a; font-weight: bold; font-size: 24px; background-color: #fff;}	     
+	.shoppingButton{width:130px; height:40px; margin-right: 10px; border-radius: 2px; background-color: #fff; color:#7d99a4; font-weight: bold; border: 1px solid #7d99a4}
+	.basketPageButton{width:130px; height:40px; margin-left: 10px; border-radius: 2px; background-color: #7d99a4; color:#fff; font-weight: bold; border: 1px solid #7d99a4}
+	
 </style>
 </head>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 $(function(){
+	//장바구니 버튼 클릭시
 	$(".basket_add_btn").click(function(){
 		var index = $(".basket_add_btn").index(this);
-		var product_idx = $(".prdIdx").eq(index).val();
-		alert(product_idx);
+		var product_idx = parseInt($(".prdIdx").eq(index).val(), 10); // 10진수로 파싱
+		var cart_cnt = parseInt("1", 10); // 10진수로 파싱
+		
+		$.ajax({
+	        type: "post",
+	        url: "${pageContext.request.contextPath}/product/basket_insert.do",
+	        data: { "product_idx": product_idx,
+	        		"prd_cart_cnt": cart_cnt },
+	        success: function(data) {
+	        	if (data == "success") {
+	        		// 모달 열기
+	        		//현재 index값의 modalContainer클래스에 hidden클래스 제거
+	        		$(".modalContainer").eq(0).removeClass("hidden");
+	            } else if(data == "fail"){
+	            	alert("장바구니 담기 실패");
+	            } else if(data == "soldout"){
+	            	alert("현재 품절된 상품 입니다.");
+	            } else{
+	            	alert("장바구니에 담을 수 있는 남은 상품의 수는 "+data+"개 입니다.");
+	            	$("#cart_cnt").focus();	            	
+	            }
+	        },
+	        error: function(error) {
+	        	alert("ajax 에러 발생");
+	        }
+	    });//end of ajax
 	});
+	
+	//장바구니 모달창 내부 닫기 버튼
+	$(".modalCloseButton").each(function(index) {
+	    $(this).click(function() {
+	        var containerIndex = Math.floor(index / 2);
+	        $(".modalContainer").eq(containerIndex).addClass("hidden");
+	        
+	    });
+	});
+	
+    $(".basketPageButton").click(function() {
+        window.location.href = "${pageContext.request.contextPath}/purchase/basket.do";
+    });
 });
 </script>
 <script>
@@ -430,7 +501,27 @@ function deletelikelistall() {
                     <td >
                     	<input type="hidden" class="prdIdx" value="${likeproductList[rowNum-1].product_idx}">
                         <input type="button" id="td_basket" class="basket_add_btn" value="장바구니">
-                        <input type="button" id="td_cancel" onclick="deletelikelist(${likeproductList[rowNum-1].like_idx});" value="삭제하기"></td>
+                        <input type="button" id="td_cancel" onclick="deletelikelist(${likeproductList[rowNum-1].like_idx});" value="삭제하기">
+                        <!-- 장바구니 담기 완료시 모달창 -->
+                	<div class="modalContainer hidden">
+					<div class="modalContent">
+						<div class="modal_title">
+							<div class="modal_title_text">선택완료</div>
+							<div class="modal_title_right"><button class="modalCloseButton close">X</button></div>							
+						</div>
+						<div class="modal_hr">
+						</div>
+						<div class="modal_content">
+							장바구니에 추가되었습니다.
+						</div>
+						<div class="modal_btn">
+						    <button class="modalCloseButton shoppingButton">쇼핑 계속하기</button>
+						    <button type="button" class="basketPageButton">
+						    장바구니 확인</button>
+						</div>
+				    </div>				    
+					</div>
+                        </td>
                 </tr>
                         </c:if>
                             </c:forEach>     
