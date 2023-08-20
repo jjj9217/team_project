@@ -315,30 +315,50 @@
     
     
     <!--  리뷰 수정에서 사진파일 삭제될경우 사진 삭제 0번방~4번방까지 -->   
-    <delete id="deletereviewimg0" parameterType="FileVo">
-        delete from File                
-                where file_idx = #{file_idx}
-    </delete>
+    <update id="deletereviewimg0" parameterType="FileVo">
+         update file set originFile=null, saveFile=null where file_idx=#{file_idx}
+    </update>
     
-    <delete id="deletereviewimg1" parameterType="FileVo">
-        delete from File                
-                where file_idx = #{file_idx}
-    </delete>
+    <update id="deletereviewimg1" parameterType="FileVo">
+         update file set originFile=null, saveFile=null where file_idx=#{file_idx}
+    </update>
     
-    <delete id="deletereviewimg2" parameterType="FileVo">
-        delete from File                
-                where file_idx = #{file_idx}
-    </delete>
+    <update id="deletereviewimg2" parameterType="FileVo">
+         update file set originFile=null, saveFile=null where file_idx=#{file_idx}
+    </update>
     
-    <delete id="deletereviewimg3" parameterType="FileVo">
-        delete from File                
-                where file_idx = #{file_idx}
-    </delete>
+    <update id="deletereviewimg3" parameterType="FileVo">
+         update file set originFile=null, saveFile=null where file_idx=#{file_idx}
+    </update>
     
-    <delete id="deletereviewimg4" parameterType="FileVo">
-        delete from File                
-                where file_idx = #{file_idx}
-    </delete>
+    <update id="deletereviewimg4" parameterType="FileVo">
+         update file set originFile=null, saveFile=null where file_idx=#{file_idx}
+    </update>
+
+<!--     <delete id="deletereviewimg0" parameterType="FileVo"> -->
+<!--         delete from File                 -->
+<!--                 where file_idx = #{file_idx} -->
+<!--     </delete> -->
+    
+<!--     <delete id="deletereviewimg1" parameterType="FileVo"> -->
+<!--         delete from File                 -->
+<!--                 where file_idx = #{file_idx} -->
+<!--     </delete> -->
+    
+<!--     <delete id="deletereviewimg2" parameterType="FileVo"> -->
+<!--         delete from File                 -->
+<!--                 where file_idx = #{file_idx} -->
+<!--     </delete> -->
+    
+<!--     <delete id="deletereviewimg3" parameterType="FileVo"> -->
+<!--         delete from File                 -->
+<!--                 where file_idx = #{file_idx} -->
+<!--     </delete> -->
+    
+<!--     <delete id="deletereviewimg4" parameterType="FileVo"> -->
+<!--         delete from File                 -->
+<!--                 where file_idx = #{file_idx} -->
+<!--     </delete> -->
     
     <!--  리뷰 수정에서 사진파일 삭제될경우 사진이 있는지 체크한 뒤 삭제하게 0번방~4번방까지 -->
     <select id="checkreviewimg0" parameterType="FileVo" resultType="_int">        

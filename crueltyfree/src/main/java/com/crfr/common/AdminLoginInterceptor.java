@@ -26,7 +26,7 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
 			
 		}			
 		
-		System.out.println("관리자로그인 인터셉터 / Member등급번호: "+grade +"\n");
+//		System.out.println("관리자로그인 인터셉터 / Member등급번호: "+grade +"\n");
 				
 		
 		if(grade != 2 || grade == 30) {

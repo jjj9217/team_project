@@ -12,7 +12,7 @@ public class MypagePageService implements MypageService {
 		int totalRows = pageNav.getTotalRows();
 		int rows_per_page = 15;
 			
-		System.out.println("ProductPageService's rows_per_page count: "+rows_per_page);	
+//		System.out.println("ProductPageService's rows_per_page count: "+rows_per_page);	
 		int pages_per_block = 5;
 		
 		pageNav.setRows_per_page(rows_per_page);
