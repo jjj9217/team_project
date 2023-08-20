@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>CrueltyFree</title>
-<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon1.png">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 $(function(){
@@ -274,28 +274,28 @@ function HeaderBest(sort_salecount) {
 <div class="clear"></div>
 <div id="ad_container">
 <nav id="ad">
-	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=49">
+	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=275">
 		<img src="${pageContext.request.contextPath}/resources/img/home_ad1.png" class="home_ad1" style="width: 1020px;" />
 	</a>
-	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=58">
+	<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=359">
 		<img src="${pageContext.request.contextPath}/resources/img/home_ad2.png" class="home_ad1" style="width: 1020px;" />
 	</a>
-		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=30">
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=320">
 		<img src="${pageContext.request.contextPath}/resources/img/home_ad3.png" class="home_ad1" style="width: 1020px;" />
 	</a>
-		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=188">
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=418">
 		<img src="${pageContext.request.contextPath}/resources/img/home_ad4.png" class="home_ad1" style="width: 1020px;" />
 	</a>
-		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=36">
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=265">
 		<img src="${pageContext.request.contextPath}/resources/img/home_ad5.png" class="home_ad1" style="width: 1020px;" />
 	</a>
-		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=120">
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=462">
 		<img src="${pageContext.request.contextPath}/resources/img/home_ad6.png" class="home_ad1" style="width: 1020px;" />
 	</a>
-		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=121">
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=468">
 		<img src="${pageContext.request.contextPath}/resources/img/home_ad7.png" class="home_ad1" style="width: 1020px;" />
 	</a>	
-		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=262">
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=423">
 		<img src="${pageContext.request.contextPath}/resources/img/home_ad8.png" class="home_ad1" style="width: 1020px;" />
 	</a>		
 </nav>

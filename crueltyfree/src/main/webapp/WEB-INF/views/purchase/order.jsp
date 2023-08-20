@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>주문/결제 | CrueltyFree</title>
-<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon1.png">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- 우편번호 -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -282,9 +282,10 @@ $(function(){
 	//쿠폰할인 옵션변경
 	$("#coupon").change(function() {
 	    var optionValue = parseFloat($("#coupon").val()); 
-	    var prdPrice = parseInt($("#val_prdPrice").val()); 
+	    var prdPrice = parseInt($("#val_prdPrice").val());
+	    var dlvPrice = parseInt($("#val_dlvPrice").val());
 	    var salePrice = prdPrice * optionValue;
-	    var resultPrice = prdPrice - salePrice;
+	    var resultPrice = prdPrice - salePrice + dlvPrice;
 
 	    
 	    //할인금액을 세팅

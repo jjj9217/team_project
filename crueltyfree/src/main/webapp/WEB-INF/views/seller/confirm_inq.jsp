@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>문의 확인 | CrueltyFree</title>
-<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.png">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon1.png">
 
 <style>
 	* {margin:0; padding:0;}
@@ -180,7 +180,7 @@
         	margin-top: 30px;
         	text-align: center;
         }
-        .reviewModifyup, reviewModifyup2{
+        .reviewModifyup, .reviewModifyup2{
         	width: 100px;
         	height: 40px;
         	border: 1px solid #7d99a4;
@@ -306,7 +306,7 @@
 		        <tr height="30px;">
 		            <th width="100px;">상품번호</th>
 		            <th width="400px;">문의 내용</th>
-		            <th width="100px;">닉네임</th>
+		            <th width="100px;">문의 날짜</th>
 		            <th width="100px;">답변 상태</th>
 		        </tr>
 		        
@@ -380,7 +380,43 @@
            </tr>
            </tbody>
            
-           
+<!-- 상품문의 수정하기 Modal -->
+<form name="caq" class="oneModifyModal2" action="${pageContext.request.contextPath}/seller/confirmModify_process.do" method="post">
+<div id="modal" class="modal_modify2 modal hidden">    
+    <div class="modal-window">
+        <div class="title">
+            <h2>상품문의 수정</h2>
+            <span class="close_modalmodify2">X</span>
+        </div>
+        <div class="hr_space"></div>  
+        <ul class="write_step">                           
+            <li id="review_content_back">  				             	            
+                <div class="review_content">
+                	<div class="inq_user">
+		            <span class="inq_user_title">문의자닉네임 :</span> <br>
+		            ${confirmproductList[rowNum-1].member_nickname}<br><br>
+		            <span class="inq_user_title">문의상품 :</span> <br>
+		            ${confirmproductList[rowNum-1].product_name}
+		            </div>
+		            <div class="inq_user_content">
+		            <span class="inq_user_title">문의내용 :</span> <br>
+		            ${confirmproductList[rowNum-1].product_inq_content}                   
+		            </div>
+                    <br><textarea id="review_content_textarea" class="txtAr" name="product_inq_answer" placeholder="답변을 입력해주세요.">${confirmproductList[rowNum-1].product_inq_answer}</textarea>                          
+              			<input type="hidden" name="product_inq_idx" value="${confirmproductList[rowNum-1].product_inq_idx}">
+                </div>          
+            </li>
+        </ul>
+        <div class="review_reg_background">                                                                     
+<!--             <button type="button" class="btnLookup" id="review_ok">닫기</button> -->
+
+					
+
+            <button type="button" class="reviewModifyup2" id="review_cancel" >수정하기</button>                                  
+        </div>
+    </div>    
+</div>
+</form>           
 
 <!-- 상품문의 답변하기 Modal -->
 <form name="caq" class="oneModifyModal" action="${pageContext.request.contextPath}/seller/confirm_process.do" method="post">
@@ -396,7 +432,7 @@
                 <div class="review_content">
 		            <div class="inq_user">
 		            <span class="inq_user_title">문의자닉네임 :</span> <br>
-		            ${confirmproductList[rowNum-1].member_nickname} <br><br>
+		            ${confirmproductList[rowNum-1].member_nickname}<br><br>
 		            <span class="inq_user_title">문의상품 :</span> <br>
 		            ${confirmproductList[rowNum-1].product_name}
 		            </div>
@@ -418,45 +454,7 @@
 </div>
 </form>
 
-
-<!-- 상품문의 수정하기 Modal -->
-<form name="caq" class="oneModifyModal2" action="${pageContext.request.contextPath}/seller/confirmModify_process.do" method="post">
-<div id="modal" class="modal_modify2 modal hidden">    
-    <div class="modal-window">
-        <div class="title">
-            <h2>상품문의 답변</h2>
-            <span class="close_modalmodify2">X</span>
-        </div>
-        <div class="hr_space"></div>  
-        <ul class="write_step">                           
-            <li id="review_content_back">  				             	            
-                <div class="review_content">
-                	<div class="inq_user">
-		            <span class="inq_user_title">문의자닉네임 :</span> <br>
-		            ${confirmproductList[rowNum-1].member_nickname}
-		            </div>
-		            <div class="inq_user_content">
-		            <span class="inq_user_title">문의내용 :</span> <br>
-		            ${confirmproductList[rowNum-1].product_inq_content}                   
-		            </div>
-                    <br><textarea id="review_content_textarea" class="txtAr" name="product_inq_answer" placeholder="답변을 입력해주세요.">${confirmproductList[rowNum-1].product_inq_answer}123123123</textarea>                          
-              			<input type="hidden" name="product_inq_idx" value="${confirmproductList[rowNum-1].product_inq_idx}">
-                </div>          
-            </li>
-        </ul>
-        <div class="review_reg_background">                                                                     
-<!--             <button type="button" class="btnLookup" id="review_ok">닫기</button> -->
-
-					
-
-            <button type="button" class="reviewModifyup2" id="review_cancel" >수정하기</button>                                  
-        </div>
-    </div>    
-</div>
-</form>
-
-						
-				</c:forEach>
+</c:forEach>
 				
 			</c:otherwise>
 		</c:choose>
@@ -493,7 +491,7 @@ $(function(){
     
     //수정하기 버튼 클릭시 모달 띄우기
     $(".oneinqModifyup2").click(function(){
-        var index = $(".oneinqModifyup").index(this);
+        var index = $(".oneinqModifyup2").index(this);
         
         $(".modal_modify2").eq(index).removeClass("hidden");      
     });
