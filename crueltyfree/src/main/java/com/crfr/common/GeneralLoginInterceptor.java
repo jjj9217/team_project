@@ -28,7 +28,7 @@ public class GeneralLoginInterceptor implements HandlerInterceptor {
 		}
 		
 		//int	grade = member.getMember_grade();
-		System.out.println("일반로그인 인터셉터 / Member등급번호: "+grade +"\n");
+//		System.out.println("일반로그인 인터셉터 / Member등급번호: "+grade +"\n");
 										
 		if(grade != 0 && grade != 1 && grade != 2 || grade == 30) {
 			//전체회원용(판매자,구매자포함) - 로그인 안되어있으면 로그인창으로 이동

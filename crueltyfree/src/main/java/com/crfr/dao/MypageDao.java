@@ -247,27 +247,25 @@ public class MypageDao {
 		 return vo;
 	}
 	
-	
-	
 	//리뷰번호 삭제하기
 	public int deletereviewimg0(FileVo vo) {
-		return sqlSession.delete(MAPPER+".deletereviewimg0", vo);
+		return sqlSession.update(MAPPER+".deletereviewimg0", vo);
 	}
 	
 	public int deletereviewimg1(FileVo vo) {
-		return sqlSession.delete(MAPPER+".deletereviewimg1", vo);
+		return sqlSession.update(MAPPER+".deletereviewimg1", vo);
 	}
 	
 	public int deletereviewimg2(FileVo vo) {
-		return sqlSession.delete(MAPPER+".deletereviewimg2", vo);
+		return sqlSession.update(MAPPER+".deletereviewimg2", vo);
 	}
 	
 	public int deletereviewimg3(FileVo vo) {
-		return sqlSession.delete(MAPPER+".deletereviewimg3", vo);
+		return sqlSession.update(MAPPER+".deletereviewimg3", vo);
 	}
 	
 	public int deletereviewimg4(FileVo vo) {
-		return sqlSession.delete(MAPPER+".deletereviewimg4", vo);
+		return sqlSession.update(MAPPER+".deletereviewimg4", vo);
 	}
 	
 	public int checkreviewimg0(FileVo vo) {
