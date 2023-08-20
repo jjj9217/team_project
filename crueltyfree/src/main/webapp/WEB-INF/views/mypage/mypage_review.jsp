@@ -424,7 +424,7 @@
     .bottom{border-bottom: 1px solid #a4a4a4}
     
      .paging{ 
-        width:1020px;
+        width:790px;
         height:150px;
         float:left;
         display: flex;
@@ -672,16 +672,24 @@
 .other{color:#4a4a4a;}
 
 .onfile{
+	display: flex;
+	justify-content:center;
+    align-content:center;
+    align-items:center;
+	width:44px; height:20px;
     font-size:25px;
     cursor:pointer;
 }
- 
+
   .file{
 display: none; }
-
+.imgEditContent{
+	width:96px;
+    height:96px;
+}
 .originimg{
-        width:120px;
-        height:120px;
+        width:96px;
+        height:96px;
     }
     .rw-photo-list {
     	width: 500px;
@@ -700,6 +708,56 @@ display: none; }
     .reviewViewImg{
     width:96px;
 	height:116px;
+    }
+    .rw-photo-list2{
+    display:flex;
+    width: 500px;
+    height: 130px;
+    }
+    .imgEditBox{
+    display:block;
+    width: 96px;
+    height: 126px;
+    padding: 2px;
+    border: 1px solid #7d99a4;
+    border-radius: 5px;
+    margin-right: 5px;
+    }
+    .imgEditBtnBox{
+    display:flex;
+    width: 96px;
+    height: 26px;
+    padding: 0;
+    }
+    .imgEditPlusBtn{
+    display:flex;
+    width: 44px;
+    height: 26px;
+    justify-content:center;
+    align-content:center;
+    align-items:center;
+    }
+    .imgEditCloseBtn{
+    display:flex;
+    width: 44px;
+    height: 26px;
+    justify-content:center;
+    align-content:center;
+    align-items:center;
+    }
+    .fileclose{
+    display:flex;
+    justify-content:center;
+    align-content:center;
+    align-items:center;
+    width: 44px;
+    height: 20px;
+    border:1px solid #7d99a4;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #7d99a4;
+    font-weight: bold;
+    font-size: 12px;
     }
 </style>
 </head>
@@ -1006,125 +1064,170 @@ display: none; }
 	            </div>
 	            <div class="rw-photo-list2">                            	                                                                          	            
 	             
-
-
-
-
-
-
-
-
-
-                
 	                <!-- 0 -->
-                     <div>
+               <div class="imgEditBox">
+               <div class="imgEditContent">
                <c:forEach var="fileVoList" items="${reviewRegList}" >                                     
                       <c:forEach var="fileVo" items="${fileVoList}" varStatus="status">                         
                             <c:if test="${(reviewproductList[rowNum-1].review_idx eq fileVo.review_idx) and (status.index eq 0)}">
-                                       <c:if test ="${fileVo.saveFile ne null}">                                                                   
+                            		<c:choose>
+                            		<c:when test="${fileVo.saveFile ne null}">
                                      <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}" style="display:flex">                                     
-                                       </c:if>                                             
+                            		</c:when>
+                            		<c:otherwise>
+                            		 <input type="hidden" class="originimg">                                     
+                            		</c:otherwise>
+                            		</c:choose>
                             </c:if>                                                                               
                    </c:forEach>
-               </c:forEach>   
-                                                  <input type="file" class="file" name="attachedFile" >
-                                                  <span class="onfile">+1</span>
-                                                  <input type="hidden" class="originDel" name="para" value="0"> 
-                                                  <input type="button" class="fileclose" value="선택삭제" style="dispaly:flex">
-                                                                                                                                
-                           <div class="boxtest"></div>                             
-                     </div>
+               </c:forEach>
+               <div class="boxtest"></div>
+               </div>
+               <div class="imgEditBtnBox">
+	               <input type="file" class="file" name="attachedFile" >
+	           <div class="imgEditPlusBtn">
+	               <span class="onfile">+</span>
+	           </div>    
+	               <input type="hidden" class="originDel" name="para" value="0"> 
+	           <div class="imgEditCloseBtn">    
+	               <input type="button" class="fileclose" value="삭제" style="dispaly:flex">
+	           </div>    
+               </div>   
+                                                        
+               </div>
                
 	                
 	                
 	                
-	                <div>
+	                <div class="imgEditBox">
+	                <div class="imgEditContent">
                <c:forEach var="fileVoList" items="${reviewRegList}" >                                     
                       <c:forEach var="fileVo" items="${fileVoList}" varStatus="status">                         
                             <c:if test="${(reviewproductList[rowNum-1].review_idx eq fileVo.review_idx) and (status.index eq 1)}">
-                                       <c:if test ="${fileVo.saveFile ne null}">                                                                   
-                                     <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}" style="display:flex">
-                                     
-                                       </c:if>                                             
+                            		<c:choose>
+                            		<c:when test="${fileVo.saveFile ne null}">
+                                     <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}" style="display:flex">                                     
+                            		</c:when>
+                            		<c:otherwise>
+                            		 <input type="hidden" class="originimg">                                     
+                            		</c:otherwise>
+                            		</c:choose>                                         
                             </c:if>                                                                               
                    </c:forEach>
-               </c:forEach>   
-                                                  <input type="file" class="file" name="attachedFile" >
-                                                  <span class="onfile">+2</span>
-                                                  <input type="hidden" class="originDel" name="para" value="0"> 
-                                                  <input type="button" class="fileclose" value="선택삭제" style="dispaly:flex">                                                                              
-                           <div class="boxtest"></div>                             
+               </c:forEach>
+               <div class="boxtest"></div>
+               </div>
+               <div class="imgEditBtnBox">
+	               <input type="file" class="file" name="attachedFile" >
+	           <div class="imgEditPlusBtn">
+	               <span class="onfile">+</span>
+	           </div>    
+	               <input type="hidden" class="originDel" name="para" value="0"> 
+	           <div class="imgEditCloseBtn">    
+	               <input type="button" class="fileclose" value="삭제" style="dispaly:flex">
+	           </div>    
+               </div>                
                      </div>
 	                
 	                
 	                
-	                <div>
+	                <div class="imgEditBox">
+	                <div class="imgEditContent">
                <c:forEach var="fileVoList" items="${reviewRegList}" >                                     
                       <c:forEach var="fileVo" items="${fileVoList}" varStatus="status">                         
                             <c:if test="${(reviewproductList[rowNum-1].review_idx eq fileVo.review_idx) and (status.index eq 2)}">
-                                       <c:if test ="${fileVo.saveFile ne null}">                                                                   
-                                     <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}" style="display:flex">
-                                     
-                                       </c:if>                                             
+                            		<c:choose>
+                            		<c:when test="${fileVo.saveFile ne null}">
+                                     <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}" style="display:flex">                                     
+                            		</c:when>
+                            		<c:otherwise>
+                            		 <input type="hidden" class="originimg">                                     
+                            		</c:otherwise>
+                            		</c:choose>                                       
                             </c:if>                                                                               
                    </c:forEach>
-               </c:forEach>   
-                                                  <input type="file" class="file" name="attachedFile" >
-                                                  <span class="onfile">+3</span> 
-                                                  <input type="hidden" class="originDel" name="para" value="0">
-                                                  <input type="button" class="fileclose" value="선택삭제" style="dispaly:flex">                                                                              
-                           <div class="boxtest"></div>                             
+               </c:forEach>
+               <div class="boxtest"></div>
+               </div>   
+               <div class="imgEditBtnBox">
+	               <input type="file" class="file" name="attachedFile" >
+	           <div class="imgEditPlusBtn">
+	               <span class="onfile">+</span>
+	           </div>    
+	               <input type="hidden" class="originDel" name="para" value="0"> 
+	           <div class="imgEditCloseBtn">    
+	               <input type="button" class="fileclose" value="삭제" style="dispaly:flex">
+	           </div>    
+               </div>                                 
                      </div>
 	                
 	                
-	                <div>
+	                <div class="imgEditBox">
+	                <div class="imgEditContent">
                <c:forEach var="fileVoList" items="${reviewRegList}" >                                     
                       <c:forEach var="fileVo" items="${fileVoList}" varStatus="status">                         
                             <c:if test="${(reviewproductList[rowNum-1].review_idx eq fileVo.review_idx) and (status.index eq 3)}">
-                                       <c:if test ="${fileVo.saveFile ne null}">                                                                   
-                                     <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}" style="display:flex">
-                                     
-                                       </c:if>                                             
+                            		<c:choose>
+                            		<c:when test="${fileVo.saveFile ne null}">
+                                     <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}" style="display:flex">                                     
+                            		</c:when>
+                            		<c:otherwise>
+                            		 <input type="hidden" class="originimg">                                     
+                            		</c:otherwise>
+                            		</c:choose>                                      
                             </c:if>                                                                               
                    </c:forEach>
-               </c:forEach>   
-                                                  <input type="file" class="file" name="attachedFile" >
-                                                  <span class="onfile">+4</span> 
-                                                  <input type="hidden" class="originDel" name="para" value="0">
-                                                  <input type="button" class="fileclose" value="선택삭제" style="dispaly:flex">                                                                              
-                           <div class="boxtest"></div>                             
+               </c:forEach>
+               <div class="boxtest"></div>  
+               </div> 
+               <div class="imgEditBtnBox">
+	               <input type="file" class="file" name="attachedFile" >
+	           <div class="imgEditPlusBtn">
+	               <span class="onfile">+</span>
+	           </div>    
+	               <input type="hidden" class="originDel" name="para" value="0"> 
+	           <div class="imgEditCloseBtn">    
+	               <input type="button" class="fileclose" value="삭제" style="dispaly:flex">
+	           </div>    
+               </div>                                      
                      </div>
 	                
 	                
-	                <div>
+	                <div class="imgEditBox">
+	                <div class="imgEditContent">
                <c:forEach var="fileVoList" items="${reviewRegList}" >                                     
                       <c:forEach var="fileVo" items="${fileVoList}" varStatus="status">                         
                             <c:if test="${(reviewproductList[rowNum-1].review_idx eq fileVo.review_idx) and (status.index eq 4)}">
-                                       <c:if test ="${fileVo.saveFile ne null}">                                                                   
-                                     <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}" style="display:flex">
-                                     
-                                       </c:if>                                             
+                            		<c:choose>
+                            		<c:when test="${fileVo.saveFile ne null}">
+                                     <img class="originimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" id="${status.index}" style="display:flex">                                     
+                            		</c:when>
+                            		<c:otherwise>
+                            		 <input type="hidden" class="originimg">                                     
+                            		</c:otherwise>
+                            		</c:choose>                                         
                             </c:if>                                                                               
                    </c:forEach>
-               </c:forEach>   
-                                                  <input type="file" class="file" name="attachedFile" >
-                                                  <span class="onfile">+5</span> 
-                                                  <input type="hidden" class="originDel" name="para" value="0">
-                                                  <input type="button" class="fileclose" value="선택삭제" style="dispaly:flex">                                                                              
-                           <div class="boxtest"></div>                             
+               </c:forEach>
+               <div class="boxtest"></div>   
+               </div>
+               <div class="imgEditBtnBox">
+	               <input type="file" class="file" name="attachedFile" >
+	           <div class="imgEditPlusBtn">
+	               <span class="onfile">+</span>
+	           </div>    
+	               <input type="hidden" class="originDel" name="para" value="0"> 
+	           <div class="imgEditCloseBtn">    
+	               <input type="button" class="fileclose" value="삭제" style="dispaly:flex">
+	           </div>    
+               </div>                               
                      </div>
 	                
 	                
 	                
 	                
-	                <span class="grayText">	                				                	                	                
-	                
-	                
-	                
-	                
-	                
-	                사진은 8MB이하의 PNG, JPG 파일만 등록 가능합니다.</span>
 	            </div>
+	                <span class="grayText">	사진은 8MB이하의 PNG, JPG 파일만 등록 가능합니다.</span>
 	        </div>            
 	        <div class="review_reg_background">
 	            <input type="hidden" name="review_idx" value="${reviewproductList[rowNum-1].review_idx}">                                                                     
@@ -1220,11 +1323,11 @@ $(function(){//jQuery
 	});
     
     
-    $(".reviewModifyup").click(function(){
-        var index2 = $(".reviewModifyup").index(this);
-        alert("작성이 완료되었습니다.");
-        $(".test01").eq(index2).submit();                   
-    });
+//     $(".reviewModifyup").click(function(){
+//         var index2 = $(".reviewModifyup").index(this);
+//         alert("작성이 완료되었습니다.");
+//         $(".test01").eq(index2).submit();                   
+//     });
 });
 
 
@@ -1267,27 +1370,27 @@ document.querySelectorAll('.file').forEach((file) => {
           var reader = new FileReader();
           var fileindex = $(".file").index(this);               // .file class에 해당되는 인덱스값 구하기          
           var imgdisplay = $(".originimg").eq(fileindex).css('display');
-          if (imgdisplay === 'flex'){ alert('여긴가?')
+          if (imgdisplay === 'flex'){
         $(".originimg").eq(fileindex).css('display','none')  
         $(".onfile").eq(fileindex).css('display','none');       // Span +버튼 감추기
         $(".fileclose").eq(fileindex).css('display','flex');    // 삭제버튼 보이기    
          reader.onload = function(event) {
            var img = document.createElement("img");
            img.setAttribute("src", event.target.result);
-           img.setAttribute("width", "75");
-           img.setAttribute("height", "75");
+           img.setAttribute("width", "96");
+           img.setAttribute("height", "96");
            img.setAttribute("class", "fileimg");           
            var name = document.querySelectorAll(".boxtest");    // div클래스명 boxtest에 이미지 생성하기
            name[fileindex].appendChild(img);                                                    
          };                                                     // reader.onload = funciton 끝나는 }
-      }else{alert('저긴가?')
+      }else{
           $(".onfile").eq(fileindex).css('display','none');       // Span +버튼 감추기
           $(".fileclose").eq(fileindex).css('display','flex');    // 삭제버튼 보이기    
            reader.onload = function(event) {
              var img = document.createElement("img");
              img.setAttribute("src", event.target.result);
-             img.setAttribute("width", "75");
-             img.setAttribute("height", "75");
+             img.setAttribute("width", "96");
+             img.setAttribute("height", "96");
              img.setAttribute("class", "fileimg");
              img.setAttribute("style", "flex");             
              var name = document.querySelectorAll(".boxtest");    // div클래스명 boxtest에 이미지 생성하기
@@ -1307,13 +1410,13 @@ fileclose.addEventListener('click', function() {                 //선택삭제 
     $(".originDel").eq(filecloseindex).val('1');
    var imgdisplay = $(".originimg").eq(filecloseindex).css('display');
 //OriginFile이 화면에 존재 and 이 display가 flex일 때                                                 //OriginFile이 화면에 있는 상태에서 선택삭제버튼을 클릭하면,
-    if (imgdisplay === 'flex'){ alert('플렉스');                                                          
+    if (imgdisplay === 'flex'){                                                        
     var name = document.querySelectorAll(".boxtest");           
     $(".originimg").eq(filecloseindex).css('display','none');     // 기존 OriginFile 사진 숨기기 (숨기지만 사실상 OriginFile은 제거된다는 의미)
 //    $(".fileclose").eq(filecloseindex).css('display','none');    // 선택삭제 버튼 숨기기
     $(".onfile").eq(filecloseindex).css('display','flex');       // Span + 버튼 보이기
     }
-    else if(imgdisplay === 'none'){ alert('이곳');
+    else if(imgdisplay === 'none'){ 
 //  $(".fileclose").eq(filecloseindex).css('display','none');    // 선택삭제 버튼 숨기기       
 //OriginFile이 화면에 존재하지 않을 경우                                                   // 기존의 OriginFile이 없고, 처음부터 Span + 버튼에서 새롭게 생성된 이미지에 대해서 선택삭제버튼을 클릭하면,            
     var name = document.querySelectorAll(".boxtest");
@@ -1327,7 +1430,7 @@ fileclose.addEventListener('click', function() {                 //선택삭제 
     if(!name2){
     var newimgdisplay = $(".fileimg").eq(fileindex).css('display');
     if(newimgdisplay){
-    if (newimgdisplay === 'flex'){ alert('여긴가?')    
+    if (newimgdisplay === 'flex'){     
     name[filecloseindex].remove();                               // 새로 추가된 img class="fileimg" 제거
     };
     $(".file").eq(filecloseindex).val('');                       // 사진을 삭제했기 때문에 사진파일의 값을 ''로 세팅
