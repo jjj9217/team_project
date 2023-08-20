@@ -155,16 +155,21 @@ public class ProductViewController {
 		List<ReviewVo> ReviewList = pSelectReviewVo.selectReviewVo(product_idx);//상품번호 전체리뷰불러오기
 		int sumReviewScore = 0;
 		int reviewCount = 0;
-		for(ReviewVo reviewVo : ReviewList) {			
+		for(ReviewVo reviewVo : ReviewList) {
+			System.out.println("평점 단건: "+reviewVo.getReview_score());
 			sumReviewScore += reviewVo.getReview_score();
+			System.out.println("평점 합: "+sumReviewScore);
 			if(reviewVo.getReview_score() != 0) {
 				reviewCount++;
 			}
+			System.out.println("평점 수: "+reviewCount);
 		}
 		double roundedAvg = 0;
 		if(sumReviewScore != 0) {
-			roundedAvg = (double) Math.round(sumReviewScore / reviewCount * 10) / 10;		
+			double rawAvg = (double) sumReviewScore / reviewCount; // 평균 계산
+		    roundedAvg = (double) Math.round(rawAvg * 10) / 10; // 소수점 둘째 자리에서 반올림하여 소수점 첫째 자리까지 표시		
 		}
+		System.out.println("평점 계산 결과: "+roundedAvg);
 		model.addAttribute("reviewScoreAvg", roundedAvg); //전체리뷰평점평균 모델에 추가
 		
 		//사용자로부터 받은 조건을 Map에 저장

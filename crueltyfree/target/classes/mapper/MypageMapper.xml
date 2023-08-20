@@ -22,6 +22,7 @@
 		        review.member_idx is null
 		        and
 		        file.product_idx IS NOT NULL
+		        and `order`.order_ing != 4
 		        AND (file.product_idx, file.file_idx) 
 		            IN (
 		            SELECT file.product_idx, MIN(file.file_idx)                   
@@ -45,6 +46,8 @@
                 `order`.client_num=#{member_idx}
                 and
                 review.member_idx is null
+                and
+                `order`.order_ing != 4
             </where>                
                 order by order_date desc
      </select>
@@ -62,6 +65,7 @@
                 `order`.client_num=#{member_idx}
                 and
                 review.member_idx is null
+                and `order`.order_ing != 4
             </where>                
                 order by order_date desc;
      </select>
