@@ -131,7 +131,7 @@ $(function(){
 	$("#join_btn").click(function(){
 		checkInput();
 	});
-	
+			
 	$("#member_identity").click(function(){
 		doPayment();
 	});
@@ -537,8 +537,8 @@ $(function(){
                 <input type="reset" id="reset_btn" value="취소하기" onclick="location.href='mypage_main.do';">
                 <input type="button" id="join_btn" name="join_btn" value="정보수정"> 
                 <input type="hidden" name="member_idx" id="member_idx"value="${member.member_idx}">         
-        </form>
-        
+        </form>        
+        <a href="${pageContext.request.contextPath}/mypage/mypage_modify_withdraw.do">탈퇴하기</a>
     </div>
             
             

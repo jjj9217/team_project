@@ -309,6 +309,9 @@ public class MypageDao {
 	public int upinsertreviewimg4(FileVo vo) {
 		return sqlSession.insert(MAPPER+".upinsertreviewimg4", vo);
 	}
-	
+		
+	public int withdrawmember(MemberVo vo) {
+		return sqlSession.update(MAPPER+".withdrawmember", vo);
+	}
 	
 }

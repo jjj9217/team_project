@@ -148,5 +148,6 @@ public interface MypageService {
 	default int upinsertreviewimg4(MultipartFile[] attachedFile,
 			   HttpServletRequest request, int searchReview_idx) {return 0;}
 	
+	default int withdrawmember(MemberVo vo) {return 0;}
 	
 }
