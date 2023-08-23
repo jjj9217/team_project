@@ -141,10 +141,10 @@ $(function(){
 
     
     
-    ul li{      
+   /*  ul li{      
         list-style:none;
     
-    }   
+    } */   
 
 
     
@@ -168,13 +168,64 @@ $(function(){
         
     
     
+    #container{
+        margin-top:20px;
+        padding-left: 20px;
+    }
+    
+    .tit_sub{color: #4a4a4a; margin-top:10px;}
+    #hr{margin-top:10px; height:3px; background-color:#7d99a4; border:0;}
+    .hoverClass{color: #4a4a4a;}
+    .hoverClass:hover{color: #7d99a4;} 
     
     
+    #withdraw_btn{
+        width: 154px;
+        height: 40px;
+        border: 1px solid #7d99a4;
+        color: #fff;
+        background-color: #7d99a4;
+        font-weight: bold;  
+        border-radius: 5px;  
+    }
     
     
-     
-}
-
+    #withdraw{
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+    }
+    
+    #withdrawtext{
+        margin-top:15px;
+        font-size:22px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    #withdraw_frm{
+        maring-top:15px;
+    }
+    
+    #container ul li{
+        padding-bottom:5px;
+    }
+    
+    li::marker{
+        color: #7d99a4;
+    }
+    
+    #withdrawfieldset{
+        border:3px solid #7d99a4;
+	    padding-block-start: 1em;
+	    padding-inline-start: 3em;
+	    padding-inline-end: 1em;
+	    padding-block-end: 1em;    
+    }
+    
+    #hr2{margin-top:15px; height:2px; background-color:#7d99a4; border:0;}
+    
 </style>
 </head>
 
@@ -212,13 +263,38 @@ $(function(){
         <div id="blank">            
         </div>
         <div class="tit_area">          
-            <h2 class="tit">회원정보 수정</h2>
+            <h2 class="tit">회원탈퇴 수정</h2>
             <hr id="hr" width=100%;>            
-			<h4 class="tit tit_sub">※ 휴대폰번호을 변경하시려면 새로 인증해주세요</h4>
-    <div id="container">        
-        <form action="withdraw_process.do" method="post" id="withdraw_frm" style="margin-top:35px;">
+			<h4 class="tit tit_sub">회원 탈퇴(이용약관 동의 철회)시 아래 내용을 확인해주세요.</h4>
+    <div id="container">
+            <fieldset id = withdrawfieldset>
+            <ul style="list-style-type: disc;">
+                <li>
+                CureltyFree 이용약관 동의 철회 시 고객님께서 보유하셨던 쿠폰은 모두 삭제되며, 재가입 시 복원이 불가능합니다.
+                </li>
+                <li>
+                CureltyFree 이용약관 동의 철회 시에는 CureltyFree 서비스를 이용할 수 없게 됩니다.
+                </li>
+                <li>
+                CureltyFree 이용약관 동의 철회 시에도 회원님의 개인정보 및 거래정보는 개인정보보호법에 의거해 약 3년간 보존됩니다.
+                </li>
+                <li>
+                CureltyFree 이용약관 동의를 철회한 후에라도 해당 약관에 다시 동의하시면 서비스를 이용할 수 있습니다.
+                </li>
+                <li>
+                진행 중인 전자상거래 이용내역(결제/배송/교환/반품 중인 상태)이 있거나 고객상담 및 이용하신 서비스가 완료되지 않은 경우 서비스 철회 하실 수 없습니다.
+                </li>                                
+            </ul>
+            </fieldset>
+            <div id="withdrawtext">
+            CureltyFree 회원 탈퇴(이용약관 동의 철회)를 하시겠습니까?
+            </div>        
+            <hr id="hr2" width=100%;>
+        <form action="withdraw_process.do" method="post" id="withdraw_frm" style="margin-top:20px;">
+               <div id=withdraw>
                <input type="button" id="withdraw_btn" value="탈퇴하기">
-               <input type="hidden" name="member_idx" value="${member.member_idx}"> 
+               <input type="hidden" name="member_idx" value="${member.member_idx}">
+               </div> 
         </form>        
     </div>
             

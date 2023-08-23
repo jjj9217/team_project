@@ -767,6 +767,17 @@ display: none; }
     left : 40px;
     top: 120px;
     }
+    
+    
+    .viewrwviewimgclose{
+    width:50;
+    height:50px;
+    position: absolute;
+    z-index: 2;
+    cursor: pointer;
+    top:120px;
+    right:40px;
+    }
 </style>
 </head>
 
@@ -988,10 +999,11 @@ display: none; }
                             <c:forEach var="fileVo" items="${fileVoList}">                            		                            	
                                 <c:if test="${reviewproductList[rowNum-1].review_idx eq fileVo.review_idx}">
                                         <c:if test ="${fileVo.saveFile ne null}">
-                                       <span class="thum imgSpan"><img class="goodlist_thumb reviewViewImg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}"></span>
+                                       <span class="thum imgSpan"><img class="goodlist_thumb reviewViewImg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" style="cursor:pointer;"></span>
                                                     <img class="viewrwviewimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" style="display:none;">
+                                                    <img class="viewrwviewimgclose" src="${pageContext.request.contextPath}/resources/uploads/reviewclose.png" style="display:none;" >
                                         </c:if>
-                                </c:if>                                
+                                </c:if>                         
                             </c:forEach>
                         </c:forEach>
                         
@@ -1462,27 +1474,40 @@ fileclose.addEventListener('click', function() {                 //선택삭제 
 
 $(function(){
     //jQuery
-    $(".goodlist_thumb").click(function(){ 
-        var index = $(".goodlist_thumb").index(this);
+    $(".reviewViewImg").click(function(){ 
+    	var index = $(".reviewViewImg").index(this);    	
+        $(".viewrwviewimg").eq(index).css('display','flex');
+        $(".viewrwviewimgclose").eq(index).css('display','flex');
         
-        $(".viewrwviewimg").eq(index).toggle();      
+//         var index = $(".goodlist_thumb").index(this);
+        
+//         $(".viewrwviewimg").eq(index).toggle();      
     });
 
 });
+
+
+// $(function(){
+//     //jQuery
+//     $(".viewrwviewimg").click(function(){ 
+//         var index = $(".viewrwviewimg").index(this);        
+//         $(".viewrwviewimg").eq(index).css('display','none');
+//         $(".viewrwviewimgclose").eq(index).css('display','none');
+//     });
+    
+// });
+
 
 
 $(function(){
     //jQuery
-    $(".viewrwviewimg").click(function(){ 
-        var index = $(".viewrwviewimg").index(this);        
-        $(".viewrwviewimg").eq(index).css('display','none');      
+    $(".viewrwviewimgclose").click(function(){ 
+        var index = $(".viewrwviewimgclose").index(this);        
+        $(".viewrwviewimg").eq(index).css('display','none');
+        $(".viewrwviewimgclose").eq(index).css('display','none');
     });
     
 });
-
-
-
-
 
 
 
