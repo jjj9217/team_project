@@ -131,7 +131,18 @@ $(function(){
 	$("#join_btn").click(function(){
 		checkInput();
 	});
-			
+	
+	$("#withdraw_btn").click(function(){
+		let confirmAns = confirm("정말 탈퇴하시겠습니까?");
+		
+	        if(confirmAns){
+	        	alert('탈퇴가 완료되었습니다.')
+	        	$("#withdraw_frm").submit();	            	           
+	        }else{      
+	        return false;}
+	        			
+    });
+	
 	$("#member_identity").click(function(){
 		doPayment();
 	});
@@ -379,14 +390,11 @@ $(function(){
     #join_btn, #reset_btn{
         width: 49%;
         height: 40px;
-        margin-top: 20px;        
+        margin-top: 20px;
         font: bold 15px Arial, sans-serif;
         cursor:pointer;/*마우스를 올려놓았을 때 커서가 손모양으로 변경됨*/
         border-radius:0px;
          border:0;
-    }
-    #reset_btn{
-        margin-bottom: 10px;
     }
     #join_btn{
         background-color:#7d99a4;
@@ -540,10 +548,12 @@ $(function(){
                 <input type="reset" id="reset_btn" value="취소하기" onclick="location.href='mypage_main.do';">
                 <input type="button" id="join_btn" name="join_btn" value="정보수정"> 
                 <input type="hidden" name="member_idx" id="member_idx"value="${member.member_idx}">         
+        </form>
+        <form action="withdraw_process.do" method="post" id="withdraw_frm" style="margin-top:35px;">
+               <input type="button" id="withdraw_btn" value="탈퇴하기">
+               <input type="hidden" name="member_idx" value="${member.member_idx}"> 
         </form>        
-        <a class="hoverClass" href="${pageContext.request.contextPath}/mypage/mypage_modify_withdraw.do">탈퇴하기</a>
     </div>
-        
             
             
             

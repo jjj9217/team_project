@@ -8,6 +8,7 @@ import com.crfr.dao.MypageDao;
 import com.crfr.vo.DeliveryVo;
 import com.crfr.vo.FileVo;
 import com.crfr.vo.LikeExploreVo;
+import com.crfr.vo.MemberVo;
 import com.crfr.vo.ProductInqVo;
 
 
@@ -73,6 +74,10 @@ public class MypageDeleteService implements MypageService {
 	
 	public int checkreviewimg4(FileVo vo) {
 		return dao.checkreviewimg4(vo);
+	}
+	
+	public int withdrawmember(MemberVo vo) {
+		return dao.withdrawmember(vo);
 	}
 	
 }

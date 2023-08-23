@@ -759,6 +759,25 @@ display: none; }
     font-weight: bold;
     font-size: 12px;
     }
+    
+    .viewrwviewimg{
+    width:500px;
+    height:500px;
+    position: absolute;
+    left : 40px;
+    top: 120px;
+    }
+    
+    
+    .viewrwviewimgclose{
+    width:50;
+    height:50px;
+    position: absolute;
+    z-index: 2;
+    cursor: pointer;
+    top:120px;
+    right:40px;
+    }
 </style>
 </head>
 
@@ -972,7 +991,7 @@ display: none; }
             <li class="photo-update"><!-- 리뷰 고도화 : class 추가 -->
                 <div class="step_cont">
                     <!-- 리뷰 고도화 : 추가 -->
-                    <div class="photo-list-info">
+                    <div class="photo-list-info">                        
                         <strong>리뷰 포토</strong>
                     </div>
                     <div class="rw-photo-list">
@@ -980,9 +999,11 @@ display: none; }
                             <c:forEach var="fileVo" items="${fileVoList}">                            		                            	
                                 <c:if test="${reviewproductList[rowNum-1].review_idx eq fileVo.review_idx}">
                                         <c:if test ="${fileVo.saveFile ne null}">
-                                       <span class="thum imgSpan"><img class="goodlist_thumb reviewViewImg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}"></span>
+                                       <span class="thum imgSpan"><img class="goodlist_thumb reviewViewImg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" style="cursor:pointer;"></span>
+                                                    <img class="viewrwviewimg" src="${pageContext.request.contextPath}/resources/uploads/${fileVo.saveFile}" style="display:none;">
+                                                    <img class="viewrwviewimgclose" src="${pageContext.request.contextPath}/resources/uploads/reviewclose.png" style="display:none;" >
                                         </c:if>
-                                </c:if>                                
+                                </c:if>                         
                             </c:forEach>
                         </c:forEach>
                         
@@ -1451,16 +1472,42 @@ fileclose.addEventListener('click', function() {                 //선택삭제 
 
 
 
+$(function(){
+    //jQuery
+    $(".reviewViewImg").click(function(){ 
+    	var index = $(".reviewViewImg").index(this);    	
+        $(".viewrwviewimg").eq(index).css('display','flex');
+        $(".viewrwviewimgclose").eq(index).css('display','flex');
+        
+//         var index = $(".goodlist_thumb").index(this);
+        
+//         $(".viewrwviewimg").eq(index).toggle();      
+    });
+
+});
+
+
+// $(function(){
+//     //jQuery
+//     $(".viewrwviewimg").click(function(){ 
+//         var index = $(".viewrwviewimg").index(this);        
+//         $(".viewrwviewimg").eq(index).css('display','none');
+//         $(".viewrwviewimgclose").eq(index).css('display','none');
+//     });
+    
+// });
 
 
 
-
-
-
-
-
-
-
+$(function(){
+    //jQuery
+    $(".viewrwviewimgclose").click(function(){ 
+        var index = $(".viewrwviewimgclose").index(this);        
+        $(".viewrwviewimg").eq(index).css('display','none');
+        $(".viewrwviewimgclose").eq(index).css('display','none');
+    });
+    
+});
 
 
 

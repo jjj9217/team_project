@@ -737,6 +737,7 @@ public class ManagerController {
 		}
 		return result;
 	}
+	
 	@PostMapping("/review_delete_multiple.do")
 	@ResponseBody
 	public String review_delete_multiple(@RequestParam("review_idxs[]") String[] review_idxs) {
@@ -753,4 +754,16 @@ public class ManagerController {
 		}
 		return result;
 	}
+	
+	
+	@PostMapping("/withdraw_process.do")
+	@ResponseBody
+	public String withdraw_process(MemberVo vo) {
+		String result = null;			
+	    int delete_result = 0;
+	    
+		
+		return result;
+	}
+	
 }

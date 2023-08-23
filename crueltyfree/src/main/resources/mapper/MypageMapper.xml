@@ -532,7 +532,10 @@
         update member set member_pw=#{member_pw} where member_idx=#{member_idx}
     </update>
     
-    
+    <!-- 회원탈퇴 -->
+    <update id="withdrawmember" parameterType="memberVo">
+         update member set cancel_or_not=-1 where member_idx=#{member_idx}
+    </update>
     
     
     
