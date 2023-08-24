@@ -905,17 +905,68 @@ $(function(){
 	    $(".modal").eq(index).removeClass("hidden");
 	});
 	
-		
+	//X버튼 클릭시 모두 초기화	
 	$(".close_modal").click(function(){
 		var index = $(".close_modal").index(this);
 	    $(".modal").eq(index).addClass("hidden");
+	    	   	    
+	    $(".test01").eq(index).each(function() {
+            this.reset();
+        });
+	    
+	    var inputs = document.querySelectorAll('.fileimg');
+	    var inputs2 = document.querySelectorAll('.fileclose');	    
+    
+	    for(var i = 0; i<5; i++){
+            if(inputs[i] != null){
+	    	inputs[i].remove();
+            inputs2[i].remove();
+            $(".onfile").eq(index).css('display','flex');
+            $(".file").eq(index).val("");
+            $(".onfile").eq(index+1).css('display','flex');
+            $(".file").eq(index+1).val("");
+            $(".onfile").eq(index+2).css('display','flex');
+            $(".file").eq(index+2).val("");
+            $(".onfile").eq(index+3).css('display','flex');
+            $(".file").eq(index+3).val("");
+            $(".onfile").eq(index+4).css('display','flex');
+            $(".file").eq(index+4).val("");
+            };
+        }	    	   	   	    
 	});
-	
+		
+	//닫기버튼 클릭시 모두 초기화
 	$(".closeBtnBottom").click(function(){
 		var index = $(".closeBtnBottom").index(this);
 	    $(".modal").eq(index).addClass("hidden");
+	    
+	    $(".test01").eq(index).each(function() {
+            this.reset();
+        });
+        
+        var inputs = document.querySelectorAll('.fileimg');
+        var inputs2 = document.querySelectorAll('.fileclose');      
+    
+        for(var i = 0; i<5; i++){
+            if(inputs[i] != null){
+            inputs[i].remove();
+            inputs2[i].remove();
+            $(".onfile").eq(index).css('display','flex');
+            $(".file").eq(index).val("");
+            $(".onfile").eq(index+1).css('display','flex');
+            $(".file").eq(index+1).val("");
+            $(".onfile").eq(index+2).css('display','flex');
+            $(".file").eq(index+2).val("");
+            $(".onfile").eq(index+3).css('display','flex');
+            $(".file").eq(index+3).val("");
+            $(".onfile").eq(index+4).css('display','flex');
+            $(".file").eq(index+4).val("");
+            };
+        }        
 	});
     
+	
+	
 	$(".reviewLookup").click(function(){
         var index = $(".reviewLookup").index(this);
         if($(".review_score_input").eq(index).val().length == 0){
