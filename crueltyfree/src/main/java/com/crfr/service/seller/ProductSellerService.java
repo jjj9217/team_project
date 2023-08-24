@@ -87,4 +87,8 @@ public interface ProductSellerService {
 	
 	// 상품 재등록 서비스
 	default int reInsertProduct(String product_idx, HttpServletRequest request) {return 0;}
+	
+	//상품출고 상태 업데이트
+	default int updateProductOutStatus1(int order_idx, int product_idx) {return 0;}
+	default int updateProductOutStatus2(int order_idx, int product_idx) {return 0;}
 }

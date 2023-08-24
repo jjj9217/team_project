@@ -311,10 +311,13 @@ $(function(){
 							
 							<form action="update_state_process1.do" class="form_update1" method="post">
 								<input type="hidden" name="order_ing1" value="${purchaseList[rowNum-1].order_num}">
+								<input type="hidden" name="order_ing3" value="${purchaseList[rowNum-1].order_idx}">
+								<input type="hidden" name="prdIdx" value="${purchaseList[rowNum-1].product_idx}">
 							</form>
 							<form action="update_state_process2.do" class="form_update2" method="post">
 								<input type="hidden" name="order_ing2" value="${purchaseList[rowNum-1].order_num}">
 								<input type="hidden" name="order_ing3" value="${purchaseList[rowNum-1].order_idx}">
+								<input type="hidden" name="prdIdx" value="${purchaseList[rowNum-1].product_idx}">
 							</form>
 							
 						</c:forEach>

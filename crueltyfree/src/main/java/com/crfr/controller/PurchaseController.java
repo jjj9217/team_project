@@ -47,7 +47,7 @@ public class PurchaseController {
 	bBasketInsert, bBasketDeleteOne, oSelectBasket, oSelectDeliveryCount,oSelectDeliveryList,
 	oInsertDelivery, oSelectDeliveryVo, oInsertOrder, oSelectOrderIdx, oInsertPay, oDeleteBasket,
 	oImportService, oInsertOrderProduct, oUpdateOrder, oUpdatePay, mSelectCountMember, oSelectCouponList,
-	oDeleteCoupon, oSelectCouponCount;
+	oDeleteCoupon, oSelectCouponCount, oInsertProductOut;
 	
 	@Setter(onMethod_={ @Autowired })	
 	ProductViewService pSelectView, pSelectThumbnail;
@@ -604,6 +604,9 @@ public class PurchaseController {
 				//단일구매 상품 주문상품 테이블에 등록하기
 				int resultInsertOrderProduct = 
 						oInsertOrderProduct.insertOrderProduct(strOrderIdx, buyPrdIdx, orderForm[0], buyCnt);
+				//상품출고 테이블에 등록하기
+				int resultInsertProductOut =
+						oInsertProductOut.insertProductOut(strOrderIdx, buyPrdIdx, buyCnt);
 			}else {
 				for(String basket_idx : basketIdxValues) {		
 					//장바구니에서 제거전에 주문상품테이블에 등록하기
@@ -613,6 +616,9 @@ public class PurchaseController {
 					String basketCnt = Integer.toString(basketVo.getBasket_count());
 					int resultInsertOrderProduct =
 							oInsertOrderProduct.insertOrderProduct(strOrderIdx, basketPrdIdx, orderForm[0], basketCnt);
+					//상품출고 테이블에 등록하기
+					int resultInsertProductOut =
+							oInsertProductOut.insertProductOut(strOrderIdx, basketPrdIdx, basketCnt);
 					deleteBasketResult = oDeleteBasket.deleteBasket(basket_idx);					
 				}				
 			}

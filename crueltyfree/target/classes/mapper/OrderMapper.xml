@@ -126,5 +126,11 @@
 	<!-- 사용 쿠폰 삭제 -->
 	<delete id="deleteCoupon" parameterType="string">
 		delete from `coupon` where coupon_idx = #{coupon_idx}
-	</delete>			
+	</delete>	
+	
+	<!-- 상품출고 테이블 등록 -->
+	<insert id="insertProductOut" parameterType="map">		
+		insert into `product_out` (order_idx, product_idx, product_out_count,product_out_date)
+		values(#{order_idx},#{product_idx},#{product_out_count},now()) 
+	</insert>				
 </mapper>

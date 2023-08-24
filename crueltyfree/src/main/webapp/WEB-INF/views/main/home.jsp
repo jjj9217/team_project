@@ -292,7 +292,7 @@ function HeaderBest(sort_salecount) {
 		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=462">
 		<img src="${pageContext.request.contextPath}/resources/img/home_ad6.png" class="home_ad1" style="width: 1020px;" />
 	</a>
-		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=468">
+		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=366">
 		<img src="${pageContext.request.contextPath}/resources/img/home_ad7.png" class="home_ad1" style="width: 1020px;" />
 	</a>	
 		<a href="${pageContext.request.contextPath}/product/product_view.do?prdNum=423">

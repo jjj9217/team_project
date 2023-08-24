@@ -760,6 +760,16 @@ $(function(){
 		}//로그인한 회원만 추천하기
 		
 	});
+	
+	$(".reviewImg").click(function(){
+		var index = $(".reviewImg").index(this);
+		$(".imgModalContainer").eq(index).removeClass("hidden");
+	});
+	
+	$(".imgModalCloseBtn").click(function(){
+		var index = $(".imgModalCloseBtn").index(this);
+		$(".imgModalContainer").eq(index).addClass("hidden");
+	});
 });
 </script>
 <style>
@@ -947,8 +957,7 @@ $(function(){
 	 	justify-content: center;
 	 	align-items: center;
 	 	background: rgba(0, 0, 0, 0.5);
-	 }
-		
+	 }		
 	 .modalContent {
 		position: absolute;
 	 	background-color: #ffffff;
@@ -957,13 +966,38 @@ $(function(){
 	 	height: 250px;
 	 	padding: 15px;
 	 }
+ 	 .imgModalContainer {
+	 	width: 100%;
+	 	height: 100%;
+	 	position: fixed;
+	 	top: 0;
+	 	left: 0;
+	 	display: flex;
+	 	justify-content: center;
+	 	align-items: center;
+	 	background: rgba(0, 0, 0, 0.5);
+	 }		
+	 .modalImgContent {
+		position: absolute;
+	 	background-color: #ffffff;
+	 	border-radius: 5px;
+	 	width: 450px;
+	 	height: 530px;
+	 	padding: 15px;
+	 }
+	 
+	 
+	 .modal_img_title{width:450px; font-size: 24px; font-weight: bold; margin-bottom: 10px;}
+	 .modal_img_content{width:450px; height:auto;}
+	 .modal_img_hr{width:450px; height: 5px; background-color: #7d99a4; margin-bottom: 20px;}
+	 
 	 .likeContainer {
 	 	width: 100%;
 	 	height: 100%;
 	 	position: fixed;
-	 	top: 300px;
-	 	left: 500px;
-	 	display: flex;
+	    top: 50%;
+	    left: 50%;
+  	 	display: flex;
 	 	justify-content: center;
 	 	align-items: center;
 	 }
@@ -1010,6 +1044,8 @@ $(function(){
 	 	height: 500px;
 	 	padding: 15px;
 	 }
+	 
+	 
 	 .modal_inq_title{width:550px; font-size: 24px; font-weight: bold; margin-bottom: 10px;}
 	 .modal_inq_content{width:550px; height:auto;}
 	 .modal_inq_hr{width:550px; height: 5px; background-color: #7d99a4; margin-bottom: 20px;}
@@ -1108,6 +1144,9 @@ $(function(){
 		height:25px;
 	}
 	.other{color:#4a4a4a;}
+	.reviewImg{
+		cursor: pointer;
+	}
 </style>
 </head>
 <body>
@@ -1544,13 +1583,25 @@ $(function(){
                                     </div>
                                     <div class="txt_inner">
                                         <!-- 첨부파일 있으면 img 불러오기 -->
-                                        ${reviewList[productReviewRows-1].review_content}
+                                        <div>${reviewList[productReviewRows-1].review_content}</div><br>                                        
                                         <c:if test="${!empty reviewList[productReviewRows-1].saveFiles[0]}">
-                                        <br><br>
                                         </c:if>
                                         <c:forEach var="imgIndex" begin="1" end="5">
                                         <c:if test="${!empty reviewList[productReviewRows-1].saveFiles[imgIndex-1]}">
-                                        <img src="../resources/uploads/${reviewList[productReviewRows-1].saveFiles[imgIndex-1]}" width="145px" height="145px">
+                                        <img  class="reviewImg" src="../resources/uploads/${reviewList[productReviewRows-1].saveFiles[imgIndex-1]}" width="145px" height="145px">
+                                        <div class="imgModalContainer hidden">
+										<div class="modalImgContent">
+											<div class="modal_img_title">
+												<div class="modal_title_text">리뷰 이미지 보기</div>
+												<div class="modal_title_right"><button class="imgModalCloseBtn close">X</button></div>							
+											</div>
+											<div class="modal_img_hr">
+											</div>
+											<div class="modal_inq_content">
+												<img src="../resources/uploads/${reviewList[productReviewRows-1].saveFiles[imgIndex-1]}" width="450px" height="450px">
+											</div>
+									    </div>				    
+										</div>
                                         </c:if>
                                         </c:forEach>
                                     </div>

@@ -290,6 +290,17 @@
 		float:right;
 		font: bold 18px Arial, Sans-serif;
 		}
+	.stateWait{		
+   		background-color:#fff; 
+		color: #7d99a4; 
+		border:1px solid #7d99a4; 		
+		border-radius:3px; 
+		width:90px; 
+		height:27px; 
+		text-align:center;
+		float:right;
+		font: bold 18px Arial, Sans-serif;
+		}
 	#strong{color:#7d99a4; font-weight:bold;}
 	.hoverClass{color: #4a4a4a;}
     .hoverClass:hover{color: #7d99a4;}
@@ -344,37 +355,37 @@
                 <span>주문접수</span>
                 </li>
                 <c:choose>
-                <c:when test="${payEd != 0}">
-                <li><em id="strong">${payEd}</em>
+                <c:when test="${payEdCount != 0}">
+                <li><em id="strong">${payEdCount}</em>
                 <span>결제완료</span>
                 </li>
                 </c:when>
                 <c:otherwise>
-                <li><em>${payEd}</em>
+                <li><em>${payEdCount}</em>
                 <span>결제완료</span>
                 </li>
                 </c:otherwise>
                 </c:choose>
                 <c:choose>
-                <c:when test="${dlvIng != 0}">
-                <li><em  id="strong">${dlvIng}</em>
+                <c:when test="${dlvIngCount != 0}">
+                <li><em  id="strong">${dlvIngCount}</em>
                 <span>배송준비중</span>
                 </li>
                 </c:when>
                 <c:otherwise>
-                <li><em>${dlvIng}</em>
+                <li><em>${dlvIngCount}</em>
                 <span>배송준비중</span>
                 </li>
                 </c:otherwise>
                 </c:choose>
                 <c:choose>
-                <c:when test="${dlvEd != 0}">
-                <li><em  id="strong">${dlvEd}</em>
+                <c:when test="${dlvEdCount != 0}">
+                <li><em  id="strong">${dlvEdCount}</em>
                 <span>배송중</span>
                 </li>
                 </c:when>
                 <c:otherwise>
-                <li><em>${dlvEd}</em>
+                <li><em>${dlvEdCount}</em>
                 <span>배송중</span>
                 </li>
                 </c:otherwise>
@@ -446,7 +457,7 @@
                                                 <p class="state">답변완료</p>
                                             </c:if>
                                             <c:if test="${empty oneinqList[rowNum].one_inq_answer}">
-                                                <p class="state">답변대기</p>
+                                                <p class="stateWait">답변대기</p>
                                             </c:if>
                                         </td>
                                     </tr>
@@ -482,7 +493,7 @@
                                                 <p class="state">답변완료</p>
                                             </c:if>
                                             <c:if test="${empty inqproductList[rowNum].product_inq_answer}">
-                                                <p class="state">답변대기</p>
+                                                <p class="stateWait">답변대기</p>
                                             </c:if>
                                         </td>
                                     </tr>

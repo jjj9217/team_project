@@ -29,5 +29,7 @@ public class OrderListVo {
 	private int product_price;
 	
 	private int order_product_idx;
-	private int order_product_count;	
+	private int order_product_count;
+	
+	private int product_out_status;
 }
