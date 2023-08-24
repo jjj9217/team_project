@@ -1324,16 +1324,28 @@ $(function(){//jQuery
     $(".reviewmodify").click(function(){ 
         var index = $(".reviewmodify").index(this);        
         $(".modal_modify1").eq(index).removeClass("hidden");      
-    });       
+    });
+    
+    //리뷰수정 x버튼 클릭시 초기화
     $(".close_modalmodify").click(function(){
         var index2 = $(".close_modalmodify").index(this);        
         $(".modal_modify1").eq(index2).addClass("hidden");
+        
+        $(".test01").eq(index2).each(function() {
+            this.reset();
+        });       
     });
   
+    //리뷰수정 닫기 버튼 클릭시 초기화  
     $(".btnLookup").click(function(){
 		var index = $(".btnLookup").index(this);
 	    $(".modal_modify1").eq(index).addClass("hidden");
+	    
+	    $(".test01").eq(index).each(function() {
+            this.reset();
+        }); 
 	});
+    
     
    
     $(".prd_item_box").click(function(){
