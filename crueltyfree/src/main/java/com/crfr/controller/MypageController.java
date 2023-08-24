@@ -35,6 +35,8 @@ import com.crfr.vo.FileVo;
 import com.crfr.vo.LikeExploreVo;
 import com.crfr.vo.MemberVo;
 import com.crfr.vo.OneInqVo;
+import com.crfr.vo.OrderProductVo;
+import com.crfr.vo.OrderVo;
 import com.crfr.vo.PageNav;
 import com.crfr.vo.ProductInqVo;
 import com.crfr.vo.ReviewExploreVo;
@@ -53,7 +55,8 @@ public class MypageController {
 	OneInqService mListNotice;
 	
 	@Setter(onMethod_={ @Autowired })
-	OrderDeliveryService mSelectCountPayEd, mSelectCountDlvIng, mSelectCountDlvEd;
+	OrderDeliveryService mSelectCountPayEd, mSelectCountDlvIng, mSelectCountDlvEd, mSelectOrderVo,
+	mSelectOrderProduct, mSelectPayEdCount, mSelectDlvIngCount, mSelectDlvEdCount;
 	
 	@Setter(onMethod_={ @Autowired })
 	MemberService mSelectCountMemberIdxReview, mInsertCouponReview;
@@ -135,14 +138,42 @@ public class MypageController {
 	    // 오늘 날짜에 1일을 더해서 timestamp_end 설정
 	    timestamp_end = Timestamp.valueOf(today.plusDays(1).atStartOfDay());
 		
-		//주문배송조회 정보제공용 카운트 수
-		int payEd = mSelectCountPayEd.selectCountPayEd(member_idx, timestamp_begin, timestamp_end);
-		int dlvIng = mSelectCountDlvIng.selectCountDlvIng(member_idx, timestamp_begin, timestamp_end);
-		int dlvEd = mSelectCountDlvEd.selectCountDlvEd(member_idx, timestamp_begin, timestamp_end);
+//		//주문배송조회 정보제공용 카운트 수
+//		int payEd = mSelectCountPayEd.selectCountPayEd(member_idx, timestamp_begin, timestamp_end);
+//		int dlvIng = mSelectCountDlvIng.selectCountDlvIng(member_idx, timestamp_begin, timestamp_end);
+//		int dlvEd = mSelectCountDlvEd.selectCountDlvEd(member_idx, timestamp_begin, timestamp_end);
+//		//모델에 세팅
+//		model.addAttribute("payEd", payEd);
+//		model.addAttribute("dlvIng", dlvIng);
+//		model.addAttribute("dlvEd", dlvEd);		
+		int payEdCount = 0;
+		int dlvIngCount = 0;
+		int dlvEdCount = 0;
+		
+	    List<OrderVo> orderVoList = mSelectOrderVo.selectOrderVo(member_idx, timestamp_begin, timestamp_end);//주문리스트 받아오기
+		
+	    for(OrderVo orderVo : orderVoList) {
+			int order_idx = orderVo.getOrder_idx();
+			
+			List<OrderProductVo> orderProduct = mSelectOrderProduct.selectOrderProduct(order_idx);
+			for(OrderProductVo orderProductVo : orderProduct) {
+				int product_idx = orderProductVo.getProduct_idx();
+				
+				 //주문배송조회 정보제공용 카운트 수(상품건 단위)
+			    int selectPayEd = mSelectPayEdCount.selectPayEdCount(order_idx, product_idx, timestamp_begin, timestamp_end);
+			    int selectDlvIng = mSelectDlvIngCount.selectDlvIngCount(order_idx, product_idx, timestamp_begin, timestamp_end);
+			    int selectDlvEd = mSelectDlvEdCount.selectDlvEdCount(order_idx, product_idx, timestamp_begin, timestamp_end);
+			    
+			    payEdCount = payEdCount + selectPayEd;
+			    dlvIngCount = dlvIngCount + selectDlvIng;
+			    dlvEdCount = dlvEdCount + selectDlvEd;
+			}
+	    }
+	    
 		//모델에 세팅
-		model.addAttribute("payEd", payEd);
-		model.addAttribute("dlvIng", dlvIng);
-		model.addAttribute("dlvEd", dlvEd);		
+		model.addAttribute("payEdCount", payEdCount);
+		model.addAttribute("dlvIngCount", dlvIngCount);
+		model.addAttribute("dlvEdCount", dlvEdCount);
 		
 		return "mypage/mypage_main";
 	}

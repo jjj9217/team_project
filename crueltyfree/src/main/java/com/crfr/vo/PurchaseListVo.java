@@ -9,6 +9,7 @@ public class PurchaseListVo {
 	private String order_name;
 	private int order_idx;
 	
+	private int product_idx;
 	private String product_name;
 	private int order_product_count;
 	

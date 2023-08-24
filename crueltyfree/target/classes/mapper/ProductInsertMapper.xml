@@ -260,5 +260,15 @@
 		update product set product_del_or_not = 1
 			where product_idx = #{product_idx}
 	</update>	
+	
+	<!-- 상품출고 업데이트 구문 -->
+	<update id="updateProductOutStatus1" parameterType="map">
+		update `product_out` set product_out_status = "1"
+			where order_idx = #{order_idx} and product_idx=#{product_idx}
+	</update>
+	<update id="updateProductOutStatus2" parameterType="map">
+		update `product_out` set product_out_status = "2"
+			where order_idx = #{order_idx} and product_idx=#{product_idx}
+	</update>	
 
 </mapper>

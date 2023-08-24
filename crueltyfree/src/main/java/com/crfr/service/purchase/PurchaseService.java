@@ -39,4 +39,5 @@ public interface PurchaseService {
 	default int selectCouponCount(int member_idx,Date today) {return 0;}
 	default List<CouponVo> selectCouponList(int member_idx,Date today) {return null;}
 	default int deleteCoupon(String coupon_idx) {return 0;}
+	default int insertProductOut(String order_idx, String product_idx, String product_out_count) {return 0;}
 }

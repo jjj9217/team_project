@@ -117,5 +117,14 @@ public class OrderDao {
 	//사용한 쿠폰 삭제
 	public int deleteCoupon(String coupon_idx){
 		return sqlSession.delete(MAPPER+".deleteCoupon",coupon_idx);
+	}
+	
+	//주문상품 테이블 등록
+	public int insertProductOut(String order_idx, String product_idx, String product_out_count) {		
+		Map<String, String> map = new HashMap<>();
+		map.put("order_idx", order_idx);
+		map.put("product_idx", product_idx);
+		map.put("product_out_count", product_out_count);
+		return sqlSession.insert(MAPPER+".insertProductOut",map);
 	}	
 }

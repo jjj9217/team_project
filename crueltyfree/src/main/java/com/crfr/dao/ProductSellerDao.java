@@ -129,4 +129,18 @@ public class ProductSellerDao{
 		return sqlSession.update(MAPPER+".reInsertProduct", product_idx);
 	}
 	
+	//상품출고 상태 업데이트
+	public int updateProductOutStatus1(int order_idx, int product_idx) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("order_idx", order_idx);		
+	    map.put("product_idx", product_idx);
+		return sqlSession.update(MAPPER+".updateProductOutStatus1", map);
+	}	
+	//상품출고 상태 업데이트
+	public int updateProductOutStatus2(int order_idx, int product_idx) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("order_idx", order_idx);		
+	    map.put("product_idx", product_idx);		
+		return sqlSession.update(MAPPER+".updateProductOutStatus2", map);
+	}
 }

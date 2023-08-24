@@ -18,4 +18,8 @@ public interface OrderDeliveryService {
 	default int selectRefundCount(int member_idx, Timestamp timestamp_begin, Timestamp timestamp_end) {return 0;}
 	default OrderVo selectOrderView(String order_num){return null;}
 	default DeliveryVo selectDelivery(int delivery_idx){return null;}
+	default int selectPayEdCount(int order_idx, int product_idx, Timestamp timestamp_begin, Timestamp timestamp_end) {return 0;}
+	default int selectDlvIngCount(int order_idx, int product_idx, Timestamp timestamp_begin, Timestamp timestamp_end) {return 0;}
+	default int selectDlvEdCount(int order_idx, int product_idx, Timestamp timestamp_begin, Timestamp timestamp_end) {return 0;}
+	default int selectDlvStatus(int order_idx, int product_idx, Timestamp timestamp_begin, Timestamp timestamp_end) {return 0;}
 }

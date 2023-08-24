@@ -42,7 +42,7 @@ public class OrderDeliveryController {
 	@Setter(onMethod_={ @Autowired })	
 	OrderDeliveryService mSelectOrderVo, mSelectOrderProduct, mSelectOrderCount, mSelectCountPayEd,
 	mSelectCountDlvIng, mSelectCountDlvEd, mSelectRefund, mSelectRefundCount, mSelectOrderView
-	,mSelectDelivery;
+	,mSelectDelivery, mSelectPayEdCount, mSelectDlvIngCount, mSelectDlvEdCount, mSelectDlvStatus;
 	
 	PageNav pageNav1 = new PageNav();
 	PageNav pageNav2 = new PageNav();
@@ -106,14 +106,16 @@ public class OrderDeliveryController {
 		    timestamp_end = Timestamp.valueOf(today.plusDays(1).atStartOfDay());
 		}
 		
-		//주문배송조회 정보제공용 카운트 수
+		
+		//주문배송조회 정보제공용 카운트 수(주문건 단위)
 		int payEd = mSelectCountPayEd.selectCountPayEd(member_idx, timestamp_begin, timestamp_end);
 		int dlvIng = mSelectCountDlvIng.selectCountDlvIng(member_idx, timestamp_begin, timestamp_end);
 		int dlvEd = mSelectCountDlvEd.selectCountDlvEd(member_idx, timestamp_begin, timestamp_end);
-		//모델에 세팅
-		model.addAttribute("payEd", payEd);
-		model.addAttribute("dlvIng", dlvIng);
-		model.addAttribute("dlvEd", dlvEd);
+		
+//		//모델에 세팅
+//		model.addAttribute("payEd", payEd);
+//		model.addAttribute("dlvIng", dlvIng);
+//		model.addAttribute("dlvEd", dlvEd);
 		
 		// 오늘 날짜
 		LocalDateTime now = LocalDateTime.now();
@@ -126,16 +128,29 @@ public class OrderDeliveryController {
 		
 		List<Integer> orderProductCounts = new ArrayList<>();
 		
+		int payEdCount = 0;
+		int dlvIngCount = 0;
+		int dlvEdCount = 0;
+		
 		for(OrderVo orderVo : orderVoList) {
 			int order_idx = orderVo.getOrder_idx();
 			int count = 0; 		
 			List<OrderProductVo> orderProduct = mSelectOrderProduct.selectOrderProduct(order_idx);
 			List<OrderListVo> orderProductList = new ArrayList<>();//리스트1개에 담길 리스트생성
-			for(OrderProductVo orderProductVo : orderProduct) {				
+			for(OrderProductVo orderProductVo : orderProduct) {
 				int product_idx = orderProductVo.getProduct_idx();
 				ProductVo productVo = pSelectView.selectView(product_idx); //상품번호의 상품Vo
 			    FileVo fileVo = pSelectThumbnail.selectThumbnail(product_idx); //상품번호의 파일Vo중 1번째
-			    			    
+			    
+			    //주문배송조회 정보제공용 카운트 수(상품건 단위)
+			    int selectPayEd = mSelectPayEdCount.selectPayEdCount(order_idx, product_idx, timestamp_begin, timestamp_end);
+			    int selectDlvIng = mSelectDlvIngCount.selectDlvIngCount(order_idx, product_idx, timestamp_begin, timestamp_end);
+			    int selectDlvEd = mSelectDlvEdCount.selectDlvEdCount(order_idx, product_idx, timestamp_begin, timestamp_end);
+			    
+			    payEdCount = payEdCount + selectPayEd;
+			    dlvIngCount = dlvIngCount + selectDlvIng;
+			    dlvEdCount = dlvEdCount + selectDlvEd;
+			    		
 			    OrderListVo orderListVo = new OrderListVo(); //OrderListVo 객체 생성
 			    //주문idx,날짜,번호,상품썸네일,상품판매자,상품이름,구매개수,상품구매금액,주문진행상태
 			    orderListVo.setOrder_idx(order_idx);
@@ -143,7 +158,9 @@ public class OrderDeliveryController {
 			    Date orderDate = orderVo.getOrder_date(); // SQL 검색 결과에서 가져온 order_date 값
 			    // 주문 날짜에 9시간을 더한 후, Date로 변환하여 저장
 			    Date adjustedDate = new Date(orderDate.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초로 변환하여 뺌
-
+			    
+//			    int prdDlvStatus = mSelectDlvStatus.selectDlvStatus(order_idx, product_idx, timestamp_begin, timestamp_end);
+			    
 			    orderListVo.setOrder_date(adjustedDate);	
 			    orderListVo.setOrder_num(orderVo.getOrder_num());
 			    orderListVo.setOriginFile(fileVo.getOriginFile());
@@ -155,12 +172,19 @@ public class OrderDeliveryController {
 			    orderListVo.setOrder_status(orderVo.getOrder_status());
 			    orderListVo.setProduct_idx(product_idx);
 			    orderListVo.setOrder_ing(orderVo.getOrder_ing());
+//			    orderListVo.setProduct_out_status(prdDlvStatus);
+			    
 			    orderProductList.add(orderListVo); // 주문상품리스트에 추가
 			    count++;
 			}//주문상품 for문 종료
 			orderProductCounts.add(count); // count 값을 리스트에 추가
 			orderList.add(orderProductList);//주문상품 리스트를 주문리스트에 추가
 		}//주문테이블vo for문 종료
+		
+		//모델에 세팅
+		model.addAttribute("payEdCount", payEdCount);
+		model.addAttribute("dlvIngCount", dlvIngCount);
+		model.addAttribute("dlvEdCount", dlvEdCount);
 		
 		model.addAttribute("orderProductCounts", orderProductCounts); // 상품수를 모델에 추가
 		model.addAttribute("orderList", orderList); // 주문리스트를 모델에 추가	

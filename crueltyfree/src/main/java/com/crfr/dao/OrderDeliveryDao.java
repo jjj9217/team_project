@@ -49,7 +49,7 @@ public class OrderDeliveryDao {
 		return sqlSession.selectOne(MAPPER+".selectOrderCount", map);	
 	}
 	
-	//회원의 결제완료 수
+	//회원의 결제완료 수(주문건)
 	public int selectCountPayEd(int member_idx, Timestamp timestamp_begin, Timestamp timestamp_end) {
 	    Map<String, Object> map = new HashMap<>();
 	    map.put("member_idx", member_idx);
@@ -58,7 +58,7 @@ public class OrderDeliveryDao {
 		return sqlSession.selectOne(MAPPER+".selectCountPayEd", map);	
 	}
 	
-	//회원의 배송준비중 수
+	//회원의 배송준비중 수(주문건)
 	public int selectCountDlvIng(int member_idx, Timestamp timestamp_begin, Timestamp timestamp_end) {
 	    Map<String, Object> map = new HashMap<>();
 	    map.put("member_idx", member_idx);
@@ -67,7 +67,7 @@ public class OrderDeliveryDao {
 		return sqlSession.selectOne(MAPPER+".selectCountDlvIng", map);	
 	}
 	
-	//회원의 배송중 수
+	//회원의 배송중 수(주문건)
 	public int selectCountDlvEd(int member_idx, Timestamp timestamp_begin, Timestamp timestamp_end) {
 	    Map<String, Object> map = new HashMap<>();
 	    map.put("member_idx", member_idx);
@@ -103,4 +103,44 @@ public class OrderDeliveryDao {
 	public DeliveryVo selectDelivery(int delivery_idx){
 		return sqlSession.selectOne(MAPPER+".selectDelivery", delivery_idx);
 	}
+	
+	//회원의 결제완료 수(상품건)
+	public int selectPayEdCount(int order_idx, int product_idx, Timestamp timestamp_begin, Timestamp timestamp_end) {
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("order_idx", order_idx);
+	    map.put("product_idx", product_idx);
+	    map.put("timestamp_begin", timestamp_begin);
+	    map.put("timestamp_end", timestamp_end);
+		return sqlSession.selectOne(MAPPER+".selectPayEdCount", map);	
+	}
+	
+	//회원의 배송준비중 수(상품건)
+	public int selectDlvIngCount(int order_idx, int product_idx, Timestamp timestamp_begin, Timestamp timestamp_end) {
+		Map<String, Object> map = new HashMap<>();
+	    map.put("order_idx", order_idx);
+	    map.put("product_idx", product_idx);
+	    map.put("timestamp_begin", timestamp_begin);
+	    map.put("timestamp_end", timestamp_end);
+		return sqlSession.selectOne(MAPPER+".selectDlvIngCount", map);	
+	}
+	
+	//회원의 배송중 수(상품건)
+	public int selectDlvEdCount(int order_idx, int product_idx, Timestamp timestamp_begin, Timestamp timestamp_end) {
+		Map<String, Object> map = new HashMap<>();
+	    map.put("order_idx", order_idx);
+	    map.put("product_idx", product_idx);
+	    map.put("timestamp_begin", timestamp_begin);
+	    map.put("timestamp_end", timestamp_end);
+		return sqlSession.selectOne(MAPPER+".selectDlvEdCount", map);	
+	}	
+
+	//배송상태
+	public int selectDlvStatus(int order_idx, int product_idx, Timestamp timestamp_begin, Timestamp timestamp_end) {
+		Map<String, Object> map = new HashMap<>();
+	    map.put("order_idx", order_idx);
+	    map.put("product_idx", product_idx);
+	    map.put("timestamp_begin", timestamp_begin);
+	    map.put("timestamp_end", timestamp_end);
+		return sqlSession.selectOne(MAPPER+".selectDlvStatus", map);	
+	}	
 }
