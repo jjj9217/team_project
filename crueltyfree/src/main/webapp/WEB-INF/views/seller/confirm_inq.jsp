@@ -493,7 +493,10 @@ $(function(){
     $(".oneinqModifyup2").click(function(){
         var index = $(".oneinqModifyup2").index(this);
         
-        $(".modal_modify2").eq(index).removeClass("hidden");      
+        $(".modal_modify2").eq(index).removeClass("hidden");    
+        $(".oneModifyModal2").each(function(){
+        	this.reset();
+        });
     });
 
     //답변하기 폼 전달
@@ -505,7 +508,7 @@ $(function(){
     
  	//수정하기 폼 전달
     $(".reviewModifyup2").click(function(){
-        var index2 = $(".reviewModifyup2").index(this);
+        var index2 = $(".reviewModifyup2").index(this);        
         alert("수정이 완료되었습니다.");
         $(".oneModifyModal2").eq(index2).submit();	//폼클래스명 적기                   
     });
@@ -516,6 +519,9 @@ $(function(){
         var index2 = $(".close_modalmodify").index(this);
         
         $(".modal_modify").eq(index2).addClass("hidden");
+        $(".oneModifyModal").each(function(){
+        	this.reset();
+        });
     });
         
     //수정 띄운 모달의 x버튼 클릭시 모달 닫기    

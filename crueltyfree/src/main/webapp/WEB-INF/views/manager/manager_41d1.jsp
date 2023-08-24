@@ -342,6 +342,9 @@ $(function(){
         $(".modalCloseButton").click(function(){
         	let index = $(".modalCloseButton").index(this);
         	$(".modalContainer").eq(index).addClass("hidden");
+        	$(".oneinqinfo").each(function(){
+            	this.reset();
+            });
     });
 })
 
@@ -522,7 +525,7 @@ $(function(){
 	<span>1:1문의</span> <span id="num">(문의번호:${oneSelectList[rowNum-1].one_inq_idx})</span> 
 		<hr id="hr">
 
-	<form name="form_update" method="post" action="edit_one_process.do" enctype="multipart/form-data" 
+	<form class="oneinqinfo" name="form_update" method="post" action="edit_one_process.do" enctype="multipart/form-data" 
           onsubmit="return validateForm()">
           
 	<input type="hidden" name="one_inq_idx" value="${oneSelectList[rowNum-1].one_inq_idx}" />

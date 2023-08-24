@@ -333,6 +333,9 @@ $(function(){
     $(".modalCloseButton").click(function(){
     	let index = $(".modalCloseButton").index(this);
     	$(".modalContainer").eq(index).addClass("hidden");
+    	$(".productinfo").each(function(){
+        	this.reset();
+        });
     });
 })
 </script>
@@ -511,7 +514,7 @@ $(function(){
 		<span>상품정보</span> <span id="num">(상품번호:${proSelectList[rowNum-1].product_idx})</span>
 		<hr id="hr">				
 
-	<form name="form_update" method="post" action="edit_pro_process.do" enctype="multipart/form-data" 
+	<form class="productinfo" name="form_update" method="post" action="edit_pro_process.do" enctype="multipart/form-data" 
           onsubmit="return validateForm()">
           
 	<input type="hidden" name="product_idx1" value="${proSelectList[rowNum-1].product_idx}" />
