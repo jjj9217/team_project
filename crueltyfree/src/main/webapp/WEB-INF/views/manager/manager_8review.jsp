@@ -341,6 +341,9 @@ $(function(){
         $(".modalCloseButton").click(function(){
         	let index = $(".modalCloseButton").index(this);
         	$(".modalContainer").eq(index).addClass("hidden");
+        	$(".reviewinfo").each(function(){
+            	this.reset();
+            });
     });
 })
 
@@ -509,7 +512,7 @@ $(function(){
 	<span>리뷰</span> <span id="num">(리뷰번호:${rvSelectList[rowNum-1].review_idx})</span> 
 	<hr id="hr">	
 
-	<form name="form_update" method="post" action="edit_review_process.do" enctype="multipart/form-data" 
+	<form class="reviewinfo" name="form_update" method="post" action="edit_review_process.do" enctype="multipart/form-data" 
           onsubmit="return validateForm()">
           
 	<input type="hidden" name="review_idx" value="${rvSelectList[rowNum-1].review_idx}" />

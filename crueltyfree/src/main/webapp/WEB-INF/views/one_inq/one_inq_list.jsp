@@ -425,7 +425,9 @@ $(function(){
     //띄운 모달의 x버튼 클릭시 모달 닫기    
     $(".close_modalmodify").click(function(){
         var index2 = $(".close_modalmodify").index(this);
-        
+        $(".oneModifyModal").each(function(){
+        	this.reset();
+        });
         $(".modal_modify").eq(index2).css("display", "none");
     });
         

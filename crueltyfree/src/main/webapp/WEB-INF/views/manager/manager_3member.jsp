@@ -318,6 +318,9 @@ $(function(){
         $(".modalCloseButton").click(function(){
         	let index = $(".modalCloseButton").index(this);
         	$(".modalContainer").eq(index).addClass("hidden");
+        	$(".memberinfo").each(function(){
+            	this.reset();
+            });
     });
 })
 </script>
@@ -512,7 +515,7 @@ $(function(){
 		<div class="modalCloseButton"><img src="../resources/img/cancel.png" style="width: 25px; height: 25px; cursor:pointer; float:right;"></div>
 		<span>회원정보</span> <span id="num">(회원번호:${memSelectList[rowNum-1].member_idx})</span> 
 		<hr id="hr">
-	<form name="form_update" method="post" action="edit_mem_process.do" enctype="multipart/form-data" 
+	<form class="memberinfo" name="form_update" method="post" action="edit_mem_process.do" enctype="multipart/form-data" 
           onsubmit="return validateForm()">
           
 	<input type="hidden" name="member_idx" value="${memSelectList[rowNum-1].member_idx}" />
