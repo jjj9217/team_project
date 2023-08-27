@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>문의 확인 | CrueltyFree</title>
+<title>매출 통계 | CrueltyFree</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon1.png">
 
 <style>
@@ -50,6 +50,7 @@
 		height:120px;
 		text-align:center;
 		margin-top:50px;
+		float:left;
 
 	}
 	
@@ -97,9 +98,10 @@
 	}
 	
 	#content {
-		width:700px;
-		float:left;
+		width:740px;
+		float:right;
 		margin-left:10px;
+		height:900px;
 	}
 	
 	.sub_title {
@@ -277,8 +279,17 @@
     .blueText{
     	color: #7d99a4;
     	font-weight: bold;
-    }    
+    }
+    
+    #doughnut-chart{
+        float:left;
+    }
+    
+    #doughnut-chart2{
+        float:right;
+    }       
 </style>
+
 </head>
 <body>
 <header>
@@ -289,186 +300,37 @@
 		<img src="../resources/img/seller.png" style="width: 50px; height: 50px;">
 		<h3>판매자 페이지</h3>	
 	</div>
+
+
+
+
+	
+	<div id="content">
+        <article class="sub_title">
+            <h5>매출 통계</h5>
+        </article> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+        <canvas id="mixed-chart" width="720" height="360"></canvas>
+        <div id = "doughnut">
+        <canvas id="doughnut-chart" width="360" height="240"></canvas>       
+        <canvas id="doughnut-chart2" width="360" height="240"></canvas>
+        </div>
+    </div>
+    
+    
+    
+  
+	
+	
 	<div id="tap">
 		<ul class="list">
-		    <li><a href="sales_statistics.do">매출 통계</a></li>
+		    <li><a href="sales_statistics.do"  style="background-color: #7d99a4; color:#ffffff; font-weight: bold;">매출 통계</a></li>
 			<li><a href="purchase_history.do">구매 내역</a></li>
-			<li><a href="confirm_inq.do" style="background-color: #7d99a4; color:#ffffff; font-weight: bold;">문의 확인</a></li>
+			<li><a href="confirm_inq.do">문의 확인</a></li>
 			<li><a href="check_pro.do">등록 상품 확인</a></li>
 		</ul>
 		<a href="regi_pro.do"><button class="pro_register">상품 등록하기</button></a>
-	</div>
-	<div id="content">
-		<article class="sub_title">
-			<h5>문의 확인</h5>
-		</article>
-		<article class="history_list">
-			<table id="history_tb">
-		        <tr height="30px;">
-		            <th width="100px;">상품번호</th>
-		            <th width="400px;">문의 내용</th>
-		            <th width="100px;">문의 날짜</th>
-		            <th width="100px;">답변 상태</th>
-		        </tr>
-		        
-		        <!-- 추후 c:choose, c:when 및 데이터베이스를 연동해 페이지 구현 -->
-				<!-- 글목록 내용-->
-		<c:choose>
-			<c:when test="${empty confirmproductList[0].product_inq_idx}">
-				<tr>
-					<td colspan="4" style="height: 300px; color: #a4a4a4;"> 등록된 문의가 없습니다. </td>
-				</tr>
-			</c:when>
-			<c:otherwise>
-				<c:forEach var="rowNum" begin="${pageNav.startNum}" end="${pageNav.endNum}">
-					
-					<c:if test="${confirmproductList[rowNum-1].product_inq_idx ne null}"> <!-- notice에 저장된 값이 있을 경우에만 출력 -->
-						<tr style="cursor:pointer;" class="viewinq">
-							<td>${confirmproductList[rowNum-1].product_inq_idx}</td> <!-- 번호 -->
-							<td id="td_title">
-								${confirmproductList[rowNum-1].product_inq_content} <!-- 제목 -->
-							</td>			
-							<td>
-								<fmt:formatDate value="${confirmproductList[rowNum-1].product_inq_regDate}" type="date"
-									pattern="yyyy/MM/dd" /> <!-- 날짜 -->
-							</td>
-							<td>
-		                        <c:choose>
-		                            <c:when test="${empty confirmproductList[rowNum-1].product_inq_answer}">
-		                                <span class="answer_wait">답변대기</span>
-		                            </c:when>
-		                            <c:when test="${!empty confirmproductList[rowNum-1].product_inq_answer}">
-		                                <span class="answer_comp">답변완료</span>
-		                            </c:when>
-		                            <c:otherwise>
-		                            </c:otherwise>
-		                        </c:choose>                                                                            
-		                    </td>
-						</tr>
-					</c:if>
-					
-<tbody class="inqView" style="display:none;">
-           <tr>
-           <td class="content_text" colspan='3'>
-           
-           
-           	                	
-           	<span class="blueText">문의내용 :</span><br>
-           	${confirmproductList[rowNum-1].product_inq_content}<br>
-           	
-           	<c:if test="${!empty confirmproductList[rowNum-1].product_inq_answer}">
-           	<br><span class="blueText">답변내용 :</span><br> 
-           	${confirmproductList[rowNum-1].product_inq_answer}<br> 
-           	</c:if>
-            
-                
-            </td>
-            <td class="content_bgblue">
-<form class="inqdelform" action="${pageContext.request.contextPath}/one_inq/one_ifdfds.do" method="post">
-           <input type="hidden" name="one_inq_idx" value="${confirmproductList[rowNum-1].product_inq_idx}">
-           <c:if test="${empty confirmproductList[rowNum-1].product_inq_answer}">
-           <button type="button" class="oneinqModifyup answer_wait2">답변하기</button>
-           <input type="hidden" class="oneinqModifyup2">
-           </c:if>
-           <c:if test="${!empty confirmproductList[rowNum-1].product_inq_answer}">
-           <button type="button" class="oneinqModifyup2 answer_comp">수정하기</button>
-           <input type="hidden" class="oneinqModifyup">
-           </c:if>                
-           </form>
-           
-           </td>
-           
-           </tr>
-           </tbody>
-           
-<!-- 상품문의 수정하기 Modal -->
-<form name="caq" class="oneModifyModal2" action="${pageContext.request.contextPath}/seller/confirmModify_process.do" method="post">
-<div id="modal" class="modal_modify2 modal hidden">    
-    <div class="modal-window">
-        <div class="title">
-            <h2>상품문의 수정</h2>
-            <span class="close_modalmodify2">X</span>
-        </div>
-        <div class="hr_space"></div>  
-        <ul class="write_step">                           
-            <li id="review_content_back">  				             	            
-                <div class="review_content">
-                	<div class="inq_user">
-		            <span class="inq_user_title">문의자닉네임 :</span> <br>
-		            ${confirmproductList[rowNum-1].member_nickname}<br><br>
-		            <span class="inq_user_title">문의상품 :</span> <br>
-		            ${confirmproductList[rowNum-1].product_name}
-		            </div>
-		            <div class="inq_user_content">
-		            <span class="inq_user_title">문의내용 :</span> <br>
-		            ${confirmproductList[rowNum-1].product_inq_content}                   
-		            </div>
-                    <br><textarea id="review_content_textarea" class="txtAr" name="product_inq_answer" placeholder="답변을 입력해주세요.">${confirmproductList[rowNum-1].product_inq_answer}</textarea>                          
-              			<input type="hidden" name="product_inq_idx" value="${confirmproductList[rowNum-1].product_inq_idx}">
-                </div>          
-            </li>
-        </ul>
-        <div class="review_reg_background">                                                                     
-<!--             <button type="button" class="btnLookup" id="review_ok">닫기</button> -->
-
-					
-
-            <button type="button" class="reviewModifyup2" id="review_cancel" >수정하기</button>                                  
-        </div>
-    </div>    
-</div>
-</form>           
-
-<!-- 상품문의 답변하기 Modal -->
-<form name="caq" class="oneModifyModal" action="${pageContext.request.contextPath}/seller/confirm_process.do" method="post">
-<div id="modal" class="modal_modify modal hidden">    
-    <div class="modal-window">
-        <div class="title">
-            <h2>상품문의 답변</h2>
-            <span class="close_modalmodify">X</span>
-        </div>
-        <div class="hr_space"></div>                
-        <ul class="write_step">                           
-            <li id="review_content_back">  				             	            
-                <div class="review_content">
-		            <div class="inq_user">
-		            <span class="inq_user_title">문의자닉네임 :</span> <br>
-		            ${confirmproductList[rowNum-1].member_nickname}<br><br>
-		            <span class="inq_user_title">문의상품 :</span> <br>
-		            ${confirmproductList[rowNum-1].product_name}
-		            </div>
-		            <div class="inq_user_content">
-		            <span class="inq_user_title">문의내용 :</span> <br>
-		            ${confirmproductList[rowNum-1].product_inq_content}                   
-		            </div>
-                    <br><textarea id="review_content_textarea" class="txtAr" name="product_inq_answer" placeholder="답변을 입력해주세요."></textarea>                          
-              			<input type="hidden" name="product_inq_idx" value="${confirmproductList[rowNum-1].product_inq_idx}">
-                </div>          
-            </li>
-        </ul>
-        <div class="review_reg_background">                                                                     
-<!--             <button type="button" class="btnLookup" id="review_ok">닫기</button> -->
-					
-            <button type="button" class="reviewModifyup" id="review_cancel" >답변하기</button>                                  
-        </div>
-    </div>    
-</div>
-</form>
-
-</c:forEach>
-				
-			</c:otherwise>
-		</c:choose>
-				
-		
-				<tr>
-					<td id="history_paging" colspan="4" style="border-bottom:none;">
-						<%@ include file="paging_confirm_inq.jsp" %>
-					</td>
-				</tr>
-    </table>
-		</article>
-	</div>
+	</div>	
 </section>
 <div id="clear"></div>
 </body>
@@ -531,6 +393,94 @@ $(function(){
         
         $(".modal_modify2").eq(index2).addClass("hidden");
     });
+});
+</script>
+
+<!-- 매출그래프 -->
+<script>
+new Chart(document.getElementById("mixed-chart"), {
+    type: 'bar',
+    data: {
+      labels: ["1900", "1950", "1999", "2050"],
+      datasets: [{
+          label: "Europe",
+          type: "line",
+          borderColor: "#8e5ea2",
+          data: [408,547,675,734],
+          fill: false
+        }, {
+          label: "Africa",
+          type: "line",
+          borderColor: "#3e95cd",
+          data: [133,221,783,2478],
+          fill: false
+        }, {
+          label: "Europe",
+          type: "bar",
+          backgroundColor: "rgba(0,0,0,0.2)",
+          data: [408,547,675,734],
+        }, {
+          label: "Africa",
+          type: "bar",
+          backgroundColor: "rgba(0,0,0,0.2)",
+          backgroundColorHover: "#3e95cd",
+          data: [133,221,783,2478]
+        }
+      ]
+    },
+    options: {
+      responsive: false,
+      title: {
+        display: true,
+        text: 'Population growth (millions): Europe & Africa'
+      },
+      legend: { display: false }
+    }
+});
+</script>
+
+<!-- 도넛차트 -->
+<script>
+new Chart(document.getElementById("doughnut-chart"), {
+    type: 'doughnut',
+    data: {
+      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+      datasets: [
+        {
+          label: "Population (millions)",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: [2478,5267,734,784,433]
+        }
+      ]
+    },
+    options: {
+      responsive: false,
+      title: {
+        display: true,
+        text: 'Predicted world population (millions) in 2050'
+      }
+    }
+});
+
+new Chart(document.getElementById("doughnut-chart2"), {
+    type: 'doughnut',
+    data: {
+      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+      datasets: [
+        {
+          label: "Population (millions)",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: [2478,5267,734,784,433]
+        }
+      ]
+    },
+    options: {
+      responsive: false,
+      title: {
+        display: true,
+        text: 'Predicted world population (millions) in 2050'
+      }
+    }
 });
 </script>
 

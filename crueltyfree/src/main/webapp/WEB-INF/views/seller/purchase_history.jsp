@@ -203,6 +203,7 @@ $(function(){
 	</div>
 	<div id="tap">
 		<ul class="list">
+			<li><a href="sales_statistics.do">매출 통계</a></li>
 			<li><a href="purchase_history.do" style="background-color: #7d99a4; color:#ffffff; font-weight: bold;">구매 내역</a></li>
 			<li><a href="confirm_inq.do">문의 확인</a></li>
 			<li><a href="check_pro.do">등록 상품 확인</a></li>

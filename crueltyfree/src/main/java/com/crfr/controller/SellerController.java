@@ -204,7 +204,7 @@ public class SellerController {
 	@GetMapping("/regi_pro.do")
 	public String regi_pro() {		
 		return "seller/regi_pro";
-	}
+	}	
 	
 	//상품 등록전 중복검사
 	@PostMapping("/regi_pro_before_process.do")
@@ -458,6 +458,12 @@ public class SellerController {
 	
 	
 	
+	
+	//매출 통계 페이지	
+	@GetMapping("/sales_statistics.do")
+	public String sales_statistics() {		
+		return "seller/sales_statistics";
+	}
 	
 	
 	
