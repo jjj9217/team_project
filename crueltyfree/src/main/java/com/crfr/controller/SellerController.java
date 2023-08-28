@@ -47,7 +47,7 @@ public class SellerController {
 	pUpdateProductFile0, pUpdateProductFile1, pUpdateProductFile2, pUpdateProductFile3,
 	pfindProductFileIdx,
 	pDeleteProduct,
-	pUpdateDeliveryState1, pUpdateDeliveryState2,
+	pUpdateDeliveryState1, pUpdateDeliveryState2, pUpdateProductOutStatus1, pUpdateProductOutStatus2,
 	pUpdateProductCount, cOrderProductList2,
 	pReInsertProduct;
 	
@@ -115,6 +115,7 @@ public class SellerController {
 		    		purHistoryListVo.setOrder_product_count(vo.getOrder_product_count()); // 주문수량
 		    		purHistoryListVo.setOrder_ing(orderVo.getOrder_ing()); // 처리 상태
 		    		purHistoryListVo.setOrder_idx(order_idx);
+		    		purHistoryListVo.setProduct_idx(product_idx);
 		    		
 		    		purchaseList.add(purHistoryListVo); // basketList에 추가
 		    		orderCount++;		    		
@@ -136,11 +137,15 @@ public class SellerController {
 	
 	// 상품 상태 요청 처리 1
 	@PostMapping("/update_state_process1.do")
-	public String update_process1(@RequestParam("order_ing1") String order_num) {
+	public String update_process1(@RequestParam("order_ing1") String order_num,
+			@RequestParam("order_ing3") int order_idx,
+			@RequestParam("prdIdx") int product_idx) {
 
 		//상태 업데이트를 위해 서비스 사용
 		int result = pUpdateDeliveryState1.updateDeliveryState1(order_num);
-
+		//상품출고 테이블 업데이트
+		int updateResult = pUpdateProductOutStatus1.updateProductOutStatus1(order_idx, product_idx);
+		
 		String viewPage = "seller/purchase_history";
 		
 		if(result == 1) {//글삭제 성공 시
@@ -153,17 +158,20 @@ public class SellerController {
 	// 상품 상태 요청 처리 2
 	@PostMapping("/update_state_process2.do")
 	public String update_process2(@RequestParam("order_ing2") String order_num, 
-			@RequestParam("order_ing3") int order_idx) {
+			@RequestParam("order_ing3") int order_idx,
+			@RequestParam("prdIdx") int product_idx) {
 
 		//상태 업데이트를 위해 서비스 사용
 		int result = pUpdateDeliveryState2.updateDeliveryState2(order_num);
 		
+		int updateResult = pUpdateProductOutStatus2.updateProductOutStatus2(order_idx, product_idx);
+		
 		List<OrderProductVo> orderProductList = cOrderProductList2.checkOrderProductList2(order_idx);
 		
 		for(OrderProductVo vo : orderProductList) {
-			int product_idx = vo.getProduct_idx();
+			int intProductIdx = vo.getProduct_idx();
 			int count = vo.getOrder_product_count();
-			int update_result = pUpdateProductCount.updateProductCount(Integer.toString(product_idx), count);
+			int update_result = pUpdateProductCount.updateProductCount(Integer.toString(intProductIdx), count);
 		}
 		
 		String viewPage = "seller/purchase_history";
@@ -204,7 +212,7 @@ public class SellerController {
 	@GetMapping("/regi_pro.do")
 	public String regi_pro() {		
 		return "seller/regi_pro";
-	}	
+	}
 	
 	//상품 등록전 중복검사
 	@PostMapping("/regi_pro_before_process.do")
@@ -458,13 +466,6 @@ public class SellerController {
 	
 	
 	
-	
-	//매출 통계 페이지	
-	@GetMapping("/sales_statistics.do")
-	public String sales_statistics() {
-		//kka
-		return "seller/sales_statistics";
-	}
 	
 	
 	
