@@ -47,7 +47,7 @@ public class PurchaseController {
 	bBasketInsert, bBasketDeleteOne, oSelectBasket, oSelectDeliveryCount,oSelectDeliveryList,
 	oInsertDelivery, oSelectDeliveryVo, oInsertOrder, oSelectOrderIdx, oInsertPay, oDeleteBasket,
 	oImportService, oInsertOrderProduct, oUpdateOrder, oUpdatePay, mSelectCountMember, oSelectCouponList,
-	oDeleteCoupon, oSelectCouponCount, oInsertProductOut;
+	oDeleteCoupon, oSelectCouponCount, oInsertProductOut, oUpdateProductOutStatus, oSelectCountProductOutStatus;
 	
 	@Setter(onMethod_={ @Autowired })	
 	ProductViewService pSelectView, pSelectThumbnail;
@@ -68,21 +68,36 @@ public class PurchaseController {
 				
 		String merchant_uid = refundMap.get("merchant_uid");
 		String order_idx = refundMap.get("order_idx");
+		String product_idx = refundMap.get("product_idx");
 		String token = oImportService.getImportToken();
-		int result_refund = oImportService.cancelPay(token, merchant_uid);
-
-		System.out.println("token: "+token);
-		System.out.println("merchant_uid: "+merchant_uid);
-		System.out.println("result_refund: "+result_refund);
+		
+		int resultDlvIng = oSelectCountProductOutStatus.selectCountProductOutStatus(order_idx);
 		
 		String result = "";
-		if(result_refund == 1) {//성공시 결제 테이블,주문테이블 환불여부 바꾸기 -> order_idx받아오기
-			oUpdateOrder.updateOrder(order_idx); //주문테이블 업데이트
-			oUpdatePay.updatePay(order_idx); //결제테이블 업데이트
-			result = "success";			
+		
+		if(resultDlvIng != 0) {
+			result = "dlv_ing";
 		}else {
-			result = "fail";
+			int result_refund = oImportService.cancelPay(token, merchant_uid);
+			
+			System.out.println("token: "+token);
+			System.out.println("merchant_uid: "+merchant_uid);
+			System.out.println("result_refund: "+result_refund);
+			
+			if(result_refund == 1) {//성공시 결제 테이블,주문테이블 환불여부 바꾸기 -> order_idx받아오기
+				oUpdateOrder.updateOrder(order_idx); //주문테이블 업데이트
+				oUpdatePay.updatePay(order_idx); //결제테이블 업데이트
+				
+				int intOrderIdx = Integer.parseInt(order_idx);
+				int intProductIdx = Integer.parseInt(product_idx);
+				
+				int updateResult = oUpdateProductOutStatus.updateProductOutStatus(intOrderIdx, intProductIdx);
+				result = "success";			
+			}else {
+				result = "fail";
+			}
 		}
+		
 		
 		return result;
 	}

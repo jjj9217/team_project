@@ -127,4 +127,17 @@ public class OrderDao {
 		map.put("product_out_count", product_out_count);
 		return sqlSession.insert(MAPPER+".insertProductOut",map);
 	}	
+	
+	//상품출고 상태 업데이트
+	public int updateProductOutStatus(int order_idx, int product_idx) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("order_idx", order_idx);		
+	    map.put("product_idx", product_idx);
+		return sqlSession.update(MAPPER+".updateProductOutStatus", map);
+	}		
+	
+	//환불전 상태 수 불러오기
+	public int selectCountProductOutStatus(String order_idx) {
+		return sqlSession.selectOne(MAPPER+".selectCountProductOutStatus", order_idx);
+	}
 }
