@@ -465,7 +465,11 @@ public class SellerController {
 	}
 	
 	
-	
+	//매출 통계 페이지	
+	@GetMapping("/sales_statistics.do")
+	public String sales_statistics() {
+		return "seller/sales_statistics";
+	}
 	
 	
 	
