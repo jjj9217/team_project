@@ -132,5 +132,18 @@
 	<insert id="insertProductOut" parameterType="map">		
 		insert into `product_out` (order_idx, product_idx, product_out_count,product_out_date)
 		values(#{order_idx},#{product_idx},#{product_out_count},now()) 
-	</insert>				
+	</insert>	
+	
+	<!-- 상품출고 업데이트 구문 -->
+	<update id="updateProductOutStatus" parameterType="map">
+		update `product_out` set product_out_status = "4"
+			where order_idx = #{order_idx}
+	</update>	
+	
+	<!-- 환불전 상태 수 불러오기 -->
+	<select id="selectCountProductOutStatus" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM product_out
+		WHERE order_idx = #{order_idx}
+		AND product_out_status IN (2, 3);
+	</select>						
 </mapper>

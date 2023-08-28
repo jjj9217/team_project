@@ -159,7 +159,7 @@ public class OrderDeliveryController {
 			    // 주문 날짜에 9시간을 더한 후, Date로 변환하여 저장
 			    Date adjustedDate = new Date(orderDate.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초로 변환하여 뺌
 			    
-//			    int prdDlvStatus = mSelectDlvStatus.selectDlvStatus(order_idx, product_idx, timestamp_begin, timestamp_end);
+			    int prdDlvStatus = mSelectDlvStatus.selectDlvStatus(order_idx, product_idx, timestamp_begin, timestamp_end);
 			    
 			    orderListVo.setOrder_date(adjustedDate);	
 			    orderListVo.setOrder_num(orderVo.getOrder_num());
@@ -172,7 +172,7 @@ public class OrderDeliveryController {
 			    orderListVo.setOrder_status(orderVo.getOrder_status());
 			    orderListVo.setProduct_idx(product_idx);
 			    orderListVo.setOrder_ing(orderVo.getOrder_ing());
-//			    orderListVo.setProduct_out_status(prdDlvStatus);
+			    orderListVo.setProduct_out_status(prdDlvStatus);
 			    
 			    orderProductList.add(orderListVo); // 주문상품리스트에 추가
 			    count++;

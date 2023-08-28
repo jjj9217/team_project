@@ -129,7 +129,8 @@ $(function(){
 	  var index = $(".refund_btn").index(this);
 	  var order_idx = $(".refund_order_idx").eq(index).val();
 	  var order_num = $(".refund_order_num").eq(index).val();
-	  
+	  var product_idx = $(".refund_product_idx").eq(index).val();
+		  
 	  var confirmation = confirm("환불을 진행하시겠습니까?");
 	  
 	  if(confirmation){
@@ -138,7 +139,8 @@ $(function(){
 			  url: "${pageContext.request.contextPath}/purchase/refund_process.do",
 			  data: JSON.stringify({
 				  "merchant_uid":order_num,//결제 UID
-				  "order_idx":order_idx//order_idx
+				  "order_idx":order_idx,//order_idx
+				  "product_idx":product_idx//product_idx
 				  }), 
 				  //JSON.stringify(JSON타입 객체): JSON타입 객체를 String객체로 변환시킴
 			  contentType: "application/json;charset=utf-8;",
@@ -147,6 +149,8 @@ $(function(){
 				  if(data == "success"){
 					  alert("환불에 성공하였습니다.");
 					  window.location.href = "${pageContext.request.contextPath}/mypage/mypage_orderinq.do";
+				  }else if(data == "dlv_ing"){
+					  alert("주문건내의 상품이 배송절차 진행중에 있습니다. 배송완료 후 반품처리 해주세요.");
 				  }else{
 					  alert("환불에 실패하였습니다.");
 				  }
@@ -630,22 +634,22 @@ $(function(){
         <fmt:formatNumber value="${orderProduct.order_product_count * orderProduct.product_price}" pattern="###,###" />원</td>
         <td class="td_state bottom">
         <c:choose>
-        <c:when test="${orderProduct.order_ing == 0}">
+        <c:when test="${orderProduct.product_out_status == 0}">
         <!-- 출고대기 상태일때 -->
         주문완료<br><br>
         <button class="refund_btn">환불신청</button>
         </c:when>
-        <c:when test="${orderProduct.order_ing == 1}">
+        <c:when test="${orderProduct.product_out_status == 1}">
         <!-- 출고준비중 상태일때 -->
         상품준비중<br><br>
         <button class="refund_btn">환불신청</button>
         </c:when>
-        <c:when test="${orderProduct.order_ing == 2}">
+        <c:when test="${orderProduct.product_out_status == 2}">
         <!-- 배송중 상태일때 -->
         상품배송중
         <input type="hidden" class="refund_btn">
         </c:when>
-        <c:when test="${orderProduct.order_ing == 3}">
+        <c:when test="${orderProduct.product_out_status == 3}">
         <!-- 출고완료 상태일때 -->
         배송완료
         <input type="hidden" class="refund_btn">
@@ -673,6 +677,7 @@ $(function(){
         </c:choose>
         <input type="hidden" class="refund_order_idx" value="${orderProduct.order_idx}">
         <input type="hidden" class="refund_order_num" value="${orderProduct.order_num}">
+        <input type="hidden" class="refund_product_idx" value="${orderProduct.product_idx}">
         </td>
         </tr>
         </c:forEach> 
