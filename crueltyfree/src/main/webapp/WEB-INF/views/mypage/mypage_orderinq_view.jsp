@@ -37,6 +37,8 @@ $(function(){
 				  if(data == "success"){
 					  alert("환불에 성공하였습니다.");
 					  window.location.href = "${pageContext.request.contextPath}/mypage/mypage_orderinq.do";
+				  }else if(data == "dlv_ing"){
+					  alert("주문건내의 상품이 배송절차 진행중에 있습니다. 배송완료 후 반품처리 해주세요.");
 				  }else{
 					  alert("환불에 실패하였습니다.");
 				  }
